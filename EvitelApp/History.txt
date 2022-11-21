@@ -1,0 +1,14 @@
+18.11.2022 - EvitelApp a EvitelLib. Net.Framework 4.8. Zatím to udìlám v èem umím a když bude èas pøepíšu do Core.
+- EvitelLib  EF CodeFirst (EntityFramework 6.4.4 - asi poslední verze když nechceš Core. Staèí už má v sobì SQLServer)
+- Adresáø Entity obsahuje DBModel.cs, LoginUser.cs, LoginAccess.cs, a vazební tabulku LoginAccesUser.cs 
+- Vytvoøení databáze: musíš do app.config pøidat configuration string (s name "DBEvitel") na který se odvolává DBModel.cs
+					  napíšeš 3 tøídy jako entity LoginUser.cs, LoginAccess.cs, a vazební tabulku LoginAccesUser.cs.
+					  Enable-Migrations - tzn, že vytvoøí adresáø Migration a vùbec zjistí že to jde (knihovny, vazby).
+					  Add-Migration InitialDBCreate -ProjectName EvitelLib -StartUpProjectName EvitelLib FirstMigration - pøidá migraci YYYMMDDHHmmSS_InitialDBCreate.cs
+					  Do této migrace mùžeš napsat úvodní Seed. Já jsem si vytvoøil dva uživatele, práva. (blbost je to v Configuration.cs, tam by to asi být nemìlo)
+					  update-database - vytvoøí databáze a tøi tabulky dle úvodní migrace. 
+
+20.11.2022 - Pøedìlání prvotní Init DB. Systém Remos. 001.Seed.sql plní data. Potøebuji k tomu nahradit tøídu DbMigration DbZPTMigration.cs, aby to spustilo SQL. 
+			 Odstranìní sloupce Discriminator, který si EF tvoøí automaticky, pokud tøídu, kterou máš registrovanou v DBContext použiješ jako rodièe pro jinou tøídu ( public class CLoggedUser : LoginUser). 
+			  Abych to odstranil použil jsem modifikátor [NotMapped]. Ale je tøeba udìlat novou migraci 
+			 .editorconfig
