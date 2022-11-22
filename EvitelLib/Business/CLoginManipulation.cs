@@ -3,6 +3,7 @@ using EvitelLib.Entity;
 using EvitelLib.Repository;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -33,7 +34,7 @@ namespace EvitelLib.Business
             loginMode = GetLoginMode();
             CRepositoryDB db = new CRepositoryDB(-1);
             LoginUser user =  null;
-            if (loginMode == eLoginMode.Name)
+            if (loginMode == eLoginMode.Name || loginMode == eLoginMode.AllowedWindowsUsers)
             {
                 user = db.LoginUserNameExists(userName);
             }
@@ -41,13 +42,22 @@ namespace EvitelLib.Business
             {
                 user = db.LoginUserNamePasswordExists(userName, userPassword);
             }
+            else if (loginMode == eLoginMode.AllWindowsUsers || loginMode == eLoginMode.HybridWindowsUsers)
+            {
+                user = db.LoginUserNameExists(userName);
+                if (user == null)
+                {
+                    db.AddLoginUser("",userName, userName, loginMode == eLoginMode.HybridWindowsUsers ? "<hybrid>" : "");
+                    user = db.LoginUserNameExists(userName);
+                }
+            }
             if (user == null)
             {
                 new CEventLog(EventCode.e1Login, EventSubCode.e2BadLogin, userName);
                 return null;
             }
             CLoggedUser loggedUser = new CLoggedUser(user);
-            if (loginMode != eLoginMode.NoLogin && loginMode != eLoginMode.AllWindowsUser)
+            if (loginMode == eLoginMode.Name || loginMode == eLoginMode.AllowedWindowsUsers || loginMode == eLoginMode.HybridWindowsUsers )
             {
                 if (!loggedUser.HasAnyAccess())
                 {
@@ -78,6 +88,7 @@ namespace EvitelLib.Business
             loggedUser.dtLogged = DateTime.Now;
             loggedUser.sessionId = ((ulong)DateTime.Now.ToBinary()).ToString();
             loggedUser.loginMode = GetLoginMode();
+ 
             new CEventLog(EventCode.e1Login, EventSubCode.e2Start, user.LastName, loggedUser.sessionId, user.LoginUserId);
             return loggedUser;
         }

@@ -29,6 +29,9 @@ namespace EvitelApp
                 Application.Run(new frmMain());
                 loginManipulation.Logout(myLoggedUser);
             }
+            else {
+                MessageBox.Show("Bad user ",  "No-Login", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
 
 
@@ -40,7 +43,16 @@ namespace EvitelApp
                     {
                         myLoggedUser = loginManipulation.GetNoLoginUser(); return true; 
                     }
-                case eLoginMode.Name:
+                case eLoginMode.AllowedWindowsUsers:
+                case eLoginMode.AllWindowsUsers:
+                case eLoginMode.HybridWindowsUsers:
+                    {
+                        string userFullName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+                        string[] userName = userFullName.Split('\\');
+                        myLoggedUser = loginManipulation.CheckLogin(userName[1], "");
+                        return (myLoggedUser != null);
+                    }
+                  case eLoginMode.Name:
                     {
                         frmLogin frm = new frmLogin
                         {
@@ -63,8 +75,12 @@ namespace EvitelApp
                         }
                         return false;
                     }
-                default: break;
+                default:
+                    MessageBox.Show("Bad loginMode = "+ loginMode.ToString(), "No-Login", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                    break;
             }
+
             return false;
         }
     }

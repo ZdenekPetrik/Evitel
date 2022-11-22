@@ -67,6 +67,8 @@ namespace EvitelLib.Repository
             }
             return "";
         }
+
+ 
         public int GetSettingI(string Name)
         {
             DBEvitel db = new DBEvitel();
@@ -282,6 +284,44 @@ namespace EvitelLib.Repository
             }
             return true;
         }
+        internal LoginUser AddLoginUser(string firstName, string lastName , string loginName, string loginPassword)
+        {
+            sErr = "";
+            LoginUser newUser = new LoginUser
+            {
+                Created = DateTime.Now,
+                LastName = lastName,
+                FirstName = firstName,
+                LoginName = loginName,
+                LoginPassword = loginPassword
+            };
+            try
+            {
+                DBEvitel db = new DBEvitel();
+                var cnt = (from l in db.LoginUsers
+                           where l.LoginName == loginName
+                           select l).Count();
+                if (cnt > 0) {
+                    new CEventLog(EventCode.e1Message, EventSubCode.e2Error, "AddLoginUser() no able add user loginName = '" + loginName + "'. It's exists.", "", IdUser);
+                    return null;
+                }
+
+                db.LoginUsers.Add(newUser);
+                db.SaveChanges();
+                var exp = (from l in db.LoginUsers
+                           where l.LoginName == loginName
+                           select l).FirstOrDefault();
+                return exp;
+            }
+            catch (Exception Ex)
+            {
+                sErr = GetInnerException(Ex);
+                new CEventLog(EventCode.e1Message, EventSubCode.e2Error, "AddLoginUser() " + GetInnerException(Ex), "", IdUser);
+                return null;
+            }
+
+        }
+
 
 
 
