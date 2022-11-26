@@ -23,7 +23,8 @@ namespace EvitelApp
             Application.SetCompatibleTextRenderingDefault(false);
             loginManipulation = new CLoginManipulation();
             myLoggedUser = null;
-            Login();
+            //Login();
+            myLoggedUser = loginManipulation.CheckLogin("ZPT", "12345678");
             if (myLoggedUser != null)
             {
                 Application.Run(new frmMain());

@@ -12,3 +12,10 @@
 			 Odstranìní sloupce Discriminator, který si EF tvoøí automaticky, pokud tøídu, kterou máš registrovanou v DBContext použiješ jako rodièe pro jinou tøídu ( public class CLoggedUser : LoginUser). 
 			  Abych to odstranil použil jsem modifikátor [NotMapped]. Ale je tøeba udìlat novou migraci 
 			 .editorconfig
+
+21.11.2022 - Založení Git. Dokonèení login pro jméno a jméno heslo.
+22.11.2022 - Dokonèení Login pro 6 typù. Øešení pro Windows. Hledání øešení pro Komponentu DataGridViewExt
+23.11.2022 - State a View wMainEventLog
+24.11.2022 - Tak jsem celý den zkoušel View a byla to marná práce. View v DB-First s EF6 nefunguje (EF Core už má ToView(), ale tady je jen ToTable.) No ale mám obrazovku pro zobrazování MainEventLogu (Panel1/Panel2), ale nìjak se mi nezobrazují texty
+25.11.2022 - Bylo to tím, že barva textu byla bílá a vzala si default z panelu, který jsem nastavil na bílo. Navíc DataGridView neumí List<string>. String bere jako tøídu a tak zobrazí všechny jeho property. A ta je jedna neboli Length. No nicménì - vše ohlednì EventLogu dodìláno Filtr propojen s vyhledávání repository sprý´ávnì filtruje ale neumít order. Protože orderuji podle názvu sloupce.
+26.11.2022 - Testování. Vyzkoušel jsem MSTest,xUnitTest a UnitTest. Pouze UnitTest umí Net.Framework 4.8 u ostatních neotevøu DB.

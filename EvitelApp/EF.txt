@@ -1,0 +1,3 @@
+add-migration state -ProjectName evitelLib -StartUpProjectName evitellib
+update-database
+update-database -ProjectName evitelLib -StartUpProjectName evitellib -TargetMigration InitialDBCreate

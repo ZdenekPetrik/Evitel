@@ -50,19 +50,19 @@ namespace EvitelLib.Common
             LoginUserId = -1;
         }
 
-        public CEventLog(EventCode eventCode, EventSubCode eventSubCode, string Text)
+        public CEventLog(eEventCode eventCode, eEventSubCode eventSubCode, string Text)
             : this()
         {
             WriteMainEventLog(eventCode, eventSubCode, Text);
         }
 
-        public CEventLog(EventCode eventCode, EventSubCode eventSubCode, string Text, string Value)
+        public CEventLog(eEventCode eventCode, eEventSubCode eventSubCode, string Text, string Value)
             : this()
         {
             WriteMainEventLog(eventCode, eventSubCode, Text, Value);
         }
 
-        public CEventLog(EventCode eventCode, EventSubCode eventSubCode, string Text, string Value, int LoginUserId)
+        public CEventLog(eEventCode eventCode, eEventSubCode eventSubCode, string Text, string Value, int LoginUserId)
             : this()
         {
             WriteMainEventLog(eventCode, eventSubCode, Text, Value, LoginUserId);
@@ -70,30 +70,30 @@ namespace EvitelLib.Common
 
         public void WriteMainEventLog(string Text)
         {
-            WriteMainEventLog(EventCode.e1Message, EventSubCode.e2Info, Text);
+            WriteMainEventLog(eEventCode.e1Message, eEventSubCode.e2Info, Text);
         }
 
-        public void WriteMainEventLog(EventCode e1, EventSubCode e2, string Text)
+        public void WriteMainEventLog(eEventCode e1, eEventSubCode e2, string Text)
         {
             WriteMainEventLog(DateTime.Now, e1, e2, Text, "");
         }
 
-        public void WriteMainEventLog(EventCode e1, EventSubCode e2, string Text, string Value)
+        public void WriteMainEventLog(eEventCode e1, eEventSubCode e2, string Text, string Value)
         {
             WriteMainEventLog(DateTime.Now, e1, e2, Text, Value);
         }
 
-        public void WriteMainEventLog(DateTime dtEvent, EventCode e1, EventSubCode e2, string Text, string Value)
+        public void WriteMainEventLog(DateTime dtEvent, eEventCode e1, eEventSubCode e2, string Text, string Value)
         {
             WriteMainEventLog(dtEvent, e1, e2, Text, Value, LoginUserId);
         }
 
-        public void WriteMainEventLog(EventCode e1, EventSubCode e2, string Text, string Value, int LoginUserId)
+        public void WriteMainEventLog(eEventCode e1, eEventSubCode e2, string Text, string Value, int LoginUserId)
         {
             WriteMainEventLog(DateTime.Now, e1, e2, Text, Value, LoginUserId);
         }
 
-        public void WriteMainEventLog(DateTime dtCreate, EventCode e1, EventSubCode e2, string Text, string Value, int LoginUserId)
+        public void WriteMainEventLog(DateTime dtCreate, eEventCode e1, eEventSubCode e2, string Text, string Value, int LoginUserId)
         {
             if (ConnectionString == null)
                 ConnectionString = ConfigurationManager.ConnectionStrings["DBEvitel"].ToString();

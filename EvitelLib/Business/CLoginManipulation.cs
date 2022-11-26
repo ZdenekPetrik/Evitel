@@ -32,7 +32,7 @@ namespace EvitelLib.Business
 
         public CLoggedUser CheckLogin(string userName, string userPassword) {
             loginMode = GetLoginMode();
-            CRepositoryDB db = new CRepositoryDB(-1);
+            CRepositoryDB db = new CRepositoryDB();
             LoginUser user =  null;
             if (loginMode == eLoginMode.Name || loginMode == eLoginMode.AllowedWindowsUsers)
             {
@@ -53,7 +53,7 @@ namespace EvitelLib.Business
             }
             if (user == null)
             {
-                new CEventLog(EventCode.e1Login, EventSubCode.e2BadLogin, userName);
+                new CEventLog(eEventCode.e1Login, eEventSubCode.e2BadLogin, userName);
                 return null;
             }
             CLoggedUser loggedUser = new CLoggedUser(user);
@@ -61,7 +61,7 @@ namespace EvitelLib.Business
             {
                 if (!loggedUser.HasAnyAccess())
                 {
-                    new CEventLog(EventCode.e1Login, EventSubCode.e2BadLogin, user.LastName, "NoAnyAccess", user.LoginUserId);
+                    new CEventLog(eEventCode.e1Login, eEventSubCode.e2BadLogin, user.LastName, "NoAnyAccess", user.LoginUserId);
                     return null;
                 }
             }
@@ -70,7 +70,6 @@ namespace EvitelLib.Business
 
         public CLoggedUser GetNoLoginUser()
         {
-
             return CheckLogin("user", "user");
         }
 
@@ -89,7 +88,7 @@ namespace EvitelLib.Business
             loggedUser.sessionId = ((ulong)DateTime.Now.ToBinary()).ToString();
             loggedUser.loginMode = GetLoginMode();
  
-            new CEventLog(EventCode.e1Login, EventSubCode.e2Start, user.LastName, loggedUser.sessionId, user.LoginUserId);
+            new CEventLog(eEventCode.e1Login, eEventSubCode.e2Start, user.LastName, loggedUser.sessionId, user.LoginUserId);
             return loggedUser;
         }
 
@@ -98,7 +97,7 @@ namespace EvitelLib.Business
         public CLoggedUser Logout(CLoggedUser loggedUser)
         {
             loggedUser.isLogged = false;
-            new CEventLog(EventCode.e1Login, EventSubCode.e2Stop, loggedUser.LastName, loggedUser.sessionId, loggedUser.LoginUserId);
+            new CEventLog(eEventCode.e1Login, eEventSubCode.e2Stop, loggedUser.LastName, loggedUser.sessionId, loggedUser.LoginUserId);
             return loggedUser;
         }
         /// změna hesla
@@ -108,7 +107,7 @@ namespace EvitelLib.Business
             CRepositoryDB db = new CRepositoryDB(loginUserIdToChange);
             isOK = db.ChangePassword(loginUserIdToChange, newLoginPassword);
             if (isOK)
-               new CEventLog(EventCode.e1Login, EventSubCode.e2ChangePassword, "", loginUserIdToChange.ToString(), loginUserId);
+               new CEventLog(eEventCode.e1Login, eEventSubCode.e2ChangePassword, "", loginUserIdToChange.ToString(), loginUserId);
             return isOK;
         }
 

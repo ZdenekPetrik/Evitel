@@ -3,6 +3,8 @@ using EvitelLib.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,9 +29,11 @@ namespace EvitelLib.Repository
         {
             this.ApplicationName = ApplicationName;
         }
+
+  
         public CRepositoryDB()
         {
-            IdUser = -1;
+            IdUser = -99;
         }
         public int IdUser
         {
@@ -63,12 +67,10 @@ namespace EvitelLib.Repository
             }
             else
             {
-                new CEventLog(EventCode.e1Message, EventSubCode.e2Error, "GetSettingS - no able found param " + Name, "", IdUser);
+                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetSettingS - no able found param " + Name, "", IdUser);
             }
             return "";
         }
-
- 
         public int GetSettingI(string Name)
         {
             DBEvitel db = new DBEvitel();
@@ -80,10 +82,12 @@ namespace EvitelLib.Repository
             }
             else
             {
-                new CEventLog(EventCode.e1Message, EventSubCode.e2Error, "GetSettingI - no able found param " + Name, "", IdUser);
+                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetSettingI - no able found param " + Name, "", IdUser);
             }
             return 0;
         }
+
+    
         public DateTime GetSettingD(string Name)
         {
             DBEvitel db = new DBEvitel();
@@ -94,13 +98,13 @@ namespace EvitelLib.Repository
                 DateTime dt = MainS[0].dValue ?? MyMinDate;
                 if (MyMinDate == dt)
                 {
-                    new CEventLog(EventCode.e1Message, EventSubCode.e2Error, "GetSettingD - no able found param " + Name, "", IdUser);
+                    new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetSettingD - no able found param " + Name, "", IdUser);
                 }
                 return dt;
             }
             else
             {
-                new CEventLog(EventCode.e1Message, EventSubCode.e2Error, "GetSettingD - no able found param " + Name, "", IdUser);
+                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetSettingD - no able found param " + Name, "", IdUser);
             }
             return MyMinDate;
         }
@@ -115,11 +119,10 @@ namespace EvitelLib.Repository
             }
             else
             {
-                new CEventLog(EventCode.e1Message, EventSubCode.e2Error, "GetSettingB - no able found param " + Name, "", IdUser);
+                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetSettingB - no able found param " + Name, "", IdUser);
             }
             return false;
         }
-
         public bool SetSetting(string Name, string sValue)
         {
             DBEvitel db = new DBEvitel();
@@ -135,13 +138,11 @@ namespace EvitelLib.Repository
             }
             catch (Exception Ex)
             {
-                new CEventLog(EventCode.e1Message, EventSubCode.e2Error, "SetSetting String - no able write param " + Name + ", Value = " + sValue + ".  " + GetInnerException(Ex), "",IdUser);
+                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "SetSetting String - no able write param " + Name + ", Value = " + sValue + ".  " + GetInnerException(Ex), "",IdUser);
                 return false;
             }
             return true;
         }
-
-
         public bool SetSetting(string Name, int iValue)
         {
             DBEvitel db = new DBEvitel();
@@ -157,7 +158,7 @@ namespace EvitelLib.Repository
             }
             catch (Exception Ex)
             {
-                new CEventLog(EventCode.e1Message, EventSubCode.e2Error, "SetSetting Int - no able write param " + Name + ", Value = " + iValue + ".  " + GetInnerException(Ex), "", IdUser);
+                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "SetSetting Int - no able write param " + Name + ", Value = " + iValue + ".  " + GetInnerException(Ex), "", IdUser);
                 return false;
             }
             return true;
@@ -175,7 +176,7 @@ namespace EvitelLib.Repository
             }
             catch (Exception Ex)
             {
-                new CEventLog(EventCode.e1Message, EventSubCode.e2Error, "SetSetting DateTime - no able write param " + Name + ", Value = " + dtValue + ".  " + GetInnerException(Ex), "", IdUser);
+                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "SetSetting DateTime - no able write param " + Name + ", Value = " + dtValue + ".  " + GetInnerException(Ex), "", IdUser);
                 return false;
             }
             return true;
@@ -195,7 +196,7 @@ namespace EvitelLib.Repository
             }
             catch (Exception Ex)
             {
-                new CEventLog(EventCode.e1Message, EventSubCode.e2Error, "SetSetting bool - no able write param " + Name + ", Value = " + bValue + ".  " + GetInnerException(Ex), "", IdUser);
+                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "SetSetting bool - no able write param " + Name + ", Value = " + bValue + ".  " + GetInnerException(Ex), "", IdUser);
                 return false;
             }
             return true;
@@ -239,7 +240,7 @@ namespace EvitelLib.Repository
             catch (Exception Ex)
             {
                 sErr = GetInnerException(Ex);
-                new CEventLog(EventCode.e1Message, EventSubCode.e2Error, "LoginUserNamePasswordExists() " + GetInnerException(Ex), "", IdUser);
+                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "LoginUserNamePasswordExists() " + GetInnerException(Ex), "", IdUser);
             }
             return null;
         }
@@ -255,7 +256,7 @@ namespace EvitelLib.Repository
             catch (Exception Ex)
             {
                 sErr = GetInnerException(Ex);
-                new CEventLog(EventCode.e1Message, EventSubCode.e2Error, "LoginUserNameExists() " + GetInnerException(Ex), "", IdUser);
+                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "LoginUserNameExists() " + GetInnerException(Ex), "", IdUser);
             }
             return null;
         }
@@ -279,7 +280,7 @@ namespace EvitelLib.Repository
             catch (Exception Ex)
             {
                 sErr = GetInnerException(Ex);
-                new CEventLog(EventCode.e1Message, EventSubCode.e2Error, "ChangePassword() " + GetInnerException(Ex), "", IdUser);
+                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "ChangePassword() " + GetInnerException(Ex), "", IdUser);
                 return false;
             }
             return true;
@@ -302,7 +303,7 @@ namespace EvitelLib.Repository
                            where l.LoginName == loginName
                            select l).Count();
                 if (cnt > 0) {
-                    new CEventLog(EventCode.e1Message, EventSubCode.e2Error, "AddLoginUser() no able add user loginName = '" + loginName + "'. It's exists.", "", IdUser);
+                    new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "AddLoginUser() no able add user loginName = '" + loginName + "'. It's exists.", "", IdUser);
                     return null;
                 }
 
@@ -316,10 +317,26 @@ namespace EvitelLib.Repository
             catch (Exception Ex)
             {
                 sErr = GetInnerException(Ex);
-                new CEventLog(EventCode.e1Message, EventSubCode.e2Error, "AddLoginUser() " + GetInnerException(Ex), "", IdUser);
+                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "AddLoginUser() " + GetInnerException(Ex), "", IdUser);
                 return null;
             }
 
+        }
+        public List<LoginUser> GetUsers()
+        {
+            sErr = "";
+            DBEvitel db = new DBEvitel();
+            try
+            {
+                var loginUsr = from l in db.LoginUsers select l;
+                return loginUsr.ToList();
+            }
+            catch (Exception Ex)
+            {
+                sErr = GetInnerException(Ex);
+                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetUsers() " + GetInnerException(Ex), "", IdUser);
+            }
+            return null;
         }
 
 
@@ -327,6 +344,70 @@ namespace EvitelLib.Repository
 
         #endregion
 
+        public bool Test() {
+            return true;
+        }
+
+        public List<MainEventLog> GetMainEventLog(string OrderBy, bool AscendingOrder, DateTime dtFrom, DateTime dtTo, string program, int? loginUserId, eEventCode? eventCode, eEventSubCode? eventSubCode, string text, string value)
+        {
+            sErr = "";
+            DBEvitel db = new DBEvitel();
+            try
+            {
+                var mainEventLogs = from l in db.MainEventLogs select l;
+                if (dtFrom != null && dtFrom >= MyMinDate)
+                    mainEventLogs = mainEventLogs.Where(p => p.dtCreate > dtFrom);
+                if (dtTo != null && dtTo > MyMinDate)
+                    mainEventLogs = mainEventLogs.Where(p => p.dtCreate < dtTo);
+                if (!string.IsNullOrEmpty(program) && program.Trim().Length > 0)
+                    mainEventLogs = mainEventLogs.Where(p => p.Program == program.Trim());
+                if (loginUserId  != null)
+                    mainEventLogs = mainEventLogs.Where(p => p.LoginUserId == loginUserId);
+                if (eventCode != null)
+                    mainEventLogs = mainEventLogs.Where(p => p.eventType == eventCode);
+                if (eventSubCode != null)
+                    mainEventLogs = mainEventLogs.Where(p => p.eventSubType == eventSubCode);
+                if (!string.IsNullOrEmpty(text) && text.Trim().Length > 0)
+                    mainEventLogs = mainEventLogs.Where(p => p.Text == text);
+                if (!string.IsNullOrEmpty(value) && value.Trim().Length > 0)
+                    mainEventLogs = mainEventLogs.Where(p => p.Value == value);
+                mainEventLogs = (IQueryable<MainEventLog>)mainEventLogs.OrderBy(orderingFunction);
+                return mainEventLogs.ToList(); 
+            }
+            catch (Exception Ex)
+            {
+                sErr = GetInnerException(Ex);
+                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetMainEventLog() " + GetInnerException(Ex), "", IdUser);
+            }
+            return null;
+         
+
+        }
+        static string filterString = "dtCreate";
+        Func<dynamic, dynamic> orderingFunction = i =>
+                             filterString == "dtCreate" ? i.dtCreate :
+                             filterString == "something" ? i.columnx : "";
+
+
+        public List<State> GetAllStates()
+        {
+            sErr = "";
+            DBEvitel db = new DBEvitel();
+            try
+            {
+                var states = from s in db.States select s;
+                return states.ToList();
+            }
+            catch (Exception Ex)
+            {
+                sErr = GetInnerException(Ex);
+                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetStates() " + GetInnerException(Ex), "", IdUser);
+            }
+            return null;
+        }
+
     }
+
+   
 
 }

@@ -57,9 +57,12 @@
   <ItemGroup>
     <Compile Include="Business\CLoginManipulation.cs" />
     <Compile Include="Common\CEventLog.cs" />
+    <Compile Include="Common\CUserHelper.cs" />
+    <Compile Include="Common\CStateHelper.cs" />
     <Compile Include="Common\DbZPTMigration.cs" />
     <Compile Include="Common\CLoggedUser.cs" />
     <Compile Include="Entity\DBEvitel.cs" />
+    <Compile Include="Entity\State.cs" />
     <Compile Include="Entity\LoginAccess.cs" />
     <Compile Include="Entity\LoginAccesUser.cs" />
     <Compile Include="Entity\MainEventLog.cs" />
@@ -68,6 +71,14 @@
     <Compile Include="Migrations\202211201720519_InitialDBCreate.cs" />
     <Compile Include="Migrations\202211201720519_InitialDBCreate.designer.cs">
       <DependentUpon>202211201720519_InitialDBCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211240949212_state.cs" />
+    <Compile Include="Migrations\202211240949212_state.designer.cs">
+      <DependentUpon>202211240949212_state.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211241028374_state2.cs" />
+    <Compile Include="Migrations\202211241028374_state2.designer.cs">
+      <DependentUpon>202211241028374_state2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -95,6 +106,12 @@
     <EmbeddedResource Include="Migrations\202211201720519_InitialDBCreate.resx">
       <DependentUpon>202211201720519_InitialDBCreate.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211240949212_state.resx">
+      <DependentUpon>202211240949212_state.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211241028374_state2.resx">
+      <DependentUpon>202211241028374_state2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -105,6 +122,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\Seed\001.Initial.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\Seed\002.State.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
