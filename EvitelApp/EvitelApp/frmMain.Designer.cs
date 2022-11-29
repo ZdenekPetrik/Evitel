@@ -203,6 +203,7 @@ namespace EvitelApp
             this.Name = "frmMain";
             this.Text = "Evitel";
             this.Load += new System.EventHandler(this.frmMain_Load);
+            this.Resize += new System.EventHandler(this.frmMain_Resize);
             this.menuHelp.ResumeLayout(false);
             this.menuHelp.PerformLayout();
             this.statusStrip1.ResumeLayout(false);

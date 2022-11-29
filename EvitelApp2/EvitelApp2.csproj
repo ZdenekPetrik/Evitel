@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EvitelLib2\EvitelLib2.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Controls\ctrlEventLog.cs" />
+    <Compile Update="Controls\ctrlEventLog.designer.cs">
+      <DependentUpon>ctrlEventLog.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\ctrlEventLogFilter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\ctrlEventLogFilter.designer.cs">
+      <DependentUpon>ctrlEventLogFilter.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Controls\ctrlEventLog.resx">
+      <DependentUpon>ctrlEventLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\ctrlEventLogFilter.resx">
+      <DependentUpon>ctrlEventLogFilter.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

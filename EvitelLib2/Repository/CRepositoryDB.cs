@@ -1,20 +1,17 @@
-﻿using EvitelLib.Common;
-using EvitelLib.Entity;
+﻿using EvitelLib2.Common;
+using EvitelLib2.Entity;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EvitelLib.Repository
+namespace EvitelLib2.Repository
 {
     public class CRepositoryDB
     {
 
- #region Main
+        #region Main
         public string sErr;
         private string _applicationName;
         private int _idUser;
@@ -31,7 +28,7 @@ namespace EvitelLib.Repository
             this.ApplicationName = ApplicationName;
         }
 
-  
+
         public CRepositoryDB()
         {
             IdUser = -99;
@@ -46,13 +43,13 @@ namespace EvitelLib.Repository
         }     // ID uživatele, který využívá knihovnu (nebo -1 pokud nikdo neexistuje)
 
 
-            // Jméno programu, který využívá knihovnu
-        public string ApplicationName   
+        // Jméno programu, který využívá knihovnu
+        public string ApplicationName
         {
             get
             {
                 if (_applicationName == null)
-                    _applicationName = ConfigurationSettings.AppSettings["AppName"];
+                    _applicationName = System.Configuration.ConfigurationSettings.AppSettings["AppName"];
                 return _applicationName;
             }
             set { _applicationName = value; }
@@ -88,7 +85,7 @@ namespace EvitelLib.Repository
             return 0;
         }
 
-    
+
         public DateTime GetSettingD(string Name)
         {
             DBEvitel db = new DBEvitel();
@@ -139,7 +136,7 @@ namespace EvitelLib.Repository
             }
             catch (Exception Ex)
             {
-                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "SetSetting String - no able write param " + Name + ", Value = " + sValue + ".  " + GetInnerException(Ex), "",IdUser);
+                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "SetSetting String - no able write param " + Name + ", Value = " + sValue + ".  " + GetInnerException(Ex), "", IdUser);
                 return false;
             }
             return true;
@@ -208,17 +205,18 @@ namespace EvitelLib.Repository
             {
                 return string.Format("{0} > {1} ", ex.InnerException.Message, GetInnerException(ex.InnerException));
             }
-            if (ex.Source == "EntityFramework")
-                if (ex.GetType() == typeof(System.Data.Entity.Validation.DbEntityValidationException))
+            if (ex.Source == "EntityFramework") { return "Neznama chyba"; }
+/*                if (ex.GetType() == typeof(System.Data.DataColumnChangeEventArgs   Entity.Validation.DbEntityValidationException))
                 {
                     if (((System.Data.Entity.Validation.DbEntityValidationException)ex).EntityValidationErrors.Count() > 0)
                     {
                         return "EntityFramework -> " + ((System.Data.Entity.Validation.DbEntityValidationException)ex).EntityValidationErrors.First().ValidationErrors.First().ErrorMessage;
                     }
                 }
+*/
             return ex.Message;
         }
-
+        /*
         public string CN
         {
             get
@@ -226,8 +224,8 @@ namespace EvitelLib.Repository
                 return (new DBEvitel()).Database.Connection.ConnectionString;
             }
         }
-
-        #endregion
+        */
+        #endregion 
         #region LOGIN
         public LoginUser LoginUserNamePasswordExists(string LoginName, string LoginPassword)
         {
@@ -235,7 +233,7 @@ namespace EvitelLib.Repository
             DBEvitel db = new DBEvitel();
             try
             {
-                var loginUsr = from l in db.LoginUsers where l.LoginName.CompareTo(LoginName) == 0 && l.LoginPassword.CompareTo(LoginPassword) == 0 select l;
+                var loginUsr = from l in db.LoginUsers where l.LoginName == LoginName && LoginName == l.LoginName &&   l.LoginPassword == LoginPassword && LoginPassword == l.LoginPassword select l;
                 return loginUsr.FirstOrDefault();
             }
             catch (Exception Ex)
@@ -251,7 +249,7 @@ namespace EvitelLib.Repository
             DBEvitel db = new DBEvitel();
             try
             {
-                var loginUsr = from l in db.LoginUsers where l.LoginName.CompareTo(LoginName) == 0 select l;
+                var loginUsr = from l in db.LoginUsers where l.LoginName == LoginName && LoginName == l.LoginName select l;
                 return loginUsr.FirstOrDefault();
             }
             catch (Exception Ex)
@@ -261,7 +259,7 @@ namespace EvitelLib.Repository
             }
             return null;
         }
-        public bool  ChangePassword(int loginUserId, string newLoginPassword)
+        public bool ChangePassword(int loginUserId, string newLoginPassword)
         {
             sErr = "";
             DBEvitel db = new DBEvitel();
@@ -286,7 +284,7 @@ namespace EvitelLib.Repository
             }
             return true;
         }
-        internal LoginUser AddLoginUser(string firstName, string lastName , string loginName, string loginPassword)
+        internal LoginUser AddLoginUser(string firstName, string lastName, string loginName, string loginPassword)
         {
             sErr = "";
             LoginUser newUser = new LoginUser
@@ -303,7 +301,8 @@ namespace EvitelLib.Repository
                 var cnt = (from l in db.LoginUsers
                            where l.LoginName == loginName
                            select l).Count();
-                if (cnt > 0) {
+                if (cnt > 0)
+                {
                     new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "AddLoginUser() no able add user loginName = '" + loginName + "'. It's exists.", "", IdUser);
                     return null;
                 }
@@ -345,35 +344,49 @@ namespace EvitelLib.Repository
 
         #endregion
 
-        public bool Test() {
+        public bool Test()
+        {
             return true;
         }
 
-        public List<MainEventLog> GetMainEventLog(string OrderBy, bool AscendingOrder, DateTime dtFrom, DateTime dtTo, string program, int? loginUserId, eEventCode? eventCode, eEventSubCode? eventSubCode, string text, string value)
+        public List<wMainEventLog> GetMainEventLog(string OrderBy, bool AscendingOrder, DateTime? dtFrom, DateTime? dtTo, string program, int? loginUserId, eEventCode? eventCode, eEventSubCode? eventSubCode, string text, string value)
         {
             sErr = "";
             DBEvitel db = new DBEvitel();
             try
             {
-                var mainEventLogs = from l in db.MainEventLogs select l;
-                if (dtFrom != null && dtFrom >= MyMinDate)
+                var mainEventLogs1 = from l in db.wMainEventLogs select l;
+                var l1 = mainEventLogs1.ToList();
+                var mainEventLogs2 = from l in db.wMainEventLogs where l.dtCreate >= MyMinDate select l;
+                var l2 = mainEventLogs2.ToList();
+                mainEventLogs1 = mainEventLogs1.Where(p => p.dtCreate > MyMinDate);
+                var l3 = mainEventLogs1.ToList();
+
+
+
+
+                var mainEventLogs = from l in db.wMainEventLogs select l;
+                if (dtFrom != null &&  dtFrom >= MyMinDate)
                     mainEventLogs = mainEventLogs.Where(p => p.dtCreate > dtFrom);
                 if (dtTo != null && dtTo > MyMinDate)
                     mainEventLogs = mainEventLogs.Where(p => p.dtCreate < dtTo);
+                var l4 = mainEventLogs.ToList();
+
                 if (!string.IsNullOrEmpty(program) && program.Trim().Length > 0)
                     mainEventLogs = mainEventLogs.Where(p => p.Program == program.Trim());
-                if (loginUserId  != null)
+                if (loginUserId != null)
                     mainEventLogs = mainEventLogs.Where(p => p.LoginUserId == loginUserId);
                 if (eventCode != null)
-                    mainEventLogs = mainEventLogs.Where(p => p.eventType == eventCode);
+                    mainEventLogs = mainEventLogs.Where(p => p.eventCode == eventCode);
                 if (eventSubCode != null)
-                    mainEventLogs = mainEventLogs.Where(p => p.eventSubType == eventSubCode);
+                    mainEventLogs = mainEventLogs.Where(p => p.eventSubCode == eventSubCode);
                 if (!string.IsNullOrEmpty(text) && text.Trim().Length > 0)
                     mainEventLogs = mainEventLogs.Where(p => p.Text == text);
                 if (!string.IsNullOrEmpty(value) && value.Trim().Length > 0)
                     mainEventLogs = mainEventLogs.Where(p => p.Value == value);
-                mainEventLogs = (IQueryable<MainEventLog>)mainEventLogs.OrderBy(orderingFunction);
-                return mainEventLogs.ToList(); 
+                var l5 = mainEventLogs.ToList();
+                mainEventLogs = mainEventLogs.OrderBy(p=>p.dtCreate);
+                return mainEventLogs.ToList();
             }
             catch (Exception Ex)
             {
@@ -381,7 +394,7 @@ namespace EvitelLib.Repository
                 new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetMainEventLog() " + GetInnerException(Ex), "", IdUser);
             }
             return null;
-         
+
 
         }
         static string filterString = "dtCreate";
@@ -408,7 +421,4 @@ namespace EvitelLib.Repository
         }
 
     }
-
-   
-
 }

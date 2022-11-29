@@ -19,3 +19,9 @@
 24.11.2022 - Tak jsem celý den zkoušel View a byla to marná práce. View v DB-First s EF6 nefunguje (EF Core už má ToView(), ale tady je jen ToTable.) No ale mám obrazovku pro zobrazování MainEventLogu (Panel1/Panel2), ale nìjak se mi nezobrazují texty
 25.11.2022 - Bylo to tím, že barva textu byla bílá a vzala si default z panelu, který jsem nastavil na bílo. Navíc DataGridView neumí List<string>. String bere jako tøídu a tak zobrazí všechny jeho property. A ta je jedna neboli Length. No nicménì - vše ohlednì EventLogu dodìláno Filtr propojen s vyhledávání repository sprý´ávnì filtruje ale neumít order. Protože orderuji podle názvu sloupce.
 26.11.2022 - Testování. Vyzkoušel jsem MSTest,xUnitTest a UnitTest. Pouze UnitTest umí Net.Framework 4.8 u ostatních neotevøu DB.
+27.11.2022 - EvitelLib2 s Core 5.0. Instalace 
+			- <PackageReference Include="Microsoft.EntityFrameworkCore.Relational"  Version="5.0.17"
+			- <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.17" />
+			- <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.17">
+			- <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" /> 
+28.11.2022 - View do EF 5.0 Core. Musí se postupnì. First Init Bez View. Pak dodáš Entity, DbSet a mapování v 

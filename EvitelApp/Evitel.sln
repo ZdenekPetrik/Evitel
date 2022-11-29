@@ -15,6 +15,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "..\UnitTest\UnitTest.csproj", "{20554A99-7C05-4E3B-A82B-537CCE2BB3FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvitelLib2", "..\EvitelLib2\EvitelLib2.csproj", "{F24C7ADA-1815-43A3-818E-4AEF67026CAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvitelApp2", "..\EvitelApp2\EvitelApp2.csproj", "{32441DEE-B5C6-4F09-B34C-0FBC7971C8E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{20554A99-7C05-4E3B-A82B-537CCE2BB3FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20554A99-7C05-4E3B-A82B-537CCE2BB3FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20554A99-7C05-4E3B-A82B-537CCE2BB3FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F24C7ADA-1815-43A3-818E-4AEF67026CAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F24C7ADA-1815-43A3-818E-4AEF67026CAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F24C7ADA-1815-43A3-818E-4AEF67026CAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F24C7ADA-1815-43A3-818E-4AEF67026CAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32441DEE-B5C6-4F09-B34C-0FBC7971C8E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32441DEE-B5C6-4F09-B34C-0FBC7971C8E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32441DEE-B5C6-4F09-B34C-0FBC7971C8E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32441DEE-B5C6-4F09-B34C-0FBC7971C8E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

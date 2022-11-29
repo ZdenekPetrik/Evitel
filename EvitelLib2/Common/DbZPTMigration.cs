@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Migrations;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-namespace EvitelLib.Common
+using Microsoft.EntityFrameworkCore.Migrations;
+using System;
+using System.IO;
+using System.Reflection;
+
+namespace EvitelLib2.Common
 {
-    public abstract class DbZPTMigration: DbMigration
+    public abstract class DbZPTMigration: Migration
     {
         /// <summary>
         /// Adds an operation to execute a SQL file from embeded resources.
         /// </summary>
         /// <param name="resourceName">The name of the resource.</param>
-        protected void SqlResourceExecute(string resourceName)
+        protected string GetSqlResource(string resourceName)
         {
             var assembly = Assembly.GetExecutingAssembly();
 
@@ -29,20 +27,11 @@ namespace EvitelLib.Common
                 using (var reader = new StreamReader(stream))
                 {
                     var sql = reader.ReadToEnd();
-                    SqlExecute(sql);
+                    sql = sql.Replace("'", "''");
+                    sql = "EXECUTE('" + Environment.NewLine + sql + Environment.NewLine + "')";
+                    return sql;
                 }
             }
         }
-        /// <summary>
-        /// Executes SQL in EXECUTE
-        /// </summary>
-        /// <param name="sql">SQL to execute</param>
-        protected void SqlExecute(string sql)
-        {
-            sql = sql.Replace("'", "''");
-            sql = "EXECUTE('" + Environment.NewLine + sql + Environment.NewLine + "')";
-            Sql(sql);
-        }
-
     }
 }

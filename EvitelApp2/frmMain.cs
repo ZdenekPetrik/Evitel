@@ -1,7 +1,7 @@
-﻿using EvitelApp.Controls;
-using EvitelApp.Login;
-using EvitelLib.Common;
-using EvitelLib.Repository;
+﻿using EvitelApp2.Controls;
+using EvitelApp2.Login;
+using EvitelLib2.Common;
+using EvitelLib2.Repository;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,48 +12,39 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace EvitelApp
+namespace EvitelApp2
 {
+ 
     public partial class frmMain : Form
     {
-        UserControl ctrlActiveControlUp;                // Co je prave zobrazeno
-        UserControl ctrlActiveControlDown;
+        private UserControl ctrlActiveControlUp;                // Co je prave zobrazeno
+        private UserControl ctrlActiveControlDown;
+        private ctrlEventLog ctrlEventLog1;
+        private ctrlEventLogFilter ctrlEventLogFilter1;
+
+        eShowWindow aktWindow;
 
 
-
-        ctrlEventLog ctrlEventLog1;
-        ctrlEventLogFilter ctrlEventLogFilter1;
-        ctrlPhones ctrlPhones1;
-        ctrlEventLogFilter ctrlEventLogFilter2;
-        public CLoggedUser myLoggedUser;
         public frmMain()
         {
             InitializeComponent();
+            
         }
 
-        private void frmMain_Load(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
         {
             toolStripUser.Text = Program.myLoggedUser.LastName;
+            toolStripTime.Text = "00:00:00";
             timer1.Interval = 1000;
             timer1.Start();
             if (Program.myLoggedUser.loginMode != eLoginMode.PasswordName)
             {
-                ChangePasswordToolStripMenuItem.Visible = false;
+                MeneToolsChangePassword.Visible = false;
             }
             CRepositoryDB repo = new CRepositoryDB();
             var x = repo.Test();
+            aktWindow = eShowWindow.emptyPage;
 
-        }
-
-        private void změnaHeslaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmChangePassword frm = new frmChangePassword();
-            frm.ShowDialog();
-        }
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -62,18 +53,38 @@ namespace EvitelApp
 
         }
 
-        private void eventLogMenuItem_Click(object sender, EventArgs e)
+        private void MenuSystemExit_Click(object sender, EventArgs e)
         {
-            splitContainer1.Visible = true;
-            ZobrazProtokol();
+            this.Close();
         }
 
-        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
+        private void MeneToolsChangePassword_Click(object sender, EventArgs e)
         {
-
+            frmChangePassword frm = new frmChangePassword();
+            frm.ShowDialog();
         }
 
-        private void ZobrazProtokol()
+        private void MenuToolEventLog_Click(object sender, EventArgs e)
+        {
+            HideActualView();
+            ShowView_EventLog();
+        }
+
+        private void HideActualView()
+        {
+           switch (aktWindow)
+            {
+                case eShowWindow.emptyPage: break;
+                case eShowWindow.EventLog: 
+                    ctrlEventLog1.Visible = ctrlEventLogFilter1.Visible = true; 
+                    ctrlActiveControlUp = ctrlActiveControlDown = null;
+                    break;
+                case eShowWindow.NecoJineho: break;
+                default: break;
+            }
+        }
+
+        private void ShowView_EventLog()
         {
             if (ctrlEventLog1 == null)
             {
@@ -95,12 +106,21 @@ namespace EvitelApp
             }
             ctrlActiveControlUp = ctrlEventLog1;
             ctrlActiveControlDown = ctrlEventLogFilter1;
-
+            aktWindow = eShowWindow.EventLog;
         }
+
+
 
         void ctrlEventLogFilter1_NewFilter()
         {
             ctrlEventLog1.ReReadData();
+        }
+
+
+        private enum eShowWindow { 
+            emptyPage,
+            EventLog,
+            NecoJineho
         }
 
         private void splitContainer1_Panel1_Resize(object sender, EventArgs e)
@@ -112,41 +132,5 @@ namespace EvitelApp
             }
         }
 
-        private void statusStrip1_Resize(object sender, EventArgs e)
-        {
-        }
-
-        private void phonesMenuItem_Click(object sender, EventArgs e)
-        {
-            splitContainer1.Visible = true;
-            ZobrazPhones();
-
-        }
-        private void ZobrazPhones()
-        {
-            if (ctrlPhones1 == null)
-            {
-                ctrlPhones1 = new ctrlPhones();
-                splitContainer1.Panel1.Controls.Add(ctrlPhones1);
-            }
-            else
-            {
-                ctrlPhones1.Visible  = true;
-            }
-            ctrlActiveControlUp = ctrlPhones1;
-            ctrlActiveControlDown = ctrlEventLogFilter1;
-
-        }
-
-        private void testToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmTest frm = new frmTest();
-            frm.ShowDialog();
-        }
-
-        private void frmMain_Resize(object sender, EventArgs e)
-        {
-
-        }
     }
 }

@@ -22,12 +22,7 @@ namespace EvitelApp.Components
       container.Add(this);
     }
 
-    public void SetColumnOrderExt(string UniqueString)
-    {
-      _UniqueString = UniqueString;
-      SetColumnOrder();
-    }
-
+ 
     private void SetColumnOrder()
     {
       if (!gfDataGridViewSetting.Default.ColumnOrder.ContainsKey(_UniqueString+"_"+this.Name))
