@@ -9,3 +9,7 @@ update-database -Project EvitelLib2 -StartupProject Evitellib2
 
     DbZPTMigration
     migrationBuilder.Sql(GetSqlResource("EvitelLib2.Migrations.Seed.001.Initial.sql"))
+
+-- EF Database First - potøebuješ Core,Design,SqlServer
+První je bez -force, pak musíš vždy vše pøepsat.
+Scaffold-DbContext "Server=.;Database=Evitel2;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Model -force

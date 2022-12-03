@@ -81,7 +81,7 @@ namespace EvitelApp.Controls
 
           
             dgw.DataSource = EventLog;
-            dgw.SetColumnOrderExt(this.Parent.Name);
+//            dgw.SetColumnOrderExt(this.Parent.Name);
             dgw.mySort.ColumnName = Cl[0].Name;
 
         }

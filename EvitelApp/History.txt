@@ -25,3 +25,13 @@
 			- <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.17">
 			- <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" /> 
 28.11.2022 - View do EF 5.0 Core. Musí se postupnì. First Init Bez View. Pak dodáš Entity, DbSet a mapování v 
+29.11.2022 - Nojo jene to je nemoné, kdy to chceš rozjet na jiném PC. Proto se odvracím od DB First. DB-First je vhodné pokud dìláš jednodušší projekt jen s tabulkama. Nebo u ètvrtou verzi tého a jasnì znáš datovou strukturu. Pak tøeba víš, e tabulka Login má bıt sloena ze dvou jednou veøejnou a druhou tajnou kde je heslo s vazbou 1:1. 
+1.12.2022 - Simona 
+- Pøihlašování bude jménem a heslem. Úrovnì budou tøi User,Admin, PowerUser.
+- Denní PDF Protokol. - obsahuje všechny LEKI hovory.
+- Evidujeme interventy a úèastníky intervencí. Obì je jeden z intervenovanıch (vdy)
+- Protokol evidence intervencí pro kraje jednopu roènì.
+- Dvì vıroèní zprávy pro  pro LD a LEKI (pro mne zde je úkol umìt export PDF, export Excel, a NICE-To-HAVE export graf a vùbec tvorba grafu)
+- TAbulka interventù a tabulka krajù.
+- Událost mùe mít pokraèování. Tzn, e asi bude tøeba v DB mít ID a IDMaster (První událost, Další zápis k události)
+- Opravy mùe provádìt jen vlastní, všechny PowerUser. Ale jen do doby uzamknutí DB - zpravidla roèní.
