@@ -10,6 +10,7 @@ using EvitelLib2.Repository;
 using EvitelLib2.Common;
 using EvitelApp2;
 using EvitelApp2.Controls;
+using EvitelLib2.Model;
 
 namespace EvitelApp2.Controls
 {
@@ -17,7 +18,7 @@ namespace EvitelApp2.Controls
     {
 
         public ctrlEventLogFilter eventLogFilter1;
-        private List<wMainEventLog> EventLog = null;
+        private List<WMainEventLog> EventLog = null;
         private CRepositoryDB DB;
 
         public ctrlEventLog()

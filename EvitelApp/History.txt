@@ -25,3 +25,8 @@
 			- <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.17">
 			- <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" /> 
 28.11.2022 - View do EF 5.0 Core. Musí se postupnì. First Init Bez View. Pak dodáš Entity, DbSet a mapování v 
+2.12.2022 - Konzultace Simona
+4.12.2022 - Jádro databáze pro LEKI hotovo. Scaffold databaze (pøechod na DB-First)
+6.12.2022 - Obrazovka ucCallLEKI a zapracování do frmMain.
+7.12.2022 - Import dat z excelu (via linkedserver + SQl Server a právy LokalSystem). Naplnìní èíselníkù. Doupøesnìní zadání se Simonou
+8.12.2022 - Eager cteni - jde to, ale zùstanu u vlastních View. Je to dobré pro to že vidím z více zdrojù co jsem naèetl. Pro první verzi je to pro mne lepší.

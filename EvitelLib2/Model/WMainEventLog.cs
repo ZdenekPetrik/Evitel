@@ -1,16 +1,17 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
-namespace EvitelLib2
+#nullable disable
+
+namespace EvitelLib2.Model
 {
-   
-    public class wMainEventLog
+    public partial class WMainEventLog
     {
         public int Id { get; set; }
-        public DateTime dtCreate { get; set; }
+        public DateTime DtCreate { get; set; }
         public int LoginUserId { get; set; }
-        public eEventCode eventCode { get; set; }
-        public eEventSubCode eventSubCode { get; set; }
+        public int EventCode { get; set; }
+        public int EventSubCode { get; set; }
         public string Program { get; set; }
         public string Text { get; set; }
         public string Value { get; set; }

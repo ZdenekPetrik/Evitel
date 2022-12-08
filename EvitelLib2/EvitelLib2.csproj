@@ -1,20 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="Migrations\Seed\001.Initial.sql" />
-    <None Remove="Migrations\Seed\002.wMainEventLog.sql" />
-    <None Remove="Migrations\Seed\002.wMainEventLog2.sql" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\Seed\002.wMainEventLog2.sql" />
-    <EmbeddedResource Include="Migrations\Seed\002.wMainEventLog.sql" />
-    <EmbeddedResource Include="Migrations\Seed\001.Initial.sql" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.17" />

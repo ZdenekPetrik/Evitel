@@ -42,9 +42,9 @@ namespace EvitelApp2
                 MeneToolsChangePassword.Visible = false;
             }
             CRepositoryDB repo = new CRepositoryDB();
-            var x = repo.Test();
-            aktWindow = eShowWindow.emptyPage;
-
+            ucCallLIKO1.Dock = DockStyle.Left;
+            splitContainer1.Dock = DockStyle.Fill;
+            ShowView_NewCall();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -58,25 +58,18 @@ namespace EvitelApp2
             this.Close();
         }
 
-        private void MeneToolsChangePassword_Click(object sender, EventArgs e)
-        {
-            frmChangePassword frm = new frmChangePassword();
-            frm.ShowDialog();
-        }
-
-        private void MenuToolEventLog_Click(object sender, EventArgs e)
-        {
-            HideActualView();
-            ShowView_EventLog();
-        }
-
+ 
         private void HideActualView()
         {
            switch (aktWindow)
             {
                 case eShowWindow.emptyPage: break;
-                case eShowWindow.EventLog: 
-                    ctrlEventLog1.Visible = ctrlEventLogFilter1.Visible = true; 
+                case eShowWindow.EventLog:
+                    ctrlEventLog1.Visible = ctrlEventLogFilter1.Visible = false;
+                    ctrlActiveControlUp = ctrlActiveControlDown = null;
+                    break;
+                case eShowWindow.NewCall:
+                    ucCallLIKO1.Visible  = false;
                     ctrlActiveControlUp = ctrlActiveControlDown = null;
                     break;
                 case eShowWindow.NecoJineho: break;
@@ -86,6 +79,7 @@ namespace EvitelApp2
 
         private void ShowView_EventLog()
         {
+            splitContainer1.Visible = true;
             if (ctrlEventLog1 == null)
             {
                 ctrlEventLog1 = new ctrlEventLog();
@@ -109,6 +103,13 @@ namespace EvitelApp2
             aktWindow = eShowWindow.EventLog;
         }
 
+        private void ShowView_NewCall(int TypeCall = 0)
+        {
+            splitContainer1.Visible = false;
+            ucCallLIKO1.Visible = true;
+            aktWindow = eShowWindow.NewCall;
+        }
+
 
 
         void ctrlEventLogFilter1_NewFilter()
@@ -120,6 +121,7 @@ namespace EvitelApp2
         private enum eShowWindow { 
             emptyPage,
             EventLog,
+            NewCall,
             NecoJineho
         }
 
@@ -132,5 +134,24 @@ namespace EvitelApp2
             }
         }
 
+        #region Obsluha menu
+        private void newCallLIKOToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HideActualView();
+            ShowView_NewCall();
+
+        }
+        private void MeneToolsChangePassword_Click(object sender, EventArgs e)
+        {
+            frmChangePassword frm = new frmChangePassword();
+            frm.ShowDialog();
+        }
+
+        private void MenuToolEventLog_Click(object sender, EventArgs e)
+        {
+            HideActualView();
+            ShowView_EventLog();
+        }
+        #endregion
     }
 }

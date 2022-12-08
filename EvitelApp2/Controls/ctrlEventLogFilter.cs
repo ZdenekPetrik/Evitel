@@ -8,8 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using EvitelLib2.Repository;
-using EvitelLib2.Entity;
+
 using EvitelLib2;
+using EvitelLib2.Model;
 
 namespace EvitelApp2.Controls
 {

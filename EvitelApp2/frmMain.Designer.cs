@@ -37,11 +37,15 @@ namespace EvitelApp2
             this.MeneToolsChangePassword = new System.Windows.Forms.ToolStripMenuItem();
             this.viewsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuToolEventLog = new System.Windows.Forms.ToolStripMenuItem();
+            this.NewCallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newCallLIKOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newCallLDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripUser = new System.Windows.Forms.ToolStripStatusLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.ucCallLIKO1 = new EvitelApp2.Controls.ucCallLIKO();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -53,10 +57,11 @@ namespace EvitelApp2
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.souborToolStripMenuItem,
             this.toolsToolStripMenuItem,
-            this.viewsToolStripMenuItem});
+            this.viewsToolStripMenuItem,
+            this.NewCallToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1000, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1421, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -80,8 +85,8 @@ namespace EvitelApp2
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MeneToolsChangePassword});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
-            this.toolsToolStripMenuItem.Text = "Tools";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
+            this.toolsToolStripMenuItem.Text = "Nástroje";
             // 
             // MeneToolsChangePassword
             // 
@@ -95,8 +100,8 @@ namespace EvitelApp2
             this.viewsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuToolEventLog});
             this.viewsToolStripMenuItem.Name = "viewsToolStripMenuItem";
-            this.viewsToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
-            this.viewsToolStripMenuItem.Text = "Views";
+            this.viewsToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.viewsToolStripMenuItem.Text = "Zobrazení";
             // 
             // MenuToolEventLog
             // 
@@ -105,6 +110,28 @@ namespace EvitelApp2
             this.MenuToolEventLog.Text = "EventLog";
             this.MenuToolEventLog.Click += new System.EventHandler(this.MenuToolEventLog_Click);
             // 
+            // NewCallToolStripMenuItem
+            // 
+            this.NewCallToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newCallLIKOToolStripMenuItem,
+            this.newCallLDToolStripMenuItem});
+            this.NewCallToolStripMenuItem.Name = "NewCallToolStripMenuItem";
+            this.NewCallToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+            this.NewCallToolStripMenuItem.Text = "Nový hovor";
+            // 
+            // newCallLIKOToolStripMenuItem
+            // 
+            this.newCallLIKOToolStripMenuItem.Name = "newCallLIKOToolStripMenuItem";
+            this.newCallLIKOToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.newCallLIKOToolStripMenuItem.Text = "Nový hovor - LIKO";
+            this.newCallLIKOToolStripMenuItem.Click += new System.EventHandler(this.newCallLIKOToolStripMenuItem_Click);
+            // 
+            // newCallLDToolStripMenuItem
+            // 
+            this.newCallLDToolStripMenuItem.Name = "newCallLDToolStripMenuItem";
+            this.newCallLDToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.newCallLDToolStripMenuItem.Text = "Nový hovor - LD";
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -112,7 +139,7 @@ namespace EvitelApp2
             this.toolStripUser});
             this.statusStrip1.Location = new System.Drawing.Point(0, 535);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1000, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1421, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -135,7 +162,6 @@ namespace EvitelApp2
             // splitContainer1
             // 
             this.splitContainer1.Cursor = System.Windows.Forms.Cursors.HSplit;
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 24);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -148,15 +174,23 @@ namespace EvitelApp2
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.BackColor = System.Drawing.SystemColors.Info;
-            this.splitContainer1.Size = new System.Drawing.Size(1000, 511);
-            this.splitContainer1.SplitterDistance = 336;
+            this.splitContainer1.Size = new System.Drawing.Size(288, 266);
+            this.splitContainer1.SplitterDistance = 174;
             this.splitContainer1.TabIndex = 2;
+            // 
+            // ucCallLIKO1
+            // 
+            this.ucCallLIKO1.Location = new System.Drawing.Point(160, 24);
+            this.ucCallLIKO1.Name = "ucCallLIKO1";
+            this.ucCallLIKO1.Size = new System.Drawing.Size(1174, 508);
+            this.ucCallLIKO1.TabIndex = 4;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1000, 557);
+            this.ClientSize = new System.Drawing.Size(1421, 557);
+            this.Controls.Add(this.ucCallLIKO1);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -189,6 +223,10 @@ namespace EvitelApp2
         private System.Windows.Forms.ToolStripMenuItem viewsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MenuToolEventLog;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.ToolStripMenuItem NewCallToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newCallLIKOToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newCallLDToolStripMenuItem;
+        private Controls.ucCallLIKO ucCallLIKO1;
     }
 }
 

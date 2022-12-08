@@ -10,14 +10,16 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BAE019C0-9C89-47AE-84EE-16D2C8CA490D}"
 	ProjectSection(SolutionItems) = preProject
 		EF.txt = EF.txt
+		..\ExcelRowSet.sql = ..\ExcelRowSet.sql
 		History.txt = History.txt
+		TODO.txt = TODO.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "..\UnitTest\UnitTest.csproj", "{20554A99-7C05-4E3B-A82B-537CCE2BB3FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvitelLib2", "..\EvitelLib2\EvitelLib2.csproj", "{F24C7ADA-1815-43A3-818E-4AEF67026CAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EvitelLib2", "..\EvitelLib2\EvitelLib2.csproj", "{F24C7ADA-1815-43A3-818E-4AEF67026CAC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvitelApp2", "..\EvitelApp2\EvitelApp2.csproj", "{32441DEE-B5C6-4F09-B34C-0FBC7971C8E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EvitelApp2", "..\EvitelApp2\EvitelApp2.csproj", "{32441DEE-B5C6-4F09-B34C-0FBC7971C8E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+
+#nullable disable
+
+namespace EvitelLib2.Model
+{
+    public partial class Likoparticipant
+    {
+        public int LikoparticipantId { get; set; }
+        public int? LikoincidentId { get; set; }
+        public int? TypePartyEid { get; set; }
+        public int? SexEid { get; set; }
+        public int? Age { get; set; }
+        public bool? IsDead { get; set; }
+        public bool? IsInjury { get; set; }
+        public bool? IsIntervence { get; set; }
+        public bool? IsFirstIntevence { get; set; }
+        public int? DruhIntervenceEid { get; set; }
+        public int? InterventId { get; set; }
+        public bool? IsAgreement { get; set; }
+        public bool? IsContact { get; set; }
+        public bool? IsPolicement { get; set; }
+        public bool? IsPolicementClosePerson { get; set; }
+        public bool? IsSenior { get; set; }
+        public bool? IsChildJuvenile { get; set; }
+        public bool? IsHandycappedMedical { get; set; }
+        public bool? IsHandyCappedMentally { get; set; }
+        public bool? IsMemberMinorityGroup { get; set; }
+        public string Organization { get; set; }
+
+        public virtual EDruhIntervence DruhIntervenceE { get; set; }
+        public virtual Intervent Intervent { get; set; }
+        public virtual Likoincident Likoincident { get; set; }
+        public virtual ESex SexE { get; set; }
+        public virtual ETypeParty TypePartyE { get; set; }
+    }
+}

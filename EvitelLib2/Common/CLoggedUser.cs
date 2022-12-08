@@ -1,4 +1,5 @@
 ﻿
+using EvitelLib2.Model;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -19,11 +20,13 @@ namespace EvitelLib2.Common
         {
             CLoggedUser newUser = (CLoggedUser)this.MemberwiseClone();
             if (isHybrid) {
-                Access = new Collection<LoginAccessUser>();
-                Access.Add(new LoginAccessUser { LoginAccessId = (int)eLoginAccess.User, LoginUserId = LoginUserId, LoginAccessUserId = 0 });
+                LoginAccessUsers = new Collection<LoginAccessUser>
+                {
+                    new LoginAccessUser { LoginAccessId = (int)eLoginAccess.User, LoginUserId = LoginUserId, LoginAccessUserId = 0 }
+                };
             }
             else
-                newUser.Access = Access;
+                newUser.LoginAccessUsers = LoginAccessUsers;
             return newUser;
         }
         public CLoggedUser() { }
@@ -34,8 +37,8 @@ namespace EvitelLib2.Common
             {
                 if (prop.Name == "Access" && parent.LoginPassword == "<hybrid>")
                 {
-                    Access = new Collection<LoginAccessUser>();
-                    Access.Add(new LoginAccessUser { LoginAccessId = (int)eLoginAccess.User, LoginUserId = LoginUserId, LoginAccessUserId = 0 });
+                    LoginAccessUsers = new Collection<LoginAccessUser>();
+                    LoginAccessUsers.Add(new LoginAccessUser { LoginAccessId = (int)eLoginAccess.User, LoginUserId = LoginUserId, LoginAccessUserId = 0 });
                 }
                 else
                 {
@@ -46,7 +49,7 @@ namespace EvitelLib2.Common
 
         public bool HasAccess(eLoginAccess loginAccess)
         {
-            foreach (var aktAccess in this.Access)
+            foreach (var aktAccess in this.LoginAccessUsers)
             {
                 if (aktAccess.LoginAccessUserId == (int)loginAccess)
                     return true;
@@ -55,7 +58,7 @@ namespace EvitelLib2.Common
         }
         public bool HasAnyAccess()
         {
-            return this.Access.Count > 0;
+            return this.LoginAccessUsers.Count > 0;
         }
     }
 
