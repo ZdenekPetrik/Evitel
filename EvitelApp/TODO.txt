@@ -2,3 +2,5 @@
 Dodìlat stránku s uživateli. Jde o to aby byla možnost je zobrazit a pøidìlovat práva. Aspoò jeden Admin aby zùstal
 Dodìlat editaci krajù a jejich intertventù. Možná zkus dvoúrovnìvý View
 Dodìlat editaci èíselníkù (prostou, univerzální ).
+
+DataGridView Filtering like Excel https://10tec.com/articles/datagridview-filter.aspx

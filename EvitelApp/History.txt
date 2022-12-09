@@ -30,3 +30,4 @@
 6.12.2022 - Obrazovka ucCallLEKI a zapracování do frmMain.
 7.12.2022 - Import dat z excelu (via linkedserver + SQl Server a právy LokalSystem). Naplnìní èíselníkù. Doupøesnìní zadání se Simonou
 8.12.2022 - Eager cteni - jde to, ale zùstanu u vlastních View. Je to dobré pro to že vidím z více zdrojù co jsem naèetl. Pro první verzi je to pro mne lepší.
+9.12.2022 - VS pada, zkusim 2022 a Core 6.0
