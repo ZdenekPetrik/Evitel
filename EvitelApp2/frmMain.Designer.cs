@@ -46,6 +46,8 @@ namespace EvitelApp2
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.ucCallLIKO1 = new EvitelApp2.Controls.ucCallLIKO();
+            this.ucIntervents1 = new EvitelApp2.Controls.ucIntervents();
+            this.interventiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -61,7 +63,7 @@ namespace EvitelApp2
             this.NewCallToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1421, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1405, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -98,7 +100,8 @@ namespace EvitelApp2
             // viewsToolStripMenuItem
             // 
             this.viewsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MenuToolEventLog});
+            this.MenuToolEventLog,
+            this.interventiToolStripMenuItem});
             this.viewsToolStripMenuItem.Name = "viewsToolStripMenuItem";
             this.viewsToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.viewsToolStripMenuItem.Text = "Zobrazení";
@@ -106,7 +109,7 @@ namespace EvitelApp2
             // MenuToolEventLog
             // 
             this.MenuToolEventLog.Name = "MenuToolEventLog";
-            this.MenuToolEventLog.Size = new System.Drawing.Size(123, 22);
+            this.MenuToolEventLog.Size = new System.Drawing.Size(180, 22);
             this.MenuToolEventLog.Text = "EventLog";
             this.MenuToolEventLog.Click += new System.EventHandler(this.MenuToolEventLog_Click);
             // 
@@ -139,7 +142,7 @@ namespace EvitelApp2
             this.toolStripUser});
             this.statusStrip1.Location = new System.Drawing.Point(0, 535);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1421, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1405, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -180,16 +183,31 @@ namespace EvitelApp2
             // 
             // ucCallLIKO1
             // 
-            this.ucCallLIKO1.Location = new System.Drawing.Point(160, 24);
+            this.ucCallLIKO1.Location = new System.Drawing.Point(294, 24);
             this.ucCallLIKO1.Name = "ucCallLIKO1";
-            this.ucCallLIKO1.Size = new System.Drawing.Size(1174, 508);
+            this.ucCallLIKO1.Size = new System.Drawing.Size(128, 110);
             this.ucCallLIKO1.TabIndex = 4;
+            // 
+            // ucIntervents1
+            // 
+            this.ucIntervents1.Location = new System.Drawing.Point(440, 36);
+            this.ucIntervents1.Name = "ucIntervents1";
+            this.ucIntervents1.Size = new System.Drawing.Size(511, 284);
+            this.ucIntervents1.TabIndex = 5;
+            // 
+            // interventiToolStripMenuItem
+            // 
+            this.interventiToolStripMenuItem.Name = "interventiToolStripMenuItem";
+            this.interventiToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.interventiToolStripMenuItem.Text = "Interventi";
+            this.interventiToolStripMenuItem.Click += new System.EventHandler(this.interventiToolStripMenuItem_Click);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1421, 557);
+            this.ClientSize = new System.Drawing.Size(1405, 557);
+            this.Controls.Add(this.ucIntervents1);
             this.Controls.Add(this.ucCallLIKO1);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
@@ -227,6 +245,8 @@ namespace EvitelApp2
         private System.Windows.Forms.ToolStripMenuItem newCallLIKOToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newCallLDToolStripMenuItem;
         private Controls.ucCallLIKO ucCallLIKO1;
+        private Controls.ucIntervents ucIntervents1;
+        private System.Windows.Forms.ToolStripMenuItem interventiToolStripMenuItem;
     }
 }
 

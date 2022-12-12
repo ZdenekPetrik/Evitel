@@ -1,8 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-
-#nullable disable
 
 namespace EvitelLib2.Model
 {
@@ -28,7 +27,6 @@ namespace EvitelLib2.Model
         public virtual DbSet<Likoincident> Likoincidents { get; set; }
         public virtual DbSet<Likointervence> Likointervences { get; set; }
         public virtual DbSet<Likoparticipant> Likoparticipants { get; set; }
-        public virtual DbSet<List1> List1s { get; set; }
         public virtual DbSet<LoginAccess> LoginAccesses { get; set; }
         public virtual DbSet<LoginAccessUser> LoginAccessUsers { get; set; }
         public virtual DbSet<LoginUser> LoginUsers { get; set; }
@@ -36,6 +34,8 @@ namespace EvitelLib2.Model
         public virtual DbSet<MainSetting> MainSettings { get; set; }
         public virtual DbSet<Region> Regions { get; set; }
         public virtual DbSet<State> States { get; set; }
+        public virtual DbSet<UserColumn> UserColumns { get; set; }
+        public virtual DbSet<UserSetting> UserSettings { get; set; }
         public virtual DbSet<WIntervent> WIntervents { get; set; }
         public virtual DbSet<WMainEventLog> WMainEventLogs { get; set; }
 
@@ -50,8 +50,6 @@ namespace EvitelLib2.Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Czech_CI_AS");
-
             modelBuilder.Entity<Call>(entity =>
             {
                 entity.Property(e => e.DtEndCall).HasColumnName("dtEndCall");
@@ -169,6 +167,10 @@ namespace EvitelLib2.Model
 
             modelBuilder.Entity<Intervent>(entity =>
             {
+                entity.Property(e => e.DtCreate)
+                    .HasColumnName("dtCreate")
+                    .HasDefaultValueSql("(getdate())");
+
                 entity.Property(e => e.DtDeleted).HasColumnName("dtDeleted");
 
                 entity.Property(e => e.Email).HasMaxLength(255);
@@ -296,35 +298,6 @@ namespace EvitelLib2.Model
                     .HasConstraintName("FK_LIKOParticipant_eTypeParty");
             });
 
-            modelBuilder.Entity<List1>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("List1$");
-
-                entity.Property(e => e.F11).HasMaxLength(255);
-
-                entity.Property(e => e.F2).HasMaxLength(255);
-
-                entity.Property(e => e.F3).HasMaxLength(255);
-
-                entity.Property(e => e.F4).HasMaxLength(255);
-
-                entity.Property(e => e.F5).HasMaxLength(255);
-
-                entity.Property(e => e.F6).HasMaxLength(255);
-
-                entity.Property(e => e.F7).HasMaxLength(255);
-
-                entity.Property(e => e.F8).HasMaxLength(255);
-
-                entity.Property(e => e.F9).HasMaxLength(255);
-
-                entity.Property(e => e._2StředočeskýKraj)
-                    .HasMaxLength(255)
-                    .HasColumnName("2  STŘEDOČESKÝ KRAJ");
-            });
-
             modelBuilder.Entity<LoginAccess>(entity =>
             {
                 entity.Property(e => e.AccessName).HasMaxLength(50);
@@ -390,7 +363,25 @@ namespace EvitelLib2.Model
                 entity.Property(e => e.Ewfewfwef)
                     .HasMaxLength(10)
                     .HasColumnName("ewfewfwef")
-                    .IsFixedLength(true);
+                    .IsFixedLength();
+            });
+
+            modelBuilder.Entity<UserColumn>(entity =>
+            {
+                entity.Property(e => e.Name).HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<UserSetting>(entity =>
+            {
+                entity.ToTable("UserSetting");
+
+                entity.Property(e => e.DValue).HasColumnName("dValue");
+
+                entity.Property(e => e.IValue).HasColumnName("iValue");
+
+                entity.Property(e => e.Name).HasMaxLength(255);
+
+                entity.Property(e => e.SValue).HasColumnName("sValue");
             });
 
             modelBuilder.Entity<WIntervent>(entity =>
@@ -403,7 +394,19 @@ namespace EvitelLib2.Model
                     .HasMaxLength(114)
                     .HasColumnName("cmbName");
 
+                entity.Property(e => e.DtCreate).HasColumnName("dtCreate");
+
+                entity.Property(e => e.Email).HasMaxLength(255);
+
+                entity.Property(e => e.IsDeleted).HasColumnName("isDeleted");
+
+                entity.Property(e => e.MobilPhone).HasMaxLength(20);
+
                 entity.Property(e => e.Name).HasMaxLength(50);
+
+                entity.Property(e => e.Phone).HasMaxLength(20);
+
+                entity.Property(e => e.PrivatePhone).HasMaxLength(20);
 
                 entity.Property(e => e.Rank).HasMaxLength(50);
 

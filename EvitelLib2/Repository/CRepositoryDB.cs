@@ -43,7 +43,7 @@ namespace EvitelLib2.Repository
             set { _idUser = value; }
         }     // ID uživatele, který využívá knihovnu (nebo -1 pokud nikdo neexistuje)
 
-   
+
 
         // Jméno programu, který využívá knihovnu
         public string ApplicationName
@@ -59,7 +59,7 @@ namespace EvitelLib2.Repository
             set { _applicationName = value; }
         }
 
-  
+
         public String GetSettingS(string Name)
         {
             Evitel2Context db = new Evitel2Context();
@@ -212,14 +212,14 @@ namespace EvitelLib2.Repository
                 return string.Format("{0} > {1} ", ex.InnerException.Message, GetInnerException(ex.InnerException));
             }
             if (ex.Source == "EntityFramework") { return "Neznama chyba"; }
-/*                if (ex.GetType() == typeof(System.Data.DataColumnChangeEventArgs   Entity.Validation.DbEntityValidationException))
-                {
-                    if (((System.Data.Entity.Validation.DbEntityValidationException)ex).EntityValidationErrors.Count() > 0)
-                    {
-                        return "EntityFramework -> " + ((System.Data.Entity.Validation.DbEntityValidationException)ex).EntityValidationErrors.First().ValidationErrors.First().ErrorMessage;
-                    }
-                }
-*/
+            /*                if (ex.GetType() == typeof(System.Data.DataColumnChangeEventArgs   Entity.Validation.DbEntityValidationException))
+                            {
+                                if (((System.Data.Entity.Validation.DbEntityValidationException)ex).EntityValidationErrors.Count() > 0)
+                                {
+                                    return "EntityFramework -> " + ((System.Data.Entity.Validation.DbEntityValidationException)ex).EntityValidationErrors.First().ValidationErrors.First().ErrorMessage;
+                                }
+                            }
+            */
             return ex.Message;
         }
         /*
@@ -239,7 +239,7 @@ namespace EvitelLib2.Repository
             Evitel2Context db = new Evitel2Context();
             try
             {
-                var loginUsr = from l in db.LoginUsers where l.LoginName == LoginName && LoginName == l.LoginName &&   l.LoginPassword == LoginPassword && LoginPassword == l.LoginPassword select l;
+                var loginUsr = from l in db.LoginUsers.Include("LoginAccessUsers") where l.LoginName == LoginName && LoginName == l.LoginName && l.LoginPassword == LoginPassword && LoginPassword == l.LoginPassword select l;
                 return loginUsr.FirstOrDefault();
             }
             catch (Exception Ex)
@@ -377,11 +377,11 @@ namespace EvitelLib2.Repository
                 if (eventSubCode != null)
                     mainEventLogs = mainEventLogs.Where(p => p.EventSubCode == (int)eventSubCode);
                 if (!string.IsNullOrEmpty(text) && text.Trim().Length > 0)
-                    mainEventLogs = mainEventLogs.Where(p => p.Text == text);
+                    mainEventLogs = mainEventLogs.Where(p => p.Text.Contains(text));
                 if (!string.IsNullOrEmpty(value) && value.Trim().Length > 0)
-                    mainEventLogs = mainEventLogs.Where(p => p.Value == value);
+                    mainEventLogs = mainEventLogs.Where(p => p.Value.Contains(value));
                 var l5 = mainEventLogs.ToList();
-                mainEventLogs = mainEventLogs.OrderBy(p=>p.DtCreate);
+                mainEventLogs = mainEventLogs.OrderBy(p => p.DtCreate);
                 return mainEventLogs.ToList();
             }
             catch (Exception Ex)
@@ -413,7 +413,7 @@ namespace EvitelLib2.Repository
         }
         public List<WIntervent> GetWIntervents()
         {
-                sErr = "";
+            sErr = "";
             Evitel2Context db = new Evitel2Context();
             try
             {
@@ -457,6 +457,105 @@ namespace EvitelLib2.Repository
             {
                 sErr = GetInnerException(Ex);
                 new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetSubTypeIntervence() " + GetInnerException(Ex), "", IdUser);
+            }
+            return null;
+        }
+
+        public bool InterventDeleteUnDelete(int interventId, bool isDelete)
+        {
+            sErr = "";
+            Evitel2Context db = new Evitel2Context();
+            try
+            {
+                var intervent = (from intv in db.Intervents where intv.InterventId == interventId select intv).FirstOrDefault();
+                if (intervent.InterventId == interventId) {
+                   intervent.DtDeleted = isDelete ? DateTime.Now : null;
+                   db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception Ex)
+            {
+                sErr = GetInnerException(Ex);
+                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "InterventDeleteUnDelete() " + GetInnerException(Ex), "", IdUser);
+            }
+            return false;
+        }
+
+
+        public bool SaveUserColumn(string nameOfDGW, int externIdUser, List<UserColumn> userColumns)
+        {
+            sErr = "";
+            Evitel2Context db = new Evitel2Context();
+            try
+            {
+                bool RefreshNeeded = false;
+                bool WriteNeeded = false;
+                var userColumnsDB = from uc in db.UserColumns where nameOfDGW == uc.Name && userColumns[0].LoginUserId == externIdUser orderby uc.ColumnIndex select uc;
+                if (userColumnsDB.Count() == userColumns.Count())
+                {
+                    for (int i = 0; i < userColumnsDB.Count(); i++)
+                    {
+                        var newRow = (from nr in userColumns where nr.ColumnIndex == i select nr).FirstOrDefault();
+                        if (newRow.ColumnIndex != i)
+                        {
+                            RefreshNeeded = true;
+                            break;
+                        }
+                        var dbRow = userColumnsDB.Where(x => x.ColumnIndex == i).First();
+                        if (dbRow == null)
+                        {
+                            RefreshNeeded = true;
+                        }
+                        else
+                        {
+                            if (newRow.DisplayIndex != dbRow.DisplayIndex || newRow.Visible != dbRow.Visible || newRow.Width != dbRow.Width)
+                            {
+                                dbRow.Width = newRow.Width;
+                                dbRow.Visible = newRow.Visible;
+                                dbRow.DisplayIndex = newRow.DisplayIndex;
+                                WriteNeeded = true;
+                            }
+                        }
+                    }
+
+                }
+                else
+                {
+                    RefreshNeeded = true;
+                }
+                if (RefreshNeeded)
+                {
+                    db.UserColumns.RemoveRange(userColumnsDB);
+                    db.UserColumns.AddRange(userColumns);
+                }
+                if (WriteNeeded || RefreshNeeded)
+                    db.SaveChanges();
+                return true;
+            }
+            catch (Exception Ex)
+            {
+                sErr = GetInnerException(Ex);
+                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "SaveUserColumn() " + GetInnerException(Ex), "", IdUser);
+            }
+            return false;
+
+
+        }
+
+        public List<UserColumn> GetUserColumn(string nameOfDGW)
+        {
+            sErr = "";
+            Evitel2Context db = new Evitel2Context();
+            try
+            {
+                var userColumnsDB = from uc in db.UserColumns where uc.Name == nameOfDGW && uc.LoginUserId == IdUser orderby uc.ColumnIndex select uc;
+                return userColumnsDB.ToList();
+            }
+            catch (Exception Ex)
+            {
+                sErr = GetInnerException(Ex);
+                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetUserColumn() " + GetInnerException(Ex), "", IdUser);
             }
             return null;
         }

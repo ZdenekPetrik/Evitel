@@ -51,7 +51,7 @@ namespace EvitelLib2.Common
         {
             foreach (var aktAccess in this.LoginAccessUsers)
             {
-                if (aktAccess.LoginAccessUserId == (int)loginAccess)
+                if (aktAccess.LoginAccessId == (int)loginAccess)
                     return true;
             }
             return false;

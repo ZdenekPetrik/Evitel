@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-#nullable disable
-
 namespace EvitelLib2.Model
 {
     public partial class WIntervent
@@ -16,5 +14,11 @@ namespace EvitelLib2.Model
         public int? RegionOrder { get; set; }
         public string RegionShortName { get; set; }
         public string CmbName { get; set; }
+        public string Phone { get; set; }
+        public string MobilPhone { get; set; }
+        public string PrivatePhone { get; set; }
+        public string Email { get; set; }
+        public DateTime DtCreate { get; set; }
+        public int IsDeleted { get; set; }
     }
 }

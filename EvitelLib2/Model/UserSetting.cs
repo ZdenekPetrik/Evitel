@@ -3,9 +3,10 @@ using System.Collections.Generic;
 
 namespace EvitelLib2.Model
 {
-    public partial class MainSetting
+    public partial class UserSetting
     {
-        public int MainSettingId { get; set; }
+        public int UserSettingId { get; set; }
+        public int? LoginUserId { get; set; }
         public string Name { get; set; }
         public string SValue { get; set; }
         public int? IValue { get; set; }

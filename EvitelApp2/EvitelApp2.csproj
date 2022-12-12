@@ -15,9 +15,7 @@
     <Compile Update="Controls\ctrlEventLog.designer.cs">
       <DependentUpon>ctrlEventLog.cs</DependentUpon>
     </Compile>
-    <Compile Update="Controls\ctrlEventLogFilter.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Update="Controls\ctrlEventLogFilter.cs" />
     <Compile Update="Controls\ctrlEventLogFilter.designer.cs">
       <DependentUpon>ctrlEventLogFilter.cs</DependentUpon>
     </Compile>

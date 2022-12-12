@@ -11,6 +11,9 @@ using EvitelLib2.Common;
 using EvitelApp2;
 using EvitelApp2.Controls;
 using EvitelLib2.Model;
+using System.Linq;
+using System.Collections;
+using System.Diagnostics;
 
 namespace EvitelApp2.Controls
 {
@@ -28,7 +31,7 @@ namespace EvitelApp2.Controls
 
         private void ReadData()
         {
-            EventLog = DB.GetMainEventLog("dtCreate", true, DateTime.Now.Date.AddDays(0), DateTime.Now.Date.AddDays(1), "", null, null, null, "", "");
+            EventLog = DB.GetMainEventLog("dtCreate", true, DateTime.Now.Date.AddDays(-1), DateTime.Now.Date.AddDays(1), "", null, null, null, "", "");
             LoadData();
         }
         public void ReReadData()
@@ -80,7 +83,7 @@ namespace EvitelApp2.Controls
             foreach (DataGridViewTextBoxColumn dgvColumn in Cl)
                 dgw.Columns.Add(dgvColumn);         
             dgw.DataSource = EventLog;
-            dgw.SetColumnOrderExt(this.Name);
+            dgw.SetColumnOrderExt(this.Name,DB);
             dgw.mySort.ColumnName = Cl[0].Name;
 
         }
@@ -98,7 +101,23 @@ namespace EvitelApp2.Controls
                 dgw.mySort.Order = ListSortDirection.Ascending;
                 oldColumn.HeaderCell.SortGlyphDirection = SortOrder.None;
             }
-            ReReadData();
+            if (newColumn.DataPropertyName == "dtCreate")
+                EventLog = dgw.mySort.Order == ListSortDirection.Ascending ? EventLog.OrderBy(s => s.DtCreate).ToList(): EventLog.OrderByDescending(s => s.DtCreate).ToList();
+            else if (newColumn.DataPropertyName == "CodeText")
+                EventLog = dgw.mySort.Order == ListSortDirection.Ascending ? EventLog.OrderBy(s => s.CodeText).ToList() : EventLog.OrderByDescending(s => s.CodeText).ToList();
+            else if (newColumn.DataPropertyName == "SubCodeText")
+                EventLog = dgw.mySort.Order == ListSortDirection.Ascending ? EventLog.OrderBy(s => s.SubCodeText).ToList() : EventLog.OrderByDescending(s => s.SubCodeText).ToList();
+            else if (newColumn.DataPropertyName == "Program")
+                EventLog = dgw.mySort.Order == ListSortDirection.Ascending ? EventLog.OrderBy(s => s.Program).ToList() : EventLog.OrderByDescending(s => s.Program).ToList();
+            else if (newColumn.DataPropertyName == "UserLastName")
+                EventLog = dgw.mySort.Order == ListSortDirection.Ascending ? EventLog.OrderBy(s => s.UserLastName).ToList() : EventLog.OrderByDescending(s => s.UserLastName).ToList();
+            else if (newColumn.DataPropertyName == "Text")
+                EventLog = dgw.mySort.Order == ListSortDirection.Ascending ? EventLog.OrderBy(s => s.Text).ToList() : EventLog.OrderByDescending(s => s.Text).ToList();
+            else if (newColumn.DataPropertyName == "Value")
+                EventLog = dgw.mySort.Order == ListSortDirection.Ascending ? EventLog.OrderBy(s => s.Value).ToList() : EventLog.OrderByDescending(s => s.Value).ToList();
+            dgw.DataSource = EventLog;
+
+//            ReReadData();
             DataGridViewColumn newColumn1 = dgw.Columns[e.ColumnIndex];
             newColumn1.HeaderCell.SortGlyphDirection =
                 dgw.mySort.Order == ListSortDirection.Ascending ?
@@ -115,34 +134,6 @@ namespace EvitelApp2.Controls
                 MyResize();
             }
         }
-
-        /*
-        private void dgw_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            try
-            {
-                if (e.ColumnIndex == 1) // column of the enum
-                {
-                    e.Value = CStateHelper.GetEventDescriptionValue ((eEventCode)e.Value);
-                }
-                if (e.ColumnIndex == 2) // column of the enum
-                {
-                    e.Value = CStateHelper.GetEventSubDescriptionValue((eEventSubCode)e.Value);
-                }
-                if (e.ColumnIndex == 4) 
-                {
-                    
-                    e.Value = e.Value != null ? CUserHelper.GetUserFullName((int)e.Value) : "";
-                }
-            }
-            catch (Exception ex)
-            {
-                e.Value = ex.Message;
-            }
-
-        }
-        */
-
         private void ctrlEventLog_Resize(object sender, EventArgs e)
         {
             MyResize();

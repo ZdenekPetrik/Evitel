@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-#nullable disable
-
 namespace EvitelLib2.Model
 {
     public partial class Intervent
@@ -24,6 +22,7 @@ namespace EvitelLib2.Model
         public DateTime? DtDeleted { get; set; }
         public string Note { get; set; }
         public int? RegionId { get; set; }
+        public DateTime DtCreate { get; set; }
 
         public virtual Region Region { get; set; }
         public virtual ICollection<Likoparticipant> Likoparticipants { get; set; }

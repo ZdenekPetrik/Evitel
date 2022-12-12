@@ -78,10 +78,10 @@ namespace EvitelLib2.Business
         private CLoggedUser Login(LoginUser user)
         {
             CLoggedUser loggedUser = new CLoggedUser(user);
+            loggedUser.loginMode = GetLoginMode();
             loggedUser.isLogged = true;
             loggedUser.dtLogged = DateTime.Now;
             loggedUser.sessionId = ((ulong)DateTime.Now.ToBinary()).ToString();
-            loggedUser.loginMode = GetLoginMode();
  
             new CEventLog(eEventCode.e1Login, eEventSubCode.e2Start, user.LastName, loggedUser.sessionId, user.LoginUserId);
             return loggedUser;

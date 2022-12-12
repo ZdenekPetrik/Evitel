@@ -42,10 +42,23 @@ namespace EvitelApp2
                 MeneToolsChangePassword.Visible = false;
             }
             CRepositoryDB repo = new CRepositoryDB();
-            ucCallLIKO1.Dock = DockStyle.Left;
+            ucCallLIKO1.Dock = DockStyle.Fill;
+            ucIntervents1.Dock = DockStyle.Fill;
             splitContainer1.Dock = DockStyle.Fill;
+            HideAll();
             ShowView_NewCall();
         }
+
+        private void HideAll()
+        {
+            List<int> listEnumValues = new List<int>();
+            eShowWindow[] myEnumMembers = (eShowWindow[])Enum.GetValues(typeof(eShowWindow));
+            foreach (eShowWindow enumMember in myEnumMembers)
+            {
+                aktWindow = enumMember; ;
+                HideActualView();
+            }
+         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -65,16 +78,18 @@ namespace EvitelApp2
             {
                 case eShowWindow.emptyPage: break;
                 case eShowWindow.EventLog:
-                    ctrlEventLog1.Visible = ctrlEventLogFilter1.Visible = false;
-                    ctrlActiveControlUp = ctrlActiveControlDown = null;
+                   splitContainer1.Visible = false;
                     break;
                 case eShowWindow.NewCall:
-                    ucCallLIKO1.Visible  = false;
-                    ctrlActiveControlUp = ctrlActiveControlDown = null;
+                    ucCallLIKO1.Visible = false;
+                    break;
+                case eShowWindow.Intervents:
+                    ucIntervents1.Visible = false;
                     break;
                 case eShowWindow.NecoJineho: break;
                 default: break;
             }
+            ctrlActiveControlUp = ctrlActiveControlDown = null;
         }
 
         private void ShowView_EventLog()
@@ -105,9 +120,16 @@ namespace EvitelApp2
 
         private void ShowView_NewCall(int TypeCall = 0)
         {
-            splitContainer1.Visible = false;
             ucCallLIKO1.Visible = true;
             aktWindow = eShowWindow.NewCall;
+        }
+        private void ShowView_Interventi()
+        {
+            ucIntervents1.Visible = true;
+            ucIntervents1.isEditModeAllowed = Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser);
+            if (!ucIntervents1.isData)
+                ucIntervents1.ReadDataFirstTime();
+            aktWindow = eShowWindow.Intervents;
         }
 
 
@@ -122,6 +144,7 @@ namespace EvitelApp2
             emptyPage,
             EventLog,
             NewCall,
+            Intervents,
             NecoJineho
         }
 
@@ -152,6 +175,14 @@ namespace EvitelApp2
             HideActualView();
             ShowView_EventLog();
         }
+        private void interventiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HideActualView();
+            ShowView_Interventi();
+
+        }
+
         #endregion
+
     }
 }
