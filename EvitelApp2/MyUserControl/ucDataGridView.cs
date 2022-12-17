@@ -60,39 +60,45 @@ namespace EvitelApp2.MyUserControl
         {
             if (this.AllowUserToOrderColumns)
             {
-                /*
-                List<ColumnOrderItem> columnOrder = new List<ColumnOrderItem>();
-                DataGridViewColumnCollection columns = this.Columns;
-                for (int i = 0; i < columns.Count; i++)
+                try
                 {
-                    columnOrder.Add(new ColumnOrderItem
+                    /*
+                    List<ColumnOrderItem> columnOrder = new List<ColumnOrderItem>();
+                    DataGridViewColumnCollection columns = this.Columns;
+                    for (int i = 0; i < columns.Count; i++)
                     {
-                        ColumnIndex = i,
-                        DisplayIndex = columns[i].DisplayIndex,
-                        Visible = columns[i].Visible,
-                        Width = columns[i].Width
-                    });
-                }
+                        columnOrder.Add(new ColumnOrderItem
+                        {
+                            ColumnIndex = i,
+                            DisplayIndex = columns[i].DisplayIndex,
+                            Visible = columns[i].Visible,
+                            Width = columns[i].Width
+                        });
+                    }
 
-                ucDataGridViewSetting.Default.ColumnOrder[_UniqueString + "_" + this.Name] = columnOrder;
-                ucDataGridViewSetting.Default.Save();
-                */
-                List<UserColumn> userColumnList = new List<UserColumn>();
-                List<ColumnOrderItem> columnOrder = new List<ColumnOrderItem>();
-                DataGridViewColumnCollection columns = this.Columns;
-                for (int i = 0; i < columns.Count; i++)
-                {
-                    userColumnList.Add(new UserColumn
+                    ucDataGridViewSetting.Default.ColumnOrder[_UniqueString + "_" + this.Name] = columnOrder;
+                    ucDataGridViewSetting.Default.Save();
+                    */
+                    List<UserColumn> userColumnList = new List<UserColumn>();
+                    List<ColumnOrderItem> columnOrder = new List<ColumnOrderItem>();
+                    DataGridViewColumnCollection columns = this.Columns;
+                    for (int i = 0; i < columns.Count; i++)
                     {
-                        ColumnIndex = i,
-                        DisplayIndex = columns[i].DisplayIndex,
-                        Visible = columns[i].Visible,
-                        Width = columns[i].Width,
-                        Name = fullUniqueString,
-                        LoginUserId = _DB.IdUser
-                    }) ;
+                        userColumnList.Add(new UserColumn
+                        {
+                            ColumnIndex = i,
+                            DisplayIndex = columns[i].DisplayIndex,
+                            Visible = columns[i].Visible,
+                            Width = columns[i].Width,
+                            Name = fullUniqueString,
+                            LoginUserId = _DB.IdUser
+                        });
+                    }
+                    if (columns.Count > 0)
+                        _DB.SaveUserColumn(fullUniqueString, _DB.IdUser, userColumnList);
                 }
-                _DB.SaveUserColumn(fullUniqueString, _DB.IdUser, userColumnList);
+                catch (Exception Ex) {
+                }
             }
         }
         //---------------------------------------------------------------------

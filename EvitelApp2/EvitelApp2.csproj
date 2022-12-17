@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DotNetCore.NPOI" Version="1.2.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="PdfSharpCore" Version="1.3.43" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EvitelLib2\EvitelLib2.csproj" />
   </ItemGroup>
 
@@ -19,6 +25,11 @@
     <Compile Update="Controls\ctrlEventLogFilter.designer.cs">
       <DependentUpon>ctrlEventLogFilter.cs</DependentUpon>
     </Compile>
+    <Compile Update="Resource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +38,10 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\ctrlEventLogFilter.resx">
       <DependentUpon>ctrlEventLogFilter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

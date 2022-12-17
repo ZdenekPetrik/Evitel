@@ -132,6 +132,7 @@ namespace EvitelApp2.Controls
             this.cmbIntervent.Name = "cmbIntervent";
             this.cmbIntervent.Size = new System.Drawing.Size(195, 23);
             this.cmbIntervent.TabIndex = 8;
+            this.cmbIntervent.Validating += new System.ComponentModel.CancelEventHandler(this.cmbIntervent_Validating);
             // 
             // tmCall
             // 
@@ -186,6 +187,7 @@ namespace EvitelApp2.Controls
             this.cmbSubTypeIntervence.Name = "cmbSubTypeIntervence";
             this.cmbSubTypeIntervence.Size = new System.Drawing.Size(195, 23);
             this.cmbSubTypeIntervence.TabIndex = 15;
+            this.cmbSubTypeIntervence.Validating += new System.ComponentModel.CancelEventHandler(this.cmbSubTypeIntervence_Validating);
             // 
             // lblDruhUdalosti
             // 
@@ -229,6 +231,7 @@ namespace EvitelApp2.Controls
             this.cmbRegion.Name = "cmbRegion";
             this.cmbRegion.Size = new System.Drawing.Size(195, 23);
             this.cmbRegion.TabIndex = 21;
+            this.cmbRegion.Validating += new System.ComponentModel.CancelEventHandler(this.cmbRegion_Validating);
             // 
             // lblRegion
             // 
@@ -324,6 +327,7 @@ namespace EvitelApp2.Controls
             this.txtPlace.Name = "txtPlace";
             this.txtPlace.Size = new System.Drawing.Size(195, 23);
             this.txtPlace.TabIndex = 23;
+            this.txtPlace.Validating += new System.ComponentModel.CancelEventHandler(this.txtPlace_Validating);
             // 
             // lblPlace
             // 

@@ -40,7 +40,7 @@ namespace WinFormsApp1
                 */
             
             DB = new CRepositoryDB(-1);
-            interventi = DB.GetWIntervents();
+            interventi = DB.GetWIntervents(null,);
             dgw.DataSource = interventi;
 
 

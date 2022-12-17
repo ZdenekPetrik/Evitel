@@ -33,8 +33,8 @@ namespace EvitelApp2.Controls
             this.dgw = new EvitelApp2.MyUserControl.ucDataGridView(this.components);
             this.groupBoxVyhledavani = new System.Windows.Forms.GroupBox();
             this.cmbRegion = new System.Windows.Forms.ComboBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtFilterContact = new System.Windows.Forms.TextBox();
+            this.txtFilterName = new System.Windows.Forms.TextBox();
             this.lblPocet = new System.Windows.Forms.Label();
             this.lblKontakt = new System.Windows.Forms.Label();
             this.btnFind = new System.Windows.Forms.Button();
@@ -64,8 +64,8 @@ namespace EvitelApp2.Controls
             // groupBoxVyhledavani
             // 
             this.groupBoxVyhledavani.Controls.Add(this.cmbRegion);
-            this.groupBoxVyhledavani.Controls.Add(this.textBox2);
-            this.groupBoxVyhledavani.Controls.Add(this.textBox1);
+            this.groupBoxVyhledavani.Controls.Add(this.txtFilterContact);
+            this.groupBoxVyhledavani.Controls.Add(this.txtFilterName);
             this.groupBoxVyhledavani.Controls.Add(this.lblPocet);
             this.groupBoxVyhledavani.Controls.Add(this.lblKontakt);
             this.groupBoxVyhledavani.Controls.Add(this.btnFind);
@@ -86,19 +86,19 @@ namespace EvitelApp2.Controls
             this.cmbRegion.Size = new System.Drawing.Size(187, 23);
             this.cmbRegion.TabIndex = 13;
             // 
-            // textBox2
+            // txtFilterContact
             // 
-            this.textBox2.Location = new System.Drawing.Point(500, 34);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(149, 23);
-            this.textBox2.TabIndex = 12;
+            this.txtFilterContact.Location = new System.Drawing.Point(500, 34);
+            this.txtFilterContact.Name = "txtFilterContact";
+            this.txtFilterContact.Size = new System.Drawing.Size(149, 23);
+            this.txtFilterContact.TabIndex = 12;
             // 
-            // textBox1
+            // txtFilterName
             // 
-            this.textBox1.Location = new System.Drawing.Point(280, 34);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(187, 23);
-            this.textBox1.TabIndex = 11;
+            this.txtFilterName.Location = new System.Drawing.Point(280, 34);
+            this.txtFilterName.Name = "txtFilterName";
+            this.txtFilterName.Size = new System.Drawing.Size(187, 23);
+            this.txtFilterName.TabIndex = 11;
             // 
             // lblPocet
             // 
@@ -178,8 +178,8 @@ namespace EvitelApp2.Controls
 
         private MyUserControl.ucDataGridView dgw;
         private System.Windows.Forms.GroupBox groupBoxVyhledavani;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtFilterContact;
+        private System.Windows.Forms.TextBox txtFilterName;
         private System.Windows.Forms.Label lblPocet;
         private System.Windows.Forms.Label lblKontakt;
         private System.Windows.Forms.Button btnFind;

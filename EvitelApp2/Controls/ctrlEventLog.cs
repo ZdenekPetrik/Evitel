@@ -32,7 +32,7 @@ namespace EvitelApp2.Controls
         private void ReadData()
         {
             EventLog = DB.GetMainEventLog("dtCreate", true, DateTime.Now.Date.AddDays(-1), DateTime.Now.Date.AddDays(1), "", null, null, null, "", "");
-            LoadData();
+            LoadDgw();
         }
         public void ReReadData()
         {
@@ -56,7 +56,7 @@ namespace EvitelApp2.Controls
             MyResize();
         }
 
-        private void LoadData()
+        private void LoadDgw()
         {
             dgw.AutoGenerateColumns = false;
             dgw.EditMode = DataGridViewEditMode.EditProgrammatically;

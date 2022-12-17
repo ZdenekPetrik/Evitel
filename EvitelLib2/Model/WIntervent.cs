@@ -19,6 +19,7 @@ namespace EvitelLib2.Model
         public string PrivatePhone { get; set; }
         public string Email { get; set; }
         public DateTime DtCreate { get; set; }
-        public int IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; }
+        public int? RegionId { get; set; }
     }
 }

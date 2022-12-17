@@ -2,10 +2,12 @@
 using EvitelApp2.Login;
 using EvitelLib2.Common;
 using EvitelLib2.Repository;
+using NPOI.SS.UserModel.Charts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -24,6 +26,7 @@ namespace EvitelApp2
 
         eShowWindow aktWindow;
 
+        private string Title = "EVITEL";
 
         public frmMain()
         {
@@ -45,6 +48,7 @@ namespace EvitelApp2
             ucCallLIKO1.Dock = DockStyle.Fill;
             ucIntervents1.Dock = DockStyle.Fill;
             splitContainer1.Dock = DockStyle.Fill;
+            ucCiselnik1.Dock = DockStyle.Fill;
             HideAll();
             ShowView_NewCall();
         }
@@ -86,6 +90,9 @@ namespace EvitelApp2
                 case eShowWindow.Intervents:
                     ucIntervents1.Visible = false;
                     break;
+                case eShowWindow.Enums:
+                    ucCiselnik1.Visible = false;
+                    break;
                 case eShowWindow.NecoJineho: break;
                 default: break;
             }
@@ -116,12 +123,15 @@ namespace EvitelApp2
             ctrlActiveControlUp = ctrlEventLog1;
             ctrlActiveControlDown = ctrlEventLogFilter1;
             aktWindow = eShowWindow.EventLog;
+            this.Text = Title + " - EventLog";
         }
 
         private void ShowView_NewCall(int TypeCall = 0)
         {
             ucCallLIKO1.Visible = true;
             aktWindow = eShowWindow.NewCall;
+            this.Text = Title + " - LIKO Nové volání";
+
         }
         private void ShowView_Interventi()
         {
@@ -130,6 +140,17 @@ namespace EvitelApp2
             if (!ucIntervents1.isData)
                 ucIntervents1.ReadDataFirstTime();
             aktWindow = eShowWindow.Intervents;
+            this.Text = Title + " - Interventi";
+        }
+        private void ShowView_Ciselnik(eAllEnums aktEnum)
+        {
+            ucCiselnik1.Visible = true;
+            ucCiselnik1.aktEnum = aktEnum;
+            ucCiselnik1.ReadDataFirstTime();
+            ucCiselnik1.MyResize();
+            aktWindow = eShowWindow.Enums;
+            this.Text = Title + " - Číselník "+ucCiselnik1.Titulek;
+
         }
 
 
@@ -145,6 +166,7 @@ namespace EvitelApp2
             EventLog,
             NewCall,
             Intervents,
+            Enums,
             NecoJineho
         }
 
@@ -184,5 +206,45 @@ namespace EvitelApp2
 
         #endregion
 
+        private void číselníkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void testToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmTestEndNPOI f = new frmTestEndNPOI();
+            f.Show();
+        }
+
+        private void EnumsSexMenuItem_Click(object sender, EventArgs e)
+        {
+            HideActualView();
+            ShowView_Ciselnik(eAllEnums.eSex);
+
+        }
+
+        private void EnumTypIntervenceMenuItem_Click(object sender, EventArgs e)
+        {
+            HideActualView();
+            ShowView_Ciselnik(eAllEnums.eTypeIntervence);
+        }
+
+        private void EnumSubTypIntervenceMenuItem_Click(object sender, EventArgs e)
+        {
+            HideActualView();
+            ShowView_Ciselnik(eAllEnums.eSubTypeIntervence);
+        }
+
+        private void EnumPartyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HideActualView();
+            ShowView_Ciselnik(eAllEnums.eTypeParty);
+        }
+
+        private void EnumRegionMenuItem_Click(object sender, EventArgs e)
+        {
+            HideActualView();
+            ShowView_Ciselnik(eAllEnums.eRegions);
+        }
     }
 }

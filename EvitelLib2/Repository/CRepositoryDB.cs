@@ -380,7 +380,6 @@ namespace EvitelLib2.Repository
                     mainEventLogs = mainEventLogs.Where(p => p.Text.Contains(text));
                 if (!string.IsNullOrEmpty(value) && value.Trim().Length > 0)
                     mainEventLogs = mainEventLogs.Where(p => p.Value.Contains(value));
-                var l5 = mainEventLogs.ToList();
                 mainEventLogs = mainEventLogs.OrderBy(p => p.DtCreate);
                 return mainEventLogs.ToList();
             }
@@ -411,14 +410,21 @@ namespace EvitelLib2.Repository
             }
             return null;
         }
-        public List<WIntervent> GetWIntervents()
+        public List<WIntervent> GetWIntervents(int? RegionId, string Name, string Contact)
         {
             sErr = "";
             Evitel2Context db = new Evitel2Context();
             try
             {
-                var Intervents = from i in db.Intervents.Include("Region") select i;
-                var wIntervents = from i in db.WIntervents orderby i.RegionOrder select i;
+                
+                var wIntervents = from i in db.WIntervents  select i;
+                if (RegionId != null)
+                   wIntervents = wIntervents.Where(x => x.RegionId == RegionId);
+                if (Name.Length > 0 )
+                    wIntervents = wIntervents.Where(x => x.Name.Contains(Name) || x.SurName.Contains(Name));
+                if (Contact.Length > 0 )
+                    wIntervents = wIntervents.Where(x => x.PrivatePhone.Contains(Name) || x.Phone.Contains(Name) ||x.MobilPhone.Contains(Name)|| x.Email.Contains(Name));
+                wIntervents = wIntervents.OrderBy(p => p.RegionOrder);
                 return wIntervents.ToList();
             }
             catch (Exception Ex)
@@ -560,6 +566,26 @@ namespace EvitelLib2.Repository
             return null;
         }
 
+        public int WriteCall(DateTime datetimeStartCall)
+        {
+            sErr = "";
+            Evitel2Context db = new Evitel2Context();
+            try
+            {
+                Call call = new Call();
+                call.DtStartCall = datetimeStartCall;
+                call.LoginUserId = IdUser;
+                db.Calls.Add(call);
+                db.SaveChanges();
+                return call.CallId;
+            }
+            catch (Exception Ex)
+            {
+                sErr = GetInnerException(Ex);
+                new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "WriteCall() " + GetInnerException(Ex), "", IdUser);
+            }
+            return -1;
+         }
     }
 }
 
