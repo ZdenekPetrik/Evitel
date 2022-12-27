@@ -62,24 +62,7 @@ namespace EvitelApp2.MyUserControl
             {
                 try
                 {
-                    /*
-                    List<ColumnOrderItem> columnOrder = new List<ColumnOrderItem>();
-                    DataGridViewColumnCollection columns = this.Columns;
-                    for (int i = 0; i < columns.Count; i++)
-                    {
-                        columnOrder.Add(new ColumnOrderItem
-                        {
-                            ColumnIndex = i,
-                            DisplayIndex = columns[i].DisplayIndex,
-                            Visible = columns[i].Visible,
-                            Width = columns[i].Width
-                        });
-                    }
-
-                    ucDataGridViewSetting.Default.ColumnOrder[_UniqueString + "_" + this.Name] = columnOrder;
-                    ucDataGridViewSetting.Default.Save();
-                    */
-                    List<UserColumn> userColumnList = new List<UserColumn>();
+                      List<UserColumn> userColumnList = new List<UserColumn>();
                     List<ColumnOrderItem> columnOrder = new List<ColumnOrderItem>();
                     DataGridViewColumnCollection columns = this.Columns;
                     for (int i = 0; i < columns.Count; i++)

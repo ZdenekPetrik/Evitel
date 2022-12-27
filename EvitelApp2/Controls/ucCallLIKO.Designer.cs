@@ -37,9 +37,9 @@ namespace EvitelApp2.Controls
             this.cmbIntervent = new System.Windows.Forms.ComboBox();
             this.tmCall = new System.Windows.Forms.DateTimePicker();
             this.btnWrite = new System.Windows.Forms.Button();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.tmIncident = new System.Windows.Forms.DateTimePicker();
             this.lblUdalost = new System.Windows.Forms.Label();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.dtIncident = new System.Windows.Forms.DateTimePicker();
             this.cmbSubTypeIntervence = new System.Windows.Forms.ComboBox();
             this.lblDruhUdalosti = new System.Windows.Forms.Label();
             this.txtEventNote = new System.Windows.Forms.TextBox();
@@ -57,28 +57,32 @@ namespace EvitelApp2.Controls
             this.lblPlace = new System.Windows.Forms.Label();
             this.lblregion1 = new System.Windows.Forms.Label();
             this.gbIntervence = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.dtIntervenceEnd = new System.Windows.Forms.DateTimePicker();
+            this.tmIntervenceEnd = new System.Windows.Forms.DateTimePicker();
             this.label5 = new System.Windows.Forms.Label();
-            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.txtNrCelkem = new System.Windows.Forms.NumericUpDown();
+            this.txtNrOstatnimOsobam = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.txtNrPozustalymBlizkym = new System.Windows.Forms.NumericUpDown();
             this.txtNrObet = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.txtNrObetemPoskozenym = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.lblIntervenceNote = new System.Windows.Forms.Label();
             this.txtIntervenceNote = new System.Windows.Forms.TextBox();
-            this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
+            this.dtIntervence = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
-            this.dateTimePicker4 = new System.Windows.Forms.DateTimePicker();
+            this.tmIntervence = new System.Windows.Forms.DateTimePicker();
+            this.ucParticipations1 = new EvitelApp2.Controls.ucParticipations();
             this.boxCall.SuspendLayout();
             this.boxEvent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtPocetObeti)).BeginInit();
             this.gbIntervence.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtNrCelkem)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtNrOstatnimOsobam)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtNrPozustalymBlizkym)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtNrObetemPoskozenym)).BeginInit();
             this.SuspendLayout();
             // 
             // dtCall
@@ -153,14 +157,14 @@ namespace EvitelApp2.Controls
             this.btnWrite.UseVisualStyleBackColor = true;
             this.btnWrite.Click += new System.EventHandler(this.btnWrite_Click);
             // 
-            // dateTimePicker1
+            // tmIncident
             // 
-            this.dateTimePicker1.CustomFormat = "hh:mm";
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker1.Location = new System.Drawing.Point(251, 17);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(87, 23);
-            this.dateTimePicker1.TabIndex = 13;
+            this.tmIncident.CustomFormat = "hh:mm";
+            this.tmIncident.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.tmIncident.Location = new System.Drawing.Point(251, 17);
+            this.tmIncident.Name = "tmIncident";
+            this.tmIncident.Size = new System.Drawing.Size(87, 23);
+            this.tmIncident.TabIndex = 13;
             // 
             // lblUdalost
             // 
@@ -171,14 +175,14 @@ namespace EvitelApp2.Controls
             this.lblUdalost.TabIndex = 12;
             this.lblUdalost.Text = "Datum a čas události";
             // 
-            // dateTimePicker2
+            // dtIncident
             // 
-            this.dateTimePicker2.CustomFormat = "dd-MM-yyyy";
-            this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker2.Location = new System.Drawing.Point(143, 17);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(87, 23);
-            this.dateTimePicker2.TabIndex = 11;
+            this.dtIncident.CustomFormat = "dd-MM-yyyy";
+            this.dtIncident.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtIncident.Location = new System.Drawing.Point(143, 17);
+            this.dtIncident.Name = "dtIncident";
+            this.dtIncident.Size = new System.Drawing.Size(87, 23);
+            this.dtIncident.TabIndex = 11;
             // 
             // cmbSubTypeIntervence
             // 
@@ -269,10 +273,10 @@ namespace EvitelApp2.Controls
             this.boxEvent.Controls.Add(this.lblPlace);
             this.boxEvent.Controls.Add(this.lblregion1);
             this.boxEvent.Controls.Add(this.lblNoteEvent);
-            this.boxEvent.Controls.Add(this.dateTimePicker2);
+            this.boxEvent.Controls.Add(this.dtIncident);
             this.boxEvent.Controls.Add(this.cmbRegion);
             this.boxEvent.Controls.Add(this.lblUdalost);
-            this.boxEvent.Controls.Add(this.dateTimePicker1);
+            this.boxEvent.Controls.Add(this.tmIncident);
             this.boxEvent.Controls.Add(this.lblDruhUdalosti);
             this.boxEvent.Controls.Add(this.lblPocetPoskozenychObeti);
             this.boxEvent.Controls.Add(this.cmbSubTypeIntervence);
@@ -283,6 +287,7 @@ namespace EvitelApp2.Controls
             this.boxEvent.TabIndex = 23;
             this.boxEvent.TabStop = false;
             this.boxEvent.Text = "Údaje o události";
+            this.boxEvent.Enter += new System.EventHandler(this.boxEvent_Enter);
             // 
             // chkPokusPriprava
             // 
@@ -349,26 +354,57 @@ namespace EvitelApp2.Controls
             // 
             // gbIntervence
             // 
+            this.gbIntervence.Controls.Add(this.label6);
+            this.gbIntervence.Controls.Add(this.dtIntervenceEnd);
+            this.gbIntervence.Controls.Add(this.tmIntervenceEnd);
             this.gbIntervence.Controls.Add(this.label5);
-            this.gbIntervence.Controls.Add(this.numericUpDown4);
-            this.gbIntervence.Controls.Add(this.numericUpDown3);
+            this.gbIntervence.Controls.Add(this.txtNrCelkem);
+            this.gbIntervence.Controls.Add(this.txtNrOstatnimOsobam);
             this.gbIntervence.Controls.Add(this.label4);
             this.gbIntervence.Controls.Add(this.label3);
-            this.gbIntervence.Controls.Add(this.numericUpDown2);
+            this.gbIntervence.Controls.Add(this.txtNrPozustalymBlizkym);
             this.gbIntervence.Controls.Add(this.txtNrObet);
-            this.gbIntervence.Controls.Add(this.numericUpDown1);
+            this.gbIntervence.Controls.Add(this.txtNrObetemPoskozenym);
             this.gbIntervence.Controls.Add(this.label2);
             this.gbIntervence.Controls.Add(this.lblIntervenceNote);
             this.gbIntervence.Controls.Add(this.txtIntervenceNote);
-            this.gbIntervence.Controls.Add(this.dateTimePicker3);
+            this.gbIntervence.Controls.Add(this.dtIntervence);
             this.gbIntervence.Controls.Add(this.label1);
-            this.gbIntervence.Controls.Add(this.dateTimePicker4);
+            this.gbIntervence.Controls.Add(this.tmIntervence);
             this.gbIntervence.Location = new System.Drawing.Point(3, 222);
             this.gbIntervence.Name = "gbIntervence";
             this.gbIntervence.Size = new System.Drawing.Size(1138, 131);
             this.gbIntervence.TabIndex = 24;
             this.gbIntervence.TabStop = false;
             this.gbIntervence.Text = "Základní údaje o intervenci";
+            this.gbIntervence.Enter += new System.EventHandler(this.gbIntervence_Enter);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(398, 28);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(21, 15);
+            this.label6.TabIndex = 44;
+            this.label6.Text = "do\r\n";
+            // 
+            // dtIntervenceEnd
+            // 
+            this.dtIntervenceEnd.CustomFormat = "dd-MM-yyyy";
+            this.dtIntervenceEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtIntervenceEnd.Location = new System.Drawing.Point(435, 22);
+            this.dtIntervenceEnd.Name = "dtIntervenceEnd";
+            this.dtIntervenceEnd.Size = new System.Drawing.Size(87, 23);
+            this.dtIntervenceEnd.TabIndex = 43;
+            // 
+            // tmIntervenceEnd
+            // 
+            this.tmIntervenceEnd.CustomFormat = "hh:mm";
+            this.tmIntervenceEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.tmIntervenceEnd.Location = new System.Drawing.Point(544, 22);
+            this.tmIntervenceEnd.Name = "tmIntervenceEnd";
+            this.tmIntervenceEnd.Size = new System.Drawing.Size(87, 23);
+            this.tmIntervenceEnd.TabIndex = 42;
             // 
             // label5
             // 
@@ -379,19 +415,20 @@ namespace EvitelApp2.Controls
             this.label5.TabIndex = 41;
             this.label5.Text = "CELKEM";
             // 
-            // numericUpDown4
+            // txtNrCelkem
             // 
-            this.numericUpDown4.Location = new System.Drawing.Point(93, 80);
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Size = new System.Drawing.Size(85, 23);
-            this.numericUpDown4.TabIndex = 40;
+            this.txtNrCelkem.Location = new System.Drawing.Point(93, 80);
+            this.txtNrCelkem.Name = "txtNrCelkem";
+            this.txtNrCelkem.Size = new System.Drawing.Size(85, 23);
+            this.txtNrCelkem.TabIndex = 40;
+            this.txtNrCelkem.Validating += new System.ComponentModel.CancelEventHandler(this.txtNrCelkem_Validating);
             // 
-            // numericUpDown3
+            // txtNrOstatnimOsobam
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(579, 80);
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(85, 23);
-            this.numericUpDown3.TabIndex = 39;
+            this.txtNrOstatnimOsobam.Location = new System.Drawing.Point(548, 80);
+            this.txtNrOstatnimOsobam.Name = "txtNrOstatnimOsobam";
+            this.txtNrOstatnimOsobam.Size = new System.Drawing.Size(85, 23);
+            this.txtNrOstatnimOsobam.TabIndex = 39;
             // 
             // label4
             // 
@@ -411,12 +448,12 @@ namespace EvitelApp2.Controls
             this.label3.TabIndex = 37;
             this.label3.Text = "POZŮSTALÝM/BLÍZKÝM";
             // 
-            // numericUpDown2
+            // txtNrPozustalymBlizkym
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(455, 80);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(85, 23);
-            this.numericUpDown2.TabIndex = 36;
+            this.txtNrPozustalymBlizkym.Location = new System.Drawing.Point(431, 80);
+            this.txtNrPozustalymBlizkym.Name = "txtNrPozustalymBlizkym";
+            this.txtNrPozustalymBlizkym.Size = new System.Drawing.Size(85, 23);
+            this.txtNrPozustalymBlizkym.TabIndex = 36;
             // 
             // txtNrObet
             // 
@@ -427,12 +464,12 @@ namespace EvitelApp2.Controls
             this.txtNrObet.TabIndex = 35;
             this.txtNrObet.Text = "OBĚTEM/POŠKOZENÝM";
             // 
-            // numericUpDown1
+            // txtNrObetemPoskozenym
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(311, 80);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(85, 23);
-            this.numericUpDown1.TabIndex = 34;
+            this.txtNrObetemPoskozenym.Location = new System.Drawing.Point(311, 80);
+            this.txtNrObetemPoskozenym.Name = "txtNrObetemPoskozenym";
+            this.txtNrObetemPoskozenym.Size = new System.Drawing.Size(85, 23);
+            this.txtNrObetemPoskozenym.TabIndex = 34;
             // 
             // label2
             // 
@@ -460,44 +497,54 @@ namespace EvitelApp2.Controls
             this.txtIntervenceNote.Size = new System.Drawing.Size(421, 89);
             this.txtIntervenceNote.TabIndex = 31;
             // 
-            // dateTimePicker3
+            // dtIntervence
             // 
-            this.dateTimePicker3.CustomFormat = "dd-MM-yyyy";
-            this.dateTimePicker3.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker3.Location = new System.Drawing.Point(143, 22);
-            this.dateTimePicker3.Name = "dateTimePicker3";
-            this.dateTimePicker3.Size = new System.Drawing.Size(87, 23);
-            this.dateTimePicker3.TabIndex = 28;
+            this.dtIntervence.CustomFormat = "dd-MM-yyyy";
+            this.dtIntervence.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtIntervence.Location = new System.Drawing.Point(166, 22);
+            this.dtIntervence.Name = "dtIntervence";
+            this.dtIntervence.Size = new System.Drawing.Size(87, 23);
+            this.dtIntervence.TabIndex = 28;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(2, 28);
+            this.label1.Location = new System.Drawing.Point(7, 28);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(130, 15);
+            this.label1.Size = new System.Drawing.Size(153, 15);
             this.label1.TabIndex = 29;
-            this.label1.Text = "Datum a čas intervence";
+            this.label1.Text = "Datum a čas intervence  od:";
             // 
-            // dateTimePicker4
+            // tmIntervence
             // 
-            this.dateTimePicker4.CustomFormat = "hh:mm";
-            this.dateTimePicker4.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker4.Location = new System.Drawing.Point(251, 22);
-            this.dateTimePicker4.Name = "dateTimePicker4";
-            this.dateTimePicker4.Size = new System.Drawing.Size(87, 23);
-            this.dateTimePicker4.TabIndex = 30;
+            this.tmIntervence.CustomFormat = "hh:mm";
+            this.tmIntervence.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.tmIntervence.Location = new System.Drawing.Point(259, 22);
+            this.tmIntervence.Name = "tmIntervence";
+            this.tmIntervence.Size = new System.Drawing.Size(87, 23);
+            this.tmIntervence.TabIndex = 30;
+            // 
+            // ucParticipations1
+            // 
+            this.ucParticipations1.Location = new System.Drawing.Point(0, 359);
+            this.ucParticipations1.Name = "ucParticipations1";
+            this.ucParticipations1.Size = new System.Drawing.Size(1141, 388);
+            this.ucParticipations1.TabIndex = 25;
+            this.ucParticipations1.Load += new System.EventHandler(this.ucParticipations1_Load);
             // 
             // ucCallLIKO
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.ucParticipations1);
             this.Controls.Add(this.gbIntervence);
             this.Controls.Add(this.boxEvent);
             this.Controls.Add(this.boxCall);
             this.Controls.Add(this.lblRegion);
             this.Name = "ucCallLIKO";
-            this.Size = new System.Drawing.Size(1141, 636);
+            this.Size = new System.Drawing.Size(1144, 666);
             this.Load += new System.EventHandler(this.ucCallLIKO_Load);
+            this.Resize += new System.EventHandler(this.ucCallLIKO_Resize);
             this.boxCall.ResumeLayout(false);
             this.boxCall.PerformLayout();
             this.boxEvent.ResumeLayout(false);
@@ -505,10 +552,10 @@ namespace EvitelApp2.Controls
             ((System.ComponentModel.ISupportInitialize)(this.txtPocetObeti)).EndInit();
             this.gbIntervence.ResumeLayout(false);
             this.gbIntervence.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtNrCelkem)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtNrOstatnimOsobam)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtNrPozustalymBlizkym)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtNrObetemPoskozenym)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -524,9 +571,9 @@ namespace EvitelApp2.Controls
         private System.Windows.Forms.ComboBox cmbIntervent;
         private System.Windows.Forms.DateTimePicker tmCall;
         private System.Windows.Forms.Button btnWrite;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker tmIncident;
         private System.Windows.Forms.Label lblUdalost;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker dtIncident;
         private System.Windows.Forms.Label lblDruhUdalosti;
         private System.Windows.Forms.TextBox txtEventNote;
         private System.Windows.Forms.Label lblNoteEvent;
@@ -545,19 +592,23 @@ namespace EvitelApp2.Controls
         private System.Windows.Forms.GroupBox gbIntervence;
         private System.Windows.Forms.Label lblIntervenceNote;
         private System.Windows.Forms.TextBox txtIntervenceNote;
-        private System.Windows.Forms.DateTimePicker dateTimePicker3;
+        private System.Windows.Forms.DateTimePicker dtIntervence;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker4;
+        private System.Windows.Forms.DateTimePicker tmIntervence;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown numericUpDown4;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
+        private System.Windows.Forms.NumericUpDown txtNrCelkem;
+        private System.Windows.Forms.NumericUpDown txtNrOstatnimOsobam;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.NumericUpDown txtNrPozustalymBlizkym;
         private System.Windows.Forms.Label txtNrObet;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown txtNrObetemPoskozenym;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cmbRegion;
-    }
+    private System.Windows.Forms.Label label6;
+    private System.Windows.Forms.DateTimePicker dtIntervenceEnd;
+    private System.Windows.Forms.DateTimePicker tmIntervenceEnd;
+    private ucParticipations ucParticipations1;
+  }
 
 }

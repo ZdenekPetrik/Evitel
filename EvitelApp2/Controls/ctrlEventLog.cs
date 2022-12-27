@@ -119,9 +119,7 @@ namespace EvitelApp2.Controls
 
 //            ReReadData();
             DataGridViewColumn newColumn1 = dgw.Columns[e.ColumnIndex];
-            newColumn1.HeaderCell.SortGlyphDirection =
-                dgw.mySort.Order == ListSortDirection.Ascending ?
-                SortOrder.Ascending : SortOrder.Descending;
+            newColumn1.HeaderCell.SortGlyphDirection = dgw.mySort.Order == ListSortDirection.Ascending ? SortOrder.Ascending : SortOrder.Descending;
             dgw.mySort.ColumnName = newColumn.Name;
         }
 

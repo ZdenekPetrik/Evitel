@@ -8,7 +8,6 @@ namespace EvitelLib2.Model
         public Region()
         {
             Intervents = new HashSet<Intervent>();
-            Likointervences = new HashSet<Likointervence>();
         }
 
         public int RegionId { get; set; }
@@ -18,6 +17,5 @@ namespace EvitelLib2.Model
         public int? RegionOrder { get; set; }
 
         public virtual ICollection<Intervent> Intervents { get; set; }
-        public virtual ICollection<Likointervence> Likointervences { get; set; }
     }
 }

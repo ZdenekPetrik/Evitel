@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AdvancedDataGridView\AdvancedDataGridView.csproj" />
     <ProjectReference Include="..\EvitelLib2\EvitelLib2.csproj" />
   </ItemGroup>
 

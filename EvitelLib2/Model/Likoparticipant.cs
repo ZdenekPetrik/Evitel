@@ -13,7 +13,7 @@ namespace EvitelLib2.Model
         public bool? IsDead { get; set; }
         public bool? IsInjury { get; set; }
         public bool? IsIntervence { get; set; }
-        public bool? IsFirstIntevence { get; set; }
+        public bool? IsFirstIntervence { get; set; }
         public int? DruhIntervenceEid { get; set; }
         public int? InterventId { get; set; }
         public bool? IsAgreement { get; set; }
@@ -22,10 +22,11 @@ namespace EvitelLib2.Model
         public bool? IsPolicementClosePerson { get; set; }
         public bool? IsSenior { get; set; }
         public bool? IsChildJuvenile { get; set; }
-        public bool? IsHandycappedMedical { get; set; }
+        public bool? IsHandyCappedMedical { get; set; }
         public bool? IsHandyCappedMentally { get; set; }
         public bool? IsMemberMinorityGroup { get; set; }
         public string Organization { get; set; }
+        public string Note { get; set; }
 
         public virtual EDruhIntervence DruhIntervenceE { get; set; }
         public virtual Intervent Intervent { get; set; }

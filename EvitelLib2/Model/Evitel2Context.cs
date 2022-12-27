@@ -108,9 +108,9 @@ namespace EvitelLib2.Model
 
                 entity.ToTable("eSex");
 
-                entity.Property(e => e.DtDelete)
+                entity.Property(e => e.DtDeleted)
                     .HasColumnType("datetime")
-                    .HasColumnName("dtDelete");
+                    .HasColumnName("dtDeleted");
 
                 entity.Property(e => e.Text).HasMaxLength(50);
             });
@@ -158,9 +158,9 @@ namespace EvitelLib2.Model
 
                 entity.ToTable("eTypeParty");
 
-                entity.Property(e => e.DtDelete)
+                entity.Property(e => e.DtDeleted)
                     .HasColumnType("datetime")
-                    .HasColumnName("dtDelete");
+                    .HasColumnName("dtDeleted");
 
                 entity.Property(e => e.Text).HasMaxLength(50);
             });
@@ -209,18 +209,13 @@ namespace EvitelLib2.Model
                     .HasColumnType("datetime")
                     .HasColumnName("dtIncident");
 
-                entity.Property(e => e.LikoincidentIdMaster).HasColumnName("LIKOIncidentIdMaster");
+                entity.Property(e => e.Place).HasMaxLength(50);
 
                 entity.Property(e => e.PokusPriprava).HasColumnName("Pokus_Priprava");
 
                 entity.Property(e => e.SubTypeIntervenceEid).HasColumnName("SubTypeIntervenceEID");
 
                 entity.Property(e => e.Title).HasMaxLength(100);
-
-                entity.HasOne(d => d.LikoincidentIdMasterNavigation)
-                    .WithMany(p => p.InverseLikoincidentIdMasterNavigation)
-                    .HasForeignKey(d => d.LikoincidentIdMaster)
-                    .HasConstraintName("FK_LIKOIncidents_LIKOIncidents");
 
                 entity.HasOne(d => d.SubTypeIntervenceE)
                     .WithMany(p => p.Likoincidents)
@@ -230,9 +225,11 @@ namespace EvitelLib2.Model
 
             modelBuilder.Entity<Likointervence>(entity =>
             {
-                entity.HasKey(e => e.IntervenceId);
-
                 entity.ToTable("LIKOIntervence");
+
+                entity.Property(e => e.LikointervenceId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("LIKOIntervenceId");
 
                 entity.Property(e => e.DtEndIntervence).HasColumnName("dtEndIntervence");
 
@@ -240,20 +237,18 @@ namespace EvitelLib2.Model
 
                 entity.Property(e => e.LikoincidentId).HasColumnName("LIKOIncidentId");
 
+                entity.Property(e => e.LikointervenceIdmaster).HasColumnName("LIKOIntervenceIDMaster");
+
                 entity.HasOne(d => d.Call)
                     .WithMany(p => p.Likointervences)
                     .HasForeignKey(d => d.CallId)
                     .HasConstraintName("FK_LIKOIntervence_Calls");
 
-                entity.HasOne(d => d.Likoincident)
-                    .WithMany(p => p.Likointervences)
-                    .HasForeignKey(d => d.LikoincidentId)
+                entity.HasOne(d => d.LikointervenceNavigation)
+                    .WithOne(p => p.Likointervence)
+                    .HasForeignKey<Likointervence>(d => d.LikointervenceId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_LIKOIntervence_LIKOIncidents");
-
-                entity.HasOne(d => d.Region)
-                    .WithMany(p => p.Likointervences)
-                    .HasForeignKey(d => d.RegionId)
-                    .HasConstraintName("FK_LIKOIntervence_Regions");
             });
 
             modelBuilder.Entity<Likoparticipant>(entity =>

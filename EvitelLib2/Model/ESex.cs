@@ -12,7 +12,7 @@ namespace EvitelLib2.Model
 
         public int SexId { get; set; }
         public string Text { get; set; }
-        public DateTime? DtDelete { get; set; }
+        public DateTime? DtDeleted { get; set; }
 
         public virtual ICollection<Likoparticipant> Likoparticipants { get; set; }
     }

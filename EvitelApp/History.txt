@@ -34,3 +34,4 @@
 14.12.2022 - Editace èíselníku Interventi. Stále problém skoro se vším. Asi to ale není jednoduché protože profi øešení stojí 1000$
 15.12.2012- Èíselníky bez editace s ADO.NET
 16.12.2022- Vyplnìní LIKO hovoru. Validace
+23.12.2022 - dokonèen zápis LIKO hovoru.

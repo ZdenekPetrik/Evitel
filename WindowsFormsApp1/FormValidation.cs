@@ -189,6 +189,24 @@ namespace WindowsFormsApp1
             return ((favoriteColorComboBox.SelectedItem != null) &&
                 (!favoriteColorComboBox.SelectedItem.ToString().Equals("None")));
         }
+
+    private void InitializeComponent()
+    {
+            this.SuspendLayout();
+            // 
+            // FormValidation
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "FormValidation";
+            this.Load += new System.EventHandler(this.FormValidation_Load);
+            this.ResumeLayout(false);
+
     }
+
+    private void FormValidation_Load(object sender, EventArgs e)
+    {
+
+    }
+  }
 }
 
