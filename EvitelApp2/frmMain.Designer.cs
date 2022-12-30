@@ -45,6 +45,8 @@ namespace EvitelApp2
             this.EnumDruhIntervenceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EnumPartyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EnumRegionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.MenuToolShowParticipation = new System.Windows.Forms.ToolStripMenuItem();
             this.NewCallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newCallLIKOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newCallLDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,6 +59,7 @@ namespace EvitelApp2
             this.ucCallLIKO1 = new EvitelApp2.Controls.ucCallLIKO();
             this.ucIntervents1 = new EvitelApp2.Controls.ucIntervents();
             this.ucCiselnik1 = new EvitelApp2.Controls.ucCiselnik();
+            this.ctrlParticipation1 = new EvitelApp2.Controls.ctrlParticipant();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -112,7 +115,9 @@ namespace EvitelApp2
             this.viewsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuToolEventLog,
             this.interventiToolStripMenuItem,
-            this.EnumsMenuItem});
+            this.EnumsMenuItem,
+            this.toolStripMenuItem2,
+            this.MenuToolShowParticipation});
             this.viewsToolStripMenuItem.Name = "viewsToolStripMenuItem";
             this.viewsToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.viewsToolStripMenuItem.Text = "Zobrazení";
@@ -148,43 +153,55 @@ namespace EvitelApp2
             // EnumsSexMenuItem
             // 
             this.EnumsSexMenuItem.Name = "EnumsSexMenuItem";
-            this.EnumsSexMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.EnumsSexMenuItem.Size = new System.Drawing.Size(172, 22);
             this.EnumsSexMenuItem.Text = "Pohlaví";
             this.EnumsSexMenuItem.Click += new System.EventHandler(this.EnumsSexMenuItem_Click);
             // 
             // EnumTypIntervenceMenuItem
             // 
             this.EnumTypIntervenceMenuItem.Name = "EnumTypIntervenceMenuItem";
-            this.EnumTypIntervenceMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.EnumTypIntervenceMenuItem.Size = new System.Drawing.Size(172, 22);
             this.EnumTypIntervenceMenuItem.Text = "Typ Intervence";
             this.EnumTypIntervenceMenuItem.Click += new System.EventHandler(this.EnumTypIntervenceMenuItem_Click);
             // 
             // EnumSubTypIntervenceMenuItem
             // 
             this.EnumSubTypIntervenceMenuItem.Name = "EnumSubTypIntervenceMenuItem";
-            this.EnumSubTypIntervenceMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.EnumSubTypIntervenceMenuItem.Size = new System.Drawing.Size(172, 22);
             this.EnumSubTypIntervenceMenuItem.Text = "Sub-TypIntervence";
             this.EnumSubTypIntervenceMenuItem.Click += new System.EventHandler(this.EnumSubTypIntervenceMenuItem_Click);
             // 
             // EnumDruhIntervenceMenuItem
             // 
             this.EnumDruhIntervenceMenuItem.Name = "EnumDruhIntervenceMenuItem";
-            this.EnumDruhIntervenceMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.EnumDruhIntervenceMenuItem.Size = new System.Drawing.Size(172, 22);
             this.EnumDruhIntervenceMenuItem.Text = "Druh Intervence";
             // 
             // EnumPartyToolStripMenuItem
             // 
             this.EnumPartyToolStripMenuItem.Name = "EnumPartyToolStripMenuItem";
-            this.EnumPartyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.EnumPartyToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.EnumPartyToolStripMenuItem.Text = "Forma Účasti";
             this.EnumPartyToolStripMenuItem.Click += new System.EventHandler(this.EnumPartyToolStripMenuItem_Click);
             // 
             // EnumRegionMenuItem
             // 
             this.EnumRegionMenuItem.Name = "EnumRegionMenuItem";
-            this.EnumRegionMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.EnumRegionMenuItem.Size = new System.Drawing.Size(172, 22);
             this.EnumRegionMenuItem.Text = "Kraje";
             this.EnumRegionMenuItem.Click += new System.EventHandler(this.EnumRegionMenuItem_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
+            // 
+            // MenuToolShowParticipation
+            // 
+            this.MenuToolShowParticipation.Name = "MenuToolShowParticipation";
+            this.MenuToolShowParticipation.Size = new System.Drawing.Size(180, 22);
+            this.MenuToolShowParticipation.Text = "Účastníci Intervence";
+            this.MenuToolShowParticipation.Click += new System.EventHandler(this.MenuToolShowParticipation_Click);
             // 
             // NewCallToolStripMenuItem
             // 
@@ -282,11 +299,19 @@ namespace EvitelApp2
             this.ucCiselnik1.Size = new System.Drawing.Size(423, 197);
             this.ucCiselnik1.TabIndex = 6;
             // 
+            // ctrlParticipation1
+            // 
+            this.ctrlParticipation1.Location = new System.Drawing.Point(0, 296);
+            this.ctrlParticipation1.Name = "ctrlParticipation1";
+            this.ctrlParticipation1.Size = new System.Drawing.Size(272, 171);
+            this.ctrlParticipation1.TabIndex = 7;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1405, 557);
+            this.Controls.Add(this.ctrlParticipation1);
             this.Controls.Add(this.ucCiselnik1);
             this.Controls.Add(this.ucIntervents1);
             this.Controls.Add(this.ucCallLIKO1);
@@ -337,6 +362,9 @@ namespace EvitelApp2
         private System.Windows.Forms.ToolStripMenuItem EnumDruhIntervenceMenuItem;
         private System.Windows.Forms.ToolStripMenuItem EnumPartyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem EnumRegionMenuItem;
-    }
+    private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+    private System.Windows.Forms.ToolStripMenuItem MenuToolShowParticipation;
+    private Controls.ctrlParticipant ctrlParticipation1;
+  }
 }
 

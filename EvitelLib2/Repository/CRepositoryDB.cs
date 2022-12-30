@@ -619,7 +619,7 @@ namespace EvitelLib2.Repository
 
     }
 
-    public int WriteIntervence(DateTime datetimeStartIntervence, DateTime datetimeEndIntervence, int callId, int incidentId, string note, int value, int NrObetemPoskozenym, int NrPozustalymBlizkym, int NrOstatnimOsobam)
+    public int WriteIntervence(DateTime datetimeStartIntervence, DateTime datetimeEndIntervence, int callId, int incidentId, string note, int value, int NrObetemPoskozenym, int NrPozustalymBlizkym, int NrOstatnimOsobam, int InterventId)
     {
       sErr = "";
       Evitel2Context db = new Evitel2Context();
@@ -634,7 +634,8 @@ namespace EvitelLib2.Repository
           LikoincidentId = incidentId,
           ObetemPoskozenym = NrObetemPoskozenym,
           PozustalymBlizkym = NrPozustalymBlizkym,
-          Ostatnim = NrOstatnimOsobam
+          Ostatnim = NrOstatnimOsobam,
+          InterventId = InterventId
         };
         db.Likointervences.Add(intervence);
         db.SaveChanges();
@@ -716,6 +717,22 @@ namespace EvitelLib2.Repository
         new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "AddParticipant() " + GetInnerException(Ex), "", IdUser);
       }
       return -1;
+    }
+
+    public List<WParticipant> GetParticipant(bool isDeepRead)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        return  (from par in db.WParticipants select par).ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetParticipant() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
     }
   }
 }

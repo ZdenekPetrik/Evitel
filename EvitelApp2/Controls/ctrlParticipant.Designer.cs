@@ -1,6 +1,6 @@
 ﻿namespace EvitelApp2.Controls
 {
-  partial class ctrlParticipation
+  partial class ctrlParticipant
   {
     /// <summary> 
     /// Required designer variable.
@@ -28,32 +28,32 @@
     /// </summary>
     private void InitializeComponent()
     {
-            this.components = new System.ComponentModel.Container();
-            this.dgw = new EvitelApp2.MyUserControl.ucDataGridView(this.components);
+            this.dgw = new Zuby.ADGV.AdvancedDataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgw)).BeginInit();
             this.SuspendLayout();
             // 
             // dgw
             // 
-            this.dgw.AllowUserToAddRows = false;
-            this.dgw.AllowUserToDeleteRows = false;
-            this.dgw.AllowUserToOrderColumns = true;
-            this.dgw.AllowUserToResizeRows = false;
             this.dgw.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgw.Location = new System.Drawing.Point(297, 101);
-            this.dgw.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.dgw.FilterAndSortEnabled = true;
+            this.dgw.FilterStringChangedInvokeBeforeDatasourceUpdate = true;
+            this.dgw.Location = new System.Drawing.Point(3, 3);
             this.dgw.Name = "dgw";
-            this.dgw.Size = new System.Drawing.Size(230, 121);
-            this.dgw.TabIndex = 2;
+            this.dgw.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.dgw.RowTemplate.Height = 25;
+            this.dgw.Size = new System.Drawing.Size(240, 150);
+            this.dgw.SortStringChangedInvokeBeforeDatasourceUpdate = true;
+            this.dgw.TabIndex = 3;
             // 
-            // ctrlParticipation
+            // ctrlParticipant
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.dgw);
-            this.Name = "ctrlParticipation";
-            this.Size = new System.Drawing.Size(824, 323);
+            this.Name = "ctrlParticipant";
+            this.Size = new System.Drawing.Size(259, 168);
             this.Load += new System.EventHandler(this.ctrlParticipation_Load);
+            this.Resize += new System.EventHandler(this.ctrlParticipant_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.dgw)).EndInit();
             this.ResumeLayout(false);
 
@@ -61,6 +61,6 @@
 
     #endregion
 
-    private MyUserControl.ucDataGridView dgw;
+    private Zuby.ADGV.AdvancedDataGridView dgw;
   }
 }

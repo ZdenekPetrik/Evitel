@@ -256,5 +256,19 @@ namespace EvitelApp2.Controls
       isReadOnly = false;
       Type = 1;   // z nedostatku invence 1 = Text, 2 = CheckBox, 3 = Combo
     }
+    public Type GetMyType() { 
+    switch (Type)
+      {
+        case 1:
+          return typeof(string);
+        case 2:
+          return typeof(bool);
+        case 3:
+          return typeof(int);
+        case 4:
+          return typeof(int);
+      }
+      return typeof(string);
+    }
   }
 }

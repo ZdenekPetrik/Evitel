@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EvitelLib2.Model
 {
-    public partial class Likoparticipant
+    public partial class WParticipant
     {
         public int LikoparticipantId { get; set; }
         public int? LikointervenceId { get; set; }
@@ -27,10 +27,21 @@ namespace EvitelLib2.Model
         public bool? IsMemberMinorityGroup { get; set; }
         public string Organization { get; set; }
         public string Note { get; set; }
-
-        public virtual EDruhIntervence DruhIntervenceE { get; set; }
-        public virtual Likointervence Likointervence { get; set; }
-        public virtual ESex SexE { get; set; }
-        public virtual ETypeParty TypePartyE { get; set; }
+        public DateTime? DtStartIntervence { get; set; }
+        public DateTime? DtEndIntervence { get; set; }
+        public string IntervenceNote { get; set; }
+        public int? ObetemPoskozenym { get; set; }
+        public int? PozustalymBlizkym { get; set; }
+        public int? Ostatnim { get; set; }
+        public int? LikointervenceIdmaster { get; set; }
+        public DateTime? DtStartCall { get; set; }
+        public DateTime? DtEndCall { get; set; }
+        public string UsrFirstName { get; set; }
+        public string UsrLastName { get; set; }
+        public string SexText { get; set; }
+        public string DruhIntervenceText { get; set; }
+        public string TypePartyText { get; set; }
+        public int? Expr1 { get; set; }
+        public string InterventName { get; set; }
     }
 }

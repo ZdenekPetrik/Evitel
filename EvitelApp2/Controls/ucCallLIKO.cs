@@ -109,11 +109,11 @@ namespace EvitelApp2.Controls
         {
           DateTime datetimeStartIntervence = dtIntervence.Value.Date.Add(TimeSpan.Parse(dtIntervence.Value.ToShortTimeString()));
           DateTime datetimeEndIntervence = dtIntervenceEnd.Value.Date.Add(TimeSpan.Parse(dtIntervenceEnd.Value.ToShortTimeString()));
-          int IntervenceId = DB.WriteIntervence(datetimeStartIntervence, datetimeEndIntervence, CallId, IncidentId, txtIntervenceNote.Text, (int)txtNrCelkem.Value, (int)txtNrObetemPoskozenym.Value, (int)txtNrPozustalymBlizkym.Value, (int)txtNrOstatnimOsobam.Value);
+          int IntervenceId = DB.WriteIntervence(datetimeStartIntervence, datetimeEndIntervence, CallId, IncidentId, txtIntervenceNote.Text, (int)txtNrCelkem.Value, (int)txtNrObetemPoskozenym.Value, (int)txtNrPozustalymBlizkym.Value, (int)txtNrOstatnimOsobam.Value, ((ComboItem)cmbIntervent.SelectedItem).iValue);
           if (IntervenceId > 0)
           {
             foreach (var aktPartycipant in ucParticipations1.participantsList) {
-              aktPartycipant.LikoincidentId = IncidentId;
+              aktPartycipant.LikointervenceId = IntervenceId;
               if (DB.AddParticipant(aktPartycipant) < 1)
                 break;
             }

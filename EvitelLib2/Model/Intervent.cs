@@ -5,11 +5,6 @@ namespace EvitelLib2.Model
 {
     public partial class Intervent
     {
-        public Intervent()
-        {
-            Likoparticipants = new HashSet<Likoparticipant>();
-        }
-
         public int InterventId { get; set; }
         public string Rank { get; set; }
         public string Title { get; set; }
@@ -25,6 +20,6 @@ namespace EvitelLib2.Model
         public DateTime DtCreate { get; set; }
 
         public virtual Region Region { get; set; }
-        public virtual ICollection<Likoparticipant> Likoparticipants { get; set; }
+        public virtual Call Call { get; set; }
     }
 }

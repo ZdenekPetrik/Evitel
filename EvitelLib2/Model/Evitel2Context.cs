@@ -17,7 +17,6 @@ namespace EvitelLib2.Model
         }
 
         public virtual DbSet<Call> Calls { get; set; }
-        public virtual DbSet<DataDq> DataDqs { get; set; }
         public virtual DbSet<EDruhIntervence> EDruhIntervences { get; set; }
         public virtual DbSet<ESex> ESexes { get; set; }
         public virtual DbSet<ESubTypeIntervence> ESubTypeIntervences { get; set; }
@@ -36,8 +35,11 @@ namespace EvitelLib2.Model
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<UserColumn> UserColumns { get; set; }
         public virtual DbSet<UserSetting> UserSettings { get; set; }
+        public virtual DbSet<WIntervence> WIntervences { get; set; }
         public virtual DbSet<WIntervent> WIntervents { get; set; }
+        public virtual DbSet<WLikocall> WLikocalls { get; set; }
         public virtual DbSet<WMainEventLog> WMainEventLogs { get; set; }
+        public virtual DbSet<WParticipant> WParticipants { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -52,41 +54,22 @@ namespace EvitelLib2.Model
         {
             modelBuilder.Entity<Call>(entity =>
             {
+                entity.Property(e => e.CallId).ValueGeneratedOnAdd();
+
                 entity.Property(e => e.DtEndCall).HasColumnName("dtEndCall");
 
                 entity.Property(e => e.DtStartCall).HasColumnName("dtStartCall");
+
+                entity.HasOne(d => d.CallNavigation)
+                    .WithOne(p => p.Call)
+                    .HasForeignKey<Call>(d => d.CallId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Calls_Intervents");
 
                 entity.HasOne(d => d.LoginUser)
                     .WithMany(p => p.Calls)
                     .HasForeignKey(d => d.LoginUserId)
                     .HasConstraintName("FK_Calls_LoginUsers");
-            });
-
-            modelBuilder.Entity<DataDq>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("Data_dq");
-
-                entity.Property(e => e.F10).HasMaxLength(255);
-
-                entity.Property(e => e.F2).HasMaxLength(255);
-
-                entity.Property(e => e.F3).HasMaxLength(255);
-
-                entity.Property(e => e.F4).HasMaxLength(255);
-
-                entity.Property(e => e.F5).HasMaxLength(255);
-
-                entity.Property(e => e.F7).HasMaxLength(255);
-
-                entity.Property(e => e.F8).HasMaxLength(255);
-
-                entity.Property(e => e.F9).HasMaxLength(255);
-
-                entity.Property(e => e._1Praha)
-                    .HasMaxLength(255)
-                    .HasColumnName("1  PRAHA");
             });
 
             modelBuilder.Entity<EDruhIntervence>(entity =>
@@ -117,8 +100,7 @@ namespace EvitelLib2.Model
 
             modelBuilder.Entity<ESubTypeIntervence>(entity =>
             {
-                entity.HasKey(e => e.SubTypeIntervenceId)
-                    .HasName("PK_eSubEvent");
+                entity.HasKey(e => e.SubTypeIntervenceId);
 
                 entity.ToTable("eSubTypeIntervence");
 
@@ -133,7 +115,7 @@ namespace EvitelLib2.Model
                 entity.HasOne(d => d.TypeIntervence)
                     .WithMany(p => p.ESubTypeIntervences)
                     .HasForeignKey(d => d.TypeIntervenceId)
-                    .HasConstraintName("FK_eSubTypeIntevence_eTypeIntervence");
+                    .HasConstraintName("FK_eSubTypeIntervence_eTypeIntervence");
             });
 
             modelBuilder.Entity<ETypeIntervence>(entity =>
@@ -216,11 +198,6 @@ namespace EvitelLib2.Model
                 entity.Property(e => e.SubTypeIntervenceEid).HasColumnName("SubTypeIntervenceEID");
 
                 entity.Property(e => e.Title).HasMaxLength(100);
-
-                entity.HasOne(d => d.SubTypeIntervenceE)
-                    .WithMany(p => p.Likoincidents)
-                    .HasForeignKey(d => d.SubTypeIntervenceEid)
-                    .HasConstraintName("FK_LIKOIncidents_eSubTypeIntervence");
             });
 
             modelBuilder.Entity<Likointervence>(entity =>
@@ -259,7 +236,7 @@ namespace EvitelLib2.Model
 
                 entity.Property(e => e.DruhIntervenceEid).HasColumnName("DruhIntervenceEID");
 
-                entity.Property(e => e.LikoincidentId).HasColumnName("LIKOIncidentId");
+                entity.Property(e => e.LikointervenceId).HasColumnName("LIKOIntervenceId");
 
                 entity.Property(e => e.Organization).HasMaxLength(255);
 
@@ -272,15 +249,10 @@ namespace EvitelLib2.Model
                     .HasForeignKey(d => d.DruhIntervenceEid)
                     .HasConstraintName("FK_LIKOParticipant_eDruhIntervence");
 
-                entity.HasOne(d => d.Intervent)
+                entity.HasOne(d => d.Likointervence)
                     .WithMany(p => p.Likoparticipants)
-                    .HasForeignKey(d => d.InterventId)
-                    .HasConstraintName("FK_LIKOParticipant_LIKOParticipant1");
-
-                entity.HasOne(d => d.Likoincident)
-                    .WithMany(p => p.Likoparticipants)
-                    .HasForeignKey(d => d.LikoincidentId)
-                    .HasConstraintName("FK_LIKOParticipant_LIKOIncidents");
+                    .HasForeignKey(d => d.LikointervenceId)
+                    .HasConstraintName("FK_LIKOParticipant_LIKOIntervence");
 
                 entity.HasOne(d => d.SexE)
                     .WithMany(p => p.Likoparticipants)
@@ -379,6 +351,39 @@ namespace EvitelLib2.Model
                 entity.Property(e => e.SValue).HasColumnName("sValue");
             });
 
+            modelBuilder.Entity<WIntervence>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("wIntervence");
+
+                entity.Property(e => e.CmbName)
+                    .HasMaxLength(114)
+                    .HasColumnName("cmbName");
+
+                entity.Property(e => e.DtEndCall).HasColumnName("dtEndCall");
+
+                entity.Property(e => e.DtEndIntervence).HasColumnName("dtEndIntervence");
+
+                entity.Property(e => e.DtStartCall).HasColumnName("dtStartCall");
+
+                entity.Property(e => e.DtStartIntervence).HasColumnName("dtStartIntervence");
+
+                entity.Property(e => e.LikoincidentId).HasColumnName("LIKOIncidentId");
+
+                entity.Property(e => e.LikointervenceId).HasColumnName("LIKOIntervenceId");
+
+                entity.Property(e => e.LikointervenceIdmaster).HasColumnName("LIKOIntervenceIDMaster");
+
+                entity.Property(e => e.UsrFirstName)
+                    .HasMaxLength(50)
+                    .HasColumnName("usrFirstName");
+
+                entity.Property(e => e.UsrLastName)
+                    .HasMaxLength(50)
+                    .HasColumnName("usrLastName");
+            });
+
             modelBuilder.Entity<WIntervent>(entity =>
             {
                 entity.HasNoKey();
@@ -414,6 +419,25 @@ namespace EvitelLib2.Model
                 entity.Property(e => e.Title).HasMaxLength(20);
             });
 
+            modelBuilder.Entity<WLikocall>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("wLIKOCalls");
+
+                entity.Property(e => e.DtEndCall).HasColumnName("dtEndCall");
+
+                entity.Property(e => e.DtStartCall).HasColumnName("dtStartCall");
+
+                entity.Property(e => e.UsrFirstName)
+                    .HasMaxLength(50)
+                    .HasColumnName("usrFirstName");
+
+                entity.Property(e => e.UsrLastName)
+                    .HasMaxLength(50)
+                    .HasColumnName("usrLastName");
+            });
+
             modelBuilder.Entity<WMainEventLog>(entity =>
             {
                 entity.HasNoKey();
@@ -435,6 +459,53 @@ namespace EvitelLib2.Model
                 entity.Property(e => e.UserFirstName).HasMaxLength(50);
 
                 entity.Property(e => e.UserLastName).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<WParticipant>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("wParticipant");
+
+                entity.Property(e => e.DruhIntervenceEid).HasColumnName("DruhIntervenceEID");
+
+                entity.Property(e => e.DruhIntervenceText).HasMaxLength(50);
+
+                entity.Property(e => e.DtEndCall).HasColumnName("dtEndCall");
+
+                entity.Property(e => e.DtEndIntervence).HasColumnName("dtEndIntervence");
+
+                entity.Property(e => e.DtStartCall).HasColumnName("dtStartCall");
+
+                entity.Property(e => e.DtStartIntervence).HasColumnName("dtStartIntervence");
+
+                entity.Property(e => e.IntervenceNote).HasColumnName("intervenceNote");
+
+                entity.Property(e => e.InterventName).HasMaxLength(114);
+
+                entity.Property(e => e.LikointervenceId).HasColumnName("LIKOIntervenceId");
+
+                entity.Property(e => e.LikointervenceIdmaster).HasColumnName("LIKOIntervenceIDMaster");
+
+                entity.Property(e => e.LikoparticipantId).HasColumnName("LIKOParticipantId");
+
+                entity.Property(e => e.Organization).HasMaxLength(255);
+
+                entity.Property(e => e.SexEid).HasColumnName("SexEID");
+
+                entity.Property(e => e.SexText).HasMaxLength(50);
+
+                entity.Property(e => e.TypePartyEid).HasColumnName("TypePartyEID");
+
+                entity.Property(e => e.TypePartyText).HasMaxLength(50);
+
+                entity.Property(e => e.UsrFirstName)
+                    .HasMaxLength(50)
+                    .HasColumnName("usrFirstName");
+
+                entity.Property(e => e.UsrLastName)
+                    .HasMaxLength(50)
+                    .HasColumnName("usrLastName");
             });
 
             OnModelCreatingPartial(modelBuilder);

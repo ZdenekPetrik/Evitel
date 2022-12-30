@@ -3,13 +3,8 @@ using System.Collections.Generic;
 
 namespace EvitelLib2.Model
 {
-    public partial class Likointervence
+    public partial class WIntervence
     {
-        public Likointervence()
-        {
-            Likoparticipants = new HashSet<Likoparticipant>();
-        }
-
         public int LikointervenceId { get; set; }
         public int? CallId { get; set; }
         public int? LikoincidentId { get; set; }
@@ -20,10 +15,12 @@ namespace EvitelLib2.Model
         public int? PozustalymBlizkym { get; set; }
         public int? Ostatnim { get; set; }
         public int? LikointervenceIdmaster { get; set; }
+        public DateTime? DtStartCall { get; set; }
+        public DateTime? DtEndCall { get; set; }
+        public int? LoginUserId { get; set; }
+        public string UsrFirstName { get; set; }
+        public string UsrLastName { get; set; }
         public int? InterventId { get; set; }
-
-        public virtual Call Call { get; set; }
-        public virtual Likoincident LikointervenceNavigation { get; set; }
-        public virtual ICollection<Likoparticipant> Likoparticipants { get; set; }
+        public string CmbName { get; set; }
     }
 }

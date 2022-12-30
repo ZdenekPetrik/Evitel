@@ -5,11 +5,6 @@ namespace EvitelLib2.Model
 {
     public partial class Likoincident
     {
-        public Likoincident()
-        {
-            Likoparticipants = new HashSet<Likoparticipant>();
-        }
-
         public int LikoincidentId { get; set; }
         public string Title { get; set; }
         public string Note { get; set; }
@@ -23,8 +18,6 @@ namespace EvitelLib2.Model
         public int? PocetPoskozenych { get; set; }
         public DateTime? DtDeleted { get; set; }
 
-        public virtual ESubTypeIntervence SubTypeIntervenceE { get; set; }
         public virtual Likointervence Likointervence { get; set; }
-        public virtual ICollection<Likoparticipant> Likoparticipants { get; set; }
     }
 }
