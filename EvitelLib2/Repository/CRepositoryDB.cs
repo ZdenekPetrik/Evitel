@@ -5,6 +5,7 @@ using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -451,19 +452,19 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
-    public List<ESubTypeIntervence> GetSubTypeIntervence()
+    public List<ESubTypeIncident> GetSubTypeIncident()
     {
       sErr = "";
       Evitel2Context db = new Evitel2Context();
       try
       {
-        var subTypeIntervence = from e in db.ESubTypeIntervences orderby e.TypeIntervenceId select e;
-        return subTypeIntervence.ToList();
+        var subTypeIncident = from e in db.ESubTypeIncidents orderby e.TypeIncidentId select e;
+        return subTypeIncident.ToList();
       }
       catch (Exception Ex)
       {
         sErr = GetInnerException(Ex);
-        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetSubTypeIntervence() " + GetInnerException(Ex), "", IdUser);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetSubTypeIncident() " + GetInnerException(Ex), "", IdUser);
       }
       return null;
     }
@@ -490,7 +491,7 @@ namespace EvitelLib2.Repository
       return false;
     }
 
-
+    #region UserColumn
     public bool SaveUserColumn(string nameOfDGW, int externIdUser, List<UserColumn> userColumns)
     {
       sErr = "";
@@ -517,10 +518,9 @@ namespace EvitelLib2.Repository
             }
             else
             {
-              if (newRow.DisplayIndex != dbRow.DisplayIndex || newRow.Visible != dbRow.Visible || newRow.Width != dbRow.Width)
+              if (newRow.DisplayIndex != dbRow.DisplayIndex || newRow.Width != dbRow.Width)
               {
                 dbRow.Width = newRow.Width;
-                dbRow.Visible = newRow.Visible;
                 dbRow.DisplayIndex = newRow.DisplayIndex;
                 WriteNeeded = true;
               }
@@ -551,6 +551,25 @@ namespace EvitelLib2.Repository
 
     }
 
+    public void DeleteUserColumn(string nameOfDGW, int idUser)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var userColumnsDB = from uc in db.UserColumns where uc.Name == nameOfDGW && uc.LoginUserId == idUser orderby uc.ColumnIndex select uc;
+        db.UserColumns.RemoveRange(userColumnsDB);
+        db.SaveChanges(); 
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "DeleteUserColumn() " + GetInnerException(Ex), "", IdUser);
+      }
+      return;
+
+    }
+
     public List<UserColumn> GetUserColumn(string nameOfDGW)
     {
       sErr = "";
@@ -567,6 +586,7 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
+#endregion
 
     public int WriteCall(DateTime datetimeStartCall)
     {
@@ -589,7 +609,7 @@ namespace EvitelLib2.Repository
       return -1;
     }
 
-    public int WriteIncident(string note, int subTypeIntervenceId, DateTime datetimeIncident, int regionId, string place, bool nasledekSmrti, bool dokonane, bool pokusPriprava, int PocetObeti)
+    public int WriteIncident(string note, int subTypeIncidentId, DateTime datetimeIncident, int regionId, string place, bool nasledekSmrti, bool dokonane, bool pokusPriprava, int PocetObeti)
     {
       sErr = "";
       Evitel2Context db = new Evitel2Context();
@@ -597,7 +617,7 @@ namespace EvitelLib2.Repository
       {
         Likoincident incident = new Likoincident();
         incident.Note = note;
-        incident.SubTypeIntervenceEid = subTypeIntervenceId;
+        incident.SubTypeIncidentEid = subTypeIncidentId;
         incident.DtIncident = datetimeIncident;
         incident.RegionId = regionId;
         incident.Place = place;
@@ -719,21 +739,139 @@ namespace EvitelLib2.Repository
       return -1;
     }
 
-    public List<WParticipant> GetParticipant(bool isDeepRead)
+    public List<WLikoparticipant> GeWtLIKOParticipant(bool isDeepRead)
     {
       sErr = "";
       Evitel2Context db = new Evitel2Context();
       try
       {
-        return  (from par in db.WParticipants select par).ToList();
+        return  (from par in db.WLikoparticipants select par).ToList();
       }
       catch (Exception Ex)
       {
         sErr = GetInnerException(Ex);
-        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetParticipant() " + GetInnerException(Ex), "", IdUser);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetLIKOParticipant() " + GetInnerException(Ex), "", IdUser);
       }
       return null;
     }
+
+    public List<WLikocall> GetWLikoCalls()
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        return (from par in db.WLikocalls orderby par.DtStartCall select par ).ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetWLikoCalls() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+
+    public List<WLikoincident> GetWLIKOIncident()
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        return (from par in db.WLikoincidents orderby par.DtIncident select par).ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetWLIKOIncident() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+
+    public List<WLikointervence> GetWLIKOIntervence()
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        return (from par in db.WLikointervences orderby par.DtStartIntervence select par).ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetWLIKOIntervence() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+
+    public Likointervence GetLikoIntervence(int likoIntervenceId)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        return (from par in db.Likointervences where par.LikointervenceId == likoIntervenceId select par).FirstOrDefault();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetLIKOIntervence(" + likoIntervenceId.ToString() + ") " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+    public Call GetLikoCall(int id)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+
+        var row = from r in db.Calls select r;
+        row = row.Where(x => x.CallId == id);
+        return row.FirstOrDefault();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetLikoCall(" + id.ToString() + ") " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+    public Likoincident GetLikoIncident(int Id)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        return (from par in db.Likoincidents where par.LikoincidentId == Id select par).FirstOrDefault();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetLikoIncident(" + Id.ToString() + ") " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+    public List<Likoparticipant> GetLikoParticipants(int id, int TypeSearch)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var row = from r in db.Likoparticipants select r;
+        if (TypeSearch == 1)
+          row = row.Where(x => x.LikoparticipantId == id);
+        else
+          row = row.Where(x => x.LikointervenceId == id);
+        return row.ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetLikoParticipants(" + id.ToString() + ") " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+
   }
 }
 

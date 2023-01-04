@@ -1,4 +1,5 @@
-﻿using EvitelApp2.MyUserControl;
+﻿using EvitelApp2.Helper;
+
 using EvitelLib2.Model;
 using EvitelLib2.Repository;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -124,9 +125,6 @@ namespace EvitelApp2.Controls
           dgw.Columns.Add(col2);
         }
       }
-      dgw.mySort.ColumnName = dgw.Columns[2].Name;
-      dgw.SetColumnOrderExt(this.Name, DB);
-
       dgw.DataSource = bindingSource;
       //            ChangeEditMode(false);
       MyResize();
@@ -137,8 +135,6 @@ namespace EvitelApp2.Controls
       int? Region = ((ComboItem)cmbRegion.SelectedItem).iValue == -1 ? null : ((ComboItem)cmbRegion.SelectedItem).iValue;
 
       winterventi = DB.GetWIntervents(Region, txtFilterName.Text, txtFilterContact.Text);
-      dgw.SetColumnOrderExt(this.Name, DB);
-      dgw.mySort.ColumnName = dgw.Columns[2].Name;
       bindingSource.DataSource = winterventi;
       dgw.DataSource = bindingSource;
     }
@@ -240,35 +236,6 @@ namespace EvitelApp2.Controls
         DB.InterventDeleteUnDelete(toDelete.InterventId, toDelete.IsDeleted == false);
       e.Cancel = true;
       RefreshMyData();
-    }
-  }
-
-  public class MyColumn
-  {
-    public string Name { get; set; }
-    public string DataPropertyName { get; set; }
-    public bool isVisible { get; set; }
-    public bool isReadOnly { get; set; }
-    public int Type { get; set; }
-    public MyColumn()
-    {
-      isVisible = true;
-      isReadOnly = false;
-      Type = 1;   // z nedostatku invence 1 = Text, 2 = CheckBox, 3 = Combo
-    }
-    public Type GetMyType() { 
-    switch (Type)
-      {
-        case 1:
-          return typeof(string);
-        case 2:
-          return typeof(bool);
-        case 3:
-          return typeof(int);
-        case 4:
-          return typeof(int);
-      }
-      return typeof(string);
     }
   }
 }

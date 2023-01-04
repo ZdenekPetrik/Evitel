@@ -40,7 +40,7 @@ namespace EvitelApp2.Controls
             this.tmIncident = new System.Windows.Forms.DateTimePicker();
             this.lblUdalost = new System.Windows.Forms.Label();
             this.dtIncident = new System.Windows.Forms.DateTimePicker();
-            this.cmbSubTypeIntervence = new System.Windows.Forms.ComboBox();
+            this.cmbSubTypeIncident = new System.Windows.Forms.ComboBox();
             this.lblDruhUdalosti = new System.Windows.Forms.Label();
             this.txtEventNote = new System.Windows.Forms.TextBox();
             this.lblNoteEvent = new System.Windows.Forms.Label();
@@ -75,6 +75,7 @@ namespace EvitelApp2.Controls
             this.label1 = new System.Windows.Forms.Label();
             this.tmIntervence = new System.Windows.Forms.DateTimePicker();
             this.ucParticipations1 = new EvitelApp2.Controls.ucParticipations();
+            this.btnBack = new System.Windows.Forms.Button();
             this.boxCall.SuspendLayout();
             this.boxEvent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtPocetObeti)).BeginInit();
@@ -184,14 +185,14 @@ namespace EvitelApp2.Controls
             this.dtIncident.Size = new System.Drawing.Size(87, 23);
             this.dtIncident.TabIndex = 11;
             // 
-            // cmbSubTypeIntervence
+            // cmbSubTypeIncident
             // 
-            this.cmbSubTypeIntervence.FormattingEnabled = true;
-            this.cmbSubTypeIntervence.Location = new System.Drawing.Point(143, 57);
-            this.cmbSubTypeIntervence.Name = "cmbSubTypeIntervence";
-            this.cmbSubTypeIntervence.Size = new System.Drawing.Size(195, 23);
-            this.cmbSubTypeIntervence.TabIndex = 15;
-            this.cmbSubTypeIntervence.Validating += new System.ComponentModel.CancelEventHandler(this.cmbSubTypeIntervence_Validating);
+            this.cmbSubTypeIncident.FormattingEnabled = true;
+            this.cmbSubTypeIncident.Location = new System.Drawing.Point(143, 57);
+            this.cmbSubTypeIncident.Name = "cmbSubTypeIncident";
+            this.cmbSubTypeIncident.Size = new System.Drawing.Size(195, 23);
+            this.cmbSubTypeIncident.TabIndex = 15;
+            this.cmbSubTypeIncident.Validating += new System.ComponentModel.CancelEventHandler(this.cmbSubTypeIntervence_Validating);
             // 
             // lblDruhUdalosti
             // 
@@ -256,7 +257,7 @@ namespace EvitelApp2.Controls
             this.boxCall.Controls.Add(this.txtLoginUser);
             this.boxCall.Controls.Add(this.cmbIntervent);
             this.boxCall.Controls.Add(this.tmCall);
-            this.boxCall.Location = new System.Drawing.Point(3, 3);
+            this.boxCall.Location = new System.Drawing.Point(3, 36);
             this.boxCall.Name = "boxCall";
             this.boxCall.Size = new System.Drawing.Size(1138, 66);
             this.boxCall.TabIndex = 22;
@@ -279,9 +280,9 @@ namespace EvitelApp2.Controls
             this.boxEvent.Controls.Add(this.tmIncident);
             this.boxEvent.Controls.Add(this.lblDruhUdalosti);
             this.boxEvent.Controls.Add(this.lblPocetPoskozenychObeti);
-            this.boxEvent.Controls.Add(this.cmbSubTypeIntervence);
+            this.boxEvent.Controls.Add(this.cmbSubTypeIncident);
             this.boxEvent.Controls.Add(this.txtEventNote);
-            this.boxEvent.Location = new System.Drawing.Point(3, 74);
+            this.boxEvent.Location = new System.Drawing.Point(3, 108);
             this.boxEvent.Name = "boxEvent";
             this.boxEvent.Size = new System.Drawing.Size(1138, 142);
             this.boxEvent.TabIndex = 23;
@@ -371,7 +372,7 @@ namespace EvitelApp2.Controls
             this.gbIntervence.Controls.Add(this.dtIntervence);
             this.gbIntervence.Controls.Add(this.label1);
             this.gbIntervence.Controls.Add(this.tmIntervence);
-            this.gbIntervence.Location = new System.Drawing.Point(3, 222);
+            this.gbIntervence.Location = new System.Drawing.Point(3, 256);
             this.gbIntervence.Name = "gbIntervence";
             this.gbIntervence.Size = new System.Drawing.Size(1138, 131);
             this.gbIntervence.TabIndex = 24;
@@ -526,23 +527,34 @@ namespace EvitelApp2.Controls
             // 
             // ucParticipations1
             // 
-            this.ucParticipations1.Location = new System.Drawing.Point(0, 359);
+            this.ucParticipations1.Location = new System.Drawing.Point(0, 393);
             this.ucParticipations1.Name = "ucParticipations1";
             this.ucParticipations1.Size = new System.Drawing.Size(1141, 388);
             this.ucParticipations1.TabIndex = 25;
             this.ucParticipations1.Load += new System.EventHandler(this.ucParticipations1_Load);
             // 
+            // btnBack
+            // 
+            this.btnBack.Location = new System.Drawing.Point(10, 7);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(75, 23);
+            this.btnBack.TabIndex = 11;
+            this.btnBack.Text = "<< Zpět";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
             // ucCallLIKO
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnBack);
             this.Controls.Add(this.ucParticipations1);
             this.Controls.Add(this.gbIntervence);
             this.Controls.Add(this.boxEvent);
             this.Controls.Add(this.boxCall);
             this.Controls.Add(this.lblRegion);
             this.Name = "ucCallLIKO";
-            this.Size = new System.Drawing.Size(1144, 666);
+            this.Size = new System.Drawing.Size(1144, 702);
             this.Load += new System.EventHandler(this.ucCallLIKO_Load);
             this.Resize += new System.EventHandler(this.ucCallLIKO_Resize);
             this.boxCall.ResumeLayout(false);
@@ -578,7 +590,7 @@ namespace EvitelApp2.Controls
         private System.Windows.Forms.TextBox txtEventNote;
         private System.Windows.Forms.Label lblNoteEvent;
         private System.Windows.Forms.Label lblPocetPoskozenychObeti;
-        private System.Windows.Forms.ComboBox cmbSubTypeIntervence;
+        private System.Windows.Forms.ComboBox cmbSubTypeIncident;
         private System.Windows.Forms.Label lblRegion;
         private System.Windows.Forms.GroupBox boxCall;
         private System.Windows.Forms.GroupBox boxEvent;
@@ -609,6 +621,7 @@ namespace EvitelApp2.Controls
     private System.Windows.Forms.DateTimePicker dtIntervenceEnd;
     private System.Windows.Forms.DateTimePicker tmIntervenceEnd;
     private ucParticipations ucParticipations1;
+    private System.Windows.Forms.Button btnBack;
   }
 
 }

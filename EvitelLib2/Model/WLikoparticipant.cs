@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EvitelLib2.Model
 {
-    public partial class WParticipant
+    public partial class WLikoparticipant
     {
         public int LikoparticipantId { get; set; }
         public int? LikointervenceId { get; set; }
@@ -42,7 +42,7 @@ namespace EvitelLib2.Model
         public string DruhIntervenceText { get; set; }
         public string TypePartyText { get; set; }
         public int? MainInterventId { get; set; }
-        public string MainInterventName { get; set; }
+        public string InterventName { get; set; }
         public string CmbName { get; set; }
     }
 }

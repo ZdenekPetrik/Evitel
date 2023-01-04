@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static EvitelApp2.frmMain;
 
 namespace EvitelApp2.Controls
 {
@@ -17,7 +18,7 @@ namespace EvitelApp2.Controls
 
     List<string> ErrorList = new List<string>();
     List<string> WarningList = new List<string>();
-    bool isNewForm = true;
+
     CRepositoryDB DB;
 
     private ErrorProvider placeErrorProvider;
@@ -26,6 +27,13 @@ namespace EvitelApp2.Controls
     private ErrorProvider cmbRegionErrorProvider;
     private ErrorProvider cmbSubTypeIntervenceErrorProvider;
     private ErrorProvider txtNrCelkemErrorProvider;
+
+    public bool isNewForm = true;
+    public int LikoIntervenceId;
+    Call aktCall;
+    Likoincident aktLikoIncident;
+    Likointervence aktLikoIntervence;
+    public event DetailIntervence ShowDetailIntervence;
 
 
     public ucCallLIKO()
@@ -40,7 +48,6 @@ namespace EvitelApp2.Controls
       txtLoginUser.Text = Program.myLoggedUser.FirstName + " " + Program.myLoggedUser.LastName;
 
       DB = new CRepositoryDB(Program.myLoggedUser.LoginUserId);
-
 
       var intervents = DB.GetWIntervents(null, "", "");
       cmbIntervent.Items.Add(new ComboItem("<Nevybráno>", ""));
@@ -59,26 +66,27 @@ namespace EvitelApp2.Controls
       }
       cmbRegion.SelectedIndex = 0;
 
-      List<EvitelLib2.Model.ESubTypeIntervence> subTypeIntervervences = DB.GetSubTypeIntervence();
-      cmbSubTypeIntervence.Items.Add(new ComboItem("<Nevybráno>", ""));
-      foreach (EvitelLib2.Model.ESubTypeIntervence subTypeIntervence in subTypeIntervervences)
+      List<EvitelLib2.Model.ESubTypeIncident> subTypeIncidents = DB.GetSubTypeIncident();
+      cmbSubTypeIncident.Items.Add(new ComboItem("<Nevybráno>", ""));
+      foreach (EvitelLib2.Model.ESubTypeIncident subTypeIntervence in subTypeIncidents)
       {
         if (subTypeIntervence.DtDeleted == null)
-          cmbSubTypeIntervence.Items.Add(new ComboItem(subTypeIntervence.Text, subTypeIntervence.SubTypeIntervenceId.ToString()));
+          cmbSubTypeIncident.Items.Add(new ComboItem(subTypeIntervence.Text, subTypeIntervence.SubTypeIncidentId.ToString()));
       }
-      cmbSubTypeIntervence.SelectedIndex = 0;
+      cmbSubTypeIncident.SelectedIndex = 0;
 
       placeErrorProvider = InitializeErrorProvider(1, txtPlace);
       placeWarningProvider = InitializeErrorProvider(2, txtPlace);
       cmbInterventErrorProvider = InitializeErrorProvider(1, cmbIntervent);
       cmbRegionErrorProvider = InitializeErrorProvider(1, cmbRegion);
-      cmbSubTypeIntervenceErrorProvider = InitializeErrorProvider(1, cmbSubTypeIntervence);
+      cmbSubTypeIntervenceErrorProvider = InitializeErrorProvider(1, cmbSubTypeIncident);
       txtNrCelkemErrorProvider = InitializeErrorProvider(2, txtNrCelkem);
       if (isNewForm) { 
-        ucParticipations1.ReadDataFirstTime();
         ucParticipations1.RowChanged_Event += ucParticipations_NewRow;
+      }else
+      {
       }
-      
+      ucParticipations1.ReadDataFirstTime();
     }
 
     private void btnWrite_Click(object sender, EventArgs e)
@@ -96,6 +104,15 @@ namespace EvitelApp2.Controls
       return;
     }
 
+    public void ReadDBData() {
+      aktLikoIntervence = DB.GetLikoIntervence(LikoIntervenceId);
+      aktCall = DB.GetLikoCall(aktLikoIntervence.CallId ?? 0);
+      aktLikoIncident = DB.GetLikoIncident(aktLikoIntervence.LikoincidentId ?? 0);
+      ucParticipations1.participantsList = DB.GetLikoParticipants(aktLikoIntervence.LikoincidentId ?? 0, 2);
+      ucParticipations1.isNew = false;
+      ucParticipations1.ReadDataFirstTime();
+    }
+
 
     private void WriteThisNewCall()
     {
@@ -104,7 +121,7 @@ namespace EvitelApp2.Controls
       if (CallId > 0)
       {
         DateTime datetimeIncident = dtIncident.Value.Date.Add(TimeSpan.Parse(tmIncident.Value.ToShortTimeString()));
-        int IncidentId = DB.WriteIncident(txtEventNote.Text, ((ComboItem)cmbSubTypeIntervence.SelectedItem).iValue, datetimeIncident, ((ComboItem)cmbRegion.SelectedItem).iValue, txtPlace.Text, chkNasledekSmrti.Checked, chkDokonane.Checked, chkPokusPriprava.Checked, (int)txtPocetObeti.Value);
+        int IncidentId = DB.WriteIncident(txtEventNote.Text, ((ComboItem)cmbSubTypeIncident.SelectedItem).iValue, datetimeIncident, ((ComboItem)cmbRegion.SelectedItem).iValue, txtPlace.Text, chkNasledekSmrti.Checked, chkDokonane.Checked, chkPokusPriprava.Checked, (int)txtPocetObeti.Value);
         if (IncidentId > 0)
         {
           DateTime datetimeStartIntervence = dtIntervence.Value.Date.Add(TimeSpan.Parse(dtIntervence.Value.ToShortTimeString()));
@@ -200,14 +217,14 @@ namespace EvitelApp2.Controls
 
     private void cmbSubTypeIntervence_Validating(object sender, CancelEventArgs e)
     {
-      if (cmbSubTypeIntervence.SelectedIndex == 0)
+      if (cmbSubTypeIncident.SelectedIndex == 0)
       {
-        cmbSubTypeIntervenceErrorProvider.SetError(this.cmbSubTypeIntervence, "Volající musí být vyplněn");
+        cmbSubTypeIntervenceErrorProvider.SetError(this.cmbSubTypeIncident, "Volající musí být vyplněn");
         e.Cancel = true;
       }
       else
       {
-        cmbSubTypeIntervenceErrorProvider.SetError(this.cmbSubTypeIntervence, "");
+        cmbSubTypeIntervenceErrorProvider.SetError(this.cmbSubTypeIncident, "");
         e.Cancel = false;
       }
     }
@@ -262,7 +279,7 @@ namespace EvitelApp2.Controls
       cmbIntervent.SelectedIndex = 0;
       dtIncident.Value = DateTime.Now;
       tmIncident.Value = DateTime.Now;
-      cmbSubTypeIntervence.SelectedIndex = 0;
+      cmbSubTypeIncident.SelectedIndex = 0;
       txtPocetObeti.Value = 0;
       cmbRegion.SelectedIndex = 0;
       txtPlace.Text = string.Empty;
@@ -278,6 +295,11 @@ namespace EvitelApp2.Controls
       txtNrPozustalymBlizkym.Value = 0; 
       txtIntervenceNote.Text = string.Empty;
       ucParticipations1.EmptyAllRow();
+    }
+
+    private void btnBack_Click(object sender, EventArgs e)
+    {
+      ShowDetailIntervence?.Invoke(-1,0);
     }
   }
 }

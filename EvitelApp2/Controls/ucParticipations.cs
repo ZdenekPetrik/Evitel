@@ -1,4 +1,5 @@
-﻿using EvitelLib2.Model;
+﻿using EvitelApp2.Helper;
+using EvitelLib2.Model;
 using EvitelLib2.Repository;
 using NPOI.SS.Formula.Functions;
 using System;
@@ -16,18 +17,18 @@ namespace EvitelApp2.Controls
   public partial class ucParticipations : UserControl
   {
 
-    CRepositoryDB DB;
-    public List<MyColumn> myColumns;
-    public List<ESex> sex;
-    public List<ETypeParty> typeParty;
+    private CRepositoryDB DB;
+    private List<MyColumn> myColumns;
+    public  List<ESex> sex;
+    public  List<ETypeParty> typeParty;
     public List<WIntervent> winterventi;
     public List<EDruhIntervence> druhIntervence;
-    public List<Likoparticipant> participantsList;
-    BindingSource source = new BindingSource();
-    public int IntervenceId = -1;
+    public BindingSource source = new BindingSource();
 
     public delegate void HandlerParticipantsRowChanged();
     public event HandlerParticipantsRowChanged RowChanged_Event;
+    public List<Likoparticipant> participantsList;
+    public bool isNew =  true;
 
 
 
@@ -84,11 +85,11 @@ namespace EvitelApp2.Controls
       typeParty = DB.GetTypeParty();
       winterventi = DB.GetWIntervents(null, "", "");
       druhIntervence = DB.GetDruhIntervence();
-      participantsList = new List<Likoparticipant>();
+      if (isNew)
+        participantsList = new List<Likoparticipant>();
       LoadDgw();
       source.DataSource = participantsList;
       dgw.DataSource = source;
-      dgw.SetColumnOrderExt(this.Name, DB);
       MyResize();
     }
 

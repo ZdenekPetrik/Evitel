@@ -1,6 +1,7 @@
 ﻿namespace EvitelApp2.Controls
 {
-  partial class ctrlParticipant
+  partial class ctrlLIKOIntervence
+
   {
     /// <summary> 
     /// Required designer variable.
@@ -52,15 +53,15 @@
             this.dgw.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgw_RowEnter);
             this.dgw.DoubleClick += new System.EventHandler(this.dgw_DoubleClick);
             // 
-            // ctrlParticipant
+            // ctrlLIKOIntervence
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.dgw);
-            this.Name = "ctrlParticipant";
+            this.Name = "ctrlLIKOIntervence";
             this.Size = new System.Drawing.Size(259, 168);
-            this.Load += new System.EventHandler(this.ctrlParticipation_Load);
-            this.Resize += new System.EventHandler(this.ctrlParticipant_Resize);
+            this.Load += new System.EventHandler(this.ctrlIntervence_Load);
+            this.Resize += new System.EventHandler(this.ctrlIntervence_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.dgw)).EndInit();
             this.ResumeLayout(false);
 

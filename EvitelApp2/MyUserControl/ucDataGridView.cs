@@ -50,7 +50,6 @@ namespace EvitelApp2.MyUserControl
                 foreach (var item in sorted)
                 {
                     this.Columns[item.ColumnIndex??0].DisplayIndex = item.DisplayIndex ?? (item.ColumnIndex ?? 0);
-                    this.Columns[item.ColumnIndex??0].Visible = item.Visible ?? true;
                     this.Columns[item.ColumnIndex??0].Width = item.Width ?? 100;
                 }
             }
@@ -71,7 +70,6 @@ namespace EvitelApp2.MyUserControl
                         {
                             ColumnIndex = i,
                             DisplayIndex = columns[i].DisplayIndex,
-                            Visible = columns[i].Visible,
                             Width = columns[i].Width,
                             Name = fullUniqueString,
                             LoginUserId = _DB.IdUser

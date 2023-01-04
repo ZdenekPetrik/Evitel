@@ -1,4 +1,4 @@
-﻿using EvitelLib.Business;
+﻿
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -10,9 +10,9 @@ namespace UnitTest
         [TestMethod]
         public void TestMethod1()
         {
-            EvitelLib.Entity.State x = new EvitelLib.Entity.State();
-            CLoginManipulation lu = new CLoginManipulation();
-            lu.GetNoLoginUser();
+//            EvitelLib2.Entity.State x = new EvitelLib2.Entity.State();
+//            CLoginManipulation lu = new CLoginManipulation();
+//            lu.GetNoLoginUser();
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EvitelLib2.Model
 {
-    public partial class Likoincident
+    public partial class WIncident
     {
         public int LikoincidentId { get; set; }
         public string Title { get; set; }
@@ -16,9 +16,11 @@ namespace EvitelLib2.Model
         public bool? PokusPriprava { get; set; }
         public string Place { get; set; }
         public int? PocetPoskozenych { get; set; }
-        public DateTime? DtDeleted { get; set; }
-
-        public virtual ESubTypeIncident SubTypeIncidentE { get; set; }
-        public virtual Likointervence Likointervence { get; set; }
+        public int? IntervenceCount { get; set; }
+        public string RegionName { get; set; }
+        public string IncidentName { get; set; }
+        public string IncidentCategory { get; set; }
+        public DateTime? DtIncidentDate { get; set; }
+        public string TmIncident { get; set; }
     }
 }

@@ -14,7 +14,6 @@ namespace EvitelLib2.Model
         public DateTime? DtStartCall { get; set; }
         public DateTime? DtEndCall { get; set; }
         public int? LoginUserId { get; set; }
-        public int? InterventId { get; set; }
 
         public virtual Intervent CallNavigation { get; set; }
         public virtual LoginUser LoginUser { get; set; }

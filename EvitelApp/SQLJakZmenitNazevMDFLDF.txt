@@ -1,0 +1,32 @@
+-- 1. zjistime nazev souboru  a zapiseme
+USE Evitel2
+GO
+SELECT file_id, name as [logical_file_name], physical_name
+FROM sys.database_files
+
+-- Evitel2 - C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\Evitel2.mdf
+-- Evitel2_log - C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\Evitel2_log.ldf
+
+-- 2 odpojime DB
+USE [master];
+GO
+ALTER DATABASE Evitel2 SET SINGLE_USER WITH ROLLBACK IMMEDIATE --Disconnect all existing session
+GO
+ALTER DATABASE Evitel2 SET OFFLINE  --Change database in to OFFLINE mode.
+GO
+
+-- 3. zmenime nazev obou souboru (jen jsme odebrali Evitel2 na Evitel)
+
+-- 4. Zapiseme do DB (ve skutecnosti nezapisujem do Evitel2 ale do master.sys.database_files)
+
+ALTER DATABASE Evitel2 MODIFY FILE (Name='Evitel2', FILENAME='C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\Evitel.mdf')
+GO
+ALTER DATABASE Evitel2 MODIFY FILE (Name='Evitel2_log', FILENAME='C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\Evitel_log.ldf')
+GO
+
+-- 5. prejmenujeme db a zmìníme v properties files "Logical Name" (Evitel2 a Evital2_Log)
+
+ALTER DATABASE Evitel2 SET ONLINE
+Go
+ALTER DATABASE Evitel2 SET MULTI_USER
+Go

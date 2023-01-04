@@ -33,8 +33,16 @@ namespace EvitelApp2
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.souborToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuSystemExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.FileExportExcel = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportDenníProtokolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MeneToolsChangePassword = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.MenuToolsRemoveFilters = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuToolsRemoveOrders = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.MenuToolSetColumnLayout = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuToolsRemoveColumnLayout = new System.Windows.Forms.ToolStripMenuItem();
             this.viewsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuToolEventLog = new System.Windows.Forms.ToolStripMenuItem();
             this.interventiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,6 +54,9 @@ namespace EvitelApp2
             this.EnumPartyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EnumRegionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.MenuToolShowCalls = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuToolShowEvents = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuToolShowIntervence = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuToolShowParticipation = new System.Windows.Forms.ToolStripMenuItem();
             this.NewCallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newCallLIKOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,12 +65,17 @@ namespace EvitelApp2
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripUser = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripRows = new System.Windows.Forms.ToolStripStatusLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.ucCallLIKO1 = new EvitelApp2.Controls.ucCallLIKO();
             this.ucIntervents1 = new EvitelApp2.Controls.ucIntervents();
             this.ucCiselnik1 = new EvitelApp2.Controls.ucCiselnik();
             this.ctrlParticipation1 = new EvitelApp2.Controls.ctrlParticipant();
+            this.ctrlLikoCall1 = new EvitelApp2.Controls.ctrlLikoCall();
+            this.ctrllikoIncident1 = new EvitelApp2.Controls.ctrlLIKOIncident();
+            this.ctrllikoIntervence1 = new EvitelApp2.Controls.ctrlLIKOIntervence();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -83,7 +99,9 @@ namespace EvitelApp2
             // souborToolStripMenuItem
             // 
             this.souborToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MenuSystemExit});
+            this.MenuSystemExit,
+            this.FileExportExcel,
+            this.exportDenníProtokolToolStripMenuItem});
             this.souborToolStripMenuItem.Name = "souborToolStripMenuItem";
             this.souborToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.souborToolStripMenuItem.Text = "Soubor";
@@ -91,14 +109,33 @@ namespace EvitelApp2
             // MenuSystemExit
             // 
             this.MenuSystemExit.Name = "MenuSystemExit";
-            this.MenuSystemExit.Size = new System.Drawing.Size(93, 22);
+            this.MenuSystemExit.Size = new System.Drawing.Size(190, 22);
             this.MenuSystemExit.Text = "Exit";
             this.MenuSystemExit.Click += new System.EventHandler(this.MenuSystemExit_Click);
+            // 
+            // FileExportExcel
+            // 
+            this.FileExportExcel.Name = "FileExportExcel";
+            this.FileExportExcel.Size = new System.Drawing.Size(190, 22);
+            this.FileExportExcel.Text = "Export Excel";
+            this.FileExportExcel.Click += new System.EventHandler(this.FileExportExcel_Click);
+            // 
+            // exportDenníProtokolToolStripMenuItem
+            // 
+            this.exportDenníProtokolToolStripMenuItem.Name = "exportDenníProtokolToolStripMenuItem";
+            this.exportDenníProtokolToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.exportDenníProtokolToolStripMenuItem.Text = "Export Denní protokol";
             // 
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MeneToolsChangePassword});
+            this.MeneToolsChangePassword,
+            this.toolStripSeparator1,
+            this.MenuToolsRemoveFilters,
+            this.MenuToolsRemoveOrders,
+            this.toolStripSeparator2,
+            this.MenuToolSetColumnLayout,
+            this.MenuToolsRemoveColumnLayout});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
             this.toolsToolStripMenuItem.Text = "Nástroje";
@@ -106,9 +143,47 @@ namespace EvitelApp2
             // MeneToolsChangePassword
             // 
             this.MeneToolsChangePassword.Name = "MeneToolsChangePassword";
-            this.MeneToolsChangePassword.Size = new System.Drawing.Size(143, 22);
+            this.MeneToolsChangePassword.Size = new System.Drawing.Size(229, 22);
             this.MeneToolsChangePassword.Text = "Změna Hesla";
             this.MeneToolsChangePassword.Click += new System.EventHandler(this.MeneToolsChangePassword_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(226, 6);
+            // 
+            // MenuToolsRemoveFilters
+            // 
+            this.MenuToolsRemoveFilters.Name = "MenuToolsRemoveFilters";
+            this.MenuToolsRemoveFilters.Size = new System.Drawing.Size(229, 22);
+            this.MenuToolsRemoveFilters.Text = "Odstranit Filtry";
+            this.MenuToolsRemoveFilters.Click += new System.EventHandler(this.MenuToolsRemoveFilters_Click);
+            // 
+            // MenuToolsRemoveOrders
+            // 
+            this.MenuToolsRemoveOrders.Name = "MenuToolsRemoveOrders";
+            this.MenuToolsRemoveOrders.Size = new System.Drawing.Size(229, 22);
+            this.MenuToolsRemoveOrders.Text = "Odstranit Řazení";
+            this.MenuToolsRemoveOrders.Click += new System.EventHandler(this.MenuToolsRemoveOrders_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(226, 6);
+            // 
+            // MenuToolSetColumnLayout
+            // 
+            this.MenuToolSetColumnLayout.Name = "MenuToolSetColumnLayout";
+            this.MenuToolSetColumnLayout.Size = new System.Drawing.Size(229, 22);
+            this.MenuToolSetColumnLayout.Text = "Ulož vlastní rozložení sloupců";
+            this.MenuToolSetColumnLayout.Click += new System.EventHandler(this.MenuToolSetColumnLayout_Click);
+            // 
+            // MenuToolsRemoveColumnLayout
+            // 
+            this.MenuToolsRemoveColumnLayout.Name = "MenuToolsRemoveColumnLayout";
+            this.MenuToolsRemoveColumnLayout.Size = new System.Drawing.Size(229, 22);
+            this.MenuToolsRemoveColumnLayout.Text = "Inicializuj rozložení sloupců";
+            this.MenuToolsRemoveColumnLayout.Click += new System.EventHandler(this.MenuToolsRemoveColumn_Click);
             // 
             // viewsToolStripMenuItem
             // 
@@ -117,6 +192,9 @@ namespace EvitelApp2
             this.interventiToolStripMenuItem,
             this.EnumsMenuItem,
             this.toolStripMenuItem2,
+            this.MenuToolShowCalls,
+            this.MenuToolShowEvents,
+            this.MenuToolShowIntervence,
             this.MenuToolShowParticipation});
             this.viewsToolStripMenuItem.Name = "viewsToolStripMenuItem";
             this.viewsToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
@@ -196,6 +274,27 @@ namespace EvitelApp2
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
             // 
+            // MenuToolShowCalls
+            // 
+            this.MenuToolShowCalls.Name = "MenuToolShowCalls";
+            this.MenuToolShowCalls.Size = new System.Drawing.Size(180, 22);
+            this.MenuToolShowCalls.Text = "Telefonní volání";
+            this.MenuToolShowCalls.Click += new System.EventHandler(this.MenuToolShowCalls_Click);
+            // 
+            // MenuToolShowEvents
+            // 
+            this.MenuToolShowEvents.Name = "MenuToolShowEvents";
+            this.MenuToolShowEvents.Size = new System.Drawing.Size(180, 22);
+            this.MenuToolShowEvents.Text = "Události";
+            this.MenuToolShowEvents.Click += new System.EventHandler(this.MenuToolShowEvents_Click);
+            // 
+            // MenuToolShowIntervence
+            // 
+            this.MenuToolShowIntervence.Name = "MenuToolShowIntervence";
+            this.MenuToolShowIntervence.Size = new System.Drawing.Size(180, 22);
+            this.MenuToolShowIntervence.Text = "Intervence";
+            this.MenuToolShowIntervence.Click += new System.EventHandler(this.MenuToolShowIntervence_Click);
+            // 
             // MenuToolShowParticipation
             // 
             this.MenuToolShowParticipation.Name = "MenuToolShowParticipation";
@@ -236,7 +335,9 @@ namespace EvitelApp2
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripTime,
-            this.toolStripUser});
+            this.toolStripUser,
+            this.toolStripStatusLabel1,
+            this.toolStripRows});
             this.statusStrip1.Location = new System.Drawing.Point(0, 535);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1405, 22);
@@ -254,6 +355,21 @@ namespace EvitelApp2
             this.toolStripUser.Name = "toolStripUser";
             this.toolStripUser.Size = new System.Drawing.Size(75, 17);
             this.toolStripUser.Text = "toolStripUser";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(1125, 17);
+            this.toolStripStatusLabel1.Spring = true;
+            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            // 
+            // toolStripRows
+            // 
+            this.toolStripRows.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripRows.Name = "toolStripRows";
+            this.toolStripRows.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.toolStripRows.Size = new System.Drawing.Size(80, 17);
+            this.toolStripRows.Text = "toolStripRows";
             // 
             // timer1
             // 
@@ -306,11 +422,35 @@ namespace EvitelApp2
             this.ctrlParticipation1.Size = new System.Drawing.Size(272, 171);
             this.ctrlParticipation1.TabIndex = 7;
             // 
+            // ctrlLikoCall1
+            // 
+            this.ctrlLikoCall1.Location = new System.Drawing.Point(278, 296);
+            this.ctrlLikoCall1.Name = "ctrlLikoCall1";
+            this.ctrlLikoCall1.Size = new System.Drawing.Size(221, 157);
+            this.ctrlLikoCall1.TabIndex = 8;
+            // 
+            // ctrllikoIncident1
+            // 
+            this.ctrllikoIncident1.Location = new System.Drawing.Point(505, 326);
+            this.ctrllikoIncident1.Name = "ctrllikoIncident1";
+            this.ctrllikoIncident1.Size = new System.Drawing.Size(259, 168);
+            this.ctrllikoIncident1.TabIndex = 9;
+            // 
+            // ctrllikoIntervence1
+            // 
+            this.ctrllikoIntervence1.Location = new System.Drawing.Point(752, 326);
+            this.ctrllikoIntervence1.Name = "ctrllikoIntervence1";
+            this.ctrllikoIntervence1.Size = new System.Drawing.Size(259, 168);
+            this.ctrllikoIntervence1.TabIndex = 10;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1405, 557);
+            this.Controls.Add(this.ctrllikoIntervence1);
+            this.Controls.Add(this.ctrllikoIncident1);
+            this.Controls.Add(this.ctrlLikoCall1);
             this.Controls.Add(this.ctrlParticipation1);
             this.Controls.Add(this.ucCiselnik1);
             this.Controls.Add(this.ucIntervents1);
@@ -365,6 +505,22 @@ namespace EvitelApp2
     private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
     private System.Windows.Forms.ToolStripMenuItem MenuToolShowParticipation;
     private Controls.ctrlParticipant ctrlParticipation1;
+    private System.Windows.Forms.ToolStripMenuItem MenuToolShowCalls;
+    private System.Windows.Forms.ToolStripMenuItem MenuToolShowEvents;
+    private System.Windows.Forms.ToolStripMenuItem MenuToolShowIntervence;
+    private Controls.ctrlLikoCall ctrlLikoCall1;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+    private System.Windows.Forms.ToolStripMenuItem MenuToolsRemoveFilters;
+    private System.Windows.Forms.ToolStripMenuItem MenuToolsRemoveOrders;
+    private System.Windows.Forms.ToolStripMenuItem MenuToolsRemoveColumnLayout;
+    private System.Windows.Forms.ToolStripMenuItem MenuToolSetColumnLayout;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+    private Controls.ctrlLIKOIncident ctrllikoIncident1;
+    private Controls.ctrlLIKOIntervence ctrllikoIntervence1;
+    private System.Windows.Forms.ToolStripMenuItem FileExportExcel;
+    private System.Windows.Forms.ToolStripMenuItem exportDenníProtokolToolStripMenuItem;
+    private System.Windows.Forms.ToolStripStatusLabel toolStripRows;
+    private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
   }
 }
 

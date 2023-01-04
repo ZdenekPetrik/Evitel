@@ -1,4 +1,5 @@
 ﻿using EvitelApp2.Controls;
+using EvitelApp2.Helper;
 using EvitelApp2.Login;
 using EvitelLib2.Common;
 using EvitelLib2.Repository;
@@ -25,8 +26,12 @@ namespace EvitelApp2
     private ctrlEventLogFilter ctrlEventLogFilter1;
 
     eShowWindow aktWindow;
-
     private string Title = "EVITEL";
+
+    public delegate void DetailIntervence(int source, int? IntervenceId);      // Zobrazí detail intervence (LikoIntervenceId>1), nebo zhasne okno (LikoIntervenceId=-1)
+    public delegate void RowInformation(int nrAkt, int nrRow);            // Zobrazí 17/256 v StatusBaru
+
+    private List<eShowWindow> lastWindowStack;
 
     public frmMain()
     {
@@ -36,6 +41,7 @@ namespace EvitelApp2
 
     private void Form1_Load(object sender, EventArgs e)
     {
+      lastWindowStack = new List<eShowWindow>();
       toolStripUser.Text = Program.myLoggedUser.LastName;
       toolStripTime.Text = "00:00:00";
       timer1.Interval = 1000;
@@ -46,10 +52,26 @@ namespace EvitelApp2
       }
       CRepositoryDB repo = new CRepositoryDB();
       ucCallLIKO1.Dock = DockStyle.Fill;
+      ucCallLIKO1.ShowDetailIntervence += ShowDetailIntervence;
+
       ucIntervents1.Dock = DockStyle.Fill;
       splitContainer1.Dock = DockStyle.Fill;
       ucCiselnik1.Dock = DockStyle.Fill;
       ctrlParticipation1.Dock = DockStyle.Fill;
+      ctrlParticipation1.ShowRowInformation += ShowRowInformation;
+      ctrlParticipation1.ShowDetailIntervence += ShowDetailIntervence;
+
+      ctrllikoIncident1.Dock = DockStyle.Fill;
+      ctrllikoIncident1.ShowRowInformation += ShowRowInformation;
+      ctrllikoIncident1.ShowDetailIntervence += ShowDetailIntervence;
+
+      ctrllikoIntervence1.Dock = DockStyle.Fill;
+      ctrllikoIntervence1.ShowRowInformation += ShowRowInformation;
+      ctrllikoIntervence1.ShowDetailIntervence += ShowDetailIntervence;
+
+      ctrlLikoCall1.Dock = DockStyle.Fill;
+      ctrlLikoCall1.ShowRowInformation += ShowRowInformation;
+      ctrlLikoCall1.ShowDetailIntervence += ShowDetailIntervence;
       HideAll();
       ShowView_NewCall();
     }
@@ -63,6 +85,7 @@ namespace EvitelApp2
         aktWindow = enumMember; ;
         HideActualView();
       }
+      toolStripRows.Text = "";
     }
 
     private void timer1_Tick(object sender, EventArgs e)
@@ -94,12 +117,26 @@ namespace EvitelApp2
         case eShowWindow.Enums:
           ucCiselnik1.Visible = false;
           break;
-        case eShowWindow.Participant:
+        case eShowWindow.LikoParticipant:
           ctrlParticipation1.Visible = false;
+          break;
+        case eShowWindow.LikoCall:
+          ctrlLikoCall1.Visible = false;
+          break;
+        case eShowWindow.LikoIncident:
+          ctrllikoIncident1.Visible = false;
+          break;
+        case eShowWindow.LikoIntervence:
+          ctrllikoIntervence1.Visible = false;
           break;
         case eShowWindow.NecoJineho: break;
         default: break;
       }
+      MenuToolsRemoveFilters.Enabled = false;
+      MenuToolsRemoveOrders.Enabled = false;
+      MenuToolSetColumnLayout.Enabled = false;
+      MenuToolsRemoveColumnLayout.Enabled = false;
+      FileExportExcel.Enabled = false;
       ctrlActiveControlUp = ctrlActiveControlDown = null;
     }
 
@@ -134,7 +171,18 @@ namespace EvitelApp2
     {
       ucCallLIKO1.Visible = true;
       aktWindow = eShowWindow.NewCall;
-      this.Text = Title + " - LIKO Nové volání";
+      if (TypeCall > 0)
+      {
+        ucCallLIKO1.isNewForm = false;
+        ucCallLIKO1.LikoIntervenceId = TypeCall;
+        ucCallLIKO1.ReadDBData();
+        this.Text = Title + " - LIKO Intervence id = " + TypeCall.ToString();
+      }
+      else
+      {
+        this.Text = Title + " - LIKO Nové volání";
+      }
+      lastWindowStack.Add(aktWindow);
 
     }
     private void ShowView_Interventi()
@@ -145,6 +193,8 @@ namespace EvitelApp2
         ucIntervents1.ReadDataFirstTime();
       aktWindow = eShowWindow.Intervents;
       this.Text = Title + " - Interventi";
+      lastWindowStack.Add(aktWindow);
+
     }
     private void ShowView_Ciselnik(eAllEnums aktEnum)
     {
@@ -154,16 +204,80 @@ namespace EvitelApp2
       ucCiselnik1.MyResize();
       aktWindow = eShowWindow.Enums;
       this.Text = Title + " - Číselník " + ucCiselnik1.Titulek;
+      lastWindowStack.Add(aktWindow);
 
     }
-    private void ShowView_Participant()
+    private void ShowView_Participant(bool openNeeded = true)
     {
+      if (openNeeded)
+      {
+        ctrlParticipation1.ReadDataFirstTime();
+        ctrlParticipation1.MyResize();
+      }
       ctrlParticipation1.Visible = true;
-      ctrlParticipation1.ReadDataFirstTime();
-      ctrlParticipation1.MyResize();
-      aktWindow = eShowWindow.Participant;
-      this.Text = "Účastníci intervence";
+      MenuToolsRemoveFilters.Enabled = true;
+      MenuToolsRemoveOrders.Enabled = true;
+      MenuToolSetColumnLayout.Enabled = true;
+      MenuToolsRemoveColumnLayout.Enabled = true;
+      FileExportExcel.Enabled = true;
+      aktWindow = eShowWindow.LikoParticipant;
+      this.Text = Title + "Účastníci intervence";
+      lastWindowStack.Add(aktWindow);
 
+    }
+
+    private void ShowView_LikoCalls(bool openNeeded = true)
+    {
+      if (openNeeded)
+      {
+        ctrlLikoCall1.ReadDataFirstTime();
+        ctrlLikoCall1.MyResize();
+      }
+      ctrlLikoCall1.Visible = true;
+      MenuToolsRemoveFilters.Enabled = true;
+      MenuToolsRemoveOrders.Enabled = true;
+      MenuToolSetColumnLayout.Enabled = true;
+      MenuToolsRemoveColumnLayout.Enabled = true;
+      FileExportExcel.Enabled = true;
+      aktWindow = eShowWindow.LikoCall;
+      this.Text = Title + " - Intervenční telefonní hovory";
+      lastWindowStack.Add(aktWindow);
+    }
+
+    private void ShowView_LIKOIncidents(bool openNeeded = true)
+    {
+      if (openNeeded)
+      {
+        ctrllikoIncident1.ReadDataFirstTime();
+        ctrllikoIncident1.MyResize();
+      }
+      ctrllikoIncident1.Visible = true;
+      MenuToolsRemoveFilters.Enabled = true;
+      MenuToolsRemoveOrders.Enabled = true;
+      MenuToolSetColumnLayout.Enabled = true;
+      MenuToolsRemoveColumnLayout.Enabled = true;
+      FileExportExcel.Enabled = true;
+      aktWindow = eShowWindow.LikoIncident;
+      this.Text = Title + " - Incidenty";
+      lastWindowStack.Add(aktWindow);
+
+    }
+    private void ShowView_Intervence(bool openNeeded = true)
+    {
+      if (openNeeded)
+      {
+        ctrllikoIntervence1.ReadDataFirstTime();
+        ctrllikoIntervence1.MyResize();
+      }
+      ctrllikoIntervence1.Visible = true;
+      MenuToolsRemoveFilters.Enabled = true;
+      MenuToolsRemoveOrders.Enabled = true;
+      MenuToolSetColumnLayout.Enabled = true;
+      MenuToolsRemoveColumnLayout.Enabled = true;
+      FileExportExcel.Enabled = true;
+      aktWindow = eShowWindow.LikoIntervence;
+      this.Text = Title + " - Intervence";
+      lastWindowStack.Add(aktWindow);
     }
 
 
@@ -173,6 +287,41 @@ namespace EvitelApp2
       ctrlEventLog1.ReReadData();
     }
 
+    // source 1=Call, 2=Incident, 3=Intervence, 4=Participant, -1 ucCallLiko konci
+    void ShowDetailIntervence(int source, int? IntervenceId)
+    {
+      if (source >= 1 && source <= 4)
+      {
+        MessageBox.Show("Zobrazím info o intervenci id = " + IntervenceId.ToString());
+        HideActualView();
+        ShowView_NewCall(IntervenceId ?? 0);
+      }
+      else if (source == -1)
+      {
+        HideActualView();
+        aktWindow = lastWindowStack[lastWindowStack.Count - 2];
+        switch (aktWindow)
+        {
+          case eShowWindow.LikoParticipant:
+            ShowView_Participant(false);
+            break;
+          case eShowWindow.LikoCall:
+            ShowView_LikoCalls(false);
+            break;
+          case eShowWindow.LikoIncident:
+            ShowView_LIKOIncidents(false);
+            break;
+          case eShowWindow.LikoIntervence:
+            ShowView_Intervence(false);
+            break;
+          default: break;
+        }
+      }
+    }
+    void ShowRowInformation(int nrAkt, int nrRow)
+    {
+      toolStripRows.Text = nrAkt.ToString() + " / " + nrRow.ToString();
+    }
 
     private enum eShowWindow
     {
@@ -181,7 +330,10 @@ namespace EvitelApp2
       NewCall,
       Intervents,
       Enums,
-      Participant,
+      LikoParticipant,
+      LikoCall,
+      LikoIncident,
+      LikoIntervence,
       NecoJineho
     }
 
@@ -268,5 +420,125 @@ namespace EvitelApp2
       ShowView_Participant();
 
     }
+
+    private void MenuToolShowCalls_Click(object sender, EventArgs e)
+    {
+      HideActualView();
+      ShowView_LikoCalls();
+    }
+
+    private void MenuToolShowEvents_Click(object sender, EventArgs e)
+    {
+      HideActualView();
+      ShowView_LIKOIncidents();
+
+    }
+
+    private void MenuToolShowIntervence_Click(object sender, EventArgs e)
+    {
+      HideActualView();
+      ShowView_Intervence();
+
+    }
+
+    private void MenuToolsRemoveFilters_Click(object sender, EventArgs e)
+    {
+      if (aktWindow == eShowWindow.LikoCall)
+        ctrlLikoCall1.RemoveFilters();
+      else if (aktWindow == eShowWindow.LikoIncident)
+        ctrllikoIncident1.RemoveFilters();
+      else if (aktWindow == eShowWindow.LikoIntervence)
+        ctrllikoIntervence1.RemoveFilters();
+
+    }
+
+
+    private void MenuToolsRemoveOrders_Click(object sender, EventArgs e)
+    {
+      if (aktWindow == eShowWindow.LikoCall)
+        ctrlLikoCall1.RemoveOrders();
+      else if (aktWindow == eShowWindow.LikoIncident)
+        ctrllikoIncident1.RemoveOrders();
+      else if (aktWindow == eShowWindow.LikoIntervence)
+        ctrllikoIntervence1.RemoveOrders();
+    }
+
+    private void MenuToolsRemoveColumn_Click(object sender, EventArgs e)
+    {
+      if (aktWindow == eShowWindow.LikoCall)
+        ctrlLikoCall1.InitColumns();
+      else if (aktWindow == eShowWindow.LikoIncident)
+        ctrllikoIncident1.InitColumns();
+      else if (aktWindow == eShowWindow.LikoIntervence)
+        ctrllikoIntervence1.InitColumns();
+    }
+
+    private void MenuToolSetColumnLayout_Click(object sender, EventArgs e)
+    {
+      if (aktWindow == eShowWindow.LikoCall)
+        ctrlLikoCall1.SetColumns();
+      else if (aktWindow == eShowWindow.LikoIncident)
+        ctrllikoIncident1.SetColumns();
+      else if (aktWindow == eShowWindow.LikoIntervence)
+        ctrllikoIntervence1.SetColumns();
+
+
+    }
+
+    private void FileExportExcel_Click(object sender, EventArgs e)
+    {
+      DataTable dtTable = null;
+      switch (aktWindow)
+      {
+        case eShowWindow.Enums:
+          ucCiselnik1.Visible = false;
+          break;
+        case eShowWindow.LikoParticipant:
+          dtTable = ctrlParticipation1.dataTable;
+          break;
+        case eShowWindow.LikoCall:
+          dtTable = ctrlLikoCall1.dataTable;
+          break;
+        case eShowWindow.LikoIncident:
+          dtTable = ctrllikoIncident1.dataTable;
+          break;
+        case eShowWindow.LikoIntervence:
+          dtTable = ctrllikoIntervence1.dataTable;
+          break;
+        default: break;
+      }
+      if (dtTable == null) {
+        MessageBox.Show("Neexistující tabulka pro Excel", "EVITEL - EXPORT TO EXCEL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        return;
+      }
+
+
+      using (SaveFileDialog fd = new SaveFileDialog())
+      {
+        fd.Filter = "Excel files (*.xlsx)|*.xlsx";
+        fd.Title = "Save table to Excel File";
+        fd.OverwritePrompt = true;
+        fd.CreatePrompt = true; 
+        if (fd.ShowDialog() == DialogResult.OK)
+        {
+          var filename = fd.FileName;
+            TableToExcel excel = new TableToExcel();
+            if (excel.TransformToFile(dtTable, filename))
+            {
+              var p = new Process();
+              p.StartInfo = new ProcessStartInfo(filename)
+              {
+                UseShellExecute = true
+              };
+              p.Start();
+            }
+            else {
+              MessageBox.Show("Nelze vytvořit Excel File z tabulky. " + excel.sErr, "EVITEL - EXPORT TO EXCEL",MessageBoxButtons.OK,MessageBoxIcon.Error);
+            }
+          }
+      }
+
+    }
+
   }
 }
