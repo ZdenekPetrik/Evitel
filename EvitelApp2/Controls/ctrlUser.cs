@@ -1,4 +1,5 @@
-﻿using EvitelApp2.Helper;
+﻿using EvitelApp2.Forms1;
+using EvitelApp2.Helper;
 using EvitelApp2.MyUserControl;
 using EvitelLib2.Model;
 using EvitelLib2.Repository;
@@ -18,23 +19,23 @@ using static EvitelApp2.frmMain;
 
 namespace EvitelApp2.Controls
 {
-  public partial class ctrlLikoCall : UserControl, IctrlWithDGW
+  public partial class ctrlUser : UserControl, IctrlWithDGW
   {
     private CRepositoryDB DB;
     private DataTable _dataTable;
     private DataSet _dataSet;
-    List<WLikocall> wLikoCalls = new List<WLikocall>();
+    List<LoginUser> loginUserList = new List<LoginUser>();
+    List<LoginAccess> loginAccessList = new List<LoginAccess>();
     BindingSource bindingSource1;
     private List<MyColumn> myColumns;
     private ColumnLayoutDB cldb;
     ToolStripMenuItem toolStripItem1 = new ToolStripMenuItem();
     public event RowInformation ShowRowInformation;
-    public event DetailIntervence ShowDetailIntervence;
     private DataGridViewCellEventArgs mouseLocation;
     public DataTable dataTable { get { return _dataTable; } }
 
 
-    public ctrlLikoCall()
+    public ctrlUser()
     {
       InitializeComponent();
     }
@@ -49,15 +50,13 @@ namespace EvitelApp2.Controls
 
       myColumns = new List<MyColumn>()
       {
-         new MyColumn { Name = "CallId", DataPropertyName = "CallId", Type=3 ,  isVisible = false },
-         new MyColumn { Name = "Volání od", DataPropertyName = "DtStartCall",Type=5, isVisible = false},
-         new MyColumn { Name = "Datum volání", DataPropertyName = "DtCall" , Type=5},
-         new MyColumn { Name = "Začátek", DataPropertyName = "TmStartCall"  },
-         new MyColumn { Name = "Konec", DataPropertyName = "TmEndCall"  },
-         new MyColumn { Name = "Doba volání", DataPropertyName = "CallDuration"  },
-         new MyColumn { Name = "Volající", DataPropertyName = "CmbName"},
-         new MyColumn { Name = "Zapsal", DataPropertyName = "UsrLastName" },
-       };
+         new MyColumn { Name = "LoginUserId", DataPropertyName = "LoginUserId", Type=3 ,  isVisible = false },
+         new MyColumn { Name = "Jméno", DataPropertyName = "FirstName"},
+         new MyColumn { Name = "Přijmení", DataPropertyName = "LastName" },
+         new MyColumn { Name = "Přihlašovací jméno", DataPropertyName = "LoginName"  },
+         new MyColumn { Name = "Vytvořeno", DataPropertyName = "Created" , Type=5 },
+         new MyColumn { Name = "Přístupy", DataPropertyName = "Access"  }
+        };
       _dataTable = new DataTable();
       _dataSet = new DataSet();
       bindingSource1 = new BindingSource();
@@ -82,7 +81,8 @@ namespace EvitelApp2.Controls
 
     public void ReadDataFirstTime()
     {
-      wLikoCalls = DB.GetWLikoCalls();
+      loginUserList = DB.GetLoginUser();
+      loginAccessList = DB.GetLoginAccess();
       AddDataToTable();
       UpdateColumn();
       cldb = new ColumnLayoutDB(DB, dgw, this.Name + _dataTable.TableName);
@@ -91,7 +91,7 @@ namespace EvitelApp2.Controls
 
     private void CreateTable()
     {
-      _dataTable = _dataSet.Tables.Add("wLikoCall");
+      _dataTable = _dataSet.Tables.Add("wLoginUser");
       foreach (var col in myColumns)
       {
         _dataTable.Columns.Add(col.Name, col.GetMyType());
@@ -103,18 +103,28 @@ namespace EvitelApp2.Controls
     private void AddDataToTable()
     {
       _dataTable.Rows.Clear();
-      foreach (var p in wLikoCalls)
+      foreach (var user in loginUserList)
       {
         DataRow newRow = _dataTable.NewRow();
         foreach (var col in myColumns)
         {
-          newRow[col.Name] = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null); ;
+          if (col.DataPropertyName == "Access")
+            newRow[col.Name] = GetAccessAcronym(user);
+          else
+            newRow[col.Name] = user.GetType().GetProperty(col.DataPropertyName).GetValue(user, null); ;
         }
         //          
         _dataTable.Rows.Add(newRow);
       }
     }
 
+    private string GetAccessAcronym(LoginUser user)
+    {
+      var access = loginAccessList.Where(p => user.LoginAccessUsers.Any(p2 => p2.LoginAccessId == p.LoginAccessId));
+      if (access.Count() == 0)
+        return "Disabled";
+      return String.Join(',', access.Select(x => x.AccessShortName));
+    }
 
     private void UpdateColumn()
     {
@@ -122,9 +132,9 @@ namespace EvitelApp2.Controls
       {
         dgw.Columns[col.Name].Visible = col.isVisible;
       }
-      dgw.SortASC(dgw.Columns["Volání od"]);
+      dgw.SortASC(dgw.Columns["Přijmení"]);
 
-      toolStripItem1.Text = "Detail Intervence";
+      toolStripItem1.Text = "Detail uživatele";
       toolStripItem1.Click += new EventHandler(toolStripItem1_Click);
       ContextMenuStrip strip = new ContextMenuStrip();
       foreach (DataGridViewColumn column in dgw.Columns)
@@ -136,7 +146,7 @@ namespace EvitelApp2.Controls
 
     private void toolStripItem1_Click(object sender, EventArgs args)
     {
-      JumpToIntervence();
+      JumpToDetail();
     }
     private void dgw_CellMouseEnter(object sender, DataGridViewCellEventArgs location)
     {
@@ -164,24 +174,36 @@ namespace EvitelApp2.Controls
 
     private void dgw_RowEnter(object sender, DataGridViewCellEventArgs e)
     {
-      ShowRowInformation?.Invoke(e.RowIndex + 1, wLikoCalls.Count);
+      ShowRowInformation?.Invoke(e.RowIndex + 1, loginUserList.Count);
     }
 
     private void dgw_DoubleClick(object sender, EventArgs e)
     {
-      JumpToIntervence();
+      JumpToDetail();
     }
 
-    private void JumpToIntervence()
+    private void JumpToDetail()
     {
-      int CallId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["CallId"].Value;
-      int? likoIntervenceId = wLikoCalls.Where(x => x.CallId == CallId)?.First().LikointervenceId;
-      ShowDetailIntervence?.Invoke(1, likoIntervenceId);
+      int LoginUserId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["LoginUserId"].Value;
+      LoginUser loginUser = loginUserList.Where(x => x.LoginUserId == LoginUserId)?.First();
+      frmUser frm = new frmUser();
+      frm.loginUser = loginUser;
+      frm.loginAccessList = loginAccessList;
+      frm.StartPosition = FormStartPosition.CenterScreen;
+      frm.Type = 2;
+      frm.ShowDialog();
+      if (frm.isOK)
+      {
+        DB.UpdateLoginUser(loginUser);
+        RefreshData();
+      }
     }
 
-
-   
-
-
+    public void RefreshData()
+    {
+      loginUserList = DB.GetLoginUser();
+      loginAccessList = DB.GetLoginAccess();
+      AddDataToTable();
+    }
   }
 }

@@ -15,7 +15,6 @@ namespace EvitelLib2.Model
         public DateTime? DtEndCall { get; set; }
         public int? LoginUserId { get; set; }
 
-        public virtual Intervent CallNavigation { get; set; }
         public virtual LoginUser LoginUser { get; set; }
         public virtual ICollection<Likointervence> Likointervences { get; set; }
     }

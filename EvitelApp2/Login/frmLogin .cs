@@ -12,8 +12,8 @@ using System.Windows.Forms;
 
 namespace EvitelApp2.Login
 {
-    public partial class frmLogin : Form
-    {
+    public partial class frmLogin : System.Windows.Forms.Form
+  {
         public CLoggedUser myLoggedUser;
         public int Mode = 1;
 

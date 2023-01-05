@@ -1,15 +1,7 @@
 ﻿using EvitelApp2.Controls;
 using EvitelLib2.Model;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using NPOI.SS.Util;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 

@@ -26,6 +26,9 @@
     <Compile Update="Controls\ctrlEventLogFilter.designer.cs">
       <DependentUpon>ctrlEventLogFilter.cs</DependentUpon>
     </Compile>
+    <Compile Update="Controls\ctrlUser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Controls\ctrlLikoIntervence.cs">
       <SubType>UserControl</SubType>
     </Compile>

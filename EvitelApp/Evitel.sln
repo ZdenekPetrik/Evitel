@@ -5,10 +5,12 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BAE019C0-9C89-47AE-84EE-16D2C8CA490D}"
 	ProjectSection(SolutionItems) = preProject
+		..\DB-Evitel20230104.sql = ..\DB-Evitel20230104.sql
 		EF.txt = EF.txt
 		..\ExcelRowSet.sql = ..\ExcelRowSet.sql
 		History.txt = History.txt
 		SQLDeleteTables.txt = SQLDeleteTables.txt
+		SQLJakZmenitNazevMDFLDF.txt = SQLJakZmenitNazevMDFLDF.txt
 		TODO.txt = TODO.txt
 	EndProjectSection
 EndProject

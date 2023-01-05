@@ -1,24 +1,21 @@
 ﻿using EvitelApp2.Controls;
+using EvitelApp2.Forms1;
 using EvitelApp2.Helper;
 using EvitelApp2.Login;
 using EvitelLib2.Common;
+using EvitelLib2.Model;
 using EvitelLib2.Repository;
-using NPOI.SS.UserModel.Charts;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using System.Windows.Forms;
 
 namespace EvitelApp2
 {
 
-  public partial class frmMain : Form
+  public partial class frmMain : System.Windows.Forms.Form
   {
     private UserControl ctrlActiveControlUp;                // Co je prave zobrazeno
     private UserControl ctrlActiveControlDown;
@@ -32,6 +29,24 @@ namespace EvitelApp2
     public delegate void RowInformation(int nrAkt, int nrRow);            // Zobrazí 17/256 v StatusBaru
 
     private List<eShowWindow> lastWindowStack;
+
+    private enum eShowWindow
+    {
+      emptyPage,
+      EventLog,
+      NewCall,
+      Intervents,
+      Enums,
+      LikoParticipant,
+      LikoCall,
+      LikoIncident,
+      LikoIntervence,
+      User,
+      NecoJineho
+    }
+
+
+
 
     public frmMain()
     {
@@ -48,8 +63,11 @@ namespace EvitelApp2
       timer1.Start();
       if (Program.myLoggedUser.loginMode != eLoginMode.PasswordName)
       {
-        MeneToolsChangePassword.Visible = false;
+        MenuItemChangePassword.Visible = false;
       }
+      MenuItemUsers.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.Admin);
+      MenuItemNewUser.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.Admin);
+
       CRepositoryDB repo = new CRepositoryDB();
       ucCallLIKO1.Dock = DockStyle.Fill;
       ucCallLIKO1.ShowDetailIntervence += ShowDetailIntervence;
@@ -72,6 +90,10 @@ namespace EvitelApp2
       ctrlLikoCall1.Dock = DockStyle.Fill;
       ctrlLikoCall1.ShowRowInformation += ShowRowInformation;
       ctrlLikoCall1.ShowDetailIntervence += ShowDetailIntervence;
+
+      ctrlUser1.Dock = DockStyle.Fill;
+      ctrlUser1.ShowRowInformation += ShowRowInformation;
+
       HideAll();
       ShowView_NewCall();
     }
@@ -128,6 +150,9 @@ namespace EvitelApp2
           break;
         case eShowWindow.LikoIntervence:
           ctrllikoIntervence1.Visible = false;
+          break;
+        case eShowWindow.User:
+          ctrlUser1.Visible = false;
           break;
         case eShowWindow.NecoJineho: break;
         default: break;
@@ -280,6 +305,24 @@ namespace EvitelApp2
       lastWindowStack.Add(aktWindow);
     }
 
+    private void ShowView_Users(bool openNeeded = true)
+    {
+      if (openNeeded)
+      {
+        ctrlUser1.ReadDataFirstTime();
+        ctrllikoIntervence1.MyResize();
+      }
+      ctrlUser1.Visible = true;
+      MenuToolsRemoveFilters.Enabled = true;
+      MenuToolsRemoveOrders.Enabled = true;
+      MenuToolSetColumnLayout.Enabled = true;
+      MenuToolsRemoveColumnLayout.Enabled = true;
+      FileExportExcel.Enabled = true;
+      aktWindow = eShowWindow.User;
+      this.Text = Title + " - Uživatelé";
+      lastWindowStack.Add(aktWindow);
+    }
+
 
 
     void ctrlEventLogFilter1_NewFilter()
@@ -323,19 +366,6 @@ namespace EvitelApp2
       toolStripRows.Text = nrAkt.ToString() + " / " + nrRow.ToString();
     }
 
-    private enum eShowWindow
-    {
-      emptyPage,
-      EventLog,
-      NewCall,
-      Intervents,
-      Enums,
-      LikoParticipant,
-      LikoCall,
-      LikoIncident,
-      LikoIntervence,
-      NecoJineho
-    }
 
     private void splitContainer1_Panel1_Resize(object sender, EventArgs e)
     {
@@ -352,11 +382,6 @@ namespace EvitelApp2
       HideActualView();
       ShowView_NewCall();
 
-    }
-    private void MeneToolsChangePassword_Click(object sender, EventArgs e)
-    {
-      frmChangePassword frm = new frmChangePassword();
-      frm.ShowDialog();
     }
 
     private void MenuToolEventLog_Click(object sender, EventArgs e)
@@ -441,104 +466,137 @@ namespace EvitelApp2
 
     }
 
+    private void MenuItemChangePassword_Click(object sender, EventArgs e)
+    {
+      frmChangePassword frm = new frmChangePassword();
+      frm.ShowDialog();
+
+    }
+    private void MenuItemUsers_Click(object sender, EventArgs e)
+    {
+      HideActualView();
+      ShowView_Users();
+    }
+
+
     private void MenuToolsRemoveFilters_Click(object sender, EventArgs e)
     {
-      if (aktWindow == eShowWindow.LikoCall)
-        ctrlLikoCall1.RemoveFilters();
-      else if (aktWindow == eShowWindow.LikoIncident)
-        ctrllikoIncident1.RemoveFilters();
-      else if (aktWindow == eShowWindow.LikoIntervence)
-        ctrllikoIntervence1.RemoveFilters();
+      IctrlWithDGW r = GetActiveCtrl(aktWindow);
+      if (r != null)
+        r?.RemoveFilters();
+      else
+      {
+        MessageBox.Show(aktWindow.ToString() + " aktivní okno neumožňuje  metodu RemoveOrders().", "NELZE", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
 
     }
 
 
     private void MenuToolsRemoveOrders_Click(object sender, EventArgs e)
     {
-      if (aktWindow == eShowWindow.LikoCall)
-        ctrlLikoCall1.RemoveOrders();
-      else if (aktWindow == eShowWindow.LikoIncident)
-        ctrllikoIncident1.RemoveOrders();
-      else if (aktWindow == eShowWindow.LikoIntervence)
-        ctrllikoIntervence1.RemoveOrders();
+      IctrlWithDGW r = GetActiveCtrl(aktWindow);
+      if (r != null)
+        r?.RemoveOrders();
+      else
+      {
+        MessageBox.Show(aktWindow.ToString() + " aktivní okno neumožňuje  metodu RemoveOrders().", "NELZE", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
     }
 
     private void MenuToolsRemoveColumn_Click(object sender, EventArgs e)
     {
-      if (aktWindow == eShowWindow.LikoCall)
-        ctrlLikoCall1.InitColumns();
-      else if (aktWindow == eShowWindow.LikoIncident)
-        ctrllikoIncident1.InitColumns();
-      else if (aktWindow == eShowWindow.LikoIntervence)
-        ctrllikoIntervence1.InitColumns();
+      IctrlWithDGW r = GetActiveCtrl(aktWindow);
+      if (r != null)
+        r?.InitColumns();
+      else
+      {
+        MessageBox.Show(aktWindow.ToString() + " aktivní okno neumožňuje  metodu InitColums().","NELZE", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
     }
 
+   
     private void MenuToolSetColumnLayout_Click(object sender, EventArgs e)
     {
-      if (aktWindow == eShowWindow.LikoCall)
-        ctrlLikoCall1.SetColumns();
-      else if (aktWindow == eShowWindow.LikoIncident)
-        ctrllikoIncident1.SetColumns();
-      else if (aktWindow == eShowWindow.LikoIntervence)
-        ctrllikoIntervence1.SetColumns();
-
-
+      IctrlWithDGW r = GetActiveCtrl(aktWindow);
+      if (r != null)
+        r?.SetColumns();
+      else
+      {
+        MessageBox.Show(aktWindow.ToString() + " aktivní okno neumožňuje metodu SetColums().", "NELZE", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
     }
+
+    private IctrlWithDGW GetActiveCtrl(eShowWindow aktWindow)
+    {
+
+      IctrlWithDGW rozhrani = null;
+      if (aktWindow == eShowWindow.LikoCall)
+        rozhrani = (IctrlWithDGW)ctrlLikoCall1;
+      else if (aktWindow == eShowWindow.LikoIncident)
+        rozhrani = (IctrlWithDGW)ctrllikoIncident1;
+      else if (aktWindow == eShowWindow.LikoIntervence)
+        rozhrani = (IctrlWithDGW)ctrllikoIntervence1;
+      else if (aktWindow == eShowWindow.LikoParticipant)
+        rozhrani = (IctrlWithDGW)ctrlParticipation1;
+      else if (aktWindow == eShowWindow.User)
+        rozhrani = (IctrlWithDGW)ctrlUser1;
+      return rozhrani;
+    }
+
 
     private void FileExportExcel_Click(object sender, EventArgs e)
     {
-      DataTable dtTable = null;
-      switch (aktWindow)
+      IctrlWithDGW r = GetActiveCtrl(aktWindow);
+      if (r == null)
       {
-        case eShowWindow.Enums:
-          ucCiselnik1.Visible = false;
-          break;
-        case eShowWindow.LikoParticipant:
-          dtTable = ctrlParticipation1.dataTable;
-          break;
-        case eShowWindow.LikoCall:
-          dtTable = ctrlLikoCall1.dataTable;
-          break;
-        case eShowWindow.LikoIncident:
-          dtTable = ctrllikoIncident1.dataTable;
-          break;
-        case eShowWindow.LikoIntervence:
-          dtTable = ctrllikoIntervence1.dataTable;
-          break;
-        default: break;
-      }
-      if (dtTable == null) {
         MessageBox.Show("Neexistující tabulka pro Excel", "EVITEL - EXPORT TO EXCEL", MessageBoxButtons.OK, MessageBoxIcon.Error);
         return;
       }
-
+      DataTable dtTable = r.dataTable;
 
       using (SaveFileDialog fd = new SaveFileDialog())
       {
         fd.Filter = "Excel files (*.xlsx)|*.xlsx";
         fd.Title = "Save table to Excel File";
         fd.OverwritePrompt = true;
-        fd.CreatePrompt = true; 
+        fd.CreatePrompt = true;
         if (fd.ShowDialog() == DialogResult.OK)
         {
           var filename = fd.FileName;
-            TableToExcel excel = new TableToExcel();
-            if (excel.TransformToFile(dtTable, filename))
+          TableToExcel excel = new TableToExcel();
+          if (excel.TransformToFile(dtTable, filename))
+          {
+            var p = new Process();
+            p.StartInfo = new ProcessStartInfo(filename)
             {
-              var p = new Process();
-              p.StartInfo = new ProcessStartInfo(filename)
-              {
-                UseShellExecute = true
-              };
-              p.Start();
-            }
-            else {
-              MessageBox.Show("Nelze vytvořit Excel File z tabulky. " + excel.sErr, "EVITEL - EXPORT TO EXCEL",MessageBoxButtons.OK,MessageBoxIcon.Error);
-            }
+              UseShellExecute = true
+            };
+            p.Start();
           }
+          else
+          {
+            MessageBox.Show("Nelze vytvořit Excel File z tabulky. " + excel.sErr, "EVITEL - EXPORT TO EXCEL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+          }
+        }
       }
 
     }
 
+    private void MenuItemNewUser_Click(object sender, EventArgs e)
+    {
+      CRepositoryDB DB = new CRepositoryDB(Program.myLoggedUser.LoginUserId);
+      frmUser frm = new frmUser();
+      frm.loginUser = new LoginUser();
+      frm.loginAccessList = DB.GetLoginAccess();
+      frm.StartPosition = FormStartPosition.CenterScreen;
+      frm.Type = 1;
+      frm.ShowDialog();
+      if (frm.isOK)
+      {
+        DB.UpdateLoginUser(frm.loginUser);
+        ctrlUser1.RefreshData();
+      }
+
+    }
   }
 }

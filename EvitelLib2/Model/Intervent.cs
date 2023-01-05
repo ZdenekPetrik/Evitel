@@ -20,6 +20,5 @@ namespace EvitelLib2.Model
         public DateTime DtCreate { get; set; }
 
         public virtual Region Region { get; set; }
-        public virtual Call Call { get; set; }
     }
 }

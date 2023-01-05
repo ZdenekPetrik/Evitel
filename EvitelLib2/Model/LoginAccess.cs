@@ -7,5 +7,6 @@ namespace EvitelLib2.Model
     {
         public int LoginAccessId { get; set; }
         public string AccessName { get; set; }
+        public string AccessShortName { get; set; }
     }
 }

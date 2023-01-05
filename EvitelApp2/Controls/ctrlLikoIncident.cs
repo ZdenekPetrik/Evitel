@@ -10,7 +10,7 @@ using static EvitelApp2.frmMain;
 
 namespace EvitelApp2.Controls
 {
-  public partial class ctrlLIKOIncident : UserControl
+  public partial class ctrlLIKOIncident : UserControl, IctrlWithDGW
   {
     private CRepositoryDB DB;
     private DataTable _dataTable;
@@ -138,12 +138,13 @@ namespace EvitelApp2.Controls
       dgw.CleanSort();
     }
 
-    internal void InitColumns()
+    public void InitColumns()
     {
       cldb.DeleteColumnOrder();
       cldb.InitializeColumns();
     }
-    internal void SetColumns()
+
+    public void SetColumns()
     {
       cldb.SaveColumnLayout();
     }

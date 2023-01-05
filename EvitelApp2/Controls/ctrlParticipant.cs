@@ -11,7 +11,7 @@ using static EvitelApp2.frmMain;
 
 namespace EvitelApp2.Controls
 {
-  public partial class ctrlParticipant : UserControl
+  public partial class ctrlParticipant : UserControl, IctrlWithDGW
   {
     private CRepositoryDB DB;
 
@@ -153,12 +153,7 @@ namespace EvitelApp2.Controls
       dgw.CleanSort();
     }
 
-    internal void RemoveColumns()
-    {
-      cldb.DeleteColumnOrder();
-      cldb.InitializeColumns();
-    }
-
+  
     private void dgw_RowEnter(object sender, DataGridViewCellEventArgs e)
     {
       ShowRowInformation?.Invoke(e.RowIndex + 1, participants.Count);
@@ -185,5 +180,16 @@ namespace EvitelApp2.Controls
     {
       mouseLocation = location;
     }
+
+    public void InitColumns()
+    {
+      cldb.DeleteColumnOrder();
+      cldb.InitializeColumns();
+    }
+    public void SetColumns()
+    {
+      cldb.SaveColumnLayout();
+    }
+
   }
 }

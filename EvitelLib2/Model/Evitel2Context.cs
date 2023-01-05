@@ -55,17 +55,9 @@ namespace EvitelLib2.Model
         {
             modelBuilder.Entity<Call>(entity =>
             {
-                entity.Property(e => e.CallId).ValueGeneratedOnAdd();
-
                 entity.Property(e => e.DtEndCall).HasColumnName("dtEndCall");
 
                 entity.Property(e => e.DtStartCall).HasColumnName("dtStartCall");
-
-                entity.HasOne(d => d.CallNavigation)
-                    .WithOne(p => p.Call)
-                    .HasForeignKey<Call>(d => d.CallId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Calls_Intervents");
 
                 entity.HasOne(d => d.LoginUser)
                     .WithMany(p => p.Calls)
@@ -274,6 +266,8 @@ namespace EvitelLib2.Model
             modelBuilder.Entity<LoginAccess>(entity =>
             {
                 entity.Property(e => e.AccessName).HasMaxLength(50);
+
+                entity.Property(e => e.AccessShortName).HasMaxLength(3);
             });
 
             modelBuilder.Entity<LoginAccessUser>(entity =>

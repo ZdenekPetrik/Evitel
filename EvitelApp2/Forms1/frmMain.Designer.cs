@@ -36,8 +36,6 @@ namespace EvitelApp2
             this.FileExportExcel = new System.Windows.Forms.ToolStripMenuItem();
             this.exportDenníProtokolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MeneToolsChangePassword = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuToolsRemoveFilters = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuToolsRemoveOrders = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -62,6 +60,9 @@ namespace EvitelApp2
             this.newCallLIKOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newCallLDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SettingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItemChangePassword = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItemUsers = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripUser = new System.Windows.Forms.ToolStripStatusLabel();
@@ -76,6 +77,8 @@ namespace EvitelApp2
             this.ctrlLikoCall1 = new EvitelApp2.Controls.ctrlLikoCall();
             this.ctrllikoIncident1 = new EvitelApp2.Controls.ctrlLIKOIncident();
             this.ctrllikoIntervence1 = new EvitelApp2.Controls.ctrlLIKOIntervence();
+            this.ctrlUser1 = new EvitelApp2.Controls.ctrlUser();
+            this.MenuItemNewUser = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -89,10 +92,11 @@ namespace EvitelApp2
             this.toolsToolStripMenuItem,
             this.viewsToolStripMenuItem,
             this.NewCallToolStripMenuItem,
-            this.testToolStripMenuItem});
+            this.testToolStripMenuItem,
+            this.SettingToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1405, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1555, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -129,8 +133,6 @@ namespace EvitelApp2
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MeneToolsChangePassword,
-            this.toolStripSeparator1,
             this.MenuToolsRemoveFilters,
             this.MenuToolsRemoveOrders,
             this.toolStripSeparator2,
@@ -139,18 +141,6 @@ namespace EvitelApp2
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
             this.toolsToolStripMenuItem.Text = "Nástroje";
-            // 
-            // MeneToolsChangePassword
-            // 
-            this.MeneToolsChangePassword.Name = "MeneToolsChangePassword";
-            this.MeneToolsChangePassword.Size = new System.Drawing.Size(229, 22);
-            this.MeneToolsChangePassword.Text = "Změna Hesla";
-            this.MeneToolsChangePassword.Click += new System.EventHandler(this.MeneToolsChangePassword_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(226, 6);
             // 
             // MenuToolsRemoveFilters
             // 
@@ -331,6 +321,30 @@ namespace EvitelApp2
             this.testToolStripMenuItem.Text = "Test";
             this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
             // 
+            // SettingToolStripMenuItem
+            // 
+            this.SettingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuItemChangePassword,
+            this.MenuItemUsers,
+            this.MenuItemNewUser});
+            this.SettingToolStripMenuItem.Name = "SettingToolStripMenuItem";
+            this.SettingToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.SettingToolStripMenuItem.Text = "Nastavení";
+            // 
+            // MenuItemChangePassword
+            // 
+            this.MenuItemChangePassword.Name = "MenuItemChangePassword";
+            this.MenuItemChangePassword.Size = new System.Drawing.Size(180, 22);
+            this.MenuItemChangePassword.Text = "Změna hesla";
+            this.MenuItemChangePassword.Click += new System.EventHandler(this.MenuItemChangePassword_Click);
+            // 
+            // MenuItemUsers
+            // 
+            this.MenuItemUsers.Name = "MenuItemUsers";
+            this.MenuItemUsers.Size = new System.Drawing.Size(180, 22);
+            this.MenuItemUsers.Text = "Uživatelé";
+            this.MenuItemUsers.Click += new System.EventHandler(this.MenuItemUsers_Click);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -338,9 +352,9 @@ namespace EvitelApp2
             this.toolStripUser,
             this.toolStripStatusLabel1,
             this.toolStripRows});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 535);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 796);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1405, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1555, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -359,7 +373,7 @@ namespace EvitelApp2
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(1125, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(1306, 17);
             this.toolStripStatusLabel1.Spring = true;
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
@@ -443,11 +457,26 @@ namespace EvitelApp2
             this.ctrllikoIntervence1.Size = new System.Drawing.Size(259, 168);
             this.ctrllikoIntervence1.TabIndex = 10;
             // 
+            // ctrlUser1
+            // 
+            this.ctrlUser1.Location = new System.Drawing.Point(1005, 304);
+            this.ctrlUser1.Name = "ctrlUser1";
+            this.ctrlUser1.Size = new System.Drawing.Size(180, 163);
+            this.ctrlUser1.TabIndex = 11;
+            // 
+            // MenuItemNewUser
+            // 
+            this.MenuItemNewUser.Name = "MenuItemNewUser";
+            this.MenuItemNewUser.Size = new System.Drawing.Size(180, 22);
+            this.MenuItemNewUser.Text = "Nový uživatel";
+            this.MenuItemNewUser.Click += new System.EventHandler(this.MenuItemNewUser_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1405, 557);
+            this.ClientSize = new System.Drawing.Size(1555, 818);
+            this.Controls.Add(this.ctrlUser1);
             this.Controls.Add(this.ctrllikoIntervence1);
             this.Controls.Add(this.ctrllikoIncident1);
             this.Controls.Add(this.ctrlLikoCall1);
@@ -483,7 +512,6 @@ namespace EvitelApp2
         private System.Windows.Forms.ToolStripMenuItem souborToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MenuSystemExit;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem MeneToolsChangePassword;
         private System.Windows.Forms.ToolStripMenuItem viewsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MenuToolEventLog;
         private System.Windows.Forms.SplitContainer splitContainer1;
@@ -509,7 +537,6 @@ namespace EvitelApp2
     private System.Windows.Forms.ToolStripMenuItem MenuToolShowEvents;
     private System.Windows.Forms.ToolStripMenuItem MenuToolShowIntervence;
     private Controls.ctrlLikoCall ctrlLikoCall1;
-    private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     private System.Windows.Forms.ToolStripMenuItem MenuToolsRemoveFilters;
     private System.Windows.Forms.ToolStripMenuItem MenuToolsRemoveOrders;
     private System.Windows.Forms.ToolStripMenuItem MenuToolsRemoveColumnLayout;
@@ -521,6 +548,11 @@ namespace EvitelApp2
     private System.Windows.Forms.ToolStripMenuItem exportDenníProtokolToolStripMenuItem;
     private System.Windows.Forms.ToolStripStatusLabel toolStripRows;
     private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+    private Controls.ctrlUser ctrlUser1;
+    private System.Windows.Forms.ToolStripMenuItem SettingToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem MenuItemChangePassword;
+    private System.Windows.Forms.ToolStripMenuItem MenuItemUsers;
+    private System.Windows.Forms.ToolStripMenuItem MenuItemNewUser;
   }
 }
 

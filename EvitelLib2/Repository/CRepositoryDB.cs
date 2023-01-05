@@ -292,7 +292,7 @@ namespace EvitelLib2.Repository
       }
       return true;
     }
-    internal LoginUser AddLoginUser(string firstName, string lastName, string loginName, string loginPassword)
+    public LoginUser AddLoginUser(string firstName, string lastName, string loginName, string loginPassword)
     {
       sErr = "";
       LoginUser newUser = new LoginUser
@@ -328,7 +328,6 @@ namespace EvitelLib2.Repository
         new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "AddLoginUser() " + GetInnerException(Ex), "", IdUser);
         return null;
       }
-
     }
     public List<LoginUser> GetUsers()
     {
@@ -345,6 +344,34 @@ namespace EvitelLib2.Repository
         new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetUsers() " + GetInnerException(Ex), "", IdUser);
       }
       return null;
+    }
+
+    public bool UpdateLoginUser(LoginUser user)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        if (user.LoginUserId > 0) { 
+          var x = from lau in db.LoginAccessUsers where lau.LoginUserId == user.LoginUserId select lau;
+          db.LoginAccessUsers.RemoveRange(x);
+          db.LoginUsers.Update(user);
+          db.Entry(user).State = EntityState.Modified;
+        }
+        else
+        {
+          user.Created = DateTime.Now;
+          db.LoginUsers.Add(user);
+        }
+        int countUpdate = db.SaveChanges();
+         }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UpdateLoginUser() " + GetInnerException(Ex), "", IdUser);
+        return false;
+      }
+      return true;
     }
 
 
@@ -872,6 +899,40 @@ namespace EvitelLib2.Repository
       return null;
     }
 
+    // Nevrací systémové účty (-1,-5), ale jen manuálně vytvořené
+    public List<LoginUser> GetLoginUser()
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var row = from r in db.LoginUsers.Include("LoginAccessUsers") where r.LoginUserId > 0 select r;
+        return row.ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetLoginUser() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+
+    public List<LoginAccess> GetLoginAccess()
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var rows = from r in db.LoginAccesses select r;
+        return rows.ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetLoginAccess() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
   }
 }
 
