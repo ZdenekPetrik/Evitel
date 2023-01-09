@@ -35,3 +35,9 @@
 15.12.2012- Èíselníky bez editace s ADO.NET
 16.12.2022- Vyplnìní LIKO hovoru. Validace
 23.12.2022 - dokonèen zápis LIKO hovoru.
+3.1.2023 - zobrazení LIKO hovoru ze všech 4 ctrl oken (Call,Incident, Intervence,Participant)
+4.1.2023 - ctrlUser a interface IctrlWithDSG, které øeší obsluhu obecného DataGridView
+5.1.2023 - export do Excelu. Hraní si s SQLite.
+6.1.2023 - Update and Add LoginUser. Napojení na ctrlUser.
+7.1.2023 - CallLiko - Update (read from DB and update all items + Participations). Zatím není propis do DB + zjištìní zmìn.
+8.1.2023 - PDF - první pokus s formátováním (hlavièka) + Linq a contains

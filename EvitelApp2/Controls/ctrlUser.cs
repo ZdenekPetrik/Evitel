@@ -1,6 +1,7 @@
 ﻿using EvitelApp2.Forms1;
 using EvitelApp2.Helper;
 using EvitelApp2.MyUserControl;
+using EvitelLib2.Common;
 using EvitelLib2.Model;
 using EvitelLib2.Repository;
 using Newtonsoft.Json;
@@ -134,7 +135,7 @@ namespace EvitelApp2.Controls
       }
       dgw.SortASC(dgw.Columns["Přijmení"]);
 
-      toolStripItem1.Text = "Detail uživatele";
+      toolStripItem1.Text = "Detail uživatele ";
       toolStripItem1.Click += new EventHandler(toolStripItem1_Click);
       ContextMenuStrip strip = new ContextMenuStrip();
       foreach (DataGridViewColumn column in dgw.Columns)
@@ -186,11 +187,16 @@ namespace EvitelApp2.Controls
     {
       int LoginUserId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["LoginUserId"].Value;
       LoginUser loginUser = loginUserList.Where(x => x.LoginUserId == LoginUserId)?.First();
+
+      var isAdmin = loginUser.LoginAccessUsers.Where(x => x.LoginAccessId == (int)eLoginAccess.Admin).Count() == 1;               // jsem administrátor
+      var nrAdmins = loginUserList.Where(d => d.LoginAccessUsers.Any(s => s.LoginAccessId == (int)eLoginAccess.Admin)).Count();   // Počet ostatních adminů
+
       frmUser frm = new frmUser();
       frm.loginUser = loginUser;
       frm.loginAccessList = loginAccessList;
       frm.StartPosition = FormStartPosition.CenterScreen;
       frm.Type = 2;
+      frm.isLastAdmin = (isAdmin && nrAdmins==1);
       frm.ShowDialog();
       if (frm.isOK)
       {

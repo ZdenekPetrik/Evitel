@@ -216,7 +216,6 @@ namespace EvitelApp2
             this.EnumsMenuItem.Name = "EnumsMenuItem";
             this.EnumsMenuItem.Size = new System.Drawing.Size(180, 22);
             this.EnumsMenuItem.Text = "Číselníky";
-            this.EnumsMenuItem.Click += new System.EventHandler(this.číselníkToolStripMenuItem_Click);
             // 
             // EnumsSexMenuItem
             // 

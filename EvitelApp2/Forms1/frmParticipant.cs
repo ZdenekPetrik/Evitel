@@ -116,6 +116,8 @@ namespace EvitelApp2
           ((CheckBox)o).Enabled = false;
         if (o is ComboBox)
           ((ComboBox)o).Enabled = false;
+        if (o is NumericUpDown)
+          ((NumericUpDown)o).Enabled = false;
       }
 
     }
@@ -219,12 +221,14 @@ namespace EvitelApp2
       txtNote.Text = aktRow.Note??"";
       txtOrganizace.Text = aktRow.Organization??"";
 
+      
       cmbTypeParty.SelectedIndex = 2;
       cmbSex.SelectedIndex = 2;
       cmbIntervent.SelectedIndex = 2;
       cmbDruhIntervence.SelectedIndex = 2;
       numAge.Value = 66;
       chkSenior.Checked = true;
+      
     }
 
     private void cmbTypeParty_Validating(object sender, CancelEventArgs e)

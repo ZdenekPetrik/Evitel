@@ -28,29 +28,13 @@ namespace EvitelApp2.Controls
     public delegate void HandlerParticipantsRowChanged();
     public event HandlerParticipantsRowChanged RowChanged_Event;
     public List<Likoparticipant> participantsList;
-    public bool isNew =  true;
-
-
-
-
+    public bool isNew = true;                 // tvorime nove participanty
+    public bool isEditMode = true;            // zobrazeni existujici skupiny participantu (tj. isNew == false). Tak ještě je třeba rozhodnout zdali smíme editovat.
 
     public ucParticipations()
     {
       InitializeComponent();
       dgw.AutoGenerateColumns = false;
-    }
-
-    private void dgw_CellContentClick(object sender, DataGridViewCellEventArgs e)
-    {
-
-    }
-
-    private void ucParticipations_Load(object sender, EventArgs e)
-    {
-      if (!DesignMode)
-      {
-        DB = new CRepositoryDB(Program.myLoggedUser.LoginUserId);
-      }
       myColumns = new List<MyColumn>()
       {
          new MyColumn { Name = "LIKOParticipantId", DataPropertyName = "LIKOParticipantId", isVisible = false },
@@ -79,22 +63,37 @@ namespace EvitelApp2.Controls
        };
     }
 
-    public void ReadDataFirstTime()
+    private void dgw_CellContentClick(object sender, DataGridViewCellEventArgs e)
+    {
+
+    }
+
+    private void ucParticipations_Load(object sender, EventArgs e)
+    {
+      if (!DesignMode)
+      {
+        DB = new CRepositoryDB(Program.myLoggedUser.LoginUserId);
+      }
+    }
+
+    public void InitData()
     {
       sex = DB.GetSex();
       typeParty = DB.GetTypeParty();
       winterventi = DB.GetWIntervents(null, "", "");
       druhIntervence = DB.GetDruhIntervence();
+      LoadDGWColumns();
       if (isNew)
         participantsList = new List<Likoparticipant>();
-      LoadDgw();
       source.DataSource = participantsList;
       dgw.DataSource = source;
       MyResize();
     }
 
-    public void LoadDgw()
+
+    public void LoadDGWColumns()
     {
+      dgw.Columns.Clear();
       for (int i = 0; i < myColumns.Count(); i++)
       {
         if (myColumns[i].Type == 3)
@@ -182,6 +181,7 @@ namespace EvitelApp2.Controls
       f.master = this;
       f.aktRow = participantsList.ElementAt(index);
       f.TypOkna = 'D';
+      f.Poradi = index + 1;
       f.ShowDialog();
       if (f.isOK)
       {
@@ -205,7 +205,8 @@ namespace EvitelApp2.Controls
       frmParticipant f = new frmParticipant();
       f.master = this;
       f.aktRow = participantsList.ElementAt(index);
-      f.TypOkna = 'U';
+      f.TypOkna = isEditMode ?'U':'S';
+      f.Poradi = index + 1;
       f.ShowDialog();
       if (f.isOK)
       {
@@ -268,6 +269,16 @@ namespace EvitelApp2.Controls
       gb_Participation.Top = 0;
       gb_Participation.Width = this.ClientSize.Width - 2;
       dgw.Width = gb_Participation.ClientSize.Width - (btnAddParticipant.Width + 10);
+      if (isEditMode)
+      {
+      }
+      else {
+        btnAddParticipant.Enabled = false;
+        btnDeleteParticipant.Enabled = false;
+        btnUpParticipant.Enabled = false;
+        btnDownParticipant.Enabled = false;
+        btnEditParticipant.Text = "Show";
+      }
     }
 
     private void gb_Participation_Enter(object sender, EventArgs e)

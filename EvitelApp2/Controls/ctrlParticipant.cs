@@ -26,7 +26,7 @@ namespace EvitelApp2.Controls
     public event DetailIntervence ShowDetailIntervence;
     private DataGridViewCellEventArgs mouseLocation;
 
-    public DataTable dataTable {get {return _dataTable;} }
+    public DataTable dataTable { get { return _dataTable; } }
 
 
     public ctrlParticipant()
@@ -39,7 +39,6 @@ namespace EvitelApp2.Controls
       if (DesignMode == false)
       {
         DB = new CRepositoryDB(Program.myLoggedUser.LoginUserId);
-        MyResize();
       }
       myColumns = new List<MyColumn>()
       {
@@ -70,7 +69,6 @@ namespace EvitelApp2.Controls
          new MyColumn { Name = "Author", DataPropertyName = "UsrLastName" }
        };
       MyResize();
-
     }
 
     public void MyResize()
@@ -153,7 +151,7 @@ namespace EvitelApp2.Controls
       dgw.CleanSort();
     }
 
-  
+
     private void dgw_RowEnter(object sender, DataGridViewCellEventArgs e)
     {
       ShowRowInformation?.Invoke(e.RowIndex + 1, participants.Count);

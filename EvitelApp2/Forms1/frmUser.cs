@@ -39,7 +39,7 @@ namespace EvitelApp2.Forms1
       errFirstName = InitializeErrorProvider(1, txtFirstName);
       errLastName = InitializeErrorProvider(1, txtLastName);
       errLoginName = InitializeErrorProvider(1, txtLoginName);
-      errPassword = InitializeErrorProvider(1, txtLoginName);
+      errPassword = InitializeErrorProvider(1, txtPassword);
 
       if (Type == 1)
       {
@@ -192,6 +192,21 @@ namespace EvitelApp2.Forms1
 
     private void groupBox1_Enter(object sender, EventArgs e)
     {
+
+    }
+
+
+    private void chkBoxAccess_SelectedValueChanged(object sender, EventArgs e)
+    {
+      if (isLastAdmin)
+      {
+        var value = chkBoxAccess.GetItemChecked(0);   // admin je vždy zobrazen jako první
+        if (!value)
+        {
+          MessageBox.Show("Nelze odtranit Administrátora. Alespoň jeden Administrátor musí zůstat.", "Odstranění Administrátora", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+        }
+        chkBoxAccess.SetItemChecked(0, true);
+      }
 
     }
   }

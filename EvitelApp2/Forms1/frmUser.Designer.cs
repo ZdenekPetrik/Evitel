@@ -145,6 +145,7 @@
             this.chkBoxAccess.Name = "chkBoxAccess";
             this.chkBoxAccess.Size = new System.Drawing.Size(251, 130);
             this.chkBoxAccess.TabIndex = 36;
+            this.chkBoxAccess.SelectedValueChanged += new System.EventHandler(this.chkBoxAccess_SelectedValueChanged);
             // 
             // label4
             // 

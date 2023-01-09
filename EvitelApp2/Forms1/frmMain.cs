@@ -361,6 +361,7 @@ namespace EvitelApp2
         }
       }
     }
+
     void ShowRowInformation(int nrAkt, int nrRow)
     {
       toolStripRows.Text = nrAkt.ToString() + " / " + nrRow.ToString();
@@ -389,17 +390,12 @@ namespace EvitelApp2
       HideActualView();
       ShowView_EventLog();
     }
+
     private void interventiToolStripMenuItem_Click(object sender, EventArgs e)
     {
       HideActualView();
       ShowView_Interventi();
 
-    }
-
-    #endregion
-
-    private void číselníkToolStripMenuItem_Click(object sender, EventArgs e)
-    {
     }
 
     private void testToolStripMenuItem_Click(object sender, EventArgs e)
@@ -472,12 +468,12 @@ namespace EvitelApp2
       frm.ShowDialog();
 
     }
+
     private void MenuItemUsers_Click(object sender, EventArgs e)
     {
       HideActualView();
       ShowView_Users();
     }
-
 
     private void MenuToolsRemoveFilters_Click(object sender, EventArgs e)
     {
@@ -490,7 +486,6 @@ namespace EvitelApp2
       }
 
     }
-
 
     private void MenuToolsRemoveOrders_Click(object sender, EventArgs e)
     {
@@ -510,11 +505,10 @@ namespace EvitelApp2
         r?.InitColumns();
       else
       {
-        MessageBox.Show(aktWindow.ToString() + " aktivní okno neumožňuje  metodu InitColums().","NELZE", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        MessageBox.Show(aktWindow.ToString() + " aktivní okno neumožňuje  metodu InitColums().", "NELZE", MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
     }
 
-   
     private void MenuToolSetColumnLayout_Click(object sender, EventArgs e)
     {
       IctrlWithDGW r = GetActiveCtrl(aktWindow);
@@ -525,6 +519,26 @@ namespace EvitelApp2
         MessageBox.Show(aktWindow.ToString() + " aktivní okno neumožňuje metodu SetColums().", "NELZE", MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
     }
+
+    private void MenuItemNewUser_Click(object sender, EventArgs e)
+    {
+      CRepositoryDB DB = new CRepositoryDB(Program.myLoggedUser.LoginUserId);
+      frmUser frm = new frmUser();
+      frm.loginUser = new LoginUser();
+      frm.loginAccessList = DB.GetLoginAccess();
+      frm.StartPosition = FormStartPosition.CenterScreen;
+      frm.Type = 1;
+      frm.ShowDialog();
+      if (frm.isOK)
+      {
+        DB.UpdateLoginUser(frm.loginUser);
+        ctrlUser1.RefreshData();
+      }
+
+    }
+    #endregion
+
+
 
     private IctrlWithDGW GetActiveCtrl(eShowWindow aktWindow)
     {
@@ -578,23 +592,6 @@ namespace EvitelApp2
             MessageBox.Show("Nelze vytvořit Excel File z tabulky. " + excel.sErr, "EVITEL - EXPORT TO EXCEL", MessageBoxButtons.OK, MessageBoxIcon.Error);
           }
         }
-      }
-
-    }
-
-    private void MenuItemNewUser_Click(object sender, EventArgs e)
-    {
-      CRepositoryDB DB = new CRepositoryDB(Program.myLoggedUser.LoginUserId);
-      frmUser frm = new frmUser();
-      frm.loginUser = new LoginUser();
-      frm.loginAccessList = DB.GetLoginAccess();
-      frm.StartPosition = FormStartPosition.CenterScreen;
-      frm.Type = 1;
-      frm.ShowDialog();
-      if (frm.isOK)
-      {
-        DB.UpdateLoginUser(frm.loginUser);
-        ctrlUser1.RefreshData();
       }
 
     }

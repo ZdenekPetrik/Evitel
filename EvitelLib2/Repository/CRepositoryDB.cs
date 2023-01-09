@@ -682,7 +682,9 @@ namespace EvitelLib2.Repository
           ObetemPoskozenym = NrObetemPoskozenym,
           PozustalymBlizkym = NrPozustalymBlizkym,
           Ostatnim = NrOstatnimOsobam,
+          
           InterventId = InterventId
+
         };
         db.Likointervences.Add(intervence);
         db.SaveChanges();
@@ -852,7 +854,7 @@ namespace EvitelLib2.Repository
       try
       {
 
-        var row = from r in db.Calls select r;
+        var row = db.Calls.Include(u => u.LoginUser).Where(x => x.CallId == id);
         row = row.Where(x => x.CallId == id);
         return row.FirstOrDefault();
       }

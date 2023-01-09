@@ -32,6 +32,8 @@ namespace EvitelApp2.Controls
     public event DetailIntervence ShowDetailIntervence;
     private DataGridViewCellEventArgs mouseLocation;
     public DataTable dataTable { get { return _dataTable; } }
+    public bool isEditMode = true;            // zobrazeni existujici intervence (tj. isNew == false). Tak ještě je třeba rozhodnout zdali smíme editovat.
+
 
 
     public ctrlLikoCall()

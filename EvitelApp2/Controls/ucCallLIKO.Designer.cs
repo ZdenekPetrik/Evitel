@@ -56,7 +56,7 @@ namespace EvitelApp2.Controls
             this.txtPlace = new System.Windows.Forms.TextBox();
             this.lblPlace = new System.Windows.Forms.Label();
             this.lblregion1 = new System.Windows.Forms.Label();
-            this.gbIntervence = new System.Windows.Forms.GroupBox();
+            this.boxIntervence = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.dtIntervenceEnd = new System.Windows.Forms.DateTimePicker();
             this.tmIntervenceEnd = new System.Windows.Forms.DateTimePicker();
@@ -79,7 +79,7 @@ namespace EvitelApp2.Controls
             this.boxCall.SuspendLayout();
             this.boxEvent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtPocetObeti)).BeginInit();
-            this.gbIntervence.SuspendLayout();
+            this.boxIntervence.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtNrCelkem)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtNrOstatnimOsobam)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtNrPozustalymBlizkym)).BeginInit();
@@ -92,7 +92,7 @@ namespace EvitelApp2.Controls
             this.dtCall.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtCall.Location = new System.Drawing.Point(143, 22);
             this.dtCall.Name = "dtCall";
-            this.dtCall.Size = new System.Drawing.Size(87, 23);
+            this.dtCall.Size = new System.Drawing.Size(102, 23);
             this.dtCall.TabIndex = 0;
             // 
             // lblDatumACas
@@ -145,6 +145,7 @@ namespace EvitelApp2.Controls
             this.tmCall.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.tmCall.Location = new System.Drawing.Point(251, 22);
             this.tmCall.Name = "tmCall";
+            this.tmCall.ShowUpDown = true;
             this.tmCall.Size = new System.Drawing.Size(87, 23);
             this.tmCall.TabIndex = 9;
             // 
@@ -164,6 +165,7 @@ namespace EvitelApp2.Controls
             this.tmIncident.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.tmIncident.Location = new System.Drawing.Point(251, 17);
             this.tmIncident.Name = "tmIncident";
+            this.tmIncident.ShowUpDown = true;
             this.tmIncident.Size = new System.Drawing.Size(87, 23);
             this.tmIncident.TabIndex = 13;
             // 
@@ -182,7 +184,7 @@ namespace EvitelApp2.Controls
             this.dtIncident.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtIncident.Location = new System.Drawing.Point(143, 17);
             this.dtIncident.Name = "dtIncident";
-            this.dtIncident.Size = new System.Drawing.Size(87, 23);
+            this.dtIncident.Size = new System.Drawing.Size(102, 23);
             this.dtIncident.TabIndex = 11;
             // 
             // cmbSubTypeIncident
@@ -288,7 +290,6 @@ namespace EvitelApp2.Controls
             this.boxEvent.TabIndex = 23;
             this.boxEvent.TabStop = false;
             this.boxEvent.Text = "Údaje o události";
-            this.boxEvent.Enter += new System.EventHandler(this.boxEvent_Enter);
             // 
             // chkPokusPriprava
             // 
@@ -353,32 +354,31 @@ namespace EvitelApp2.Controls
             this.lblregion1.TabIndex = 11;
             this.lblregion1.Text = "Kraj";
             // 
-            // gbIntervence
+            // boxIntervence
             // 
-            this.gbIntervence.Controls.Add(this.label6);
-            this.gbIntervence.Controls.Add(this.dtIntervenceEnd);
-            this.gbIntervence.Controls.Add(this.tmIntervenceEnd);
-            this.gbIntervence.Controls.Add(this.label5);
-            this.gbIntervence.Controls.Add(this.txtNrCelkem);
-            this.gbIntervence.Controls.Add(this.txtNrOstatnimOsobam);
-            this.gbIntervence.Controls.Add(this.label4);
-            this.gbIntervence.Controls.Add(this.label3);
-            this.gbIntervence.Controls.Add(this.txtNrPozustalymBlizkym);
-            this.gbIntervence.Controls.Add(this.txtNrObet);
-            this.gbIntervence.Controls.Add(this.txtNrObetemPoskozenym);
-            this.gbIntervence.Controls.Add(this.label2);
-            this.gbIntervence.Controls.Add(this.lblIntervenceNote);
-            this.gbIntervence.Controls.Add(this.txtIntervenceNote);
-            this.gbIntervence.Controls.Add(this.dtIntervence);
-            this.gbIntervence.Controls.Add(this.label1);
-            this.gbIntervence.Controls.Add(this.tmIntervence);
-            this.gbIntervence.Location = new System.Drawing.Point(3, 256);
-            this.gbIntervence.Name = "gbIntervence";
-            this.gbIntervence.Size = new System.Drawing.Size(1138, 131);
-            this.gbIntervence.TabIndex = 24;
-            this.gbIntervence.TabStop = false;
-            this.gbIntervence.Text = "Základní údaje o intervenci";
-            this.gbIntervence.Enter += new System.EventHandler(this.gbIntervence_Enter);
+            this.boxIntervence.Controls.Add(this.label6);
+            this.boxIntervence.Controls.Add(this.dtIntervenceEnd);
+            this.boxIntervence.Controls.Add(this.tmIntervenceEnd);
+            this.boxIntervence.Controls.Add(this.label5);
+            this.boxIntervence.Controls.Add(this.txtNrCelkem);
+            this.boxIntervence.Controls.Add(this.txtNrOstatnimOsobam);
+            this.boxIntervence.Controls.Add(this.label4);
+            this.boxIntervence.Controls.Add(this.label3);
+            this.boxIntervence.Controls.Add(this.txtNrPozustalymBlizkym);
+            this.boxIntervence.Controls.Add(this.txtNrObet);
+            this.boxIntervence.Controls.Add(this.txtNrObetemPoskozenym);
+            this.boxIntervence.Controls.Add(this.label2);
+            this.boxIntervence.Controls.Add(this.lblIntervenceNote);
+            this.boxIntervence.Controls.Add(this.txtIntervenceNote);
+            this.boxIntervence.Controls.Add(this.dtIntervence);
+            this.boxIntervence.Controls.Add(this.label1);
+            this.boxIntervence.Controls.Add(this.tmIntervence);
+            this.boxIntervence.Location = new System.Drawing.Point(3, 256);
+            this.boxIntervence.Name = "boxIntervence";
+            this.boxIntervence.Size = new System.Drawing.Size(1138, 131);
+            this.boxIntervence.TabIndex = 24;
+            this.boxIntervence.TabStop = false;
+            this.boxIntervence.Text = "Základní údaje o intervenci";
             // 
             // label6
             // 
@@ -395,7 +395,7 @@ namespace EvitelApp2.Controls
             this.dtIntervenceEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtIntervenceEnd.Location = new System.Drawing.Point(435, 22);
             this.dtIntervenceEnd.Name = "dtIntervenceEnd";
-            this.dtIntervenceEnd.Size = new System.Drawing.Size(87, 23);
+            this.dtIntervenceEnd.Size = new System.Drawing.Size(103, 23);
             this.dtIntervenceEnd.TabIndex = 43;
             // 
             // tmIntervenceEnd
@@ -404,6 +404,7 @@ namespace EvitelApp2.Controls
             this.tmIntervenceEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.tmIntervenceEnd.Location = new System.Drawing.Point(544, 22);
             this.tmIntervenceEnd.Name = "tmIntervenceEnd";
+            this.tmIntervenceEnd.ShowUpDown = true;
             this.tmIntervenceEnd.Size = new System.Drawing.Size(87, 23);
             this.tmIntervenceEnd.TabIndex = 42;
             // 
@@ -504,7 +505,7 @@ namespace EvitelApp2.Controls
             this.dtIntervence.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtIntervence.Location = new System.Drawing.Point(166, 22);
             this.dtIntervence.Name = "dtIntervence";
-            this.dtIntervence.Size = new System.Drawing.Size(87, 23);
+            this.dtIntervence.Size = new System.Drawing.Size(97, 23);
             this.dtIntervence.TabIndex = 28;
             // 
             // label1
@@ -520,9 +521,10 @@ namespace EvitelApp2.Controls
             // 
             this.tmIntervence.CustomFormat = "hh:mm";
             this.tmIntervence.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.tmIntervence.Location = new System.Drawing.Point(259, 22);
+            this.tmIntervence.Location = new System.Drawing.Point(278, 22);
             this.tmIntervence.Name = "tmIntervence";
-            this.tmIntervence.Size = new System.Drawing.Size(87, 23);
+            this.tmIntervence.ShowUpDown = true;
+            this.tmIntervence.Size = new System.Drawing.Size(60, 23);
             this.tmIntervence.TabIndex = 30;
             // 
             // ucParticipations1
@@ -549,7 +551,7 @@ namespace EvitelApp2.Controls
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.ucParticipations1);
-            this.Controls.Add(this.gbIntervence);
+            this.Controls.Add(this.boxIntervence);
             this.Controls.Add(this.boxEvent);
             this.Controls.Add(this.boxCall);
             this.Controls.Add(this.lblRegion);
@@ -562,8 +564,8 @@ namespace EvitelApp2.Controls
             this.boxEvent.ResumeLayout(false);
             this.boxEvent.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtPocetObeti)).EndInit();
-            this.gbIntervence.ResumeLayout(false);
-            this.gbIntervence.PerformLayout();
+            this.boxIntervence.ResumeLayout(false);
+            this.boxIntervence.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtNrCelkem)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtNrOstatnimOsobam)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtNrPozustalymBlizkym)).EndInit();
@@ -601,7 +603,7 @@ namespace EvitelApp2.Controls
         private System.Windows.Forms.CheckBox chkDokonane;
         private System.Windows.Forms.CheckBox chkNasledekSmrti;
         private System.Windows.Forms.NumericUpDown txtPocetObeti;
-        private System.Windows.Forms.GroupBox gbIntervence;
+        private System.Windows.Forms.GroupBox boxIntervence;
         private System.Windows.Forms.Label lblIntervenceNote;
         private System.Windows.Forms.TextBox txtIntervenceNote;
         private System.Windows.Forms.DateTimePicker dtIntervence;

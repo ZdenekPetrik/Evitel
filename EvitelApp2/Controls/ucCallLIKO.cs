@@ -1,5 +1,9 @@
-﻿using EvitelLib2.Model;
+﻿using EvitelApp2.Helper;
+using EvitelLib2.Common;
+using EvitelLib2.Model;
 using EvitelLib2.Repository;
+using EvitelLib2.Repository;
+using NPOI.OpenXmlFormats.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,13 +32,13 @@ namespace EvitelApp2.Controls
     private ErrorProvider cmbSubTypeIntervenceErrorProvider;
     private ErrorProvider txtNrCelkemErrorProvider;
 
-    public bool isNewForm = true;
     public int LikoIntervenceId;
     Call aktCall;
     Likoincident aktLikoIncident;
     Likointervence aktLikoIntervence;
     public event DetailIntervence ShowDetailIntervence;
-
+    public bool isNewForm = true;              // tvorime novou intervenci
+    public bool isEditMode = true;            // zobrazeni existujici intervence (tj. isNew == false). Tak ještě je třeba rozhodnout zdali smíme editovat. Zde si to ale nastavuji sam v ReadDBData()
 
     public ucCallLIKO()
     {
@@ -81,12 +85,27 @@ namespace EvitelApp2.Controls
       cmbRegionErrorProvider = InitializeErrorProvider(1, cmbRegion);
       cmbSubTypeIntervenceErrorProvider = InitializeErrorProvider(1, cmbSubTypeIncident);
       txtNrCelkemErrorProvider = InitializeErrorProvider(2, txtNrCelkem);
-      if (isNewForm) { 
-        ucParticipations1.RowChanged_Event += ucParticipations_NewRow;
-      }else
-      {
+      ucParticipations1.RowChanged_Event += ucParticipations_NewRow;
+      ucParticipations1.InitData();
+      ReWriteScreen();
+    }
+
+    private void ReWriteScreen()
+    {
+      if (isNewForm) {
+        btnBack.Visible = false;
+        boxCall.Top = 0;
       }
-      ucParticipations1.ReadDataFirstTime();
+      else
+      {
+        btnBack.Visible = true;
+        boxCall.Top = 30;
+      }
+      boxCall.Left = boxEvent.Left = boxIntervence.Left = 3;
+      boxEvent.Top = boxCall.Top  + boxCall.Height + 5;
+      boxIntervence.Top = boxEvent.Top + boxEvent.Height + 5;
+      ucParticipations1.Top = boxIntervence.Top + boxIntervence.Height + 5;
+
     }
 
     private void btnWrite_Click(object sender, EventArgs e)
@@ -105,12 +124,18 @@ namespace EvitelApp2.Controls
     }
 
     public void ReadDBData() {
+      EmptyAll();
       aktLikoIntervence = DB.GetLikoIntervence(LikoIntervenceId);
       aktCall = DB.GetLikoCall(aktLikoIntervence.CallId ?? 0);
       aktLikoIncident = DB.GetLikoIncident(aktLikoIntervence.LikoincidentId ?? 0);
       ucParticipations1.participantsList = DB.GetLikoParticipants(aktLikoIntervence.LikoincidentId ?? 0, 2);
       ucParticipations1.isNew = false;
-      ucParticipations1.ReadDataFirstTime();
+      isEditMode =  (Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser) || (aktCall.DtEndCall?.AddMonths(1)>DateTime.Now && aktCall.LoginUserId == Program.myLoggedUser.LoginUserId));
+      isEditMode = false;
+      ucParticipations1.isEditMode = isEditMode;
+      ucParticipations1.InitData();
+      LoadAllData();
+      ReWriteScreen();
     }
 
 
@@ -246,20 +271,7 @@ namespace EvitelApp2.Controls
 
     #endregion
 
-    private void gbIntervence_Enter(object sender, EventArgs e)
-    {
 
-    }
-
-    private void boxEvent_Enter(object sender, EventArgs e)
-    {
-
-    }
-
-    private void ucParticipations1_Load(object sender, EventArgs e)
-    {
-
-    }
 
     public void ucParticipations_NewRow()
     {
@@ -294,12 +306,49 @@ namespace EvitelApp2.Controls
       txtNrOstatnimOsobam.Value = 0;  
       txtNrPozustalymBlizkym.Value = 0; 
       txtIntervenceNote.Text = string.Empty;
-      ucParticipations1.EmptyAllRow();
+ //     ucParticipations1.EmptyAllRow();
     }
+
+    private void LoadAllData()
+    {
+      dtCall.Value = (DateTime)aktCall.DtStartCall;
+      tmCall.Value = (DateTime)aktCall.DtStartCall;
+      cmbIntervent.SelectItemByValue(aktLikoIntervence.InterventId??0);
+      txtLoginUser.Text = aktCall.LoginUser.FirstName + " " + aktCall.LoginUser.LastName;
+      
+      dtIncident.Value = (DateTime)aktLikoIncident.DtIncident;
+      tmIncident.Value = (DateTime)aktLikoIncident.DtIncident;
+      cmbRegion.SelectItemByValue(aktLikoIncident.RegionId ?? 0);
+      txtPlace.Text = aktLikoIncident.Place;
+      cmbSubTypeIncident.SelectItemByValue(aktLikoIncident.LikoincidentId);
+      txtPocetObeti.Value = aktLikoIncident.PocetPoskozenych??0;
+      chkDokonane.Checked = aktLikoIncident.NasledekSmrti ?? false;
+      chkDokonane.Checked = aktLikoIncident.Dokonane ?? false;
+      chkPokusPriprava.Checked = aktLikoIncident.PokusPriprava ?? false;
+      txtEventNote.Text = aktLikoIncident.Note;
+
+      dtIntervence.Value = (DateTime)aktLikoIntervence.DtStartIntervence;
+      tmIntervence.Value = (DateTime)aktLikoIntervence.DtStartIntervence;
+      dtIntervenceEnd.Value = (DateTime)aktLikoIntervence.DtEndIntervence;
+      tmIntervenceEnd.Value = (DateTime)aktLikoIntervence.DtEndIntervence;
+      txtNrCelkem.Value = ucParticipations1.participantsList.Count();
+      txtNrObetemPoskozenym.Value = aktLikoIntervence.ObetemPoskozenym??0;
+      txtNrPozustalymBlizkym.Value = aktLikoIntervence.PozustalymBlizkym ?? 0;
+      txtNrOstatnimOsobam.Value = aktLikoIntervence.Ostatnim ?? 0 ;
+      txtIntervenceNote.Text = aktLikoIntervence.Note;
+
+    }
+
 
     private void btnBack_Click(object sender, EventArgs e)
     {
       ShowDetailIntervence?.Invoke(-1,0);
     }
+
+    private void ucParticipations1_Load(object sender, EventArgs e)
+    {
+
+    }
   }
+ 
 }
