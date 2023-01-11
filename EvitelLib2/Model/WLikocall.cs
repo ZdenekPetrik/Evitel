@@ -18,5 +18,6 @@ namespace EvitelLib2.Model
         public string UsrLastName { get; set; }
         public int? InterventId { get; set; }
         public string CmbName { get; set; }
+        public string InterventShortName { get; set; }
     }
 }

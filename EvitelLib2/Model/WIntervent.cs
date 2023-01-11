@@ -21,5 +21,6 @@ namespace EvitelLib2.Model
         public DateTime DtCreate { get; set; }
         public bool? IsDeleted { get; set; }
         public int? RegionId { get; set; }
+        public string InterventShortName { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using EvitelLib2.Repository;
+﻿using EvitelLib2.Model;
+using EvitelLib2.Repository;
 using Newtonsoft.Json;
 using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
@@ -12,6 +13,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -191,8 +193,9 @@ namespace EvitelApp2.Controls
       CRepositoryDB DB = new CRepositoryDB(-1);
       List<int> abc = new List<int>() { 1, 2, 3 };
 
-      var intervenceList = DB.GetWLIKOIntervence().Where(x => abc.Contains(x.LikointervenceId)); ;
-      var callsList = DB.GetWLikoCalls().Where(x => intervenceList.Select(x => x.LikointervenceId).Contains(x.LikointervenceId));  
+      var intervenceList =  DB.GetWLIKOIntervence().Where(x => abc.Contains(x.LikointervenceId));    //  new List<WIntervence>(); 
+      var callsList = DB.GetWLikoCalls().Where(x => intervenceList.Select(x => x.LikointervenceId).Contains(x.LikointervenceId));
+      var incidentsList = DB.GetWLIKOIncident().Where(x => intervenceList.Select(x => x.LikoincidentId).Contains(x.LikoincidentId));
 
 
 
@@ -206,14 +209,15 @@ namespace EvitelApp2.Controls
       page.Orientation = PdfSharpCore.PageOrientation.Landscape;
 
       var penBlack = new XPen(XColor.FromArgb(255, 255, 255));
-      var penGray = new XPen(XColor.FromArgb(196, 196, 196));
+      var penGray = new XPen(XColor.FromArgb(230, 230, 230));
 
 
       var gfx = XGraphics.FromPdfPage(page);
       var fontTitle = new XFont("Arial", 16, XFontStyle.Bold);
-      var fontRegular = new XFont("Arial", 11, XFontStyle.Regular);
+      var fontRegular = new XFont("Arial", 9, XFontStyle.Regular);
+      var fontBold = new XFont("Arial", 10, XFontStyle.Bold);
       var textColorBlack = XBrushes.Black;
-      var textColor = XBrushes.DarkGray;
+      var textColor = XBrushes.DarkSlateGray;
       var format = XStringFormats.TopLeft;
       XRect rect = new XRect(20, 20, 250, 220);
       var pen = new XPen(XColor.FromArgb(127, 127, 127));
@@ -225,30 +229,100 @@ namespace EvitelApp2.Controls
       rect = new XRect(page.Width - 160, 35, 100, 20);
       gfx.DrawString("Do:  " + dtTo.ToString("dd.MM.yyyy HH:mm:ss"), fontRegular, textColor, rect, format);
 
-      int hovorStart = 20;
-      rect = new XRect(hovorStart, 60, 200, 20);
-      gfx.DrawString("Hovor", fontRegular, textColor, rect, XStringFormats.Center);
-      gfx.DrawLine(pen, new XPoint(hovorStart, 80), new XPoint(200, 80));
-
-      int udalostStart = 220;
-      rect = new XRect(udalostStart, 60, 300, 20);
-      gfx.DrawString("Událost", fontRegular, textColor, rect, XStringFormats.Center);
-      gfx.DrawLine(pen, new XPoint(udalostStart, 80), new XPoint(500, 80));
-
-      int IntervenceStart = 520;
-      rect = new XRect(IntervenceStart, 60, 150, 20);
-      gfx.DrawString("Intervence", fontRegular, textColor, rect, XStringFormats.Center);
-      gfx.DrawLine(pen, new XPoint(IntervenceStart, 80), new XPoint(650, 80));
-
-      int PredaniStart = 670;
-      rect = new XRect(PredaniStart, 60, page.Width - (PredaniStart + 20), 20);
-      gfx.DrawString("Předání", fontRegular, textColor, rect, XStringFormats.Center);
-      gfx.DrawLine(pen, new XPoint(PredaniStart, 80), new XPoint(page.Width - 20, 80));
+      if (intervenceList.Count() == 0)
+      {
+        rect = new XRect(20, 100, page.Width - 20, 20);
+        gfx.DrawString("V průběhu směny nebyla oznámena žádná událost", fontRegular, textColor, rect, XStringFormats.Center);
+      }
+      else
+      {
 
 
+        int aktY = 60;
+        int aktY2 = 80;
+        int hovorStart = 20;
+        int hovorSize = 170;
+        rect = new XRect(hovorStart, aktY, hovorSize - 20, 20);
+        gfx.DrawString("Hovor", fontRegular, textColor, rect, XStringFormats.Center);
+        gfx.DrawLine(pen, new XPoint(hovorStart, aktY2), new XPoint(hovorSize - 20, aktY2));
+
+        int udalostStart = hovorStart + hovorSize;
+        int udalostSize = 260;
+        rect = new XRect(udalostStart, aktY, udalostSize - 20, 20);
+        gfx.DrawString("Událost", fontRegular, textColor, rect, XStringFormats.Center);
+        gfx.DrawLine(pen, new XPoint(udalostStart, aktY2), new XPoint(udalostStart + udalostSize - 20, aktY2));
+
+        int IntervenceStart = udalostStart + udalostSize;
+        int IntervenceSize = 200;
+
+        rect = new XRect(IntervenceStart, aktY, IntervenceSize - 20, 20);
+        gfx.DrawString("Intervence", fontRegular, textColor, rect, XStringFormats.Center);
+        gfx.DrawLine(pen, new XPoint(IntervenceStart, aktY2), new XPoint(IntervenceStart + IntervenceSize - 20, aktY2));
+
+        int PredaniStart = IntervenceStart + IntervenceSize;
+        int PredaniSize = (int)page.Width - PredaniStart;
+        rect = new XRect(PredaniStart, aktY, PredaniSize, 20);
+        gfx.DrawString("Předání", fontRegular, textColor, rect, XStringFormats.Center);
+        gfx.DrawLine(pen, new XPoint(PredaniStart, aktY2), new XPoint(PredaniStart + PredaniSize - 20, aktY2));
 
 
+        aktY = 100;
+        aktY2 = 120;
+        hovorStart = 20;
+        gfx.DrawLine(pen, new XPoint(hovorStart, aktY2), new XPoint(page.Width - 20, aktY2));
+        gfx.DrawString("Id", fontBold, textColorBlack, new XRect(hovorStart, aktY, 40, 20), XStringFormats.CenterLeft);
+        gfx.DrawString("Čas", fontBold, textColorBlack, new XRect(hovorStart + 40, aktY, 30, 20), XStringFormats.CenterLeft);
+        gfx.DrawString("Volal", fontBold, textColorBlack, new XRect(hovorStart + 70, aktY, 100, 20), XStringFormats.CenterLeft);
 
+        gfx.DrawString("Kraj", fontBold, textColorBlack, new XRect(udalostStart, aktY, 100, 20), XStringFormats.CenterLeft);
+        gfx.DrawString("Datum", fontBold, textColorBlack, new XRect(udalostStart + 100, aktY, 60, 20), XStringFormats.CenterLeft);
+        gfx.DrawString("Místo", fontBold, textColorBlack, new XRect(udalostStart + 160, aktY, 100, 20), XStringFormats.CenterLeft);
+
+        gfx.DrawString("Typ", fontBold, textColorBlack, new XRect(IntervenceStart, aktY, 100, 20), XStringFormats.CenterLeft);
+        gfx.DrawString("Zápis", fontBold, textColorBlack, new XRect(IntervenceStart + 140, aktY, 60, 20), XStringFormats.CenterLeft);
+        gfx.DrawString("Datum", fontBold, textColorBlack, new XRect(IntervenceStart + 160, aktY, 60, 20), XStringFormats.CenterLeft);
+
+
+        gfx.DrawString("Obětí", fontBold, textColorBlack, new XRect(PredaniStart, aktY, 50, 20), XStringFormats.CenterLeft);
+        gfx.DrawString("Osob", fontBold, textColorBlack, new XRect(PredaniStart + 50, aktY, 50, 20), XStringFormats.CenterLeft);
+        gfx.DrawString("Přijal", fontBold, textColorBlack, new XRect(PredaniStart + 50, aktY, 50, 20), XStringFormats.CenterLeft);
+
+
+        gfx.DrawString(dtFrom.ToString("dddd d. MMMM yyyy", new CultureInfo("cs-cz")), fontBold, textColor, new XRect(hovorStart, aktY + 40, 20, 20), XStringFormats.TopLeft);
+        gfx.DrawLine(pen, new XPoint(hovorStart, aktY + 55), new XPoint(page.Width - 20, aktY + 55));
+
+        aktY = 160;
+        foreach (var aktIntervence in intervenceList)
+        {
+          var aktCall = callsList.Where(x => x.LikointervenceId == aktIntervence.LikointervenceId).FirstOrDefault();
+          var aktIncident = incidentsList.Where(x => x.LikoincidentId == aktIntervence.LikoincidentId).FirstOrDefault();
+
+          gfx.DrawString(aktCall.LikointervenceId.ToString() + ".", fontRegular, textColor, new XRect(hovorStart, aktY, 40, 20), XStringFormats.CenterLeft);
+          gfx.DrawString((aktCall.DtStartCall ?? DateTime.Now).ToString("HH:mm"), fontRegular, textColor, new XRect(hovorStart + 40, aktY, 30, 20), XStringFormats.CenterLeft);
+          gfx.DrawString(aktCall.InterventShortName, fontRegular, textColor, new XRect(hovorStart + 70, aktY, 100, 20), XStringFormats.CenterLeft);
+
+          gfx.DrawString(aktIncident.RegionName, fontRegular, textColor, new XRect(udalostStart, aktY, 100, 20), XStringFormats.CenterLeft);
+          gfx.DrawString((aktIncident.DtIncident ?? DateTime.Now).ToString("dd.MM.yyyy"), fontRegular, textColor, new XRect(udalostStart + 100, aktY, 60, 20), XStringFormats.CenterLeft);
+          gfx.DrawString(aktIncident.Place, fontRegular, textColor, new XRect(udalostStart + 160, aktY, 100, 20), XStringFormats.CenterLeft);
+
+          gfx.DrawString(aktIncident.IncidentName, fontRegular, textColor, new XRect(IntervenceStart, aktY, 140, 20), XStringFormats.CenterLeft);
+          gfx.DrawString(aktIntervence.FirstIntervence??true ? "1.":"2+", fontRegular, textColor, new XRect(IntervenceStart+140, aktY, 140, 20), XStringFormats.CenterLeft);
+          gfx.DrawString((aktIntervence.DtStartIntervence ?? DateTime.Now).ToString("dd.MM.yyyy"), fontRegular, textColor, new XRect(IntervenceStart+160, aktY, 40, 20), XStringFormats.CenterLeft);
+
+          aktY += 20;
+        }
+        string bottom = "";
+        if (intervenceList.Count() == 1)
+          bottom = "Jeden hovor za směnu";
+        else if (intervenceList.Count() <= 4)
+          bottom = intervenceList.Count().ToString() + " hovory za směnu";
+        else
+          bottom = intervenceList.Count().ToString() + " hovorů za směnu";
+
+        aktY += 20;
+        gfx.DrawString(bottom, fontBold, textColorBlack, new XRect(hovorStart, aktY, 100, 20), XStringFormats.Center);
+
+      }
 
       //      gfx.DrawLine(pen, new XPoint(0, 0), new XPoint(0, 842));
       //      gfx.DrawLine(pen, new XPoint(0, 0), new XPoint(595, 0));

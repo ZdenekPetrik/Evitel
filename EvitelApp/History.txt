@@ -41,3 +41,4 @@
 6.1.2023 - Update and Add LoginUser. Napojení na ctrlUser.
 7.1.2023 - CallLiko - Update (read from DB and update all items + Participations). Zatím není propis do DB + zjištìní zmìn.
 8.1.2023 - PDF - první pokus s formátováním (hlavièka) + Linq a contains
+9.1.
