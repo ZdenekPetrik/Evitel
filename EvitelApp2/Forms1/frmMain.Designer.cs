@@ -63,6 +63,10 @@ namespace EvitelApp2
             this.SettingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemChangePassword = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemUsers = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItemNewUser = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.MenuItemBackup = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItemRestore = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripUser = new System.Windows.Forms.ToolStripStatusLabel();
@@ -78,7 +82,6 @@ namespace EvitelApp2
             this.ctrllikoIncident1 = new EvitelApp2.Controls.ctrlLIKOIncident();
             this.ctrllikoIntervence1 = new EvitelApp2.Controls.ctrlLIKOIntervence();
             this.ctrlUser1 = new EvitelApp2.Controls.ctrlUser();
-            this.MenuItemNewUser = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -325,7 +328,10 @@ namespace EvitelApp2
             this.SettingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuItemChangePassword,
             this.MenuItemUsers,
-            this.MenuItemNewUser});
+            this.MenuItemNewUser,
+            this.toolStripSeparator1,
+            this.MenuItemBackup,
+            this.MenuItemRestore});
             this.SettingToolStripMenuItem.Name = "SettingToolStripMenuItem";
             this.SettingToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.SettingToolStripMenuItem.Text = "Nastavení";
@@ -333,16 +339,42 @@ namespace EvitelApp2
             // MenuItemChangePassword
             // 
             this.MenuItemChangePassword.Name = "MenuItemChangePassword";
-            this.MenuItemChangePassword.Size = new System.Drawing.Size(180, 22);
+            this.MenuItemChangePassword.Size = new System.Drawing.Size(214, 22);
             this.MenuItemChangePassword.Text = "Změna hesla";
             this.MenuItemChangePassword.Click += new System.EventHandler(this.MenuItemChangePassword_Click);
             // 
             // MenuItemUsers
             // 
             this.MenuItemUsers.Name = "MenuItemUsers";
-            this.MenuItemUsers.Size = new System.Drawing.Size(180, 22);
+            this.MenuItemUsers.Size = new System.Drawing.Size(214, 22);
             this.MenuItemUsers.Text = "Uživatelé";
             this.MenuItemUsers.Click += new System.EventHandler(this.MenuItemUsers_Click);
+            // 
+            // MenuItemNewUser
+            // 
+            this.MenuItemNewUser.Name = "MenuItemNewUser";
+            this.MenuItemNewUser.Size = new System.Drawing.Size(214, 22);
+            this.MenuItemNewUser.Text = "Nový uživatel";
+            this.MenuItemNewUser.Click += new System.EventHandler(this.MenuItemNewUser_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(211, 6);
+            // 
+            // MenuItemBackup
+            // 
+            this.MenuItemBackup.Name = "MenuItemBackup";
+            this.MenuItemBackup.Size = new System.Drawing.Size(214, 22);
+            this.MenuItemBackup.Text = "Zálohování databáze Evitel";
+            this.MenuItemBackup.Click += new System.EventHandler(this.MenuItemBackup_Click);
+            // 
+            // MenuItemRestore
+            // 
+            this.MenuItemRestore.Name = "MenuItemRestore";
+            this.MenuItemRestore.Size = new System.Drawing.Size(214, 22);
+            this.MenuItemRestore.Text = "Obnova databáze Evitel";
+            this.MenuItemRestore.Click += new System.EventHandler(this.MenuItemRestore_Click);
             // 
             // statusStrip1
             // 
@@ -463,13 +495,6 @@ namespace EvitelApp2
             this.ctrlUser1.Size = new System.Drawing.Size(180, 163);
             this.ctrlUser1.TabIndex = 11;
             // 
-            // MenuItemNewUser
-            // 
-            this.MenuItemNewUser.Name = "MenuItemNewUser";
-            this.MenuItemNewUser.Size = new System.Drawing.Size(180, 22);
-            this.MenuItemNewUser.Text = "Nový uživatel";
-            this.MenuItemNewUser.Click += new System.EventHandler(this.MenuItemNewUser_Click);
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -552,6 +577,9 @@ namespace EvitelApp2
     private System.Windows.Forms.ToolStripMenuItem MenuItemChangePassword;
     private System.Windows.Forms.ToolStripMenuItem MenuItemUsers;
     private System.Windows.Forms.ToolStripMenuItem MenuItemNewUser;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+    private System.Windows.Forms.ToolStripMenuItem MenuItemBackup;
+    private System.Windows.Forms.ToolStripMenuItem MenuItemRestore;
   }
 }
 

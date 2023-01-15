@@ -34,6 +34,8 @@
             this.txtFaktorialZ = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnProtokol = new System.Windows.Forms.Button();
+            this.btnBackup = new System.Windows.Forms.Button();
+            this.btnRestore = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -93,11 +95,33 @@
             this.btnProtokol.UseVisualStyleBackColor = true;
             this.btnProtokol.Click += new System.EventHandler(this.btnProtokol_Click);
             // 
+            // btnBackup
+            // 
+            this.btnBackup.Location = new System.Drawing.Point(48, 301);
+            this.btnBackup.Name = "btnBackup";
+            this.btnBackup.Size = new System.Drawing.Size(75, 23);
+            this.btnBackup.TabIndex = 6;
+            this.btnBackup.Text = "Backup";
+            this.btnBackup.UseVisualStyleBackColor = true;
+            this.btnBackup.Click += new System.EventHandler(this.btnBackup_Click);
+            // 
+            // btnRestore
+            // 
+            this.btnRestore.Location = new System.Drawing.Point(170, 301);
+            this.btnRestore.Name = "btnRestore";
+            this.btnRestore.Size = new System.Drawing.Size(75, 23);
+            this.btnRestore.TabIndex = 7;
+            this.btnRestore.Text = "Restore";
+            this.btnRestore.UseVisualStyleBackColor = true;
+            this.btnRestore.Click += new System.EventHandler(this.btnRestore_Click);
+            // 
             // frmTestEndNPOI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnRestore);
+            this.Controls.Add(this.btnBackup);
             this.Controls.Add(this.btnProtokol);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtFaktorialZ);
@@ -120,5 +144,7 @@
     private System.Windows.Forms.TextBox txtFaktorialZ;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.Button btnProtokol;
+    private System.Windows.Forms.Button btnBackup;
+    private System.Windows.Forms.Button btnRestore;
   }
 }

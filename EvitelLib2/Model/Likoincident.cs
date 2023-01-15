@@ -5,6 +5,11 @@ namespace EvitelLib2.Model
 {
     public partial class Likoincident
     {
+        public Likoincident()
+        {
+            Likointervences = new HashSet<Likointervence>();
+        }
+
         public int LikoincidentId { get; set; }
         public string Title { get; set; }
         public string Note { get; set; }
@@ -19,6 +24,6 @@ namespace EvitelLib2.Model
         public DateTime? DtDeleted { get; set; }
 
         public virtual ESubTypeIncident SubTypeIncidentE { get; set; }
-        public virtual Likointervence Likointervence { get; set; }
+        public virtual ICollection<Likointervence> Likointervences { get; set; }
     }
 }

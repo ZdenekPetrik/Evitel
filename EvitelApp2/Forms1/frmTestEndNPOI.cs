@@ -1,5 +1,7 @@
 ﻿using EvitelLib2.Model;
 using EvitelLib2.Repository;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
@@ -16,7 +18,9 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Windows.Forms;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 
 namespace EvitelApp2.Controls
@@ -193,7 +197,7 @@ namespace EvitelApp2.Controls
       CRepositoryDB DB = new CRepositoryDB(-1);
       List<int> abc = new List<int>() { 1, 2, 3 };
 
-      var intervenceList =  DB.GetWLIKOIntervence().Where(x => abc.Contains(x.LikointervenceId));    //  new List<WIntervence>(); 
+      var intervenceList = DB.GetWLIKOIntervence().Where(x => abc.Contains(x.LikointervenceId));    //  new List<WIntervence>(); 
       var callsList = DB.GetWLikoCalls().Where(x => intervenceList.Select(x => x.LikointervenceId).Contains(x.LikointervenceId));
       var incidentsList = DB.GetWLIKOIncident().Where(x => intervenceList.Select(x => x.LikoincidentId).Contains(x.LikoincidentId));
 
@@ -306,8 +310,8 @@ namespace EvitelApp2.Controls
           gfx.DrawString(aktIncident.Place, fontRegular, textColor, new XRect(udalostStart + 160, aktY, 100, 20), XStringFormats.CenterLeft);
 
           gfx.DrawString(aktIncident.IncidentName, fontRegular, textColor, new XRect(IntervenceStart, aktY, 140, 20), XStringFormats.CenterLeft);
-          gfx.DrawString(aktIntervence.FirstIntervence??true ? "1.":"2+", fontRegular, textColor, new XRect(IntervenceStart+140, aktY, 140, 20), XStringFormats.CenterLeft);
-          gfx.DrawString((aktIntervence.DtStartIntervence ?? DateTime.Now).ToString("dd.MM.yyyy"), fontRegular, textColor, new XRect(IntervenceStart+160, aktY, 40, 20), XStringFormats.CenterLeft);
+          gfx.DrawString(aktIntervence.Poradi.ToString(), fontRegular, textColor, new XRect(IntervenceStart + 140, aktY, 140, 20), XStringFormats.CenterLeft);
+          gfx.DrawString((aktIntervence.DtStartIntervence ?? DateTime.Now).ToString("dd.MM.yyyy"), fontRegular, textColor, new XRect(IntervenceStart + 160, aktY, 40, 20), XStringFormats.CenterLeft);
 
           aktY += 20;
         }
@@ -335,6 +339,83 @@ namespace EvitelApp2.Controls
       };
       p.Start();
 
+    }
+
+    private void btnBackup_Click(object sender, EventArgs e)
+    {
+      try
+      {
+        using (SaveFileDialog fd = new SaveFileDialog())
+        {
+          fd.FileName = "EvitelBackup_" + DateTime.Now.ToString("yyyMMdd_HHmmss") + ".bak";
+          fd.Filter = "Backup files (*.bak)|*.bak";
+          fd.Title = "Save table to Backup File";
+          fd.OverwritePrompt = true;
+          fd.CreatePrompt = true;
+          if (fd.ShowDialog() == DialogResult.OK)
+          {
+            var filename = fd.FileName;
+            string command = "BACKUP DATABASE Evitel TO DISK = '" + fd.FileName + "'";
+
+            using (var ctx = new Evitel2Context())
+            {
+              //Get student name of string type
+              var a = ctx.Database.ExecuteSqlRaw(command);
+            }
+          }
+        }
+      }
+      catch (Exception Ex)
+      {
+        MessageBox.Show("Nelze provést zálohování. " + Ex.Message);
+      }
+    }
+
+    private void btnRestore_Click(object sender, EventArgs e)
+    {
+      try
+      {
+
+        string databaseName = "Evitel";
+        var filePath = string.Empty;
+        using (OpenFileDialog openFileDialog = new OpenFileDialog())
+        {
+          openFileDialog.Filter = "backup files (*.bak)|*.bak|All files (*.*)|*.*";
+
+          if (openFileDialog.ShowDialog() == DialogResult.OK)
+          {
+            filePath = openFileDialog.FileName;
+          }
+        }
+        if (filePath.Length > 0)
+        {
+
+
+          string command = "ALTER DATABASE [" + databaseName + "] SET SINGLE_USER WITH ROLLBACK IMMEDIATE";
+          using (var ctx = new Evitel2Context())
+          {
+            //Get student name of string type
+            var a = ctx.Database.ExecuteSqlRaw(command);
+          }
+          command = "RESTORE DATABASE [" + databaseName + "] FROM DISK = N'" + filePath + "' WITH REPLACE";
+          using (var ctx = new Evitel2Context())
+          {
+            //Get student name of string type
+            var a = ctx.Database.ExecuteSqlRaw(command);
+          }
+
+          command = "ALTER DATABASE [" + databaseName + "] SET MULTI_USER";
+          using (var ctx = new Evitel2Context())
+          {
+            //Get student name of string type
+            var a = ctx.Database.ExecuteSqlRaw(command);
+          }
+        }
+      }
+      catch (Exception Ex)
+      {
+        MessageBox.Show("Nelze provést obnovu databáze. " + Ex.Message);
+      }
     }
   }
 }

@@ -16,7 +16,9 @@ namespace EvitelLib2.Model
         public bool? IsFirstIntervence { get; set; }
         public int? DruhIntervenceEid { get; set; }
         public int? InterventId { get; set; }
+        public int? InterventId2 { get; set; }
         public bool? IsAgreement { get; set; }
+        public bool? IsAgreementBkb { get; set; }
         public bool? IsContact { get; set; }
         public bool? IsPolicement { get; set; }
         public bool? IsPolicementClosePerson { get; set; }
@@ -29,6 +31,8 @@ namespace EvitelLib2.Model
         public string Note { get; set; }
 
         public virtual EDruhIntervence DruhIntervenceE { get; set; }
+        public virtual Intervent Intervent { get; set; }
+        public virtual Intervent InterventId2Navigation { get; set; }
         public virtual Likointervence Likointervence { get; set; }
         public virtual ESex SexE { get; set; }
         public virtual ETypeParty TypePartyE { get; set; }

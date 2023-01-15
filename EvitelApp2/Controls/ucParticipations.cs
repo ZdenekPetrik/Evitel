@@ -24,6 +24,7 @@ namespace EvitelApp2.Controls
     public List<WIntervent> winterventi;
     public List<EDruhIntervence> druhIntervence;
     public BindingSource source = new BindingSource();
+    private ColumnLayoutDB cldb;
 
     public delegate void HandlerParticipantsRowChanged();
     public event HandlerParticipantsRowChanged RowChanged_Event;
@@ -49,8 +50,10 @@ namespace EvitelApp2.Controls
          new MyColumn { Name = "První Int.", DataPropertyName = "IsFirstIntervence" ,Type = 2},
          new MyColumn { Name = "Druh Int.", DataPropertyName = "DruhIntervenceEid" , Type = 3},
          new MyColumn { Name = "Intervent", DataPropertyName = "InterventId", Type = 3},
+         new MyColumn { Name = "Intervent2", DataPropertyName = "InterventId2", Type = 3},
          new MyColumn { Name = "Poznámka", DataPropertyName = "Note" },
          new MyColumn { Name = "Souhlas", DataPropertyName = "IsAgreement",Type = 2 },
+         new MyColumn { Name = "BKB", DataPropertyName = "IsAgreementBKB",Type = 2 },
          new MyColumn { Name = "Kontakt", DataPropertyName = "IsContact",Type = 2 },
          new MyColumn { Name = "Policista", DataPropertyName = "IsPolicement",Type = 2 },
          new MyColumn { Name = "Blízká polic.", DataPropertyName = "IsPolicementClosePerson",Type = 2 },
@@ -87,6 +90,8 @@ namespace EvitelApp2.Controls
         participantsList = new List<Likoparticipant>();
       source.DataSource = participantsList;
       dgw.DataSource = source;
+      cldb = new ColumnLayoutDB(DB, dgw, this.Name + "ucParticipation");
+      cldb.SetColumnLayout();
       MyResize();
     }
 
@@ -125,6 +130,12 @@ namespace EvitelApp2.Controls
           }
 
           else if (myColumns[i].DataPropertyName == "InterventId")
+          {
+            col2.DataSource = winterventi;
+            col2.DisplayMember = "CmbName";
+            col2.ValueMember = "InterventId";
+          }
+          else if (myColumns[i].DataPropertyName == "InterventId2")
           {
             col2.DataSource = winterventi;
             col2.DisplayMember = "CmbName";
@@ -267,8 +278,8 @@ namespace EvitelApp2.Controls
     public void MyResize()
     {
       gb_Participation.Top = 0;
-      gb_Participation.Width = this.ClientSize.Width - 2;
-      dgw.Width = gb_Participation.ClientSize.Width - (btnAddParticipant.Width + 10);
+      gb_Participation.Width = this.ClientSize.Width - 10;
+      dgw.Width = gb_Participation.ClientSize.Width - (btnAddParticipant.Width + 25);
       if (isEditMode)
       {
       }
@@ -294,6 +305,16 @@ namespace EvitelApp2.Controls
         RowChanged_Event();
     }
 
+    internal void SetColumns()
+    {
+      cldb.SaveColumnLayout();
+    }
+
+    internal void InitColumns()
+    {
+      cldb.DeleteColumnOrder();
+      cldb.InitializeColumns();
+    }
   }
 }
 

@@ -27,6 +27,8 @@ namespace EvitelLib2.Model
         public bool? IsMemberMinorityGroup { get; set; }
         public string Organization { get; set; }
         public string Note { get; set; }
+        public int? InterventId2 { get; set; }
+        public bool? IsAgreementBkb { get; set; }
         public DateTime? DtStartIntervence { get; set; }
         public DateTime? DtEndIntervence { get; set; }
         public string IntervenceNote { get; set; }
@@ -35,14 +37,15 @@ namespace EvitelLib2.Model
         public int? Ostatnim { get; set; }
         public int? LikointervenceIdmaster { get; set; }
         public DateTime? DtStartCall { get; set; }
-        public DateTime? DtEndCall { get; set; }
         public string UsrFirstName { get; set; }
         public string UsrLastName { get; set; }
         public string SexText { get; set; }
         public string DruhIntervenceText { get; set; }
         public string TypePartyText { get; set; }
         public int? MainInterventId { get; set; }
-        public string InterventName { get; set; }
+        public string InterventShortName { get; set; }
+        public string RegionName { get; set; }
         public string CmbName { get; set; }
+        public int? Poradi { get; set; }
     }
 }

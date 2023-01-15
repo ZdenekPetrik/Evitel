@@ -42,8 +42,8 @@ namespace EvitelApp2.Controls
       }
       myColumns = new List<MyColumn>()
       {
-         new MyColumn { Name = "LIKOParticipantId", DataPropertyName = "LikoparticipantId", isVisible = false , Type = 3},
-         new MyColumn { Name = "LIKOIntervenceId", DataPropertyName = "LikointervenceId", isVisible = false, Type = 3 },
+         new MyColumn { Name = "ID", DataPropertyName = "LikoparticipantId" , Type = 3},
+         new MyColumn { Name = "IntervenceId", DataPropertyName = "LikointervenceId", Type = 3 },
          new MyColumn { Name = "Forma účasti", DataPropertyName = "TypePartyText" },
          new MyColumn { Name = "Pohlaví", DataPropertyName = "SexText"},
          new MyColumn { Name = "Věk", DataPropertyName = "Age" },
@@ -52,7 +52,6 @@ namespace EvitelApp2.Controls
          new MyColumn { Name = "Intervence", DataPropertyName = "IsIntervence", Type = 2 },
          new MyColumn { Name = "První Int.", DataPropertyName = "IsFirstIntervence", Type = 2 },
          new MyColumn { Name = "Druh Int.", DataPropertyName = "DruhIntervenceText" },
-         new MyColumn { Name = "Intervent", DataPropertyName = "CmbName"},
          new MyColumn { Name = "Datum intervence", DataPropertyName = "DtStartIntervence" },
          new MyColumn { Name = "Poznámka", DataPropertyName = "Note" },
          new MyColumn { Name = "Souhlas", DataPropertyName = "IsAgreement", Type = 2 },
@@ -66,6 +65,8 @@ namespace EvitelApp2.Controls
          new MyColumn { Name = "Minorita", DataPropertyName = "IsMemberMinorityGroup", Type = 2 },
          new MyColumn { Name = "Call", DataPropertyName = "DtStartCall" },
          new MyColumn { Name = "Organizace", DataPropertyName = "Organization" },
+         new MyColumn { Name = "Intervent", DataPropertyName = "InterventShortName" },
+         new MyColumn { Name = "Region", DataPropertyName = "RegionName" },
          new MyColumn { Name = "Author", DataPropertyName = "UsrLastName" }
        };
       MyResize();

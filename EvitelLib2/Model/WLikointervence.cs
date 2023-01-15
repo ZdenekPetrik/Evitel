@@ -16,14 +16,14 @@ namespace EvitelLib2.Model
         public int? Ostatnim { get; set; }
         public int? LikointervenceIdmaster { get; set; }
         public DateTime? DtStartCall { get; set; }
-        public DateTime? DtEndCall { get; set; }
         public int? LoginUserId { get; set; }
         public string UsrFirstName { get; set; }
         public string UsrLastName { get; set; }
         public int? InterventId { get; set; }
-        public string InterventName { get; set; }
+        public string InterventShortName { get; set; }
+        public string RegionName { get; set; }
         public DateTime? DateStartIntervence { get; set; }
         public string TimeStartIntervence { get; set; }
-        public bool? FirstIntervence { get; set; }
+        public int? Poradi { get; set; }
     }
 }

@@ -88,13 +88,18 @@ namespace EvitelApp2
       }
       cmbIntervent.Items.Add(new ComboItem("<Nevybráno>", "-1"));
       cmbIntervent.SelectedIndex = 0;
+      cmbIntervent2.Items.Add(new ComboItem("<Nevybráno>", "-1"));
+      cmbIntervent2.SelectedIndex = 0;
       foreach (var intervent in master.winterventi)
       {
         if (intervent.IsDeleted == false)
         {
           cmbIntervent.Items.Add(new ComboItem(intervent.CmbName, intervent.InterventId.ToString()));
+          cmbIntervent2.Items.Add(new ComboItem(intervent.CmbName, intervent.InterventId.ToString()));
           if ((aktRow.InterventId ?? 0) == intervent.InterventId)
             cmbIntervent.SelectedIndex = cmbIntervent.Items.Count - 1;
+          if ((aktRow.InterventId2 ?? 0) == intervent.InterventId)
+           cmbIntervent2.SelectedIndex = cmbIntervent2.Items.Count - 1;
         }
       }
       errTypePartyEid = InitializeErrorProvider(1, cmbTypeParty);
@@ -162,9 +167,13 @@ namespace EvitelApp2
       aktRow.TypePartyEid = ((ComboItem)cmbTypeParty.SelectedItem).iValue;
       aktRow.SexEid = ((ComboItem)cmbSex.SelectedItem).iValue;
       aktRow.InterventId = ((ComboItem)cmbIntervent.SelectedItem).iValue;
+      aktRow.InterventId2 = ((ComboItem)cmbIntervent2.SelectedItem).iValue;
+      if (aktRow.InterventId2 == -1)
+        aktRow.InterventId2 = null;
       aktRow.DruhIntervenceEid = ((ComboItem)cmbDruhIntervence.SelectedItem).iValue;
       aktRow.Age = (int)numAge.Value;
       aktRow.IsAgreement = chkAgreement.Checked;
+      aktRow.IsAgreementBkb = chkAgreementBKB.Checked;
       aktRow.IsChildJuvenile = chkChildJuvenile.Checked;
       aktRow.IsContact = chkContact.Checked;
       aktRow.IsDead = chkIsDead.Checked;
@@ -198,6 +207,12 @@ namespace EvitelApp2
         if (((ComboItem)cmbIntervent.Items[i]).iValue == (aktRow.InterventId ?? -1))
           cmbIntervent.SelectedIndex = i;
       }
+      cmbIntervent2.SelectedIndex = 0;
+      for (int i = 0; i < cmbIntervent2.Items.Count; i++)
+      {
+        if (((ComboItem)cmbIntervent2.Items[i]).iValue == (aktRow.InterventId2 ?? -1))
+          cmbIntervent2.SelectedIndex = i;
+      }
       for (int i = 0; i < cmbDruhIntervence.Items.Count; i++)
       {
         if (((ComboItem)cmbDruhIntervence.Items[i]).iValue == (aktRow.DruhIntervenceEid ?? -1))
@@ -205,7 +220,8 @@ namespace EvitelApp2
       }
 
       numAge.Value = (decimal)(aktRow.Age??0) ;
-      chkAgreement.Checked = aktRow.IsAgreement??false;
+      chkAgreement.Checked = aktRow.IsAgreement ?? false;
+      chkAgreementBKB.Checked = aktRow.IsAgreementBkb ?? false;
       chkChildJuvenile.Checked = aktRow.IsChildJuvenile ?? false;
       chkContact.Checked = aktRow.IsContact ?? false;
       chkIsDead.Checked = aktRow.IsDead ?? false;

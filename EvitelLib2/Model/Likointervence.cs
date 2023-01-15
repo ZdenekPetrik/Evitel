@@ -21,9 +21,11 @@ namespace EvitelLib2.Model
         public int? Ostatnim { get; set; }
         public int? LikointervenceIdmaster { get; set; }
         public int? InterventId { get; set; }
+        public int? Poradi { get; set; }
 
         public virtual Call Call { get; set; }
-        public virtual Likoincident LikointervenceNavigation { get; set; }
+        public virtual Intervent Intervent { get; set; }
+        public virtual Likoincident Likoincident { get; set; }
         public virtual ICollection<Likoparticipant> Likoparticipants { get; set; }
     }
 }

@@ -200,13 +200,17 @@ namespace EvitelApp2
       {
         ucCallLIKO1.isNewForm = false;
         ucCallLIKO1.LikoIntervenceId = TypeCall;
-        ucCallLIKO1.ReadDBData();
         this.Text = Title + " - LIKO Intervence id = " + TypeCall.ToString();
+
       }
       else
       {
+        ucCallLIKO1.isNewForm = true;
         this.Text = Title + " - LIKO Nové volání";
       }
+      MenuToolSetColumnLayout.Enabled = true;
+      MenuToolsRemoveColumnLayout.Enabled = true;
+      ucCallLIKO1.PrepareScreen();
       lastWindowStack.Add(aktWindow);
 
     }
@@ -335,7 +339,6 @@ namespace EvitelApp2
     {
       if (source >= 1 && source <= 4)
       {
-        MessageBox.Show("Zobrazím info o intervenci id = " + IntervenceId.ToString());
         HideActualView();
         ShowView_NewCall(IntervenceId ?? 0);
       }
@@ -536,6 +539,17 @@ namespace EvitelApp2
       }
 
     }
+
+    private void MenuItemRestore_Click(object sender, EventArgs e)
+    {
+      (new BackupRestore()).Restore();
+    }
+
+    private void MenuItemBackup_Click(object sender, EventArgs e)
+    {
+      (new BackupRestore()).Backup();
+    }
+
     #endregion
 
 
@@ -554,6 +568,8 @@ namespace EvitelApp2
         rozhrani = (IctrlWithDGW)ctrlParticipation1;
       else if (aktWindow == eShowWindow.User)
         rozhrani = (IctrlWithDGW)ctrlUser1;
+      else if (aktWindow == eShowWindow.NewCall)
+        rozhrani = (IctrlWithDGW)ucCallLIKO1;
       return rozhrani;
     }
 
@@ -595,5 +611,6 @@ namespace EvitelApp2
       }
 
     }
-  }
+
+    }
 }

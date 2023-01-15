@@ -51,13 +51,13 @@ namespace EvitelApp2.Controls
 
       myColumns = new List<MyColumn>()
       {
-         new MyColumn { Name = "CallId", DataPropertyName = "CallId", Type=3 ,  isVisible = false },
+         new MyColumn { Name = "ID", DataPropertyName = "CallId", Type=3  },
+         new MyColumn { Name = "Typ Hovoru", DataPropertyName = "TypHovoru"},
          new MyColumn { Name = "Volání od", DataPropertyName = "DtStartCall",Type=5, isVisible = false},
          new MyColumn { Name = "Datum volání", DataPropertyName = "DtCall" , Type=5},
          new MyColumn { Name = "Začátek", DataPropertyName = "TmStartCall"  },
-         new MyColumn { Name = "Konec", DataPropertyName = "TmEndCall"  },
-         new MyColumn { Name = "Doba volání", DataPropertyName = "CallDuration"  },
-         new MyColumn { Name = "Volající", DataPropertyName = "CmbName"},
+         new MyColumn { Name = "Volající", DataPropertyName = "InterventShortName"},
+         new MyColumn { Name = "Region", DataPropertyName = "RegionName"},
          new MyColumn { Name = "Zapsal", DataPropertyName = "UsrLastName" },
        };
       _dataTable = new DataTable();
@@ -176,7 +176,7 @@ namespace EvitelApp2.Controls
 
     private void JumpToIntervence()
     {
-      int CallId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["CallId"].Value;
+      int CallId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["ID"].Value;
       int? likoIntervenceId = wLikoCalls.Where(x => x.CallId == CallId)?.First().LikointervenceId;
       ShowDetailIntervence?.Invoke(1, likoIntervenceId);
     }

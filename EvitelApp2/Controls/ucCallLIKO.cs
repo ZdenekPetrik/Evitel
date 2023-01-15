@@ -1,4 +1,5 @@
 ﻿using EvitelApp2.Helper;
+using EvitelLib2;
 using EvitelLib2.Common;
 using EvitelLib2.Model;
 using EvitelLib2.Repository;
@@ -10,6 +11,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,9 +19,8 @@ using static EvitelApp2.frmMain;
 
 namespace EvitelApp2.Controls
 {
-  public partial class ucCallLIKO : UserControl
+  public partial class ucCallLIKO : UserControl, IctrlWithDGW
   {
-
     List<string> ErrorList = new List<string>();
     List<string> WarningList = new List<string>();
 
@@ -29,16 +30,28 @@ namespace EvitelApp2.Controls
     private ErrorProvider placeWarningProvider;
     private ErrorProvider cmbInterventErrorProvider;
     private ErrorProvider cmbRegionErrorProvider;
-    private ErrorProvider cmbSubTypeIntervenceErrorProvider;
-    private ErrorProvider txtNrCelkemErrorProvider;
+    private ErrorProvider cmbSubTypeIncidentErrorProvider;
 
     public int LikoIntervenceId;
     Call aktCall;
     Likoincident aktLikoIncident;
     Likointervence aktLikoIntervence;
+
+    List<WIntervent> intervents;
+    List<EvitelLib2.Model.Region> regions;
+    List<ESubTypeIncident> subTypeIncidents;
+
     public event DetailIntervence ShowDetailIntervence;
     public bool isNewForm = true;              // tvorime novou intervenci
     public bool isEditMode = true;            // zobrazeni existujici intervence (tj. isNew == false). Tak ještě je třeba rozhodnout zdali smíme editovat. Zde si to ale nastavuji sam v ReadDBData()
+
+    // pokud zmeni nejakou hodnotu pri editu tak uvolni button Save
+    private bool changedAnyValue { get { return _changedAnyValue; } set { if (isNewForm == false && isEditMode) { _changedAnyValue = true; btnWrite.Enabled = true; } } }
+
+    public DataTable dataTable => throw new NotImplementedException();
+
+    private bool _changedAnyValue = false;
+
 
     public ucCallLIKO()
     {
@@ -49,72 +62,143 @@ namespace EvitelApp2.Controls
     {
       if (DesignMode)
         return;
-      txtLoginUser.Text = Program.myLoggedUser.FirstName + " " + Program.myLoggedUser.LastName;
-
       DB = new CRepositoryDB(Program.myLoggedUser.LoginUserId);
-
-      var intervents = DB.GetWIntervents(null, "", "");
+      intervents = DB.GetWIntervents(null, "", "");
       cmbIntervent.Items.Add(new ComboItem("<Nevybráno>", ""));
       foreach (var intervent in intervents)
       {
         if (intervent.IsDeleted != true)
           cmbIntervent.Items.Add(new ComboItem(intervent.CmbName, intervent.InterventId.ToString()));
       }
-      cmbIntervent.SelectedIndex = 0;
-
-      List<EvitelLib2.Model.Region> regions = DB.GetRegions();
+      regions = DB.GetRegions();
       cmbRegion.Items.Add(new ComboItem("<Nevybráno>", ""));
       foreach (EvitelLib2.Model.Region region in regions)
       {
         cmbRegion.Items.Add(new ComboItem(region.ShortName + " - " + region.Name, region.RegionId.ToString()));
       }
-      cmbRegion.SelectedIndex = 0;
 
-      List<EvitelLib2.Model.ESubTypeIncident> subTypeIncidents = DB.GetSubTypeIncident();
+      subTypeIncidents = DB.GetSubTypeIncident();
       cmbSubTypeIncident.Items.Add(new ComboItem("<Nevybráno>", ""));
       foreach (EvitelLib2.Model.ESubTypeIncident subTypeIntervence in subTypeIncidents)
       {
         if (subTypeIntervence.DtDeleted == null)
           cmbSubTypeIncident.Items.Add(new ComboItem(subTypeIntervence.Text, subTypeIntervence.SubTypeIncidentId.ToString()));
       }
-      cmbSubTypeIncident.SelectedIndex = 0;
-
       placeErrorProvider = InitializeErrorProvider(1, txtPlace);
       placeWarningProvider = InitializeErrorProvider(2, txtPlace);
       cmbInterventErrorProvider = InitializeErrorProvider(1, cmbIntervent);
       cmbRegionErrorProvider = InitializeErrorProvider(1, cmbRegion);
-      cmbSubTypeIntervenceErrorProvider = InitializeErrorProvider(1, cmbSubTypeIncident);
-      txtNrCelkemErrorProvider = InitializeErrorProvider(2, txtNrCelkem);
+      cmbSubTypeIncidentErrorProvider = InitializeErrorProvider(1, cmbSubTypeIncident);
       ucParticipations1.RowChanged_Event += ucParticipations_NewRow;
-      ucParticipations1.InitData();
-      ReWriteScreen();
+      this.dtCall.ValueChanged += new System.EventHandler(this.Any_ValueChanged);
+      this.tmCall.ValueChanged += new System.EventHandler(this.Any_ValueChanged);
+      this.dtIncident.ValueChanged += this.Any_ValueChanged;
+      this.tmIncident.ValueChanged += this.Any_ValueChanged;
+      this.dtIntervence.ValueChanged += this.Any_ValueChanged;
+      this.tmIntervence.ValueChanged += this.Any_ValueChanged;
+      this.dtIntervenceEnd.ValueChanged += this.Any_ValueChanged;
+      this.tmIntervenceEnd.ValueChanged += this.Any_ValueChanged;
+      this.cmbIntervent.SelectedIndexChanged += this.Any_ValueChanged;
+      this.cmbRegion.SelectedIndexChanged += this.Any_ValueChanged;
+      this.cmbSubTypeIncident.SelectedIndexChanged += this.Any_ValueChanged;
+      this.txtIntervenceNote.TextChanged += this.Any_ValueChanged;
+      this.txtEventNote.TextChanged += this.Any_ValueChanged;
+      this.txtPlace.TextChanged += this.Any_ValueChanged;
+      this.chkDokonane.CheckedChanged += this.Any_ValueChanged;
+      this.chkNasledekSmrti.CheckedChanged += this.Any_ValueChanged;
+      this.chkPokusPriprava.CheckedChanged += this.Any_ValueChanged;
+      this.chkSecondIntervence.CheckedChanged += this.Any_ValueChanged;
+      this.txtPocetObeti.ValueChanged += this.Any_ValueChanged;
+      this.txtNrCelkem.ValueChanged += this.Any_ValueChanged;
+      this.txtNrObetemPoskozenym.ValueChanged += this.Any_ValueChanged;
+      this.txtNrOstatnimOsobam.ValueChanged += this.Any_ValueChanged;
+      this.txtNrPozustalymBlizkym.ValueChanged += this.Any_ValueChanged;
+      txtSecondIncidentID.Controls[0].Visible = false;
+      PrepareScreen();
     }
 
-    private void ReWriteScreen()
+    private void DtIncident_ValueChanged(object sender, EventArgs e)
     {
-      if (isNewForm) {
+      throw new NotImplementedException();
+    }
+
+    private void TxtEventNote_TextChanged(object sender, EventArgs e)
+    {
+      throw new NotImplementedException();
+    }
+
+
+    // Volá se při LOAD a pak vždy poté co nadřazený proces rozhodne co zobrazit
+    public void PrepareScreen()
+    {
+      if (isNewForm)
+      {
         btnBack.Visible = false;
-        boxCall.Top = 0;
+        btnWrite.Enabled = true;
+        btnWrite.Text = "Uložit";
+        lblSupposeId.Text = "Předpokládané Id události";
+        txtLoginUser.Text = Program.myLoggedUser.FirstName + " " + Program.myLoggedUser.LastName;
+        ucParticipations1.isNew = true;
+        EmptyAll();
       }
       else
       {
         btnBack.Visible = true;
+        btnWrite.Text = "Upravit";
+        aktLikoIntervence = DB.GetLikoIntervence(LikoIntervenceId);
+        aktCall = DB.GetLikoCall(aktLikoIntervence.CallId ?? 0);
+        aktLikoIncident = DB.GetLikoIncident(aktLikoIntervence.LikoincidentId ?? 0);
+        ucParticipations1.participantsList = DB.GetLikoParticipants(aktLikoIntervence.LikointervenceId, 2);
+        isEditMode = (Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser) || (aktCall.DtEndCall?.AddMonths(1) > DateTime.Now && aktCall.LoginUserId == Program.myLoggedUser.LoginUserId));
+        ucParticipations1.isEditMode = isEditMode;
+        ucParticipations1.isNew = false;
+        var anyUser = DB.GetUsers().Where(x => x.LoginUserId == aktCall.LoginUserId).FirstOrDefault();
+        txtLoginUser.Text = anyUser.FirstName + " " + anyUser.LastName;
+        txtSupposedId.Text = aktLikoIncident.LikoincidentId.ToString();
+        lblSupposeId.Text = "Id události";
+        LoadAllData();
+        btnWrite.Enabled = false;     // je nutné nakonec - mění se při první změně
+      }
+      chkSecondIntervence_CheckedChanged(null, null);
+      ucParticipations1.InitData();
+      ReWriteScreen();
+    }
+
+
+    private void ReWriteScreen()
+    {
+      if (isNewForm)
+      {
+        boxCall.Top = 0;
+      }
+      else
+      {
         boxCall.Top = 30;
       }
       boxCall.Left = boxEvent.Left = boxIntervence.Left = 3;
-      boxEvent.Top = boxCall.Top  + boxCall.Height + 5;
+      boxEvent.Top = boxCall.Top + boxCall.Height + 5;
       boxIntervence.Top = boxEvent.Top + boxEvent.Height + 5;
       ucParticipations1.Top = boxIntervence.Top + boxIntervence.Height + 5;
 
     }
 
+
     private void btnWrite_Click(object sender, EventArgs e)
     {
-
       if (ValidateChildren())
       {
-        if (DialogResult.Yes == MessageBox.Show("Opravdu zapsat tento hovor?", "LIKO hovor", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
-          WriteThisNewCall();
+        if (txtNrCelkem.Value > 0 && ucParticipations1.participantsList.Count() > 0)
+        {
+          if (DialogResult.Yes == MessageBox.Show("Opravdu zapsat tento hovor?", "LIKO hovor", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+            if (isNewForm)
+              WriteThisNewCall();
+            else
+              UpdateThisNewCall();
+        }
+        else
+        {
+          MessageBox.Show("Alespoň jeden 'Účastník intervence' musí existovat");
+        }
       }
       else
       {
@@ -123,30 +207,38 @@ namespace EvitelApp2.Controls
       return;
     }
 
-    public void ReadDBData() {
-      EmptyAll();
-      aktLikoIntervence = DB.GetLikoIntervence(LikoIntervenceId);
-      aktCall = DB.GetLikoCall(aktLikoIntervence.CallId ?? 0);
-      aktLikoIncident = DB.GetLikoIncident(aktLikoIntervence.LikoincidentId ?? 0);
-      ucParticipations1.participantsList = DB.GetLikoParticipants(aktLikoIntervence.LikoincidentId ?? 0, 2);
-      ucParticipations1.isNew = false;
-      isEditMode =  (Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser) || (aktCall.DtEndCall?.AddMonths(1)>DateTime.Now && aktCall.LoginUserId == Program.myLoggedUser.LoginUserId));
-      isEditMode = false;
-      ucParticipations1.isEditMode = isEditMode;
-      ucParticipations1.InitData();
-      LoadAllData();
-      ReWriteScreen();
+    private void TxtNrCelkem_Validating(object sender, CancelEventArgs e)
+    {
+      throw new NotImplementedException();
     }
+
 
 
     private void WriteThisNewCall()
     {
+      int IncidentId = 0;
+      if (chkSecondIntervence.Checked)
+      {
+        var aktLikoIncident = DB.GetLikoIncident((int)txtSecondIncidentID.Value);
+        if (aktLikoIncident == null)
+        {
+          MessageBox.Show("Incident ID = " + ((int)txtSecondIncidentID.Value).ToString() + " neexistuje.");
+          return;
+        }
+        else
+        {
+          IncidentId = aktLikoIncident.LikoincidentId;
+        }
+      }
       DateTime datetimeStartCall = dtCall.Value.Date.Add(TimeSpan.Parse(tmCall.Value.ToShortTimeString()));
       int CallId = DB.WriteCall(datetimeStartCall);
       if (CallId > 0)
       {
-        DateTime datetimeIncident = dtIncident.Value.Date.Add(TimeSpan.Parse(tmIncident.Value.ToShortTimeString()));
-        int IncidentId = DB.WriteIncident(txtEventNote.Text, ((ComboItem)cmbSubTypeIncident.SelectedItem).iValue, datetimeIncident, ((ComboItem)cmbRegion.SelectedItem).iValue, txtPlace.Text, chkNasledekSmrti.Checked, chkDokonane.Checked, chkPokusPriprava.Checked, (int)txtPocetObeti.Value);
+        if (chkSecondIntervence.Checked != true)
+        {
+          DateTime datetimeIncident = dtIncident.Value.Date.Add(TimeSpan.Parse(tmIncident.Value.ToShortTimeString()));
+          IncidentId = DB.WriteIncident(txtEventNote.Text, ((ComboItem)cmbSubTypeIncident.SelectedItem).iValue, datetimeIncident, ((ComboItem)cmbRegion.SelectedItem).iValue, txtPlace.Text, chkNasledekSmrti.Checked, chkDokonane.Checked, chkPokusPriprava.Checked, (int)txtPocetObeti.Value);
+        }
         if (IncidentId > 0)
         {
           DateTime datetimeStartIntervence = dtIntervence.Value.Date.Add(TimeSpan.Parse(dtIntervence.Value.ToShortTimeString()));
@@ -154,14 +246,15 @@ namespace EvitelApp2.Controls
           int IntervenceId = DB.WriteIntervence(datetimeStartIntervence, datetimeEndIntervence, CallId, IncidentId, txtIntervenceNote.Text, (int)txtNrCelkem.Value, (int)txtNrObetemPoskozenym.Value, (int)txtNrPozustalymBlizkym.Value, (int)txtNrOstatnimOsobam.Value, ((ComboItem)cmbIntervent.SelectedItem).iValue);
           if (IntervenceId > 0)
           {
-            foreach (var aktPartycipant in ucParticipations1.participantsList) {
+            foreach (var aktPartycipant in ucParticipations1.participantsList)
+            {
               aktPartycipant.LikointervenceId = IntervenceId;
               if (DB.AddParticipant(aktPartycipant) < 1)
                 break;
             }
-            MessageBox.Show("Událost " + IncidentId.ToString() + " uložena");
+            MessageBox.Show("Událost ID = " + IncidentId.ToString() + " uložena");
             EmptyAll();
-
+            ucParticipations1.EmptyAllRow();
           }
         }
       }
@@ -169,10 +262,121 @@ namespace EvitelApp2.Controls
       {
         MessageBox.Show("Nelze zapsat událost. " + DB.sErr);
       }
-
     }
 
 
+    private void UpdateThisNewCall()
+    {
+      DateTime datetimeStartCall = dtCall.Value.Date.Add(TimeSpan.Parse(tmCall.Value.ToShortTimeString()));
+      if (datetimeStartCall != aktCall.DtStartCall)
+      {
+        DB.UpdateCall(aktCall.CallId, datetimeStartCall);
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CallTable, aktCall.DtStartCall.ToString() + " -> " + datetimeStartCall.ToString(), aktCall.CallId.ToString(), Program.myLoggedUser.LoginUserId);
+        aktCall = DB.GetLikoCall(aktLikoIntervence.CallId ?? 0);
+      }
+      bool isChangeIntervence = false;
+      if (((ComboItem)cmbIntervent.SelectedItem).iValue != aktLikoIntervence.InterventId)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2IntervenceTable, intervents.Where(x => x.InterventId == aktLikoIntervence.InterventId).Select(x => x.CmbName).First() + " -> " + ((ComboItem)cmbIntervent.SelectedItem).Text, aktLikoIntervence.InterventId.ToString(), Program.myLoggedUser.LoginUserId);
+        isChangeIntervence = true;
+      }
+      DateTime datetimeStartIntervence = dtIntervence.Value.Date.Add(TimeSpan.Parse(dtIntervence.Value.ToShortTimeString()));
+      DateTime datetimeEndIntervence = dtIntervenceEnd.Value.Date.Add(TimeSpan.Parse(dtIntervenceEnd.Value.ToShortTimeString()));
+
+      if (datetimeStartIntervence != aktLikoIntervence.DtStartIntervence)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2IntervenceTable, "Start Intervence " + aktLikoIntervence.DtStartIntervence.ToString() + " -> " + datetimeStartIntervence.ToString(), aktLikoIntervence.InterventId.ToString(), Program.myLoggedUser.LoginUserId);
+        isChangeIntervence = true;
+      }
+      if (datetimeEndIntervence != aktLikoIntervence.DtEndIntervence)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2IntervenceTable, "End Intervence " + aktLikoIntervence.DtEndIntervence.ToString() + " -> " + datetimeEndIntervence.ToString(), aktLikoIntervence.InterventId.ToString(), Program.myLoggedUser.LoginUserId);
+        isChangeIntervence = true;
+      }
+      if (txtNrPozustalymBlizkym.Value != aktLikoIntervence.PozustalymBlizkym)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2IntervenceTable, "Pozustalym Blizkym " + txtNrPozustalymBlizkym.Value + " -> " + aktLikoIntervence.PozustalymBlizkym.ToString(), aktLikoIntervence.InterventId.ToString(), Program.myLoggedUser.LoginUserId);
+        isChangeIntervence = true;
+      }
+      if (txtNrObetemPoskozenym.Value != aktLikoIntervence.ObetemPoskozenym)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2IntervenceTable, "Obetem Poskozenym " + txtNrObetemPoskozenym.Value + " -> " + aktLikoIntervence.ObetemPoskozenym.ToString(), aktLikoIntervence.InterventId.ToString(), Program.myLoggedUser.LoginUserId);
+        isChangeIntervence = true;
+      }
+      if (txtNrOstatnimOsobam.Value != aktLikoIntervence.Ostatnim)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2IntervenceTable, "Obetem Poskozenym " + txtNrOstatnimOsobam.Value + " -> " + aktLikoIntervence.Ostatnim.ToString(), aktLikoIntervence.InterventId.ToString(), Program.myLoggedUser.LoginUserId);
+        isChangeIntervence = true;
+      }
+      if (txtIntervenceNote.Text != aktLikoIntervence.Note)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2IntervenceTable, "Poznámka" + txtIntervenceNote.Text + " -> " + aktLikoIntervence.Note, aktLikoIntervence.InterventId.ToString(), Program.myLoggedUser.LoginUserId);
+        isChangeIntervence = true;
+      }
+      if (isChangeIntervence)
+      {
+        DB.UpdateIntervence(aktLikoIntervence.LikointervenceId, datetimeStartIntervence, datetimeEndIntervence, (int)txtNrObetemPoskozenym.Value, (int)txtNrPozustalymBlizkym.Value, (int)txtNrOstatnimOsobam.Value, txtIntervenceNote.Text);
+        aktLikoIntervence = DB.GetLikoIntervence(aktLikoIntervence.LikointervenceId);
+      }
+      bool isChangeIncident = false;
+      DateTime datetimeIncident = dtIncident.Value.Date.Add(TimeSpan.Parse(tmIncident.Value.ToShortTimeString()));
+      if (datetimeIncident != aktLikoIncident.DtIncident)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2IncidentTable, "Start Incident " + aktLikoIncident.DtIncident.ToString() + " -> " + datetimeIncident.ToString(), aktLikoIncident.LikoincidentId.ToString(), Program.myLoggedUser.LoginUserId);
+        isChangeIncident = true;
+      }
+      if (((ComboItem)cmbSubTypeIncident.SelectedItem).iValue != aktLikoIncident.SubTypeIncidentEid)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2IncidentTable, subTypeIncidents.Where(x => x.SubTypeIncidentId == aktLikoIncident.SubTypeIncidentEid).Select(x => x.Text).First() + " -> " + ((ComboItem)cmbSubTypeIncident.SelectedItem).Text, aktLikoIncident.LikoincidentId.ToString(), Program.myLoggedUser.LoginUserId);
+        isChangeIncident = true;
+      }
+      if (((ComboItem)cmbRegion.SelectedItem).iValue != aktLikoIncident.RegionId)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2IncidentTable, regions.Where(x => x.RegionId == aktLikoIncident.RegionId).Select(x => x.Name).First() + " -> " + ((ComboItem)cmbRegion.SelectedItem).Text, aktLikoIncident.LikoincidentId.ToString(), Program.myLoggedUser.LoginUserId);
+        isChangeIncident = true;
+      }
+      if (txtEventNote.Text != aktLikoIncident.Note)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2IntervenceTable, "Poznámka " + txtEventNote.Text + " -> " + aktLikoIncident.Note, aktLikoIncident.LikoincidentId.ToString(), Program.myLoggedUser.LoginUserId);
+        isChangeIncident = true;
+      }
+      if (txtPlace.Text != aktLikoIncident.Place)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2IntervenceTable, "Místo " + txtPlace.Text + " -> " + aktLikoIncident.Note, aktLikoIncident.LikoincidentId.ToString(), Program.myLoggedUser.LoginUserId);
+        isChangeIncident = true;
+      }
+      if (txtPocetObeti.Value != aktLikoIncident.PocetPoskozenych)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2IntervenceTable, "Počet počkozených " + txtPocetObeti.Value.ToString() + " -> " + aktLikoIncident.PocetPoskozenych, aktLikoIncident.LikoincidentId.ToString(), Program.myLoggedUser.LoginUserId);
+        isChangeIncident = true;
+      }
+      if (chkDokonane.Checked != aktLikoIncident.Dokonane)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2IntervenceTable, "Dokonané " + chkDokonane.Checked.ToString() + " -> " + aktLikoIncident.Dokonane.ToString(), aktLikoIncident.LikoincidentId.ToString(), Program.myLoggedUser.LoginUserId);
+        isChangeIncident = true;
+      }
+      if (chkNasledekSmrti.Checked != aktLikoIncident.NasledekSmrti)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2IntervenceTable, "Dokonané " + chkNasledekSmrti.Checked.ToString() + " -> " + aktLikoIncident.NasledekSmrti.ToString(), aktLikoIncident.LikoincidentId.ToString(), Program.myLoggedUser.LoginUserId);
+        isChangeIncident = true;
+      }
+      if (chkPokusPriprava.Checked != aktLikoIncident.PokusPriprava)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2IntervenceTable, "Dokonané " + chkPokusPriprava.Checked.ToString() + " -> " + aktLikoIncident.PokusPriprava.ToString(), aktLikoIncident.LikoincidentId.ToString(), Program.myLoggedUser.LoginUserId);
+        isChangeIncident = true;
+      }
+
+      if (isChangeIncident)
+      {
+        DB.UpdateIncident(aktLikoIncident.LikoincidentId, datetimeIncident, ((ComboItem)cmbSubTypeIncident.SelectedItem).iValue, ((ComboItem)cmbRegion.SelectedItem).iValue, txtEventNote.Text, txtPlace.Text, (int)txtPocetObeti.Value, chkDokonane.Checked, chkNasledekSmrti.Checked, chkPokusPriprava.Checked);
+        aktLikoIncident = DB.GetLikoIncident(aktLikoIncident.LikoincidentId);
+
+      }
+
+
+      LoadAllData();
+      btnWrite.Enabled = false;     // je nutné nakonec - mění se při první změně
+    }
 
     #region Validation
 
@@ -240,34 +444,20 @@ namespace EvitelApp2.Controls
       }
     }
 
-    private void cmbSubTypeIntervence_Validating(object sender, CancelEventArgs e)
+    private void cmbSubTypeIncident_Validating(object sender, CancelEventArgs e)
     {
       if (cmbSubTypeIncident.SelectedIndex == 0)
       {
-        cmbSubTypeIntervenceErrorProvider.SetError(this.cmbSubTypeIncident, "Volající musí být vyplněn");
+        cmbSubTypeIncidentErrorProvider.SetError(this.cmbSubTypeIncident, "Volající musí být vyplněn");
         e.Cancel = true;
       }
       else
       {
-        cmbSubTypeIntervenceErrorProvider.SetError(this.cmbSubTypeIncident, "");
+        cmbSubTypeIncidentErrorProvider.SetError(this.cmbSubTypeIncident, "");
         e.Cancel = false;
       }
     }
 
-    private void txtNrCelkem_Validating(object sender, CancelEventArgs e)
-    {
-      if (txtNrCelkem.Value <= 0)
-      {
-        cmbSubTypeIntervenceErrorProvider.SetError(this.txtNrCelkem, "Alespoň jeden Účastník musí být zadán");
-        e.Cancel = true;
-      }
-      else
-      {
-        cmbSubTypeIntervenceErrorProvider.SetError(this.txtNrCelkem, "");
-        e.Cancel = false;
-      }
-
-    }
 
     #endregion
 
@@ -275,7 +465,7 @@ namespace EvitelApp2.Controls
 
     public void ucParticipations_NewRow()
     {
-      txtNrCelkem.Value = ucParticipations1.participantsList.Count(); 
+      txtNrCelkem.Value = ucParticipations1.participantsList.Count();
     }
 
     private void ucCallLIKO_Resize(object sender, EventArgs e)
@@ -302,26 +492,26 @@ namespace EvitelApp2.Controls
       dtIntervenceEnd.Value = DateTime.Now;
       tmIntervenceEnd.Value = DateTime.Now;
       txtNrCelkem.Value = 0;
-      txtNrObetemPoskozenym.Value = 0;  
-      txtNrOstatnimOsobam.Value = 0;  
-      txtNrPozustalymBlizkym.Value = 0; 
+      txtNrObetemPoskozenym.Value = 0;
+      txtNrOstatnimOsobam.Value = 0;
+      txtNrPozustalymBlizkym.Value = 0;
       txtIntervenceNote.Text = string.Empty;
- //     ucParticipations1.EmptyAllRow();
+      txtSupposedId.Text = DB.GetIncidentNextId().ToString();
     }
 
     private void LoadAllData()
     {
       dtCall.Value = (DateTime)aktCall.DtStartCall;
       tmCall.Value = (DateTime)aktCall.DtStartCall;
-      cmbIntervent.SelectItemByValue(aktLikoIntervence.InterventId??0);
+      cmbIntervent.SelectItemByValue(aktLikoIntervence.InterventId ?? 0);
       txtLoginUser.Text = aktCall.LoginUser.FirstName + " " + aktCall.LoginUser.LastName;
-      
+
       dtIncident.Value = (DateTime)aktLikoIncident.DtIncident;
       tmIncident.Value = (DateTime)aktLikoIncident.DtIncident;
       cmbRegion.SelectItemByValue(aktLikoIncident.RegionId ?? 0);
       txtPlace.Text = aktLikoIncident.Place;
-      cmbSubTypeIncident.SelectItemByValue(aktLikoIncident.LikoincidentId);
-      txtPocetObeti.Value = aktLikoIncident.PocetPoskozenych??0;
+      cmbSubTypeIncident.SelectItemByValue(aktLikoIncident.SubTypeIncidentEid ?? 0);
+      txtPocetObeti.Value = aktLikoIncident.PocetPoskozenych ?? 0;
       chkDokonane.Checked = aktLikoIncident.NasledekSmrti ?? false;
       chkDokonane.Checked = aktLikoIncident.Dokonane ?? false;
       chkPokusPriprava.Checked = aktLikoIncident.PokusPriprava ?? false;
@@ -332,23 +522,106 @@ namespace EvitelApp2.Controls
       dtIntervenceEnd.Value = (DateTime)aktLikoIntervence.DtEndIntervence;
       tmIntervenceEnd.Value = (DateTime)aktLikoIntervence.DtEndIntervence;
       txtNrCelkem.Value = ucParticipations1.participantsList.Count();
-      txtNrObetemPoskozenym.Value = aktLikoIntervence.ObetemPoskozenym??0;
+      txtNrObetemPoskozenym.Value = aktLikoIntervence.ObetemPoskozenym ?? 0;
       txtNrPozustalymBlizkym.Value = aktLikoIntervence.PozustalymBlizkym ?? 0;
-      txtNrOstatnimOsobam.Value = aktLikoIntervence.Ostatnim ?? 0 ;
+      txtNrOstatnimOsobam.Value = aktLikoIntervence.Ostatnim ?? 0;
       txtIntervenceNote.Text = aktLikoIntervence.Note;
-
+      chkSecondIntervence.Checked = aktLikoIntervence.Poradi > 1;
     }
 
 
     private void btnBack_Click(object sender, EventArgs e)
     {
-      ShowDetailIntervence?.Invoke(-1,0);
+      ShowDetailIntervence?.Invoke(-1, 0);
     }
 
     private void ucParticipations1_Load(object sender, EventArgs e)
     {
 
     }
+
+    // Univerzální metoda, abychom věděli že uživatel něco změnil a my mohli uvolnit editační button
+    private void Any_ValueChanged(object sender, EventArgs e)
+    {
+      changedAnyValue = true;
+    }
+
+    private void btnDruhaIntervence_Click(object sender, EventArgs e)
+    {
+      if (isNewForm)
+      {
+        if (txtSecondIncidentID.Text.Length == 0)
+        {
+          //frmGetIntervence()
+        }
+        else
+        {
+          if (txtSecondIncidentID.Value > 0)
+          {
+            var aktLikoIncident = DB.GetLikoIncident((int)txtSecondIncidentID.Value);
+            if (aktLikoIncident != null)
+            {
+              dtIncident.Value = (DateTime)aktLikoIncident.DtIncident;
+              tmIncident.Value = (DateTime)aktLikoIncident.DtIncident;
+              cmbRegion.SelectItemByValue(aktLikoIncident.RegionId ?? 0);
+              txtPlace.Text = aktLikoIncident.Place;
+              cmbSubTypeIncident.SelectItemByValue(aktLikoIncident.SubTypeIncidentEid ?? 0);
+              txtPocetObeti.Value = aktLikoIncident.PocetPoskozenych ?? 0;
+              chkDokonane.Checked = aktLikoIncident.NasledekSmrti ?? false;
+              chkDokonane.Checked = aktLikoIncident.Dokonane ?? false;
+              chkPokusPriprava.Checked = aktLikoIncident.PokusPriprava ?? false;
+              txtEventNote.Text = aktLikoIncident.Note;
+            }
+            else
+            {
+              MessageBox.Show("Incident ID = " + ((int)txtSecondIncidentID.Value).ToString() + " neexistuje.");
+            }
+          }
+        }
+
+      }
+    }
+
+    private void chkSecondIntervence_CheckedChanged(object sender, EventArgs e)
+    {
+      if (isNewForm)
+      {
+        txtSecondIncidentID.Visible = chkSecondIntervence.Checked;
+        btnDruhaIntervence.Visible = chkSecondIntervence.Checked;
+        chkSecondIntervence.Enabled = true;
+      }
+      else
+      {
+        txtSecondIncidentID.Visible = false;
+        btnDruhaIntervence.Visible = false;
+        chkSecondIntervence.Enabled = false;
+      }
+
+    }
+
+    public void SetColumns()
+    {
+      ucParticipations1.SetColumns();
+    }
+
+    public void InitColumns()
+    {
+      ucParticipations1.InitColumns();
+    }
+
+    public void RemoveOrders()
+    {
+      throw new NotImplementedException();
+    }
+
+    public void RemoveFilters()
+    {
+      throw new NotImplementedException();
+    }
+
+    private void txtEventNote_TextChanged_1(object sender, EventArgs e)
+    {
+
+    }
   }
- 
 }

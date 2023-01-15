@@ -11,6 +11,5 @@ namespace EvitelLib2.Model
         public string DescriptionType { get; set; }
         public string DescriptionValue { get; set; }
         public string Description { get; set; }
-        public string Ewfewfwef { get; set; }
     }
 }

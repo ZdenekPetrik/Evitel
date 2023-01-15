@@ -5,6 +5,13 @@ namespace EvitelLib2.Model
 {
     public partial class Intervent
     {
+        public Intervent()
+        {
+            Likointervences = new HashSet<Likointervence>();
+            LikoparticipantInterventId2Navigations = new HashSet<Likoparticipant>();
+            LikoparticipantIntervents = new HashSet<Likoparticipant>();
+        }
+
         public int InterventId { get; set; }
         public string Rank { get; set; }
         public string Title { get; set; }
@@ -20,5 +27,8 @@ namespace EvitelLib2.Model
         public DateTime DtCreate { get; set; }
 
         public virtual Region Region { get; set; }
+        public virtual ICollection<Likointervence> Likointervences { get; set; }
+        public virtual ICollection<Likoparticipant> LikoparticipantInterventId2Navigations { get; set; }
+        public virtual ICollection<Likoparticipant> LikoparticipantIntervents { get; set; }
     }
 }

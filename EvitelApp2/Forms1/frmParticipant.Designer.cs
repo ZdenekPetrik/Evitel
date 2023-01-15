@@ -69,185 +69,209 @@
             this.chkHandyCappedMedical = new System.Windows.Forms.CheckBox();
             this.chkHandyCappedMentally = new System.Windows.Forms.CheckBox();
             this.chkIsMemberMinorityGroup = new System.Windows.Forms.CheckBox();
+            this.chkAgreementBKB = new System.Windows.Forms.CheckBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.cmbIntervent2 = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numAge)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label1.Location = new System.Drawing.Point(12, 43);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 15);
+            this.label1.Size = new System.Drawing.Size(93, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Forma účasti";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label2.Location = new System.Drawing.Point(12, 75);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(46, 15);
+            this.label2.Size = new System.Drawing.Size(56, 20);
             this.label2.TabIndex = 1;
             this.label2.Text = "Pohlaví";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label3.Location = new System.Drawing.Point(12, 107);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(25, 15);
+            this.label3.Size = new System.Drawing.Size(32, 20);
             this.label3.TabIndex = 2;
             this.label3.Text = "Věk";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 139);
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label4.Location = new System.Drawing.Point(12, 136);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(32, 15);
+            this.label4.Size = new System.Drawing.Size(40, 20);
             this.label4.TabIndex = 3;
             this.label4.Text = "Smrt";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 171);
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label5.Location = new System.Drawing.Point(12, 169);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(47, 15);
+            this.label5.Size = new System.Drawing.Size(59, 20);
             this.label5.TabIndex = 4;
             this.label5.Text = "Zranění";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 203);
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label6.Location = new System.Drawing.Point(12, 201);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(62, 15);
+            this.label6.Size = new System.Drawing.Size(77, 20);
             this.label6.TabIndex = 5;
             this.label6.Text = "Intervence";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 235);
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label7.Location = new System.Drawing.Point(12, 232);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(92, 15);
+            this.label7.Size = new System.Drawing.Size(113, 20);
             this.label7.TabIndex = 6;
             this.label7.Text = "První intervence";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label8.Location = new System.Drawing.Point(12, 267);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(53, 15);
+            this.label8.Size = new System.Drawing.Size(65, 20);
             this.label8.TabIndex = 7;
             this.label8.Text = "Druh Int.";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label9.Location = new System.Drawing.Point(12, 299);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(54, 15);
+            this.label9.Size = new System.Drawing.Size(79, 20);
             this.label9.TabIndex = 8;
-            this.label9.Text = "Intervent";
+            this.label9.Text = "Intervent 1";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(12, 334);
+            this.label11.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label11.Location = new System.Drawing.Point(13, 365);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(48, 15);
+            this.label11.Size = new System.Drawing.Size(60, 20);
             this.label11.TabIndex = 10;
             this.label11.Text = "Souhlas";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(12, 366);
+            this.label12.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label12.Location = new System.Drawing.Point(12, 392);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(48, 15);
+            this.label12.Size = new System.Drawing.Size(60, 20);
             this.label12.TabIndex = 11;
             this.label12.Text = "Kontakt";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(12, 398);
+            this.label13.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label13.Location = new System.Drawing.Point(12, 423);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(51, 15);
+            this.label13.Size = new System.Drawing.Size(63, 20);
             this.label13.TabIndex = 12;
             this.label13.Text = "Policista";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(12, 430);
+            this.label14.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label14.Location = new System.Drawing.Point(183, 424);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(97, 15);
+            this.label14.Size = new System.Drawing.Size(123, 20);
             this.label14.TabIndex = 13;
             this.label14.Text = "Blízká policistovy";
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(12, 462);
+            this.label15.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label15.Location = new System.Drawing.Point(13, 456);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(40, 15);
+            this.label15.Size = new System.Drawing.Size(51, 20);
             this.label15.TabIndex = 14;
             this.label15.Text = "Senior";
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(12, 494);
+            this.label16.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label16.Location = new System.Drawing.Point(13, 488);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(55, 15);
+            this.label16.Size = new System.Drawing.Size(69, 20);
             this.label16.TabIndex = 15;
             this.label16.Text = "Mladiství";
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(12, 526);
+            this.label17.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label17.Location = new System.Drawing.Point(13, 520);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(27, 15);
+            this.label17.Size = new System.Drawing.Size(34, 20);
             this.label17.TabIndex = 16;
             this.label17.Text = "ZPT";
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(12, 558);
+            this.label18.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label18.Location = new System.Drawing.Point(13, 552);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(96, 15);
+            this.label18.Size = new System.Drawing.Size(119, 20);
             this.label18.TabIndex = 17;
             this.label18.Text = "Duševní porucha";
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(12, 590);
+            this.label20.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label20.Location = new System.Drawing.Point(13, 584);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(52, 15);
+            this.label20.Size = new System.Drawing.Size(65, 20);
             this.label20.TabIndex = 18;
             this.label20.Text = "Minorita";
             // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(12, 622);
+            this.label21.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label21.Location = new System.Drawing.Point(12, 620);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(66, 15);
+            this.label21.Size = new System.Drawing.Size(84, 20);
             this.label21.TabIndex = 19;
             this.label21.Text = "Organizace";
             // 
             // btnCokoli
             // 
-            this.btnCokoli.Location = new System.Drawing.Point(159, 730);
+            this.btnCokoli.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnCokoli.Location = new System.Drawing.Point(122, 748);
             this.btnCokoli.Name = "btnCokoli";
-            this.btnCokoli.Size = new System.Drawing.Size(75, 23);
+            this.btnCokoli.Size = new System.Drawing.Size(109, 33);
             this.btnCokoli.TabIndex = 20;
             this.btnCokoli.Text = "???";
             this.btnCokoli.UseVisualStyleBackColor = true;
@@ -255,76 +279,85 @@
             // 
             // cmbTypeParty
             // 
+            this.cmbTypeParty.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cmbTypeParty.FormattingEnabled = true;
-            this.cmbTypeParty.Location = new System.Drawing.Point(126, 35);
+            this.cmbTypeParty.Location = new System.Drawing.Point(134, 35);
             this.cmbTypeParty.Name = "cmbTypeParty";
-            this.cmbTypeParty.Size = new System.Drawing.Size(202, 23);
+            this.cmbTypeParty.Size = new System.Drawing.Size(202, 29);
             this.cmbTypeParty.TabIndex = 21;
             this.cmbTypeParty.Validating += new System.ComponentModel.CancelEventHandler(this.cmbTypeParty_Validating);
             // 
             // cmbSex
             // 
+            this.cmbSex.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cmbSex.FormattingEnabled = true;
-            this.cmbSex.Location = new System.Drawing.Point(126, 67);
+            this.cmbSex.Location = new System.Drawing.Point(134, 67);
             this.cmbSex.Name = "cmbSex";
-            this.cmbSex.Size = new System.Drawing.Size(202, 23);
+            this.cmbSex.Size = new System.Drawing.Size(202, 29);
             this.cmbSex.TabIndex = 22;
             this.cmbSex.Validating += new System.ComponentModel.CancelEventHandler(this.cmbSex_Validating);
             // 
             // cmbIntervent
             // 
+            this.cmbIntervent.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cmbIntervent.FormattingEnabled = true;
-            this.cmbIntervent.Location = new System.Drawing.Point(126, 291);
+            this.cmbIntervent.Location = new System.Drawing.Point(134, 291);
             this.cmbIntervent.Name = "cmbIntervent";
-            this.cmbIntervent.Size = new System.Drawing.Size(202, 23);
+            this.cmbIntervent.Size = new System.Drawing.Size(202, 29);
             this.cmbIntervent.TabIndex = 23;
             this.cmbIntervent.Validating += new System.ComponentModel.CancelEventHandler(this.cmbIntervent_Validating);
             // 
             // cmbDruhIntervence
             // 
+            this.cmbDruhIntervence.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cmbDruhIntervence.FormattingEnabled = true;
-            this.cmbDruhIntervence.Location = new System.Drawing.Point(126, 259);
+            this.cmbDruhIntervence.Location = new System.Drawing.Point(134, 259);
             this.cmbDruhIntervence.Name = "cmbDruhIntervence";
-            this.cmbDruhIntervence.Size = new System.Drawing.Size(202, 23);
+            this.cmbDruhIntervence.Size = new System.Drawing.Size(202, 29);
             this.cmbDruhIntervence.TabIndex = 24;
             this.cmbDruhIntervence.Validating += new System.ComponentModel.CancelEventHandler(this.cmbDruhIntervence_Validating);
             // 
             // numAge
             // 
-            this.numAge.Location = new System.Drawing.Point(126, 100);
+            this.numAge.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.numAge.Location = new System.Drawing.Point(134, 100);
             this.numAge.Name = "numAge";
-            this.numAge.Size = new System.Drawing.Size(61, 23);
+            this.numAge.Size = new System.Drawing.Size(61, 29);
             this.numAge.TabIndex = 25;
             this.numAge.Validating += new System.ComponentModel.CancelEventHandler(this.numAge_Validating);
             // 
             // txtOrganizace
             // 
-            this.txtOrganizace.Location = new System.Drawing.Point(126, 614);
+            this.txtOrganizace.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtOrganizace.Location = new System.Drawing.Point(134, 612);
             this.txtOrganizace.Name = "txtOrganizace";
-            this.txtOrganizace.Size = new System.Drawing.Size(202, 23);
+            this.txtOrganizace.Size = new System.Drawing.Size(202, 29);
             this.txtOrganizace.TabIndex = 26;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(12, 654);
+            this.label10.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label10.Location = new System.Drawing.Point(252, 652);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(62, 15);
+            this.label10.Size = new System.Drawing.Size(76, 20);
             this.label10.TabIndex = 27;
             this.label10.Text = "Poznámka";
             // 
             // txtNote
             // 
-            this.txtNote.Location = new System.Drawing.Point(126, 643);
+            this.txtNote.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtNote.Location = new System.Drawing.Point(13, 675);
             this.txtNote.Multiline = true;
             this.txtNote.Name = "txtNote";
-            this.txtNote.Size = new System.Drawing.Size(202, 66);
+            this.txtNote.Size = new System.Drawing.Size(322, 66);
             this.txtNote.TabIndex = 28;
             // 
             // chkIsDead
             // 
             this.chkIsDead.AutoSize = true;
-            this.chkIsDead.Location = new System.Drawing.Point(126, 138);
+            this.chkIsDead.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.chkIsDead.Location = new System.Drawing.Point(134, 138);
             this.chkIsDead.Name = "chkIsDead";
             this.chkIsDead.Size = new System.Drawing.Size(15, 14);
             this.chkIsDead.TabIndex = 29;
@@ -333,7 +366,8 @@
             // chkIsInjury
             // 
             this.chkIsInjury.AutoSize = true;
-            this.chkIsInjury.Location = new System.Drawing.Point(126, 172);
+            this.chkIsInjury.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.chkIsInjury.Location = new System.Drawing.Point(134, 172);
             this.chkIsInjury.Name = "chkIsInjury";
             this.chkIsInjury.Size = new System.Drawing.Size(15, 14);
             this.chkIsInjury.TabIndex = 30;
@@ -342,7 +376,8 @@
             // chkIsIntervence
             // 
             this.chkIsIntervence.AutoSize = true;
-            this.chkIsIntervence.Location = new System.Drawing.Point(126, 204);
+            this.chkIsIntervence.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.chkIsIntervence.Location = new System.Drawing.Point(134, 204);
             this.chkIsIntervence.Name = "chkIsIntervence";
             this.chkIsIntervence.Size = new System.Drawing.Size(15, 14);
             this.chkIsIntervence.TabIndex = 31;
@@ -351,7 +386,8 @@
             // chkIsFirstIntervence
             // 
             this.chkIsFirstIntervence.AutoSize = true;
-            this.chkIsFirstIntervence.Location = new System.Drawing.Point(126, 236);
+            this.chkIsFirstIntervence.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.chkIsFirstIntervence.Location = new System.Drawing.Point(134, 236);
             this.chkIsFirstIntervence.Name = "chkIsFirstIntervence";
             this.chkIsFirstIntervence.Size = new System.Drawing.Size(15, 14);
             this.chkIsFirstIntervence.TabIndex = 32;
@@ -360,7 +396,8 @@
             // chkAgreement
             // 
             this.chkAgreement.AutoSize = true;
-            this.chkAgreement.Location = new System.Drawing.Point(126, 335);
+            this.chkAgreement.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.chkAgreement.Location = new System.Drawing.Point(134, 365);
             this.chkAgreement.Name = "chkAgreement";
             this.chkAgreement.Size = new System.Drawing.Size(15, 14);
             this.chkAgreement.TabIndex = 33;
@@ -369,7 +406,8 @@
             // chkContact
             // 
             this.chkContact.AutoSize = true;
-            this.chkContact.Location = new System.Drawing.Point(126, 367);
+            this.chkContact.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.chkContact.Location = new System.Drawing.Point(134, 397);
             this.chkContact.Name = "chkContact";
             this.chkContact.Size = new System.Drawing.Size(15, 14);
             this.chkContact.TabIndex = 34;
@@ -378,7 +416,8 @@
             // chkPolicement
             // 
             this.chkPolicement.AutoSize = true;
-            this.chkPolicement.Location = new System.Drawing.Point(126, 399);
+            this.chkPolicement.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.chkPolicement.Location = new System.Drawing.Point(134, 429);
             this.chkPolicement.Name = "chkPolicement";
             this.chkPolicement.Size = new System.Drawing.Size(15, 14);
             this.chkPolicement.TabIndex = 35;
@@ -387,7 +426,8 @@
             // chkPolicemenClosePerson
             // 
             this.chkPolicemenClosePerson.AutoSize = true;
-            this.chkPolicemenClosePerson.Location = new System.Drawing.Point(126, 431);
+            this.chkPolicemenClosePerson.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.chkPolicemenClosePerson.Location = new System.Drawing.Point(320, 428);
             this.chkPolicemenClosePerson.Name = "chkPolicemenClosePerson";
             this.chkPolicemenClosePerson.Size = new System.Drawing.Size(15, 14);
             this.chkPolicemenClosePerson.TabIndex = 36;
@@ -396,7 +436,8 @@
             // chkSenior
             // 
             this.chkSenior.AutoSize = true;
-            this.chkSenior.Location = new System.Drawing.Point(126, 463);
+            this.chkSenior.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.chkSenior.Location = new System.Drawing.Point(134, 461);
             this.chkSenior.Name = "chkSenior";
             this.chkSenior.Size = new System.Drawing.Size(15, 14);
             this.chkSenior.TabIndex = 37;
@@ -405,7 +446,8 @@
             // chkChildJuvenile
             // 
             this.chkChildJuvenile.AutoSize = true;
-            this.chkChildJuvenile.Location = new System.Drawing.Point(126, 495);
+            this.chkChildJuvenile.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.chkChildJuvenile.Location = new System.Drawing.Point(134, 493);
             this.chkChildJuvenile.Name = "chkChildJuvenile";
             this.chkChildJuvenile.Size = new System.Drawing.Size(15, 14);
             this.chkChildJuvenile.TabIndex = 38;
@@ -414,7 +456,8 @@
             // chkHandyCappedMedical
             // 
             this.chkHandyCappedMedical.AutoSize = true;
-            this.chkHandyCappedMedical.Location = new System.Drawing.Point(126, 527);
+            this.chkHandyCappedMedical.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.chkHandyCappedMedical.Location = new System.Drawing.Point(134, 525);
             this.chkHandyCappedMedical.Name = "chkHandyCappedMedical";
             this.chkHandyCappedMedical.Size = new System.Drawing.Size(15, 14);
             this.chkHandyCappedMedical.TabIndex = 39;
@@ -423,7 +466,8 @@
             // chkHandyCappedMentally
             // 
             this.chkHandyCappedMentally.AutoSize = true;
-            this.chkHandyCappedMentally.Location = new System.Drawing.Point(126, 559);
+            this.chkHandyCappedMentally.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.chkHandyCappedMentally.Location = new System.Drawing.Point(134, 557);
             this.chkHandyCappedMentally.Name = "chkHandyCappedMentally";
             this.chkHandyCappedMentally.Size = new System.Drawing.Size(15, 14);
             this.chkHandyCappedMentally.TabIndex = 40;
@@ -432,17 +476,61 @@
             // chkIsMemberMinorityGroup
             // 
             this.chkIsMemberMinorityGroup.AutoSize = true;
-            this.chkIsMemberMinorityGroup.Location = new System.Drawing.Point(126, 591);
+            this.chkIsMemberMinorityGroup.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.chkIsMemberMinorityGroup.Location = new System.Drawing.Point(134, 589);
             this.chkIsMemberMinorityGroup.Name = "chkIsMemberMinorityGroup";
             this.chkIsMemberMinorityGroup.Size = new System.Drawing.Size(15, 14);
             this.chkIsMemberMinorityGroup.TabIndex = 41;
             this.chkIsMemberMinorityGroup.UseVisualStyleBackColor = true;
             // 
+            // chkAgreementBKB
+            // 
+            this.chkAgreementBKB.AutoSize = true;
+            this.chkAgreementBKB.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.chkAgreementBKB.Location = new System.Drawing.Point(321, 365);
+            this.chkAgreementBKB.Name = "chkAgreementBKB";
+            this.chkAgreementBKB.Size = new System.Drawing.Size(15, 14);
+            this.chkAgreementBKB.TabIndex = 43;
+            this.chkAgreementBKB.UseVisualStyleBackColor = true;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label19.Location = new System.Drawing.Point(215, 365);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(91, 20);
+            this.label19.TabIndex = 42;
+            this.label19.Text = "Souhlas BKB";
+            // 
+            // cmbIntervent2
+            // 
+            this.cmbIntervent2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.cmbIntervent2.FormattingEnabled = true;
+            this.cmbIntervent2.Location = new System.Drawing.Point(134, 325);
+            this.cmbIntervent2.Name = "cmbIntervent2";
+            this.cmbIntervent2.Size = new System.Drawing.Size(202, 29);
+            this.cmbIntervent2.TabIndex = 45;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label22.Location = new System.Drawing.Point(12, 333);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(79, 20);
+            this.label22.TabIndex = 44;
+            this.label22.Text = "Intervent 2";
+            // 
             // frmParticipant
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(355, 768);
+            this.ClientSize = new System.Drawing.Size(355, 793);
+            this.Controls.Add(this.cmbIntervent2);
+            this.Controls.Add(this.label22);
+            this.Controls.Add(this.chkAgreementBKB);
+            this.Controls.Add(this.label19);
             this.Controls.Add(this.chkIsMemberMinorityGroup);
             this.Controls.Add(this.chkHandyCappedMentally);
             this.Controls.Add(this.chkHandyCappedMedical);
@@ -485,7 +573,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "frmParticipant";
-            this.Text = "frmParticipant";
+            this.Text = "Účastník intervence";
             this.Load += new System.EventHandler(this.frmParticipant_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numAge)).EndInit();
             this.ResumeLayout(false);
@@ -536,5 +624,9 @@
     private System.Windows.Forms.CheckBox chkHandyCappedMedical;
     private System.Windows.Forms.CheckBox chkHandyCappedMentally;
     private System.Windows.Forms.CheckBox chkIsMemberMinorityGroup;
+    private System.Windows.Forms.CheckBox chkAgreementBKB;
+    private System.Windows.Forms.Label label19;
+    private System.Windows.Forms.ComboBox cmbIntervent2;
+    private System.Windows.Forms.Label label22;
   }
 }

@@ -41,7 +41,7 @@ namespace EvitelApp2.Controls
 
       myColumns = new List<MyColumn>()
       {
-         new MyColumn { Name = "LikoincidentId", DataPropertyName = "LikoincidentId", isVisible = false, Type = 3 },
+         new MyColumn { Name = "ID", DataPropertyName = "LikoincidentId", Type = 3 },
          new MyColumn { Name = "Datum čas", DataPropertyName = "DtIncident",Type=5, isVisible = false},
          new MyColumn { Name = "Datum", DataPropertyName = "DtIncidentDate" , Type=5},
          new MyColumn { Name = "Čas", DataPropertyName = "TmIncident" },
@@ -53,7 +53,7 @@ namespace EvitelApp2.Controls
          new MyColumn { Name = "Následek Smrti", DataPropertyName = "NasledekSmrti" , Type = 2  },
          new MyColumn { Name = "Dokonané", DataPropertyName = "Dokonane", Type = 2  },
          new MyColumn { Name = "Pokus Příprava", DataPropertyName = "PokusPriprava",  Type=2 },
-         new MyColumn { Name = "# interv", DataPropertyName = "IntervenceCount", Type = 3 },
+         new MyColumn { Name = "# intervence", DataPropertyName = "IntervenceCount", Type = 3 },
 
          };
       _dataTable = new DataTable();
@@ -162,8 +162,9 @@ namespace EvitelApp2.Controls
 
     private void JumpToIntervence()
     {
-      int Id = (int)dgw.Rows[mouseLocation.RowIndex].Cells["LikoincidentId"].Value;
-      int? likoIntervenceId = wIncidents.Where(x => x.LikoincidentId == Id)?.First().FirstLikoIntervenceId;
+      int Id = (int)dgw.Rows[mouseLocation.RowIndex].Cells["ID"].Value;
+      var x = DB.GetWLIKOIntervence();
+      int? likoIntervenceId = DB.GetWLIKOIntervence().Where(x => x.LikoincidentId == Id && x.Poradi == 1).FirstOrDefault().LikointervenceId;
       ShowDetailIntervence?.Invoke(2, likoIntervenceId);
     }
 

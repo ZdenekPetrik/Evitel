@@ -1,6 +1,7 @@
 ﻿using EvitelLib2.Common;
 using EvitelLib2.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,13 @@ using System.Linq;
 using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
+
+
+// Toto je třeba zapsat do OnConfiguration
+/*
+ var connectionString = ConfigurationManager.ConnectionStrings["DBEvitel2"].ConnectionString;
+ optionsBuilder.UseSqlServer(connectionString);
+*/
 
 namespace EvitelLib2.Repository
 {
@@ -934,6 +942,93 @@ namespace EvitelLib2.Repository
         new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetLoginAccess() " + GetInnerException(Ex), "", IdUser);
       }
       return null;
+    }
+
+    public int GetIncidentNextId()
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        int maxId = db.Likoincidents.Max(x => x.LikoincidentId);
+        return maxId+1;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetIncidentNextId() " + GetInnerException(Ex), "", IdUser);
+      }
+      return 0;
+    }
+
+    public bool UpdateCall(int callId, DateTime datetimeStartCall)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var oneCall = db.Calls.Where(x => x.CallId == callId).First();
+        oneCall.DtStartCall = datetimeStartCall;
+        db.SaveChanges();
+        return true;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UpdateCall() " + GetInnerException(Ex), "", IdUser);
+      }
+      return false;
+
+    }
+    public bool UpdateIntervence(int likoIntervenceId, DateTime datetimeStartIntervence, DateTime datetimeEndIntervence, int NrObetemPoskozenym, int NrPozustalymBlizkym, int NrOstatnimOsobam, string note)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var oneIntervence = db.Likointervences.Where(x => x.LikointervenceId == likoIntervenceId).First();
+        oneIntervence.DtStartIntervence = datetimeStartIntervence;
+        oneIntervence.DtEndIntervence= datetimeEndIntervence;
+        oneIntervence.Note = note;
+        oneIntervence.ObetemPoskozenym = NrObetemPoskozenym;
+        oneIntervence.PozustalymBlizkym = NrPozustalymBlizkym;
+        oneIntervence.Ostatnim = NrOstatnimOsobam;
+        db.SaveChanges();
+        return true;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UpdateIntervence() " + GetInnerException(Ex), "", IdUser);
+      }
+      return false;
+    }
+
+    public bool UpdateIncident(int likoincidentId, DateTime datetimeIncident, int subTypeIncidentId, int regionId, string note, string place, int pocetObeti, bool isDokonane, bool nasledekSmrti, bool pokusPriprava)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var oneIncident = db.Likoincidents.Where(x => x.LikoincidentId== likoincidentId).First();
+        oneIncident.DtIncident = datetimeIncident;
+        oneIncident.SubTypeIncidentEid = subTypeIncidentId;
+        oneIncident.RegionId = regionId;
+        oneIncident.Note = note;
+        oneIncident.Place = place;
+        oneIncident.PocetPoskozenych = pocetObeti;
+        oneIncident.NasledekSmrti = nasledekSmrti;
+        oneIncident.PokusPriprava = pokusPriprava;
+        oneIncident.Dokonane = isDokonane;
+        db.SaveChanges();
+        return true;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UpdateIncident() " + GetInnerException(Ex), "", IdUser);
+      }
+      return false;
     }
   }
 }

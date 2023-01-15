@@ -22,6 +22,5 @@ namespace EvitelLib2.Model
         public string IncidentCategory { get; set; }
         public DateTime? DtIncidentDate { get; set; }
         public string TmIncident { get; set; }
-        public int? FirstLikoIntervenceId { get; set; }
     }
 }

@@ -40,7 +40,7 @@ namespace EvitelApp2.Controls
 
       myColumns = new List<MyColumn>()
       {
-         new MyColumn { Name = "LikointervenceId", DataPropertyName = "LikointervenceId", isVisible = false, Type = 3 },
+         new MyColumn { Name = "Id", DataPropertyName = "LikointervenceId", Type = 3 },
          new MyColumn { Name = "Datum čas", DataPropertyName = "DtStartIntervence",Type=5, isVisible = false},
          new MyColumn { Name = "Datum", DataPropertyName = "DateStartIntervence" , Type=5},
          new MyColumn { Name = "Čas", DataPropertyName = "TimeStartIntervence" },
@@ -48,8 +48,10 @@ namespace EvitelApp2.Controls
          new MyColumn { Name = "Obětem Poškozeným", DataPropertyName = "ObetemPoskozenym" , Type = 3  },
          new MyColumn { Name = "Pozůstalým blízkým", DataPropertyName = "PozustalymBlizkym"  , Type = 3 },
          new MyColumn { Name = "Ostatním", DataPropertyName = "Ostatnim" , Type = 3  },
-         new MyColumn { Name = "První interv.", DataPropertyName = "FirstIntervence", Type=2},
-         new MyColumn { Name = "Intervent", DataPropertyName = "InterventName" },       };
+         new MyColumn { Name = "Pořadí", DataPropertyName = "Poradi", Type=3},
+         new MyColumn { Name = "Intervent", DataPropertyName = "InterventShortName" },
+         new MyColumn { Name = "Region", DataPropertyName = "RegionName"}
+      };
       _dataTable = new DataTable();
       _dataSet = new DataSet();
       bindingSource1 = new BindingSource();
@@ -138,7 +140,7 @@ namespace EvitelApp2.Controls
       cldb.DeleteColumnOrder();
       cldb.InitializeColumns();
     }
-    public  void SetColumns()
+    public void SetColumns()
     {
       cldb.SaveColumnLayout();
     }
@@ -156,7 +158,7 @@ namespace EvitelApp2.Controls
     }
     private void JumpToIntervence()
     {
-      int? likoIntervenceId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["LikointervenceId"].Value;
+      int? likoIntervenceId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["ID"].Value;
       ShowDetailIntervence?.Invoke(3, likoIntervenceId);
     }
 

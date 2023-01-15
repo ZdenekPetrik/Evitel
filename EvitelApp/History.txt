@@ -42,3 +42,22 @@
 7.1.2023 - CallLiko - Update (read from DB and update all items + Participations). Zatím není propis do DB + zjištìní zmìn.
 8.1.2023 - PDF - první pokus s formátováním (hlavièka) + Linq a contains
 9.1.
+10.01.2023 - rozjezd na Notebooku, Publish, SQL script celé databáze pro tvorbu
+11.01.2023 - Simona 
+ chybí opakovaná intervence (výbìr dle data a ID události)
+ Pøedpokládané ID události (zobraz pøi Add)
+ Nepoznám Nazapsaný, zapsaný, Edit staré
+ Nový LIKO nesmaže Participanty
+ Zpìt << <  id > >>
+ Co Je to LIKO  Linka Krizové intervenèní pomoci (linka pomoci v krizi)
+ Souhlas BKP - jako další položka v DB
+ SSMS nejde edit tabulek?
+ OK - Èas 0-12 a né 0-24
+ OK - Celkem = 0 a už se dál nedostaneme
+ FullExport datum od-do
+ Statistika (od do) (osob, intervencí, událostí, všech/jen prvních) (týdenní, mìsíèní, ètvrtletní, pololetní, roèní), podle krajù, TÈ
+ Na 21 se nejde pøihlásit. 
+ Možná udìlat nìjakou úvodní obrazovku se statistikou.
+ Mùžou být 2 interventi na jednoho Participanta
+ Bylo by dobré exportovat jen vyfiltrovanou tabulku (nyní se ukládá celá table). A zároveò akceptovat øazení. Asi exportovat podle ID DGW.
+
