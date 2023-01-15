@@ -26,7 +26,16 @@ namespace EvitelApp2.Controls
     public event DetailIntervence ShowDetailIntervence;
     private DataGridViewCellEventArgs mouseLocation;
 
-    public DataTable dataTable { get { return _dataTable; } }
+    public DataTable dataTable
+    {
+      get
+      {
+        DataView dv = new DataView(_dataTable);
+        dv.RowFilter = dgw.FilterString;
+        dv.Sort = dgw.SortString;
+        return dv.ToTable();
+      }
+    }
 
 
     public ctrlParticipant()
