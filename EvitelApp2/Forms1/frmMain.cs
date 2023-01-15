@@ -403,8 +403,6 @@ namespace EvitelApp2
 
     private void testToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      frmTestEndNPOI f = new frmTestEndNPOI();
-      f.Show();
     }
 
     private void EnumsSexMenuItem_Click(object sender, EventArgs e)
@@ -550,6 +548,20 @@ namespace EvitelApp2
       (new BackupRestore()).Backup();
     }
 
+    private void mainTestToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      frmTestEndNPOI f = new frmTestEndNPOI();
+      f.Show();
+
+    }
+
+    private void graphTestToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      var f = new frmGraph();
+      f.Show();
+
+    }
+
     #endregion
 
 
@@ -612,5 +624,5 @@ namespace EvitelApp2
 
     }
 
-    }
+   }
 }

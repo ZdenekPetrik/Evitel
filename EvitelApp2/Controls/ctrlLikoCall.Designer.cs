@@ -48,6 +48,7 @@
             this.dgw.Size = new System.Drawing.Size(240, 150);
             this.dgw.SortStringChangedInvokeBeforeDatasourceUpdate = true;
             this.dgw.TabIndex = 3;
+            this.dgw.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgw_CellContentClick);
             this.dgw.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgw_CellMouseEnter);
             this.dgw.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgw_RowEnter);
             this.dgw.DoubleClick += new System.EventHandler(this.dgw_DoubleClick);

@@ -60,6 +60,8 @@ namespace EvitelApp2
             this.newCallLIKOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newCallLDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mainTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SettingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemChangePassword = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemUsers = new System.Windows.Forms.ToolStripMenuItem();
@@ -318,10 +320,27 @@ namespace EvitelApp2
             // 
             // testToolStripMenuItem
             // 
+            this.testToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mainTestToolStripMenuItem,
+            this.graphTestToolStripMenuItem});
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
             this.testToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.testToolStripMenuItem.Text = "Test";
             this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
+            // 
+            // mainTestToolStripMenuItem
+            // 
+            this.mainTestToolStripMenuItem.Name = "mainTestToolStripMenuItem";
+            this.mainTestToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.mainTestToolStripMenuItem.Text = "Main Test";
+            this.mainTestToolStripMenuItem.Click += new System.EventHandler(this.mainTestToolStripMenuItem_Click);
+            // 
+            // graphTestToolStripMenuItem
+            // 
+            this.graphTestToolStripMenuItem.Name = "graphTestToolStripMenuItem";
+            this.graphTestToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.graphTestToolStripMenuItem.Text = "Graph Test";
+            this.graphTestToolStripMenuItem.Click += new System.EventHandler(this.graphTestToolStripMenuItem_Click);
             // 
             // SettingToolStripMenuItem
             // 
@@ -580,6 +599,8 @@ namespace EvitelApp2
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     private System.Windows.Forms.ToolStripMenuItem MenuItemBackup;
     private System.Windows.Forms.ToolStripMenuItem MenuItemRestore;
+    private System.Windows.Forms.ToolStripMenuItem mainTestToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem graphTestToolStripMenuItem;
   }
 }
 

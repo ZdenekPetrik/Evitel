@@ -25,7 +25,7 @@ namespace EvitelApp2.Helper
         using (var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
         {
           IWorkbook workbook = new XSSFWorkbook();
-          ISheet excelSheet = workbook.CreateSheet("Sheet1");
+          ISheet excelSheet = workbook.CreateSheet("List1");
 
           List<String> columns = new List<string>();
           IRow row = excelSheet.CreateRow(0);

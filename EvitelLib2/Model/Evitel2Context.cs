@@ -36,6 +36,7 @@ namespace EvitelLib2.Model
     public virtual DbSet<UserColumn> UserColumns { get; set; }
     public virtual DbSet<UserSetting> UserSettings { get; set; }
     public virtual DbSet<WIntervent> WIntervents { get; set; }
+    public virtual DbSet<WLikoall> WLikoalls { get; set; }
     public virtual DbSet<WLikocall> WLikocalls { get; set; }
     public virtual DbSet<WLikoincident> WLikoincidents { get; set; }
     public virtual DbSet<WLikointervence> WLikointervences { get; set; }
@@ -395,6 +396,91 @@ namespace EvitelLib2.Model
         entity.Property(e => e.SurName).HasMaxLength(50);
 
         entity.Property(e => e.Title).HasMaxLength(20);
+      });
+
+      modelBuilder.Entity<WLikoall>(entity =>
+      {
+        entity.HasNoKey();
+
+        entity.ToView("wLIKOAll");
+
+        entity.Property(e => e.DruhIntervenceEid).HasColumnName("DruhIntervenceEID");
+
+        entity.Property(e => e.DruhIntervenceText).HasMaxLength(50);
+
+        entity.Property(e => e.DtEndIntervence).HasColumnName("dtEndIntervence");
+
+        entity.Property(e => e.DtIncident)
+                  .HasColumnType("datetime")
+                  .HasColumnName("dtIncident");
+
+        entity.Property(e => e.DtStartCall).HasColumnName("dtStartCall");
+
+        entity.Property(e => e.DtStartIntervence).HasColumnName("dtStartIntervence");
+
+        entity.Property(e => e.FirstName).HasMaxLength(50);
+
+        entity.Property(e => e.IncIncident)
+                  .HasMaxLength(255)
+                  .HasColumnName("inc_Incident");
+
+        entity.Property(e => e.IncKategorie)
+                  .HasMaxLength(50)
+                  .HasColumnName("inc_Kategorie");
+
+        entity.Property(e => e.IncMisto)
+                  .HasMaxLength(50)
+                  .HasColumnName("inc_Misto");
+
+        entity.Property(e => e.IncNote).HasColumnName("inc_Note");
+
+        entity.Property(e => e.IncRegion)
+                  .HasMaxLength(50)
+                  .HasColumnName("inc_Region");
+
+        entity.Property(e => e.IncRegionId).HasColumnName("inc_RegionId");
+
+        entity.Property(e => e.IntInterventId).HasColumnName("int_interventId");
+
+        entity.Property(e => e.IntInterventName)
+                  .HasMaxLength(53)
+                  .HasColumnName("int_InterventName");
+
+        entity.Property(e => e.IntRegion)
+                  .HasMaxLength(50)
+                  .HasColumnName("int_Region");
+
+        entity.Property(e => e.IntervenceNote).HasColumnName("intervenceNote");
+
+        entity.Property(e => e.Intervent2Name).HasMaxLength(53);
+
+        entity.Property(e => e.InterventName).HasMaxLength(53);
+
+        entity.Property(e => e.IsAgreementBkb).HasColumnName("isAgreementBKB");
+
+        entity.Property(e => e.LastName).HasMaxLength(50);
+
+        entity.Property(e => e.LikoincidentId).HasColumnName("LIKOIncidentId");
+
+        entity.Property(e => e.LikointervenceId).HasColumnName("LIKOIntervenceId");
+
+        entity.Property(e => e.LikoparticipantId).HasColumnName("LIKOParticipantId");
+
+        entity.Property(e => e.Organization).HasMaxLength(255);
+
+        entity.Property(e => e.PokusPriprava).HasColumnName("Pokus_Priprava");
+
+        entity.Property(e => e.RegionName).HasMaxLength(50);
+
+        entity.Property(e => e.SexEid).HasColumnName("SexEID");
+
+        entity.Property(e => e.SexText).HasMaxLength(50);
+
+        entity.Property(e => e.SubTypeIncidentEid).HasColumnName("SubTypeIncidentEID");
+
+        entity.Property(e => e.TypePartyEid).HasColumnName("TypePartyEID");
+
+        entity.Property(e => e.TypePartyText).HasMaxLength(50);
       });
 
       modelBuilder.Entity<WLikocall>(entity =>
