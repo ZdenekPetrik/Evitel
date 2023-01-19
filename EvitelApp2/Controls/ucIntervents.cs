@@ -1,5 +1,6 @@
-﻿using EvitelApp2.Helper;
-
+﻿using EvitelApp2.Forms1.Ciselnik;
+using EvitelApp2.Helper;
+using EvitelLib2.Common;
 using EvitelLib2.Model;
 using EvitelLib2.Repository;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -14,34 +15,34 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-
+using static EvitelApp2.frmMain;
 
 namespace EvitelApp2.Controls
 {
-  public partial class ucIntervents : UserControl
+  public partial class ucIntervents : UserControl, IctrlWithDGW
   {
-    public bool isEditModeAllowed { set { btnEditMode.Visible = value; } }
-    public bool isData { get { return winterventi != null; } }       // info zda uz data byla nactena
 
-    private List<WIntervent> winterventi = null;
-    List<EvitelLib2.Model.Region> regions = null;
     private CRepositoryDB DB;
-    private int Rows { get { return winterventi!.Count(); } }
-    DataGridViewComboBoxColumn dgvCmb = new DataGridViewComboBoxColumn();
-    private BindingSource bindingSource = new BindingSource();
+    private DataTable _dataTable;
+    private DataSet _dataSet;
+    private List<WIntervent> winterventi = null;
+    BindingSource bindingSource1;
+    private ColumnLayoutDB cldb;
 
+    public bool isData { get { return winterventi != null; } }       // info zda uz data byla nactena
+    private bool isEditModeAllowed { get { return Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser); } }
     private List<MyColumn> myColumns;
-
-    private class interventiShow
+    public event RowInformation ShowRowInformation;
+    public DataTable dataTable
     {
-      public int InterventId { get; set; }
-      public string Hodnost { get; set; }
-      public string Titul { get; set; }
-      public string Jméno { get; set; }
-      public string Přijmení { get; set; }
-      public int IsDeleted { get; set; }
-    };
+      get
+      {
+        DataView dv = new DataView(_dataTable);
+        dv.RowFilter = dgw.FilterString;
+        dv.Sort = dgw.SortString;
+        return dv.ToTable();
+      }
+    }
 
 
     public ucIntervents()
@@ -56,10 +57,8 @@ namespace EvitelApp2.Controls
         DB = new CRepositoryDB(Program.myLoggedUser.LoginUserId);
       }
       myColumns = new List<MyColumn>()
-            {    new MyColumn { Name = "InterventId", DataPropertyName = "InterventId", isVisible = false },
-                 new MyColumn { Name = "IsDeleted", DataPropertyName = "IsDeleted", isVisible = false },
-                 new MyColumn { Name = "RegionId", DataPropertyName = "RegionId", isVisible = false },
-                 new MyColumn { Name = "Region", DataPropertyName = "RegionId" },
+            {    new MyColumn { Name = "ID", DataPropertyName = "InterventId", Type = 4 },
+                 new MyColumn { Name = "Region", DataPropertyName = "RegionName" },
                  new MyColumn { Name = "Hodnost", DataPropertyName = "Rank" },
                  new MyColumn { Name = "Titul", DataPropertyName = "Title" },
                  new MyColumn { Name = "Jméno", DataPropertyName = "Name" },
@@ -68,88 +67,73 @@ namespace EvitelApp2.Controls
                  new MyColumn { Name = "Mobilní tf.", DataPropertyName = "MobilPhone"},
                  new MyColumn { Name = "Soukromý tf.", DataPropertyName = "PrivatePhone" },
                  new MyColumn { Name = "Mail", DataPropertyName = "Email"},
-                 new MyColumn { Name = "Poznámka", DataPropertyName = "Note" },
-                 new MyColumn { Name = "Vytvořeno", DataPropertyName = "dtCreate", isReadOnly = true },
-            };
+                 new MyColumn { Name = "Vytvořeno", DataPropertyName = "DtCreate" },
+                 new MyColumn { Name = "Jméno2", DataPropertyName = "InterventShortName" },
+                 new MyColumn { Name = "Jméno3", DataPropertyName = "CmbName"},
+                 new MyColumn { Name = "Smazáno", DataPropertyName = "IsDeleted", Type=2 },
+           };
+      _dataTable = new DataTable();
+      _dataSet = new DataSet();
+      bindingSource1 = new BindingSource();
+      bindingSource1.DataSource = _dataSet;
+      dgw.SetDoubleBuffered();
+      dgw.DataSource = bindingSource1;
+      CreateTable();
+      btnAdd.Visible = btnEdit.Visible = btnDelete.Visible = isEditModeAllowed;
     }
 
     public void ReadDataFirstTime()
     {
       winterventi = DB.GetWIntervents(null, "", "");
-      bindingSource.DataSource = winterventi;
-      regions = DB.GetRegions();
-      LoadFilter();
-      LoadDgw();
-      MyResize();
+      AddDataToTable();
+      cldb = new ColumnLayoutDB(DB, dgw, this.Name + _dataTable.TableName);
+      cldb.SetColumnLayout();
     }
 
-
-    public void LoadFilter()
+    private void CreateTable()
     {
-      cmbRegion.Items.Add(new ComboItem("< ALL >", "-1"));
-      foreach (var Any in regions)
+      _dataTable = _dataSet.Tables.Add("Intervents");
+      foreach (var col in myColumns)
       {
-        cmbRegion.Items.Add(new ComboItem(Any.Name, Any.RegionId.ToString()));
-        dgvCmb.Items.Add(Any.Name);
+        _dataTable.Columns.Add(col.Name, col.GetMyType());
       }
-      cmbRegion.SelectedIndex = 0;
-
+      bindingSource1.DataMember = _dataTable.TableName;
     }
 
-    public void LoadDgw()
+    private void AddDataToTable()
     {
-      dgw.EditMode = DataGridViewEditMode.EditOnKeystrokeOrF2;
-
-      dgw.AutoGenerateColumns = false;
-      dgw.AllowUserToOrderColumns = true;
-      DataGridViewTextBoxColumn[] Cl = new DataGridViewTextBoxColumn[7];
-      for (int i = 0; i < myColumns.Count(); i++)
+      _dataTable.Rows.Clear();
+      foreach (var p in winterventi)
       {
-
-        if (myColumns[i].Name != "Region")
+        DataRow newRow = _dataTable.NewRow();
+        foreach (var col in myColumns)
         {
-          var cl = new DataGridViewTextBoxColumn();
-          cl.Name = myColumns[i].Name;
-          cl.DataPropertyName = myColumns[i].DataPropertyName;
-          cl.Visible = myColumns[i].isVisible;
-          cl.ReadOnly = myColumns[i].isReadOnly;
-          dgw.Columns.Add(cl);
+          newRow[col.Name] = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null) ?? DBNull.Value; ;
         }
-        else
-        {
-          DataGridViewComboBoxColumn col2 = new DataGridViewComboBoxColumn();
-          col2.DataSource = regions;
-          col2.DisplayMember = "Name";
-          col2.DataPropertyName = "RegionId";
-          col2.ValueMember = "regionId";
-          dgw.Columns.Add(col2);
-        }
+        //          
+        _dataTable.Rows.Add(newRow);
       }
-      dgw.DataSource = bindingSource;
-      //            ChangeEditMode(false);
-      MyResize();
     }
 
     public void RefreshMyData()
     {
-      int? Region = ((ComboItem)cmbRegion.SelectedItem).iValue == -1 ? null : ((ComboItem)cmbRegion.SelectedItem).iValue;
-
-      winterventi = DB.GetWIntervents(Region, txtFilterName.Text, txtFilterContact.Text);
-      bindingSource.DataSource = winterventi;
-      dgw.DataSource = bindingSource;
+      winterventi = DB.GetWIntervents(null, "", "");
+      bindingSource1.DataSource = winterventi;
+      dgw.DataSource = bindingSource1;
     }
-
 
     public void MyResize()
     {
       dgw.Top = dgw.Left = 0;
       dgw.Width = this.ClientSize.Width - (5);
-      dgw.Height = this.ClientSize.Height - (groupBoxVyhledavani.Height + 5);
-      groupBoxVyhledavani.Top = this.ClientSize.Height - (groupBoxVyhledavani.Height + 2);
-      groupBoxVyhledavani.Left = 0;
-      btnEditMode.Left = groupBoxVyhledavani.Width + 5;
-      btnEditMode.Top = this.ClientSize.Height - (btnEditMode.Height + 2);
+      dgw.Height = this.ClientSize.Height - (btnAdd.Height + 20);
+
+      btnAdd.Top = this.ClientSize.Height - 55; btnAdd.Left = 40;
+      btnDelete.Top = this.ClientSize.Height - 55; btnDelete.Left = this.ClientSize.Width - (btnAdd.Width + 40);
+      btnEdit.Top = this.ClientSize.Height - 55; btnEdit.Left = (this.ClientSize.Width / 2) - (btnAdd.Width / 2);
+
     }
+
     public void MyResize(Size ClientSize)
     {
       this.Top = this.Left = 0;
@@ -172,70 +156,105 @@ namespace EvitelApp2.Controls
       }
     }
 
-    private void btnEditMode_Click(object sender, EventArgs e)
+    public void SetColumns()
     {
-      ChangeEditMode(!dgw.AllowUserToAddRows);
-
+      cldb.SaveColumnLayout();
     }
-    private void ChangeEditMode(bool isOn)
+
+    public void InitColumns()
     {
-      dgw.AllowUserToAddRows = isOn;
-      dgw.AllowUserToDeleteRows = isOn;
-      dgw.EditMode = isOn ? DataGridViewEditMode.EditOnKeystrokeOrF2 : DataGridViewEditMode.EditProgrammatically;
-      btnEditMode.Text = isOn ? "View Mode" : "Edit Mode";
-      RefreshMyData();
-      if (isOn)
+      cldb.DeleteColumnOrder();
+      cldb.InitializeColumns();
+    }
+
+    public void RemoveOrders()
+    {
+      dgw.CleanSort();
+    }
+
+    public void RemoveFilters()
+    {
+      dgw.CleanFilter();
+    }
+
+    private void btnAdd_Click(object sender, EventArgs e)
+    {
+      frmIntervent frmU = new frmIntervent();
+      frmIntervent frm = new frmIntervent();
+      frm.oneRow = new Intervent();
+      frm.TypeForm = eModifyRow.addRow;
+      frm.ShowDialog();
+      if (frm.isReturnOK)
       {
-        btnEditMode.Visible = true;
+        DB.UniversalModifyIntervent(frm.TypeForm, frm.oneRow);
+        winterventi = DB.GetWIntervents(null, "", "");
+        AddDataToTable();
       }
+
     }
-    DataGridViewCellEventArgs lastAktCell;
-    DataGridViewCellEventArgs lastEditCell;
-    private void dgw_CellEnter(object sender, DataGridViewCellEventArgs e)
+
+    private void btnEdit_Click(object sender, EventArgs e)
     {
-      if (lastAktCell != null && (lastAktCell.RowIndex != e.RowIndex || e.RowIndex == 0))
-        ShowRow(e.RowIndex + 1);
-      else
-        ShowRow(0);
-      if (lastEditCell != null && lastEditCell.RowIndex != e.RowIndex)
+      int RowIndex = GetAktRow();
+      if (RowIndex < 0)
+        return;
+      frmIntervent frm = new frmIntervent();
+      int id = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
+      frm.oneRow = DB.GetIntervent(id);
+      frm.TypeForm = eModifyRow.modifyRow;
+      frm.ShowDialog();
+      if (frm.isReturnOK)
       {
-        if (lastEditCell.RowIndex < Rows)
-        {
-          MessageBox.Show("Edit ROW " + lastEditCell.RowIndex.ToString());
-
-        }
-        else
-          MessageBox.Show("NEW ROW " + lastEditCell.RowIndex.ToString());
-        lastEditCell = null;
+        DB.UniversalModifyIntervent(frm.TypeForm, frm.oneRow);
+        winterventi = DB.GetWIntervents(null, "", "");
+        AddDataToTable();
       }
-      lastAktCell = e;
+
     }
 
-    private void dgw_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+    private void btnDelete_Click(object sender, EventArgs e)
     {
-      lastEditCell = e;
+      int RowIndex = GetAktRow();
+      if (RowIndex < 0)
+        return;
+      frmIntervent frm = new frmIntervent();
+      int id = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
+      frm.oneRow = DB.GetIntervent(id);
+      frm.TypeForm = (((bool?)dgw.Rows[RowIndex].Cells["Smazáno"].Value) ?? false) == true ? eModifyRow.undeleteRow : eModifyRow.deleteRow;
+      frm.ShowDialog();
+      if (frm.isReturnOK)
+      {
+        DB.UniversalModifyIntervent(frm.TypeForm, frm.oneRow);
+        winterventi = DB.GetWIntervents(null,"","");
+        AddDataToTable();
+      }
+
+
+
     }
 
-
-    private void ShowRow(int index)
+    private int GetAktRow()
     {
-      lblPocet.Text = string.Format("{0}/{1}", index, Rows);
+      if (dgw.SelectedCells.Count == 0)
+      {
+        MessageBox.Show("Není vybrána žádná věta k editaci", "Intervent", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        return -1;
+      }
+      return dgw.SelectedCells[0].RowIndex;
     }
-    private void btnFind_Click(object sender, EventArgs e)
+
+    private void dgw_RowEnter(object sender, DataGridViewCellEventArgs e)
     {
-      RefreshMyData();
+      ShowRowInformation?.Invoke(e.RowIndex + 1, _dataTable.Rows.Count);
+
     }
 
-
-
-    private void dgw_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+    private void ucIntervents_VisibleChanged(object sender, EventArgs e)
     {
-      string id = e.Row.Cells[0].Value.ToString();
-      var toDelete = winterventi.First(x => x.InterventId.ToString() == id);
-      if (DialogResult.Yes == MessageBox.Show("Opravdu " + ((toDelete.IsDeleted == false) ? "smazat " : "obnovit ") + toDelete.Name + " " + toDelete.SurName + " " + toDelete.RegionName + "?", "DeleteRow", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
-        DB.InterventDeleteUnDelete(toDelete.InterventId, toDelete.IsDeleted == false);
-      e.Cancel = true;
-      RefreshMyData();
+      if (this.Visible == true)
+      {
+        ShowRowInformation?.Invoke(1, _dataTable.Rows.Count);
+      }
     }
   }
 }

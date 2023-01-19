@@ -2,13 +2,18 @@
 using EvitelLib2.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using NPOI.POIFS.FileSystem;
 using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
+using System.Security.Cryptography.X509Certificates;
 using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 
 // Toto je třeba zapsat do OnConfiguration
@@ -19,6 +24,15 @@ using System.Threading.Tasks;
 
 namespace EvitelLib2.Repository
 {
+
+  public enum eModifyRow
+  {
+    addRow,
+    modifyRow,
+    deleteRow,
+    undeleteRow
+  }
+
   public class CRepositoryDB
   {
 
@@ -360,7 +374,8 @@ namespace EvitelLib2.Repository
       Evitel2Context db = new Evitel2Context();
       try
       {
-        if (user.LoginUserId > 0) { 
+        if (user.LoginUserId > 0)
+        {
           var x = from lau in db.LoginAccessUsers where lau.LoginUserId == user.LoginUserId select lau;
           db.LoginAccessUsers.RemoveRange(x);
           db.LoginUsers.Update(user);
@@ -372,7 +387,7 @@ namespace EvitelLib2.Repository
           db.LoginUsers.Add(user);
         }
         int countUpdate = db.SaveChanges();
-         }
+      }
       catch (Exception Ex)
       {
         sErr = GetInnerException(Ex);
@@ -592,9 +607,9 @@ namespace EvitelLib2.Repository
       Evitel2Context db = new Evitel2Context();
       try
       {
-        var userColumnsDB = from uc in db.UserColumns where uc.Name == nameOfDGW && uc.LoginUserId == idUser orderby uc.ColumnIndex select uc;
+        var userColumnsDB = from uc in db.UserColumns where uc.Name == nameOfDGW /*&& uc.LoginUserId == idUser */ orderby uc.ColumnIndex select uc;
         db.UserColumns.RemoveRange(userColumnsDB);
-        db.SaveChanges(); 
+        db.SaveChanges();
       }
       catch (Exception Ex)
       {
@@ -611,7 +626,7 @@ namespace EvitelLib2.Repository
       Evitel2Context db = new Evitel2Context();
       try
       {
-        var userColumnsDB = from uc in db.UserColumns where uc.Name == nameOfDGW && uc.LoginUserId == IdUser orderby uc.ColumnIndex select uc;
+        var userColumnsDB = from uc in db.UserColumns where uc.Name == nameOfDGW /* && uc.LoginUserId == IdUser */ orderby uc.ColumnIndex select uc;
         return userColumnsDB.ToList();
       }
       catch (Exception Ex)
@@ -621,7 +636,7 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
-#endregion
+    #endregion
 
     public int WriteCall(DateTime datetimeStartCall)
     {
@@ -690,7 +705,7 @@ namespace EvitelLib2.Repository
           ObetemPoskozenym = NrObetemPoskozenym,
           PozustalymBlizkym = NrPozustalymBlizkym,
           Ostatnim = NrOstatnimOsobam,
-          
+
           InterventId = InterventId
 
         };
@@ -723,6 +738,25 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
+
+    public int AddSex(ESex sexRow)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        db.ESexes.Add(sexRow);
+        db.SaveChanges();
+        return sexRow.SexId;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "AddSex() " + GetInnerException(Ex), "", IdUser);
+      }
+      return -1;
+    }
+
 
     public List<ETypeParty> GetTypeParty()
     {
@@ -782,7 +816,7 @@ namespace EvitelLib2.Repository
       Evitel2Context db = new Evitel2Context();
       try
       {
-        return  (from par in db.WLikoparticipants select par).ToList();
+        return (from par in db.WLikoparticipants select par).ToList();
       }
       catch (Exception Ex)
       {
@@ -798,7 +832,7 @@ namespace EvitelLib2.Repository
       Evitel2Context db = new Evitel2Context();
       try
       {
-        return (from par in db.WLikocalls orderby par.DtStartCall select par ).ToList();
+        return (from par in db.WLikocalls orderby par.DtStartCall select par).ToList();
       }
       catch (Exception Ex)
       {
@@ -951,7 +985,7 @@ namespace EvitelLib2.Repository
       try
       {
         int maxId = db.Likoincidents.Max(x => x.LikoincidentId);
-        return maxId+1;
+        return maxId + 1;
       }
       catch (Exception Ex)
       {
@@ -988,7 +1022,7 @@ namespace EvitelLib2.Repository
       {
         var oneIntervence = db.Likointervences.Where(x => x.LikointervenceId == likoIntervenceId).First();
         oneIntervence.DtStartIntervence = datetimeStartIntervence;
-        oneIntervence.DtEndIntervence= datetimeEndIntervence;
+        oneIntervence.DtEndIntervence = datetimeEndIntervence;
         oneIntervence.Note = note;
         oneIntervence.ObetemPoskozenym = NrObetemPoskozenym;
         oneIntervence.PozustalymBlizkym = NrPozustalymBlizkym;
@@ -1010,7 +1044,7 @@ namespace EvitelLib2.Repository
       Evitel2Context db = new Evitel2Context();
       try
       {
-        var oneIncident = db.Likoincidents.Where(x => x.LikoincidentId== likoincidentId).First();
+        var oneIncident = db.Likoincidents.Where(x => x.LikoincidentId == likoincidentId).First();
         oneIncident.DtIncident = datetimeIncident;
         oneIncident.SubTypeIncidentEid = subTypeIncidentId;
         oneIncident.RegionId = regionId;
@@ -1029,6 +1063,355 @@ namespace EvitelLib2.Repository
         new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UpdateIncident() " + GetInnerException(Ex), "", IdUser);
       }
       return false;
+    }
+
+    public void SaveChanges()
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        db.SaveChanges();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "SaveChanges() " + GetInnerException(Ex), "", IdUser);
+      }
+
+    }
+
+    public int UniversalModifySex(eModifyRow modifyRow, int id, string text)
+    {
+      sErr = "";
+      string oldText = "";
+      Evitel2Context db = new Evitel2Context();
+      ESex row = new ESex();
+      try
+      {
+
+        switch (modifyRow)
+        {
+          case eModifyRow.addRow:
+            {
+              row.Text = text;
+              db.ESexes.Add(row);
+              break;
+            }
+          case eModifyRow.modifyRow:
+            {
+              row = db.ESexes.Where(x => x.SexId == id).First();
+              oldText = row.Text;
+              row.Text = text;
+              break;
+            }
+          case eModifyRow.deleteRow:
+            {
+              row = db.ESexes.Where(x => x.SexId == id).First();
+              row.DtDeleted = DateTime.Now;
+              break;
+            }
+          case eModifyRow.undeleteRow:
+            {
+              row = db.ESexes.Where(x => x.SexId == id).First();
+              row.DtDeleted = null;
+              break;
+            }
+          default:
+            new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifySex() Bad enum ModifyRow", modifyRow.ToString(), IdUser);
+            break;
+        }
+        db.SaveChanges();
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "Sex " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? "/" + oldText : ""), IdUser);
+
+        return row?.SexId ?? -1;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifySex() " + GetInnerException(Ex), id.ToString(), IdUser);
+      }
+      return -1;
+    }
+
+    public int UniversalModifyTypeParty(eModifyRow modifyRow, int id, string text)
+    {
+      sErr = "";
+      string oldText = "";
+      Evitel2Context db = new Evitel2Context();
+      ETypeParty row = new ETypeParty();
+      try
+      {
+
+        switch (modifyRow)
+        {
+          case eModifyRow.addRow:
+            {
+              row.Text = text;
+              db.ETypeParties.Add(row);
+              break;
+            }
+          case eModifyRow.modifyRow:
+            {
+              row = db.ETypeParties.Where(x => x.TypePartyId == id).First();
+              oldText = row.Text;
+              row.Text = text;
+              break;
+            }
+          case eModifyRow.deleteRow:
+            {
+              row = db.ETypeParties.Where(x => x.TypePartyId == id).First();
+              row.DtDeleted = DateTime.Now;
+              break;
+            }
+          case eModifyRow.undeleteRow:
+            {
+              row = db.ETypeParties.Where(x => x.TypePartyId == id).First();
+              row.DtDeleted = null;
+              break;
+            }
+          default:
+            new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyTypeParty() Bad enum ModifyRow", modifyRow.ToString(), IdUser);
+            break;
+        }
+        db.SaveChanges();
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "TypeParty " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? "/" + oldText : ""), IdUser);
+        return row?.TypePartyId ?? -1;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyTypeParty() " + GetInnerException(Ex), id.ToString(), IdUser);
+      }
+      return -1;
+    }
+
+    public int UniversalModifyDruhIntervence(eModifyRow modifyRow, int id, string text)
+    {
+      sErr = "";
+      string oldText = "";
+      Evitel2Context db = new Evitel2Context();
+      EDruhIntervence row = new EDruhIntervence();
+      try
+      {
+        switch (modifyRow)
+        {
+          case eModifyRow.addRow:
+            {
+              row.Text = text;
+              db.EDruhIntervences.Add(row);
+              break;
+            }
+          case eModifyRow.modifyRow:
+            {
+              row = db.EDruhIntervences.Where(x => x.DruhIntervenceId == id).First();
+              oldText = row.Text;
+              row.Text = text;
+              break;
+            }
+          case eModifyRow.deleteRow:
+            {
+              row = db.EDruhIntervences.Where(x => x.DruhIntervenceId == id).First();
+              row.DtDeleted = DateTime.Now;
+              break;
+            }
+          case eModifyRow.undeleteRow:
+            {
+              row = db.EDruhIntervences.Where(x => x.DruhIntervenceId == id).First();
+              row.DtDeleted = null;
+              break;
+            }
+          default:
+            new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyDruhIntervence() Bad enum ModifyRow", modifyRow.ToString(), IdUser);
+            break;
+        }
+        db.SaveChanges();
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "DruhIntervence " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? "/" + oldText : ""), IdUser);
+        return row?.DruhIntervenceId ?? -1;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyDruhIntervence() " + GetInnerException(Ex), id.ToString(), IdUser);
+      }
+      return -1;
+
+    }
+
+    public int UniversalModifySubTypeIncident(eModifyRow modifyRow, int id, string text, string kategorie)
+    {
+      sErr = "";
+      string oldText = "";
+      string oldText2 = "";
+      Evitel2Context db = new Evitel2Context();
+      ESubTypeIncident row = new ESubTypeIncident();
+      try
+      {
+        switch (modifyRow)
+        {
+          case eModifyRow.addRow:
+            {
+              row.Text = text;
+              row.Kategorie = kategorie;
+              db.ESubTypeIncidents.Add(row);
+              break;
+            }
+          case eModifyRow.modifyRow:
+            {
+              row = db.ESubTypeIncidents.Where(x => x.SubTypeIncidentId == id).First();
+              oldText = row.Text;
+              oldText2 = row.Kategorie;
+              row.Text = text;
+              row.Kategorie = kategorie;
+              break;
+            }
+          case eModifyRow.deleteRow:
+            {
+              row = db.ESubTypeIncidents.Where(x => x.SubTypeIncidentId == id).First();
+              row.DtDeleted = DateTime.Now;
+              break;
+            }
+          case eModifyRow.undeleteRow:
+            {
+              row = db.ESubTypeIncidents.Where(x => x.SubTypeIncidentId == id).First();
+              row.DtDeleted = null;
+              break;
+            }
+          default:
+            new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifySubTypeIncident() Bad enum ModifyRow", modifyRow.ToString(), IdUser);
+            break;
+        }
+        db.SaveChanges();
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "SubTypeIncidentId " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? "/" + oldText : "") + " Kategorie:" + kategorie + ((modifyRow == eModifyRow.modifyRow) ? "/" + oldText2 : ""), IdUser);
+        return row?.SubTypeIncidentId ?? -1;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifySubTypeIncident() " + GetInnerException(Ex), id.ToString(), IdUser);
+      }
+      return -1;
+
+    }
+
+    public int UniversalModifyRegion(eModifyRow modifyRow, int id, string name, string shortName, string name2)
+    {
+      sErr = "";
+      string oldText = "";
+      string oldText2 = "";
+      string oldText3 = "";
+      Evitel2Context db = new Evitel2Context();
+      Region row = new Region();
+      try
+      {
+        switch (modifyRow)
+        {
+          case eModifyRow.addRow:
+            {
+              row.Name = name;
+              row.ShortName = shortName;
+              row.Name2 = name2;
+              db.Regions.Add(row);
+              break;
+            }
+          case eModifyRow.modifyRow:
+            {
+              row = db.Regions.Where(x => x.RegionId == id).First();
+              oldText = row.Name;
+              oldText2 = row.ShortName;
+              oldText3 = row.Name2;
+              row.Name = name;
+              row.ShortName = shortName;
+              row.Name2 = name2;
+              break;
+            }
+          default:
+            new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyRegion() Bad enum ModifyRow", modifyRow.ToString(), IdUser);
+            break;
+        }
+        db.SaveChanges();
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "SubTypeIncidentId " + modifyRow.ToString() + "id = " + id.ToString(), name + ((modifyRow == eModifyRow.modifyRow) ? "/" + oldText : "") + " ShortName:" + shortName + ((modifyRow == eModifyRow.modifyRow) ? "/" + oldText2 : ""), IdUser);
+        return row?.RegionId ?? -1;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyRegion() " + GetInnerException(Ex), id.ToString(), IdUser);
+      }
+      return -1;
+
+    }
+
+    public Intervent GetIntervent(int id)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var rows = from r in db.Intervents where r.InterventId == id select r;
+        return rows.First();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetIntervent() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+
+    }
+
+    public int UniversalModifyIntervent(eModifyRow modifyRow, Intervent oneRow)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+
+      var entry = db.Entry(oneRow);
+      entry.CurrentValues.SetValues(oneRow);
+      try
+      {
+        switch (modifyRow)
+        {
+          case eModifyRow.addRow:
+            {
+              db.Intervents.Add(oneRow);
+              break;
+            }
+          case eModifyRow.modifyRow:
+            {
+              var row = db.Intervents.Where(x => x.InterventId == oneRow.InterventId).First();
+              var entry1 = db.Entry(row);
+              entry1.CurrentValues.SetValues(oneRow);
+              break;
+            }
+          case eModifyRow.deleteRow:
+            {
+              var row = db.Intervents.Where(x => x.InterventId == oneRow.InterventId).First();
+              row.DtDeleted = DateTime.Now;
+              break;
+            }
+          case eModifyRow.undeleteRow:
+            {
+              var row = db.Intervents.Where(x => x.InterventId == oneRow.InterventId).First();
+              row.DtDeleted = null;
+              break;
+            }
+          default:
+            new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyIntervent() Bad enum ModifyRow", modifyRow.ToString(), IdUser);
+            break;
+        }
+        Console.WriteLine(db.ChangeTracker.DebugView.LongView);
+        db.ChangeTracker.DetectChanges();
+        Console.WriteLine(db.ChangeTracker.DebugView.LongView);
+        db.SaveChanges();
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "UniversalModifyIntervent " + modifyRow.ToString() + "id = " + oneRow.InterventId.ToString(),"", IdUser);
+        return oneRow?.InterventId ?? 0;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyIntervent() " + GetInnerException(Ex), oneRow?.InterventId.ToString(), IdUser);
+      }
+      return -1;
     }
   }
 }

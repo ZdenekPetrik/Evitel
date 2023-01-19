@@ -31,6 +31,8 @@ namespace EvitelLib2
 
     e2CallTable = 51,
     e2IntervenceTable = 52,
-    e2IncidentTable = 53
+    e2IncidentTable = 53,
+
+    e2CodeBook = 61
   };
 }

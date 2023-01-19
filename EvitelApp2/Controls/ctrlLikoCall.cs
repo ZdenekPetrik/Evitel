@@ -133,7 +133,7 @@ namespace EvitelApp2.Controls
       }
       dgw.SortASC(dgw.Columns["Volání od"]);
 
-      toolStripItem1.Text = "Detail Intervence";
+      toolStripItem1.Text = "Detail Hovoru";
       toolStripItem1.Click += new EventHandler(toolStripItem1_Click);
       ContextMenuStrip strip = new ContextMenuStrip();
       foreach (DataGridViewColumn column in dgw.Columns)

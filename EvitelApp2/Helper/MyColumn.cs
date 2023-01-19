@@ -17,7 +17,7 @@ namespace EvitelApp2.Helper
     {
       isVisible = true;
       isReadOnly = false;
-      Type = 1;   // z nedostatku invence 1 = Text, 2 = CheckBox, 3 = Combo
+      Type = 1;   // z nedostatku invence 1 = Text, 2 = bool, 3 = Combo, 5=DateTime, 11 = ID, 12 = dtDeteled
     }
     public Type GetMyType()
     {
@@ -32,6 +32,10 @@ namespace EvitelApp2.Helper
         case 4:
           return typeof(int);
         case 5:
+          return typeof(DateTime);
+        case 11:
+          return typeof(int);
+        case 12:
           return typeof(DateTime);
       }
       return typeof(string);

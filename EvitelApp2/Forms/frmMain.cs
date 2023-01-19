@@ -26,7 +26,7 @@ namespace EvitelApp2
     private string Title = "EVITEL";
 
     public delegate void DetailIntervence(int source, int? IntervenceId);      // Zobrazí detail intervence (LikoIntervenceId>1), nebo zhasne okno (LikoIntervenceId=-1)
-    public delegate void RowInformation(int nrAkt, int nrRow);            // Zobrazí 17/256 v StatusBaru
+    public delegate void RowInformation(int nrAkt, int nrRow);                 // Zobrazí 17/256 v StatusBaru
 
     private List<eShowWindow> lastWindowStack;
 
@@ -94,6 +94,8 @@ namespace EvitelApp2
       ctrlUser1.Dock = DockStyle.Fill;
       ctrlUser1.ShowRowInformation += ShowRowInformation;
 
+      ucCiselnik1.ShowRowInformation += ShowRowInformation;
+      ucIntervents1.ShowRowInformation += ShowRowInformation;
       HideAll();
       ShowView_NewCall();
     }
@@ -162,6 +164,7 @@ namespace EvitelApp2
       MenuToolSetColumnLayout.Enabled = false;
       MenuToolsRemoveColumnLayout.Enabled = false;
       FileExportExcel.Enabled = false;
+      FileExportCSV.Enabled = false;
       ctrlActiveControlUp = ctrlActiveControlDown = null;
     }
 
@@ -217,20 +220,30 @@ namespace EvitelApp2
     private void ShowView_Interventi()
     {
       ucIntervents1.Visible = true;
-      ucIntervents1.isEditModeAllowed = Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser);
       if (!ucIntervents1.isData)
         ucIntervents1.ReadDataFirstTime();
+      MenuToolsRemoveFilters.Enabled = true;
+      MenuToolsRemoveOrders.Enabled = true;
+      MenuToolSetColumnLayout.Enabled = true;
+      MenuToolsRemoveColumnLayout.Enabled = true;
+      FileExportExcel.Enabled = true;
+      FileExportCSV.Enabled = true;
       aktWindow = eShowWindow.Intervents;
       this.Text = Title + " - Interventi";
       lastWindowStack.Add(aktWindow);
 
     }
-    private void ShowView_Ciselnik(eAllEnums aktEnum)
+    private void ShowView_Ciselnik(eAllCodeBooks aktCodeBook)
     {
       ucCiselnik1.Visible = true;
-      ucCiselnik1.aktEnum = aktEnum;
+      ucCiselnik1.aktCodeBook = aktCodeBook;
       ucCiselnik1.ReadDataFirstTime();
       ucCiselnik1.MyResize();
+      MenuToolSetColumnLayout.Enabled = true;
+      MenuToolsRemoveColumnLayout.Enabled = true;
+      FileExportExcel.Enabled = true;
+      FileExportCSV.Enabled = true;
+
       aktWindow = eShowWindow.Enums;
       this.Text = Title + " - Číselník " + ucCiselnik1.Titulek;
       lastWindowStack.Add(aktWindow);
@@ -249,6 +262,7 @@ namespace EvitelApp2
       MenuToolSetColumnLayout.Enabled = true;
       MenuToolsRemoveColumnLayout.Enabled = true;
       FileExportExcel.Enabled = true;
+      FileExportCSV.Enabled = true;
       aktWindow = eShowWindow.LikoParticipant;
       this.Text = Title + "Účastníci intervence";
       lastWindowStack.Add(aktWindow);
@@ -267,7 +281,8 @@ namespace EvitelApp2
       MenuToolsRemoveOrders.Enabled = true;
       MenuToolSetColumnLayout.Enabled = true;
       MenuToolsRemoveColumnLayout.Enabled = true;
-      FileExportExcel.Enabled = true;
+      FileExportExcel.Enabled = true; 
+      FileExportCSV.Enabled = true;
       aktWindow = eShowWindow.LikoCall;
       this.Text = Title + " - Intervenční telefonní hovory";
       lastWindowStack.Add(aktWindow);
@@ -286,6 +301,7 @@ namespace EvitelApp2
       MenuToolSetColumnLayout.Enabled = true;
       MenuToolsRemoveColumnLayout.Enabled = true;
       FileExportExcel.Enabled = true;
+      FileExportCSV.Enabled = true;
       aktWindow = eShowWindow.LikoIncident;
       this.Text = Title + " - Incidenty";
       lastWindowStack.Add(aktWindow);
@@ -304,6 +320,7 @@ namespace EvitelApp2
       MenuToolSetColumnLayout.Enabled = true;
       MenuToolsRemoveColumnLayout.Enabled = true;
       FileExportExcel.Enabled = true;
+      FileExportCSV.Enabled = true;
       aktWindow = eShowWindow.LikoIntervence;
       this.Text = Title + " - Intervence";
       lastWindowStack.Add(aktWindow);
@@ -322,6 +339,7 @@ namespace EvitelApp2
       MenuToolSetColumnLayout.Enabled = true;
       MenuToolsRemoveColumnLayout.Enabled = true;
       FileExportExcel.Enabled = true;
+      FileExportCSV.Enabled = true;
       aktWindow = eShowWindow.User;
       this.Text = Title + " - Uživatelé";
       lastWindowStack.Add(aktWindow);
@@ -408,32 +426,27 @@ namespace EvitelApp2
     private void EnumsSexMenuItem_Click(object sender, EventArgs e)
     {
       HideActualView();
-      ShowView_Ciselnik(eAllEnums.eSex);
+      ShowView_Ciselnik(eAllCodeBooks.eSex);
 
     }
 
-    private void EnumTypIntervenceMenuItem_Click(object sender, EventArgs e)
-    {
-      HideActualView();
-      ShowView_Ciselnik(eAllEnums.eTypeIntervence);
-    }
 
-    private void EnumSubTypIntervenceMenuItem_Click(object sender, EventArgs e)
+    private void EnumTypIncidentuMenuItem_Click(object sender, EventArgs e)
     {
       HideActualView();
-      ShowView_Ciselnik(eAllEnums.eSubTypeIntervence);
+      ShowView_Ciselnik(eAllCodeBooks.eSubTypeIncident);
     }
 
     private void EnumPartyToolStripMenuItem_Click(object sender, EventArgs e)
     {
       HideActualView();
-      ShowView_Ciselnik(eAllEnums.eTypeParty);
+      ShowView_Ciselnik(eAllCodeBooks.eTypeParty);
     }
 
     private void EnumRegionMenuItem_Click(object sender, EventArgs e)
     {
       HideActualView();
-      ShowView_Ciselnik(eAllEnums.eRegions);
+      ShowView_Ciselnik(eAllCodeBooks.eRegions);
     }
 
     private void MenuToolShowParticipation_Click(object sender, EventArgs e)
@@ -462,6 +475,13 @@ namespace EvitelApp2
       ShowView_Intervence();
 
     }
+
+    private void EnumDruhIntervenceMenuItem_Click(object sender, EventArgs e)
+    {
+      HideActualView();
+      ShowView_Ciselnik(eAllCodeBooks.eDruhIntervence);
+    }
+
 
     private void MenuItemChangePassword_Click(object sender, EventArgs e)
     {
@@ -557,8 +577,6 @@ namespace EvitelApp2
 
     private void graphTestToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      var f = new frmGraph();
-      f.Show();
 
     }
 
@@ -582,7 +600,43 @@ namespace EvitelApp2
         rozhrani = (IctrlWithDGW)ctrlUser1;
       else if (aktWindow == eShowWindow.NewCall)
         rozhrani = (IctrlWithDGW)ucCallLIKO1;
+      else if (aktWindow == eShowWindow.Enums)
+        rozhrani = (IctrlWithDGW)ucCiselnik1;
+      else if (aktWindow == eShowWindow.Intervents)
+        rozhrani = (IctrlWithDGW)ucIntervents1; 
       return rozhrani;
+    }
+    private void fileExportCSV_Click(object sender, EventArgs e)
+    {
+      IctrlWithDGW r = GetActiveCtrl(aktWindow);
+      if (r == null)
+      {
+        MessageBox.Show("Neexistující tabulka pro CSV", "EVITEL - EXPORT TO CSV", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        return;
+      }
+      DataTable dtTable = r.dataTable;
+
+      using (SaveFileDialog fd = new SaveFileDialog())
+      {
+        fd.Filter = "CSV files (*.csv)|*.csv";
+        fd.Title = "Save table to CSV File";
+        fd.OverwritePrompt = true;
+        fd.CreatePrompt = true;
+        if (fd.ShowDialog() == DialogResult.OK)
+        {
+          var filename = fd.FileName;
+          TableToCSV csv = new TableToCSV();
+          if (csv.TransformToFile(dtTable, filename))
+          {
+            MessageBox.Show(" Soubor CSV vytvořen. \n"+ filename, "EVITEL - EXPORT TO CSV", MessageBoxButtons.OK, MessageBoxIcon.Information);
+          }
+          else
+          {
+            MessageBox.Show("Nelze vytvořit csv File z tabulky. " + csv.sErr, "EVITEL - EXPORT TO CSV", MessageBoxButtons.OK, MessageBoxIcon.Error);
+          }
+        }
+      }
+
     }
 
 

@@ -1,179 +1,553 @@
-﻿using EvitelLib2.Model;
+﻿using EvitelApp2.Forms1.Ciselnik;
+using EvitelApp2.Helper;
+using EvitelLib2.Model;
+using EvitelLib2.Repository;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlTypes;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static EvitelApp2.Controls.ucCiselnik;
+using static EvitelApp2.frmMain;
 
 namespace EvitelApp2.Controls
 {
 
-    public enum eAllEnums { 
-        eSex = 1,
-        eSubTypeIntervence,
-        eTypeIntervence,
-        eTypeParty,
-        eRegions,
-        eIntervents,
-    }
+  public enum eAllCodeBooks
+  {
+    eSex = 1,
+    eSubTypeIncident,
+    eTypeIncident,
+    eTypeParty,
+    eRegions,
+    eIntervents,
+    eDruhIntervence
+  }
 
 
-    public partial class ucCiselnik : UserControl
+
+  public partial class ucCiselnik : UserControl, IctrlWithDGW
+  {
+
+
+
+    public class EnumData
     {
-
-        public eAllEnums aktEnum;
-        public bool isData { get { return bindingSource1 != null; } }       // info zda uz data byla nactena
-        string SQLCommand = "";
-        public string Titulek = "";
-
-        BindingSource bindingSource1;
-
-
-        public ucCiselnik()
-        {
-            InitializeComponent();
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.AllowUserToDeleteRows = false;
-        }
-
-        private void ucCiselnik_Load(object sender, EventArgs e)
-        {
-        }
-
-        public void ReadDataFirstTime()
-        {
-            bindingSource1 = new BindingSource();
-            switch (aktEnum)
-            {
-                case eAllEnums.eSex: SQLCommand = "Select SexId as id, Text,CAST(IIF(dtDeleted IS NULL,0,1) AS BIT) isDeleted From eSex"; Titulek = "Pohlaví"; break;
-                case eAllEnums.eSubTypeIntervence: SQLCommand = "Select SubTypeIntervenceId as id, sti.Text , Kategorie, ti2.Text as TypeIntervence, CAST(IIF(sti.dtDeleted IS NULL,0,1) AS BIT) isDeleted From eSubTypeIntervence sti LEFT JOIN eTypeIntervence ti2 on sti.TypeIntervenceId = ti2.typeIntervenceId "; Titulek = "SubTyp Intervence"; break;
-                case eAllEnums.eTypeIntervence: SQLCommand = "Select TypeIntervenceId as id, Text, ShortText, CAST(IIF(dtDeleted IS NULL,0,1) AS BIT) isDeleted From eTypeIntervence"; Titulek = "Typ Intervence"; break;
-                case eAllEnums.eRegions: SQLCommand = "Select RegionId as id, Name, ShortName, Name2 From Regions ORDER BY RegionId"; Titulek = "Kraje"; break;
-                case eAllEnums.eTypeParty: SQLCommand = "Select TypePartyId as id, Text,  CAST(IIF(dtDeleted IS NULL,0,1) AS BIT) isDeleted  From eTypeParty "; Titulek = "Forma účasti"; break;
-                default: break;
-            }
-
-            try
-            {
-                // Set up the DataGridView.
-                
-                dataGridView1.Dock = DockStyle.Fill;
-
-                // Automatically generate the DataGridView columns.
-                dataGridView1.AutoGenerateColumns = true;
-
-                // Set up the data source.
-                bindingSource1.DataSource = GetData(SQLCommand);
-                dataGridView1.DataSource = bindingSource1;
-
-                // Automatically resize the visible rows.
-                dataGridView1.AutoSizeRowsMode =
-                    DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
-
-                // Set the DataGridView control's border.
-                dataGridView1.BorderStyle = BorderStyle.Fixed3D;
-
-                // Put the cells in edit mode when user enters them.
-                dataGridView1.EditMode = DataGridViewEditMode.EditOnEnter;
-                dataGridView1.EditMode = DataGridViewEditMode.EditProgrammatically;
-
-            }
-            catch (SqlException )
-            {
-                MessageBox.Show("To run this sample replace connection.ConnectionString" +
-                    " with a valid connection string to a Northwind" +
-                    " database accessible to your system.", "ERROR",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-        }
-
-        private static DataTable GetData(string sqlCommand)
-        {
-            DataTable table = new DataTable();
-            try
-            {
-                string connectionString = "Integrated Security=SSPI;" +
-                    "Persist Security Info=False;" +
-                    "Initial Catalog=Evitel2;Data Source=localhost";
-
-
-                connectionString = "Server=.;Database=Evitel2;Trusted_Connection=True;";
-
-                SqlConnection Connection = new SqlConnection(connectionString);
-
-                var x = SelectRows(connectionString, sqlCommand);
-
-
-                ExecuteDataTableSqlDA(Connection, CommandType.Text, sqlCommand);
-
-                Connection.Open();
-
-                SqlCommand command = new SqlCommand(sqlCommand, Connection);
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                adapter.SelectCommand = command;
-                Connection.Close();
-
-                //           table.Locale = System.Globalization.CultureInfo.InvariantCulture;
-                adapter.Fill(table);
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show(ex.Message);
-                return null;
-            }
-
-            return table;
-
-        }
-
-
-        public static DataTable ExecuteDataTableSqlDA(SqlConnection conn, CommandType cmdType, string cmdText)
-        {
-            DataTable dt = new DataTable();
-            SqlDataAdapter da = new SqlDataAdapter(cmdText, conn);
-            da.Fill(dt);
-            return dt;
-        }
-
-        private static DataSet SelectRows(
-
-            string connectionString, string queryString)
-        {
-            DataSet dts = new DataSet();
-            using (SqlConnection connection =
-                new SqlConnection(connectionString))
-            {
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                adapter.SelectCommand = new SqlCommand(
-                    queryString, connection);
-                adapter.Fill(dts);
-                return dts;
-            }
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        public void MyResize()
-        {
-            dataGridView1.Top = dataGridView1.Left = 0;
-            dataGridView1.Width = this.ClientSize.Width - (5);
-            dataGridView1.Height = this.ClientSize.Height -  5;
-        }
-
-        private void ucCiselnik_Resize(object sender, EventArgs e)
-        {
-            MyResize();
-        }
+      public string Title { get; set; }
+      public List<MyColumn> myColumns = new List<MyColumn>();
     }
+
+
+    private CRepositoryDB DB;
+    private DataTable _dataTable;
+    private System.Data.DataSet _dataSet;
+    private ColumnLayoutDB cldb;
+
+
+    public eAllCodeBooks aktCodeBook;
+    public bool isData { get { return bindingSource1 != null; } }       // info zda uz data byla nactena
+    public string Titulek { get { return edt?.Title; } }                // info pro hlavni okno - jmeno číselníku pro zobrazení
+
+    EnumData edt;
+    List<ESex> sexDataList;
+    List<ETypeParty> typePartyDataList;
+    List<EDruhIntervence> druhIntervenceDataList;
+    List<ESubTypeIncident> subTypeIncidentDataList;
+    List<EvitelLib2.Model.Region> regionDataList;
+
+    public event RowInformation ShowRowInformation;
+
+    BindingSource bindingSource1;
+
+    public DataTable dataTable
+    {
+      get
+      {
+        return _dataTable;
+      }
+    }
+
+    public ucCiselnik()
+    {
+      InitializeComponent();
+      dgw.AllowUserToAddRows = false;
+      dgw.AllowUserToDeleteRows = false;
+    }
+
+    private void ucCiselnik2_Load(object sender, EventArgs e)
+    {
+      if (DesignMode == false)
+      {
+        DB = new CRepositoryDB(Program.myLoggedUser.LoginUserId);
+        MyResize();
+      }
+    }
+
+    public void ReadDataFirstTime()
+    {
+      bindingSource1 = new BindingSource();
+      _dataTable = new DataTable();
+      _dataSet = new DataSet();
+      bindingSource1 = new BindingSource();
+      bindingSource1.DataSource = _dataSet;
+
+      edt = new EnumData();
+      switch (aktCodeBook)
+      {
+        case eAllCodeBooks.eSex:
+          edt.myColumns = new List<MyColumn>()
+          {
+             new MyColumn { Name = "ID", DataPropertyName = "SexId", Type=11  },
+             new MyColumn { Name = "Text", DataPropertyName = "Text"},
+             new MyColumn { Name = "Smazáno", DataPropertyName = "DtDeleted", Type=12},
+          };
+          edt.Title = "Pohlaví";
+          sexDataList = DB.GetSex();
+          CreateTable();
+          AddDataToTableSex();
+          break;
+        case eAllCodeBooks.eTypeParty:
+          edt.myColumns = new List<MyColumn>()
+          {
+             new MyColumn { Name = "ID", DataPropertyName = "TypePartyId", Type=11  },
+             new MyColumn { Name = "Text", DataPropertyName = "Text"},
+             new MyColumn { Name = "Smazáno", DataPropertyName = "DtDeleted", Type=12},
+          };
+          edt.Title = "Forma účasti";
+          typePartyDataList = DB.GetTypeParty();
+          CreateTable();
+          AddDataToTableTypeParty();
+          break;
+        case eAllCodeBooks.eDruhIntervence:
+          edt.myColumns = new List<MyColumn>()
+          {
+             new MyColumn { Name = "ID", DataPropertyName = "DruhIntervenceId", Type=11  },
+             new MyColumn { Name = "Text", DataPropertyName = "Text"},
+             new MyColumn { Name = "Smazáno", DataPropertyName = "DtDeleted", Type=12},
+          };
+          edt.Title = "Druh intervence";
+          druhIntervenceDataList = DB.GetDruhIntervence();
+          CreateTable();
+          AddDataToTableDruhIntervence();
+          break;
+
+        case eAllCodeBooks.eSubTypeIncident:
+          edt.myColumns = new List<MyColumn>()
+          {
+             new MyColumn { Name = "ID", DataPropertyName = "SubTypeIncidentId", Type=11  },
+             new MyColumn { Name = "Text", DataPropertyName = "Text"},
+             new MyColumn { Name = "Kategorie", DataPropertyName = "Kategorie"},
+             new MyColumn { Name = "Smazáno", DataPropertyName = "DtDeleted", Type=12},
+          };
+          edt.Title = "Typ Incidentu";
+          subTypeIncidentDataList = DB.GetSubTypeIncident();
+          CreateTable();
+          AddDataToTableSubTypeIncident();
+          break;
+
+        case eAllCodeBooks.eRegions:
+          edt.myColumns = new List<MyColumn>()
+          {
+             new MyColumn { Name = "ID", DataPropertyName = "RegionId", Type=11  },
+             new MyColumn { Name = "Name", DataPropertyName = "Name"},
+             new MyColumn { Name = "Zkratka", DataPropertyName = "ShortName"},
+             new MyColumn { Name = "Name2", DataPropertyName = "Name2"},
+          };
+          edt.Title = "Kraje";
+          regionDataList = DB.GetRegions();
+          CreateTable();
+          AddDataToTableRegion();
+          break;
+
+        default: break;
+      }
+      dgw.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
+      dgw.BorderStyle = BorderStyle.Fixed3D;
+      dgw.EditMode = DataGridViewEditMode.EditProgrammatically;
+      dgw.DataSource = bindingSource1;
+      cldb = new ColumnLayoutDB(DB, dgw, this.Name + _dataTable.TableName);
+      cldb.SetColumnLayout();
+
+    }
+
+
+    private void CreateTable()
+    {
+      _dataTable = _dataSet.Tables.Add("Enum-" + edt.Title);
+      foreach (var col in edt.myColumns)
+      {
+        _dataTable.Columns.Add(col.Name, col.GetMyType());
+      }
+      bindingSource1.DataMember = _dataTable.TableName;
+    }
+
+    private void AddDataToTableSex()
+    {
+      _dataTable.Rows.Clear();
+      foreach (var p in sexDataList)
+      {
+        DataRow newRow = _dataTable.NewRow();
+        foreach (var col in edt.myColumns)
+        {
+          newRow[col.Name] = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null) ?? DBNull.Value;
+        }
+        //          
+        _dataTable.Rows.Add(newRow);
+      }
+    }
+    private void AddDataToTableTypeParty()
+    {
+      _dataTable.Rows.Clear();
+      foreach (var p in typePartyDataList)
+      {
+        DataRow newRow = _dataTable.NewRow();
+        foreach (var col in edt.myColumns)
+        {
+          newRow[col.Name] = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null) ?? DBNull.Value;
+        }
+        //          
+        _dataTable.Rows.Add(newRow);
+      }
+    }
+
+    private void AddDataToTableDruhIntervence()
+    {
+      _dataTable.Rows.Clear();
+      foreach (var p in druhIntervenceDataList)
+      {
+        DataRow newRow = _dataTable.NewRow();
+        foreach (var col in edt.myColumns)
+        {
+          newRow[col.Name] = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null) ?? DBNull.Value;
+        }
+        //          
+        _dataTable.Rows.Add(newRow);
+      }
+    }
+
+    private void AddDataToTableSubTypeIncident()
+    {
+      _dataTable.Rows.Clear();
+      foreach (var p in subTypeIncidentDataList)
+      {
+        DataRow newRow = _dataTable.NewRow();
+        foreach (var col in edt.myColumns)
+        {
+          newRow[col.Name] = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null) ?? DBNull.Value;
+        }
+        //          
+        _dataTable.Rows.Add(newRow);
+      }
+    }
+
+    private void AddDataToTableRegion()
+    {
+      _dataTable.Rows.Clear();
+      foreach (var p in regionDataList)
+      {
+        DataRow newRow = _dataTable.NewRow();
+        foreach (var col in edt.myColumns)
+        {
+          newRow[col.Name] = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null) ?? DBNull.Value;
+        }
+        //          
+        _dataTable.Rows.Add(newRow);
+      }
+    }
+
+
+    public void MyResize()
+    {
+      dgw.Top = dgw.Left = 0;
+      dgw.Width = this.ClientSize.Width - (5);
+      dgw.Height = this.ClientSize.Height - 70;
+
+      btnAdd.Top = this.ClientSize.Height - 55; btnAdd.Left = 40;
+      btnDelete.Top = this.ClientSize.Height - 55; btnDelete.Left = this.ClientSize.Width - (btnAdd.Width + 40);
+      btnEdit.Top = this.ClientSize.Height - 55; btnEdit.Left = (this.ClientSize.Width / 2) - (btnAdd.Width + 20);
+
+    }
+
+    private void ucCiselnik_Resize(object sender, EventArgs e)
+    {
+      MyResize();
+    }
+
+    private void btnEdit_Click(object sender, EventArgs e)
+    {
+      int RowIndex = GetAktRow();
+      if (RowIndex < 0)
+        return;
+      frmCiselnik frmU = new frmCiselnik();
+      switch (aktCodeBook)
+      {
+        case eAllCodeBooks.eSex:
+          frmU.aktCodeBook = aktCodeBook;
+          frmU.ID = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
+          frmU.Text1 = (string)dgw.Rows[RowIndex].Cells["Text"].Value;
+          frmU.Text = "Číselník " + edt.Title + " --- Věta " + (RowIndex + 1).ToString();
+          frmU.TypeForm = eModifyRow.modifyRow;
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+          {
+            DB.UniversalModifySex(eModifyRow.modifyRow, frmU.ID, frmU.Text1);
+            sexDataList = DB.GetSex();
+            AddDataToTableSex();
+          }
+          break;
+        case eAllCodeBooks.eTypeParty:
+          frmU.aktCodeBook = aktCodeBook;
+          frmU.ID = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
+          frmU.Text1 = (string)dgw.Rows[RowIndex].Cells["Text"].Value;
+          frmU.Text = "Číselník " + edt.Title + " --- Věta " + (RowIndex + 1).ToString();
+          frmU.TypeForm = eModifyRow.modifyRow;
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+          {
+            DB.UniversalModifyTypeParty(eModifyRow.modifyRow, frmU.ID, frmU.Text1);
+            typePartyDataList = DB.GetTypeParty();
+            AddDataToTableTypeParty();
+          }
+          break;
+        case eAllCodeBooks.eSubTypeIncident:
+          frmU.aktCodeBook = aktCodeBook;
+          frmU.ID = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
+          frmU.Text1 = (string)dgw.Rows[RowIndex].Cells["Text"].Value;
+          frmU.Text2 = (string)dgw.Rows[RowIndex].Cells["Kategorie"].Value;
+          frmU.Label2 = "Kategorie";
+          frmU.ExtensionItem = 1;
+          frmU.Text = "Číselník " + edt.Title + " --- Věta " + (RowIndex + 1).ToString();
+          frmU.TypeForm = eModifyRow.modifyRow;
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+          {
+            DB.UniversalModifySubTypeIncident(eModifyRow.modifyRow, frmU.ID, frmU.Text1, frmU.Text2);
+            subTypeIncidentDataList = DB.GetSubTypeIncident();
+            AddDataToTableSubTypeIncident();
+          }
+          break;
+        case eAllCodeBooks.eRegions:
+          frmU.aktCodeBook = aktCodeBook;
+          frmU.ID = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
+          frmU.Text1 = (string)dgw.Rows[RowIndex].Cells["Name"].Value;
+          frmU.Text2 = (string)dgw.Rows[RowIndex].Cells["Zkratka"].Value;
+          frmU.Label2 = "Kategorie";
+          frmU.Text3 = (string)dgw.Rows[RowIndex].Cells["Name2"].Value;
+          frmU.Label3 = "Jméno";
+          frmU.ExtensionItem = 2;
+          frmU.Text = "Číselník " + edt.Title + " --- Věta " + (RowIndex + 1).ToString();
+          frmU.TypeForm = eModifyRow.modifyRow;
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+          {
+            DB.UniversalModifyRegion(eModifyRow.modifyRow, frmU.ID, frmU.Text1, frmU.Text2, frmU.Text3);
+            regionDataList = DB.GetRegions();
+            AddDataToTableRegion();
+          }
+          break;
+      }
+    }
+
+    private void btnAdd_Click(object sender, EventArgs e)
+    {
+      int RowIndex = GetAktRow();
+      if (RowIndex < 0)
+        return;
+      frmCiselnik frmU = new frmCiselnik();
+      frmU.aktCodeBook = aktCodeBook;
+      frmU.ID = 0;
+      frmU.Text1 = "";
+      frmU.Text = "Číselník " + edt.Title;
+      frmU.TypeForm = eModifyRow.addRow;
+
+      switch (aktCodeBook)
+      {
+        case eAllCodeBooks.eSex:
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+          {
+            DB.UniversalModifySex(frmU.TypeForm, frmU.ID, frmU.Text1);
+            sexDataList = DB.GetSex();
+            AddDataToTableSex();
+          }
+          break;
+        case eAllCodeBooks.eTypeParty:
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+          {
+            DB.UniversalModifyTypeParty(frmU.TypeForm, frmU.ID, frmU.Text1);
+            typePartyDataList = DB.GetTypeParty();
+            AddDataToTableTypeParty();
+          }
+          break;
+        case eAllCodeBooks.eDruhIntervence:
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+          {
+            DB.UniversalModifyDruhIntervence(frmU.TypeForm, frmU.ID, frmU.Text1);
+            druhIntervenceDataList = DB.GetDruhIntervence();
+            AddDataToTableDruhIntervence();
+          }
+          break;
+        case eAllCodeBooks.eSubTypeIncident:
+          frmU.Text2 = "";
+          frmU.Label2 = "Kategorie";
+          frmU.ExtensionItem = 1;
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+          {
+            DB.UniversalModifySubTypeIncident(frmU.TypeForm, frmU.ID, frmU.Text1, frmU.Text2);
+            subTypeIncidentDataList = DB.GetSubTypeIncident();
+            AddDataToTableSubTypeIncident();
+          }
+          break;
+        case eAllCodeBooks.eRegions:
+          frmU.Text2 = "";
+          frmU.Label2 = "Zkratka";
+          frmU.Text3 = "";
+          frmU.Label3 = "Name2";
+          frmU.ExtensionItem = 2;
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+          {
+            DB.UniversalModifyRegion(frmU.TypeForm, frmU.ID, frmU.Text1, frmU.Text2, frmU.Text3);
+            regionDataList = DB.GetRegions();
+            AddDataToTableRegion();
+          }
+          break;
+
+        default:
+          break;
+      }
+    }
+
+    private void btnDelete_Click(object sender, EventArgs e)
+    {
+      int RowIndex = GetAktRow();
+      if (RowIndex < 0)
+        return;
+
+      frmCiselnik frmU = new frmCiselnik();
+
+      switch (aktCodeBook)
+      {
+        case eAllCodeBooks.eSex:
+          frmU.aktCodeBook = aktCodeBook;
+          frmU.ID = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
+          frmU.Text1 = (string)dgw.Rows[RowIndex].Cells["Text"].Value;
+          frmU.Text = "Číselník " + edt.Title + " --- Věta " + (RowIndex + 1).ToString();
+          frmU.TypeForm = dgw.Rows[RowIndex].Cells["Smazáno"].Value == DBNull.Value ? eModifyRow.deleteRow : eModifyRow.undeleteRow;
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+          {
+            DB.UniversalModifySex(frmU.TypeForm, frmU.ID, frmU.Text1);
+            sexDataList = DB.GetSex();
+            AddDataToTableSex();
+          }
+          break;
+        case eAllCodeBooks.eTypeParty:
+          frmU.aktCodeBook = aktCodeBook;
+          frmU.ID = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
+          frmU.Text1 = (string)dgw.Rows[RowIndex].Cells["Text"].Value;
+          frmU.Text = "Číselník " + edt.Title + " --- Věta " + (RowIndex + 1).ToString();
+          frmU.TypeForm = dgw.Rows[RowIndex].Cells["Smazáno"].Value == DBNull.Value ? eModifyRow.deleteRow : eModifyRow.undeleteRow;
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+          {
+            DB.UniversalModifyTypeParty(frmU.TypeForm, frmU.ID, frmU.Text1);
+            typePartyDataList = DB.GetTypeParty();
+            AddDataToTableTypeParty();
+          }
+          break;
+        case eAllCodeBooks.eDruhIntervence:
+          frmU.aktCodeBook = aktCodeBook;
+          frmU.ID = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
+          frmU.Text1 = (string)dgw.Rows[RowIndex].Cells["Text"].Value;
+          frmU.Text = "Číselník " + edt.Title + " --- Věta " + (RowIndex + 1).ToString();
+          frmU.TypeForm = dgw.Rows[RowIndex].Cells["Smazáno"].Value == DBNull.Value ? eModifyRow.deleteRow : eModifyRow.undeleteRow;
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+          {
+            DB.UniversalModifyDruhIntervence(eModifyRow.addRow, frmU.ID, frmU.Text1);
+            druhIntervenceDataList = DB.GetDruhIntervence();
+            AddDataToTableDruhIntervence();
+          }
+          break;
+        case eAllCodeBooks.eSubTypeIncident:
+          frmU.aktCodeBook = aktCodeBook;
+          frmU.ID = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
+          frmU.Text1 = (string)dgw.Rows[RowIndex].Cells["Text"].Value;
+          frmU.Text = "Číselník " + edt.Title + " --- Věta " + (RowIndex + 1).ToString();
+          frmU.TypeForm = dgw.Rows[RowIndex].Cells["Smazáno"].Value == DBNull.Value ? eModifyRow.deleteRow : eModifyRow.undeleteRow;
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+          {
+            DB.UniversalModifyDruhIntervence(eModifyRow.addRow, frmU.ID, frmU.Text1);
+            druhIntervenceDataList = DB.GetDruhIntervence();
+            AddDataToTableDruhIntervence();
+          }
+          break;
+        case eAllCodeBooks.eRegions:
+          MessageBox.Show("Region nelze mazat", "Číselník", MessageBoxButtons.OK, MessageBoxIcon.Information);
+          break;
+        default:
+          break;
+
+      }
+    }
+
+    private int GetAktRow()
+    {
+      if (dgw.SelectedCells.Count == 0)
+      {
+        MessageBox.Show("Není vybrána žádná věta k editaci", "Číselník " + edt.Title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        return -1;
+      }
+      return dgw.SelectedCells[0].RowIndex;
+    }
+
+
+    private void dgw_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+    {
+      if (e.RowIndex >= 0)
+        btnEdit_Click(null, null);
+    }
+
+    public void SetColumns()
+    {
+      cldb.SaveColumnLayout();
+    }
+
+    public void InitColumns()
+    {
+      cldb.DeleteColumnOrder();
+      cldb.InitializeColumns();
+    }
+
+    public void RemoveOrders()
+    {
+      throw new NotImplementedException();
+    }
+
+    public void RemoveFilters()
+    {
+      throw new NotImplementedException();
+    }
+
+    private void dgw_RowEnter(object sender, DataGridViewCellEventArgs e)
+    {
+         ShowRowInformation?.Invoke(e.RowIndex + 1, _dataTable.Rows.Count);
+     }
+  }
 }
 
 
