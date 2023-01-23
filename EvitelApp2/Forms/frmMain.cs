@@ -281,7 +281,7 @@ namespace EvitelApp2
       MenuToolsRemoveOrders.Enabled = true;
       MenuToolSetColumnLayout.Enabled = true;
       MenuToolsRemoveColumnLayout.Enabled = true;
-      FileExportExcel.Enabled = true; 
+      FileExportExcel.Enabled = true;
       FileExportCSV.Enabled = true;
       aktWindow = eShowWindow.LikoCall;
       this.Text = Title + " - Intervenční telefonní hovory";
@@ -575,6 +575,13 @@ namespace EvitelApp2
 
     }
 
+    private void EnumNickMenuItem_Click(object sender, EventArgs e)
+    {
+      HideActualView();
+      ShowView_Ciselnik(eAllCodeBooks.eNick);
+    }
+
+
     private void graphTestToolStripMenuItem_Click(object sender, EventArgs e)
     {
 
@@ -603,7 +610,7 @@ namespace EvitelApp2
       else if (aktWindow == eShowWindow.Enums)
         rozhrani = (IctrlWithDGW)ucCiselnik1;
       else if (aktWindow == eShowWindow.Intervents)
-        rozhrani = (IctrlWithDGW)ucIntervents1; 
+        rozhrani = (IctrlWithDGW)ucIntervents1;
       return rozhrani;
     }
     private void fileExportCSV_Click(object sender, EventArgs e)
@@ -628,7 +635,7 @@ namespace EvitelApp2
           TableToCSV csv = new TableToCSV();
           if (csv.TransformToFile(dtTable, filename))
           {
-            MessageBox.Show(" Soubor CSV vytvořen. \n"+ filename, "EVITEL - EXPORT TO CSV", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(" Soubor CSV vytvořen. \n" + filename, "EVITEL - EXPORT TO CSV", MessageBoxButtons.OK, MessageBoxIcon.Information);
           }
           else
           {
@@ -678,5 +685,5 @@ namespace EvitelApp2
 
     }
 
-   }
+  }
 }

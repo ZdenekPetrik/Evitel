@@ -23,6 +23,7 @@ using System.Windows.Forms;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 
+
 namespace EvitelApp2.Controls
 {
   public partial class frmTestEndNPOI : Form
@@ -32,10 +33,43 @@ namespace EvitelApp2.Controls
       InitializeComponent();
     }
 
-    private void Form1_Load(object sender, EventArgs e)
-    {
-      GlobalFontSettings.FontResolver = new FontResolver();
 
+
+    private void AutoCompleteExample()
+    {
+      // Create the list to use as the custom source. 
+      var source = new AutoCompleteStringCollection();
+      source.AddRange(new string[]
+                      {
+                        "January",
+                        "February",
+                        "March",
+                        "April",
+                        "May",
+                        "June",
+                        "July",
+                        "August",
+                        "September",
+                        "October",
+                        "November",
+                        "December"
+                      });
+
+      // Create and initialize the text box.
+      var textBox = new TextBox
+      {
+        AutoCompleteCustomSource = source,
+        AutoCompleteMode =
+                            AutoCompleteMode.SuggestAppend,
+        AutoCompleteSource =
+                            AutoCompleteSource.CustomSource,
+        Location = new Point(20, 20),
+        Width = ClientRectangle.Width - 40,
+        Visible = true
+      };
+
+      // Add the text box to the form.
+      Controls.Add(textBox);
     }
 
 
@@ -99,7 +133,22 @@ namespace EvitelApp2.Controls
 
     private void frmTestEndNPOI_Load(object sender, EventArgs e)
     {
+      {
+        GlobalFontSettings.FontResolver = new FontResolver();
+        AutoCompleteStringCollection col = new AutoCompleteStringCollection
+      {
+        "adam",
+        "adamovič",
+        "adamov",
+        "broumov",
+        "broskve"
+      };
 
+        txtAutocomplete.AutoCompleteSource = AutoCompleteSource.CustomSource;
+        txtAutocomplete.AutoCompleteCustomSource = col;
+        txtAutocomplete.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+
+      }
     }
 
     private void button2_Click(object sender, EventArgs e)

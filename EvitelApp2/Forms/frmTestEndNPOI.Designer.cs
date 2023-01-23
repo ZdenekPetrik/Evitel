@@ -36,6 +36,8 @@
             this.btnProtokol = new System.Windows.Forms.Button();
             this.btnBackup = new System.Windows.Forms.Button();
             this.btnRestore = new System.Windows.Forms.Button();
+            this.txtAutocomplete = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -115,11 +117,29 @@
             this.btnRestore.UseVisualStyleBackColor = true;
             this.btnRestore.Click += new System.EventHandler(this.btnRestore_Click);
             // 
+            // txtAutocomplete
+            // 
+            this.txtAutocomplete.Location = new System.Drawing.Point(591, 52);
+            this.txtAutocomplete.Name = "txtAutocomplete";
+            this.txtAutocomplete.Size = new System.Drawing.Size(100, 23);
+            this.txtAutocomplete.TabIndex = 8;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(513, 34);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(195, 15);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Autocomplete (našeptávač 3 znaky)";
+            // 
             // frmTestEndNPOI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.txtAutocomplete);
             this.Controls.Add(this.btnRestore);
             this.Controls.Add(this.btnBackup);
             this.Controls.Add(this.btnProtokol);
@@ -146,5 +166,7 @@
     private System.Windows.Forms.Button btnProtokol;
     private System.Windows.Forms.Button btnBackup;
     private System.Windows.Forms.Button btnRestore;
+    private System.Windows.Forms.TextBox txtAutocomplete;
+    private System.Windows.Forms.Label label2;
   }
 }

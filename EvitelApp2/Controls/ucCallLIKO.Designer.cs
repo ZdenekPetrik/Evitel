@@ -59,6 +59,7 @@ namespace EvitelApp2.Controls
             this.lblPlace = new System.Windows.Forms.Label();
             this.lblregion1 = new System.Windows.Forms.Label();
             this.boxIntervence = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.txtSecondIncidentID = new System.Windows.Forms.NumericUpDown();
             this.btnDruhaIntervence = new System.Windows.Forms.Button();
             this.chkSecondIntervence = new System.Windows.Forms.CheckBox();
@@ -81,6 +82,7 @@ namespace EvitelApp2.Controls
             this.tmIntervence = new System.Windows.Forms.DateTimePicker();
             this.ucParticipations1 = new EvitelApp2.Controls.ucParticipations();
             this.btnBack = new System.Windows.Forms.Button();
+            this.lblIntervenceSum = new System.Windows.Forms.Label();
             this.boxCall.SuspendLayout();
             this.boxEvent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtPocetObeti)).BeginInit();
@@ -414,6 +416,8 @@ namespace EvitelApp2.Controls
             // 
             // boxIntervence
             // 
+            this.boxIntervence.Controls.Add(this.lblIntervenceSum);
+            this.boxIntervence.Controls.Add(this.label7);
             this.boxIntervence.Controls.Add(this.txtSecondIncidentID);
             this.boxIntervence.Controls.Add(this.btnDruhaIntervence);
             this.boxIntervence.Controls.Add(this.chkSecondIntervence);
@@ -440,6 +444,16 @@ namespace EvitelApp2.Controls
             this.boxIntervence.TabIndex = 24;
             this.boxIntervence.TabStop = false;
             this.boxIntervence.Text = "Základní údaje o intervenci";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label7.Location = new System.Drawing.Point(154, 95);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(48, 17);
+            this.label7.TabIndex = 47;
+            this.label7.Text = "celkem";
             // 
             // txtSecondIncidentID
             // 
@@ -492,6 +506,7 @@ namespace EvitelApp2.Controls
             this.dtIntervenceEnd.Name = "dtIntervenceEnd";
             this.dtIntervenceEnd.Size = new System.Drawing.Size(97, 27);
             this.dtIntervenceEnd.TabIndex = 43;
+            this.dtIntervenceEnd.ValueChanged += new System.EventHandler(this.dtIntervenceEnd_ValueChanged);
             // 
             // tmIntervenceEnd
             // 
@@ -503,6 +518,7 @@ namespace EvitelApp2.Controls
             this.tmIntervenceEnd.ShowUpDown = true;
             this.tmIntervenceEnd.Size = new System.Drawing.Size(61, 27);
             this.tmIntervenceEnd.TabIndex = 42;
+            this.tmIntervenceEnd.ValueChanged += new System.EventHandler(this.tmIntervenceEnd_ValueChanged);
             // 
             // label5
             // 
@@ -615,6 +631,7 @@ namespace EvitelApp2.Controls
             this.dtIntervence.Name = "dtIntervence";
             this.dtIntervence.Size = new System.Drawing.Size(97, 27);
             this.dtIntervence.TabIndex = 28;
+            this.dtIntervence.ValueChanged += new System.EventHandler(this.dtIntervence_ValueChanged);
             // 
             // label1
             // 
@@ -636,6 +653,7 @@ namespace EvitelApp2.Controls
             this.tmIntervence.ShowUpDown = true;
             this.tmIntervence.Size = new System.Drawing.Size(60, 27);
             this.tmIntervence.TabIndex = 30;
+            this.tmIntervence.ValueChanged += new System.EventHandler(this.tmIntervence_ValueChanged);
             // 
             // ucParticipations1
             // 
@@ -654,6 +672,16 @@ namespace EvitelApp2.Controls
             this.btnBack.Text = "<< Zpět";
             this.btnBack.UseVisualStyleBackColor = true;
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
+            // lblIntervenceSum
+            // 
+            this.lblIntervenceSum.AutoSize = true;
+            this.lblIntervenceSum.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblIntervenceSum.Location = new System.Drawing.Point(309, 95);
+            this.lblIntervenceSum.Name = "lblIntervenceSum";
+            this.lblIntervenceSum.Size = new System.Drawing.Size(39, 17);
+            this.lblIntervenceSum.TabIndex = 48;
+            this.lblIntervenceSum.Text = "00:00";
             // 
             // ucCallLIKO
             // 
@@ -740,6 +768,8 @@ namespace EvitelApp2.Controls
     private System.Windows.Forms.CheckBox chkSecondIntervence;
     private System.Windows.Forms.Button btnDruhaIntervence;
     private System.Windows.Forms.NumericUpDown txtSecondIncidentID;
+    private System.Windows.Forms.Label label7;
+    private System.Windows.Forms.Label lblIntervenceSum;
   }
 
 }

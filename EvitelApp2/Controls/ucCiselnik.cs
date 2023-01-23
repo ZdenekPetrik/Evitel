@@ -30,7 +30,9 @@ namespace EvitelApp2.Controls
     eTypeParty,
     eRegions,
     eIntervents,
-    eDruhIntervence
+    eDruhIntervence,
+    eNick
+
   }
 
 
@@ -63,6 +65,7 @@ namespace EvitelApp2.Controls
     List<EDruhIntervence> druhIntervenceDataList;
     List<ESubTypeIncident> subTypeIncidentDataList;
     List<EvitelLib2.Model.Region> regionDataList;
+    List<ENick> nickDataList;
 
     public event RowInformation ShowRowInformation;
 
@@ -167,6 +170,18 @@ namespace EvitelApp2.Controls
           CreateTable();
           AddDataToTableRegion();
           break;
+        case eAllCodeBooks.eNick:
+          edt.myColumns = new List<MyColumn>()
+          {
+             new MyColumn { Name = "ID", DataPropertyName = "NickId", Type=11  },
+             new MyColumn { Name = "Text", DataPropertyName = "Text"},
+          };
+          edt.Title = "Přezdívky";
+          nickDataList = DB.GetNick();
+          CreateTable();
+          AddDataToTableNick();
+          break;
+
 
         default: break;
       }
@@ -264,6 +279,22 @@ namespace EvitelApp2.Controls
       }
     }
 
+    private void AddDataToTableNick()
+    {
+      _dataTable.Rows.Clear();
+      foreach (var p in nickDataList)
+      {
+        DataRow newRow = _dataTable.NewRow();
+        foreach (var col in edt.myColumns)
+        {
+          newRow[col.Name] = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null) ?? DBNull.Value;
+        }
+        //          
+        _dataTable.Rows.Add(newRow);
+      }
+
+    }
+
 
     public void MyResize()
     {
@@ -354,14 +385,26 @@ namespace EvitelApp2.Controls
             AddDataToTableRegion();
           }
           break;
+        case eAllCodeBooks.eNick:
+          frmU.aktCodeBook = aktCodeBook;
+          frmU.ID = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
+          frmU.Text1 = (string)dgw.Rows[RowIndex].Cells["Text"].Value;
+          frmU.Text = "Číselník " + edt.Title + " --- Věta " + (RowIndex + 1).ToString();
+          frmU.TypeForm = eModifyRow.modifyRow;
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+          {
+            //            DB.UniversalModifyNick(eModifyRow.modifyRow, frmU.ID, frmU.Text1);
+            //            nickDataList = DB.GetNick();
+            AddDataToTableNick();
+          }
+          break;
+
       }
     }
 
     private void btnAdd_Click(object sender, EventArgs e)
     {
-      int RowIndex = GetAktRow();
-      if (RowIndex < 0)
-        return;
       frmCiselnik frmU = new frmCiselnik();
       frmU.aktCodeBook = aktCodeBook;
       frmU.ID = 0;
@@ -422,6 +465,15 @@ namespace EvitelApp2.Controls
             DB.UniversalModifyRegion(frmU.TypeForm, frmU.ID, frmU.Text1, frmU.Text2, frmU.Text3);
             regionDataList = DB.GetRegions();
             AddDataToTableRegion();
+          }
+          break;
+        case eAllCodeBooks.eNick:
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+          {
+            DB.UniversalModifyNick(frmU.TypeForm, frmU.ID, frmU.Text1);
+            nickDataList = DB.GetNick();
+            AddDataToTableNick();
           }
           break;
 
@@ -545,8 +597,8 @@ namespace EvitelApp2.Controls
 
     private void dgw_RowEnter(object sender, DataGridViewCellEventArgs e)
     {
-         ShowRowInformation?.Invoke(e.RowIndex + 1, _dataTable.Rows.Count);
-     }
+      ShowRowInformation?.Invoke(e.RowIndex + 1, _dataTable.Rows.Count);
+    }
   }
 }
 

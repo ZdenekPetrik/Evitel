@@ -160,6 +160,7 @@ namespace EvitelApp2.Controls
       }
       chkSecondIntervence_CheckedChanged(null, null);
       ucParticipations1.InitData();
+      SpoctiDobuIntervence();
       ReWriteScreen();
     }
 
@@ -620,6 +621,35 @@ namespace EvitelApp2.Controls
 
     private void txtEventNote_TextChanged_1(object sender, EventArgs e)
     {
+
+    }
+
+    private void dtIntervence_ValueChanged(object sender, EventArgs e)
+    {
+      SpoctiDobuIntervence();
+    }
+
+    private void tmIntervence_ValueChanged(object sender, EventArgs e)
+    {
+      SpoctiDobuIntervence();
+    }
+
+    private void dtIntervenceEnd_ValueChanged(object sender, EventArgs e)
+    {
+      SpoctiDobuIntervence();
+    }
+
+    private void tmIntervenceEnd_ValueChanged(object sender, EventArgs e)
+    {
+      SpoctiDobuIntervence();
+    }
+
+    private void SpoctiDobuIntervence()
+    {
+      DateTime datetimeStartIntervence = dtIntervence.Value.Date.Add(TimeSpan.Parse(tmIntervence.Value.ToShortTimeString()));
+      DateTime datetimeEndIntervence = dtIntervenceEnd.Value.Date.Add(TimeSpan.Parse(tmIntervenceEnd.Value.ToShortTimeString()));
+      TimeSpan s = datetimeEndIntervence - datetimeStartIntervence;
+      lblIntervenceSum.Text = ((int)s.TotalHours).ToString("D2") + ":" + s.Minutes.ToString("D2");
 
     }
   }

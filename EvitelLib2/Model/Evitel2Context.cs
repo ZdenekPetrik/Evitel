@@ -18,6 +18,7 @@ namespace EvitelLib2.Model
 
     public virtual DbSet<Call> Calls { get; set; }
     public virtual DbSet<EDruhIntervence> EDruhIntervences { get; set; }
+    public virtual DbSet<ENick> ENicks { get; set; }
     public virtual DbSet<ESex> ESexes { get; set; }
     public virtual DbSet<ESubTypeIncident> ESubTypeIncidents { get; set; }
     public virtual DbSet<ETypeIncident> ETypeIncidents { get; set; }
@@ -50,6 +51,7 @@ namespace EvitelLib2.Model
         var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DBEvitel2"].ConnectionString;
         optionsBuilder.UseSqlServer(connectionString);
       }
+
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -71,6 +73,19 @@ namespace EvitelLib2.Model
         entity.HasKey(e => e.DruhIntervenceId);
 
         entity.ToTable("eDruhIntervence");
+
+        entity.Property(e => e.DtDeleted)
+                  .HasColumnType("datetime")
+                  .HasColumnName("dtDeleted");
+
+        entity.Property(e => e.Text).HasMaxLength(50);
+      });
+
+      modelBuilder.Entity<ENick>(entity =>
+      {
+        entity.HasKey(e => e.NickId);
+
+        entity.ToTable("eNick");
 
         entity.Property(e => e.DtDeleted)
                   .HasColumnType("datetime")

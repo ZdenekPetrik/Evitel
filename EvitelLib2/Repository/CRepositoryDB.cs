@@ -18,8 +18,11 @@ using static System.Net.Mime.MediaTypeNames;
 
 // Toto je třeba zapsat do OnConfiguration
 /*
- var connectionString = ConfigurationManager.ConnectionStrings["DBEvitel2"].ConnectionString;
- optionsBuilder.UseSqlServer(connectionString);
+    if (!optionsBuilder.IsConfigured)
+      {
+        var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DBEvitel2"].ConnectionString;
+        optionsBuilder.UseSqlServer(connectionString);
+      }
 */
 
 namespace EvitelLib2.Repository
@@ -738,23 +741,21 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
-
-    public int AddSex(ESex sexRow)
+    public List<ENick> GetNick()
     {
       sErr = "";
       Evitel2Context db = new Evitel2Context();
       try
       {
-        db.ESexes.Add(sexRow);
-        db.SaveChanges();
-        return sexRow.SexId;
+        var nick = from n in db.ENicks select n;
+        return nick.AsNoTracking().ToList();
       }
       catch (Exception Ex)
       {
         sErr = GetInnerException(Ex);
-        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "AddSex() " + GetInnerException(Ex), "", IdUser);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetNick() " + GetInnerException(Ex), "", IdUser);
       }
-      return -1;
+      return null;
     }
 
 
@@ -1341,6 +1342,60 @@ namespace EvitelLib2.Repository
       return -1;
 
     }
+
+    public int UniversalModifyNick(eModifyRow modifyRow, int id, string text)
+    {
+      sErr = "";
+      string oldText = "";
+      Evitel2Context db = new Evitel2Context();
+      ENick row = new ENick();
+      try
+      {
+
+        switch (modifyRow)
+        {
+          case eModifyRow.addRow:
+            {
+              row.Text = text;
+              db.ENicks.Add(row);
+              break;
+            }
+          case eModifyRow.modifyRow:
+            {
+              row = db.ENicks.Where(x => x.NickId == id).First();
+              oldText = row.Text;
+              row.Text = text;
+              break;
+            }
+          case eModifyRow.deleteRow:
+            {
+              row = db.ENicks.Where(x => x.NickId == id).First();
+              row.DtDeleted = DateTime.Now;
+              break;
+            }
+          case eModifyRow.undeleteRow:
+            {
+              row = db.ENicks.Where(x => x.NickId == id).First();
+              row.DtDeleted = null;
+              break;
+            }
+          default:
+            new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyNick() Bad enum ModifyRow", modifyRow.ToString(), IdUser);
+            break;
+        }
+        db.SaveChanges();
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "Nick " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? "/" + oldText : ""), IdUser);
+
+        return row?.NickId ?? -1;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyNick() " + GetInnerException(Ex), id.ToString(), IdUser);
+      }
+      return -1;
+    }
+
 
     public Intervent GetIntervent(int id)
     {
