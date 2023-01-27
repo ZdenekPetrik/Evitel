@@ -17,12 +17,22 @@ namespace EvitelLib2.Model
     }
 
     public virtual DbSet<Call> Calls { get; set; }
+    public virtual DbSet<EAge> EAges { get; set; }
+    public virtual DbSet<EClientCurrentStatus> EClientCurrentStatuses { get; set; }
+    public virtual DbSet<EClientFrom> EClientFroms { get; set; }
+    public virtual DbSet<EContactTopic> EContactTopics { get; set; }
+    public virtual DbSet<EContactType> EContactTypes { get; set; }
     public virtual DbSet<EDruhIntervence> EDruhIntervences { get; set; }
+    public virtual DbSet<EEndOfSpeech> EEndOfSpeeches { get; set; }
     public virtual DbSet<ENick> ENicks { get; set; }
     public virtual DbSet<ESex> ESexes { get; set; }
+    public virtual DbSet<ESubClientCurrentStatus> ESubClientCurrentStatuses { get; set; }
+    public virtual DbSet<ESubContactTopic> ESubContactTopics { get; set; }
+    public virtual DbSet<ESubEndOfSpeech> ESubEndOfSpeeches { get; set; }
     public virtual DbSet<ESubTypeIncident> ESubTypeIncidents { get; set; }
     public virtual DbSet<ETypeIncident> ETypeIncidents { get; set; }
     public virtual DbSet<ETypeParty> ETypeParties { get; set; }
+    public virtual DbSet<ETypeService> ETypeServices { get; set; }
     public virtual DbSet<Intervent> Intervents { get; set; }
     public virtual DbSet<Likoincident> Likoincidents { get; set; }
     public virtual DbSet<Likointervence> Likointervences { get; set; }
@@ -48,10 +58,12 @@ namespace EvitelLib2.Model
     {
       if (!optionsBuilder.IsConfigured)
       {
-        var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DBEvitel2"].ConnectionString;
+
+        var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DBEvitel2"]?.ConnectionString;
+        if (connectionString == null)
+          connectionString = "Data Source=localhost;Initial Catalog=Evitel2;Integrated Security=SSPI;Trusted_Connection=True;Application Name=Evitel2;";
         optionsBuilder.UseSqlServer(connectionString);
       }
-
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -68,11 +80,90 @@ namespace EvitelLib2.Model
                   .HasConstraintName("FK_Calls_LoginUsers");
       });
 
+      modelBuilder.Entity<EAge>(entity =>
+      {
+        entity.HasKey(e => e.AgeId);
+
+        entity.ToTable("eAge");
+
+        entity.Property(e => e.DtDeleted)
+                  .HasColumnType("datetime")
+                  .HasColumnName("dtDeleted");
+
+        entity.Property(e => e.Text).HasMaxLength(50);
+      });
+
+      modelBuilder.Entity<EClientCurrentStatus>(entity =>
+      {
+        entity.HasKey(e => e.ClientCurrentStatusId);
+
+        entity.ToTable("eClientCurrentStatus");
+
+        entity.Property(e => e.DtDeleted)
+                  .HasColumnType("datetime")
+                  .HasColumnName("dtDeleted");
+
+        entity.Property(e => e.Text).HasMaxLength(50);
+      });
+
+      modelBuilder.Entity<EClientFrom>(entity =>
+      {
+        entity.HasKey(e => e.ClientFromId);
+
+        entity.ToTable("eClientFrom");
+
+        entity.Property(e => e.DtDeleted)
+                  .HasColumnType("datetime")
+                  .HasColumnName("dtDeleted");
+
+        entity.Property(e => e.Text).HasMaxLength(50);
+      });
+
+      modelBuilder.Entity<EContactTopic>(entity =>
+      {
+        entity.HasKey(e => e.ContactTopicId)
+                  .HasName("PK_eContactTopis");
+
+        entity.ToTable("eContactTopic");
+
+        entity.Property(e => e.DtDeleted)
+                  .HasColumnType("datetime")
+                  .HasColumnName("dtDeleted");
+
+        entity.Property(e => e.Text).HasMaxLength(50);
+      });
+
+      modelBuilder.Entity<EContactType>(entity =>
+      {
+        entity.HasKey(e => e.ContactTypeId);
+
+        entity.ToTable("eContactType");
+
+        entity.Property(e => e.DtDeleted)
+                  .HasColumnType("datetime")
+                  .HasColumnName("dtDeleted");
+
+        entity.Property(e => e.Text).HasMaxLength(50);
+      });
+
       modelBuilder.Entity<EDruhIntervence>(entity =>
       {
         entity.HasKey(e => e.DruhIntervenceId);
 
         entity.ToTable("eDruhIntervence");
+
+        entity.Property(e => e.DtDeleted)
+                  .HasColumnType("datetime")
+                  .HasColumnName("dtDeleted");
+
+        entity.Property(e => e.Text).HasMaxLength(50);
+      });
+
+      modelBuilder.Entity<EEndOfSpeech>(entity =>
+      {
+        entity.HasKey(e => e.EndOfSpeechId);
+
+        entity.ToTable("eEndOfSpeech");
 
         entity.Property(e => e.DtDeleted)
                   .HasColumnType("datetime")
@@ -105,6 +196,60 @@ namespace EvitelLib2.Model
                   .HasColumnName("dtDeleted");
 
         entity.Property(e => e.Text).HasMaxLength(50);
+      });
+
+      modelBuilder.Entity<ESubClientCurrentStatus>(entity =>
+      {
+        entity.HasKey(e => e.SubClientCurrentStatusId);
+
+        entity.ToTable("eSubClientCurrentStatus");
+
+        entity.Property(e => e.DtDeleted)
+                  .HasColumnType("datetime")
+                  .HasColumnName("dtDeleted");
+
+        entity.Property(e => e.Text).HasMaxLength(255);
+
+        entity.HasOne(d => d.ClientCurrentStatus)
+                  .WithMany(p => p.ESubClientCurrentStatuses)
+                  .HasForeignKey(d => d.ClientCurrentStatusId)
+                  .HasConstraintName("FK_eSubClientCurrentStatus_eClientCurrentStatus");
+      });
+
+      modelBuilder.Entity<ESubContactTopic>(entity =>
+      {
+        entity.HasKey(e => e.SubContactTopicId);
+
+        entity.ToTable("eSubContactTopic");
+
+        entity.Property(e => e.DtDeleted)
+                  .HasColumnType("datetime")
+                  .HasColumnName("dtDeleted");
+
+        entity.Property(e => e.Text).HasMaxLength(255);
+
+        entity.HasOne(d => d.ContactTopic)
+                  .WithMany(p => p.ESubContactTopics)
+                  .HasForeignKey(d => d.ContactTopicId)
+                  .HasConstraintName("FK_eSubContactTopic_eContactTopic");
+      });
+
+      modelBuilder.Entity<ESubEndOfSpeech>(entity =>
+      {
+        entity.HasKey(e => e.SubEndOfSpeechId);
+
+        entity.ToTable("eSubEndOfSpeech");
+
+        entity.Property(e => e.DtDeleted)
+                  .HasColumnType("datetime")
+                  .HasColumnName("dtDeleted");
+
+        entity.Property(e => e.Text).HasMaxLength(255);
+
+        entity.HasOne(d => d.EndOfSpeech)
+                  .WithMany(p => p.ESubEndOfSpeeches)
+                  .HasForeignKey(d => d.EndOfSpeechId)
+                  .HasConstraintName("FK_eSubEndOfSpeech_eEndOfSpeech");
       });
 
       modelBuilder.Entity<ESubTypeIncident>(entity =>
@@ -148,6 +293,19 @@ namespace EvitelLib2.Model
         entity.HasKey(e => e.TypePartyId);
 
         entity.ToTable("eTypeParty");
+
+        entity.Property(e => e.DtDeleted)
+                  .HasColumnType("datetime")
+                  .HasColumnName("dtDeleted");
+
+        entity.Property(e => e.Text).HasMaxLength(50);
+      });
+
+      modelBuilder.Entity<ETypeService>(entity =>
+      {
+        entity.HasKey(e => e.TypeServiceId);
+
+        entity.ToTable("eTypeService");
 
         entity.Property(e => e.DtDeleted)
                   .HasColumnType("datetime")

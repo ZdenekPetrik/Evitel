@@ -587,6 +587,73 @@ namespace EvitelApp2
 
     }
 
+    private void EnumEndOfSpeechMenuItem_Click(object sender, EventArgs e)
+    {
+      HideActualView();
+      ShowView_Ciselnik(eAllCodeBooks.eEndOfSpeech);
+
+    }
+
+    private void EnumSubEndOfSpeechMenuItem_Click(object sender, EventArgs e)
+    {
+      HideActualView();
+      ShowView_Ciselnik(eAllCodeBooks.eSubEndOfSpeech);
+
+    }
+
+    private void EnumAktualniStavKlientaMenuItem_Click(object sender, EventArgs e)
+    {
+      HideActualView();
+      ShowView_Ciselnik(eAllCodeBooks.eClientCurrentStatus);
+    }
+
+    private void EnumAktualniStavKlientaDetailMenuItem_Click(object sender, EventArgs e)
+    {
+      HideActualView();
+      ShowView_Ciselnik(eAllCodeBooks.eSubClientCurrentStatus);
+    }
+
+    private void EnumTemaKontaktuMenuItem_Click(object sender, EventArgs e)
+    {
+      HideActualView();
+      ShowView_Ciselnik(eAllCodeBooks.eTopic);
+
+    }
+
+    private void EnumTemaKontaktuDetailMenuItem_Click(object sender, EventArgs e)
+    {
+      HideActualView();
+      ShowView_Ciselnik(eAllCodeBooks.eSubTopic);
+    }
+    private void EnumContactTypeMenuItem_Click(object sender, EventArgs e)
+    {
+      HideActualView();
+      ShowView_Ciselnik(eAllCodeBooks.eContactType);
+
+    }
+
+    private void EnumTypeServiceMenuItem_Click(object sender, EventArgs e)
+    {
+      HideActualView();
+      ShowView_Ciselnik(eAllCodeBooks.eTypeService);
+
+    }
+
+    private void EnumClientFromMenuItem_Click(object sender, EventArgs e)
+    {
+      HideActualView();
+      ShowView_Ciselnik(eAllCodeBooks.eClientFrom);
+
+    }
+
+    private void EnumAgeMenuItem_Click(object sender, EventArgs e)
+    {
+      HideActualView();
+      ShowView_Ciselnik(eAllCodeBooks.eAge);
+
+    }
+
+
     #endregion
 
 
@@ -685,5 +752,5 @@ namespace EvitelApp2
 
     }
 
-  }
+   }
 }

@@ -4,6 +4,7 @@ using EvitelLib2.Model;
 using EvitelLib2.Repository;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.VisualBasic.ApplicationServices;
 using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static EvitelApp2.Controls.ucCiselnik;
 using static EvitelApp2.frmMain;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace EvitelApp2.Controls
 {
@@ -31,7 +33,18 @@ namespace EvitelApp2.Controls
     eRegions,
     eIntervents,
     eDruhIntervence,
-    eNick
+    eNick,
+    eEndOfSpeech,
+    eSubEndOfSpeech,
+    eClientCurrentStatus,
+    eSubClientCurrentStatus,
+    eTopic,
+    eSubTopic,
+    eContactTopic,
+    eContactType,
+    eAge,
+    eClientFrom,
+    eTypeService
 
   }
 
@@ -66,6 +79,21 @@ namespace EvitelApp2.Controls
     List<ESubTypeIncident> subTypeIncidentDataList;
     List<EvitelLib2.Model.Region> regionDataList;
     List<ENick> nickDataList;
+    List<EEndOfSpeech> endOfSpeechDataList;
+    List<ESubEndOfSpeech> subEndOfSpeechDataList;
+    List<EClientCurrentStatus> clientCurrentStatusDataList;
+    List<ESubClientCurrentStatus> subClientCurrentStatusDataList;
+    List<EContactTopic> topicDataList;
+    List<ESubContactTopic> subTopicDataList;
+    List<EContactType> contactTypeDataList;
+    List<EAge> ageDataList;
+    List<EClientFrom> clientFromDataList;
+    List<ETypeService> typeServiceDataList;
+
+
+
+
+
 
     public event RowInformation ShowRowInformation;
 
@@ -181,9 +209,138 @@ namespace EvitelApp2.Controls
           CreateTable();
           AddDataToTableNick();
           break;
+        case eAllCodeBooks.eEndOfSpeech:
+          edt.myColumns = new List<MyColumn>()
+          {
+             new MyColumn { Name = "ID", DataPropertyName = "EndOfSpeechId", Type=11  },
+             new MyColumn { Name = "Text", DataPropertyName = "Text"},
+             new MyColumn { Name = "Smazáno", DataPropertyName = "DtDeleted", Type=12},
+          };
+          edt.Title = "Závěr hovoru";
+          endOfSpeechDataList = DB.GetEndOfSpeech();
+          CreateTable();
+          AddDataToTableEndOfSpeech();
+          break;
+        case eAllCodeBooks.eSubEndOfSpeech:
+          edt.myColumns = new List<MyColumn>()
+          {
+             new MyColumn { Name = "ID", DataPropertyName = "SubEndOfSpeechId", Type=11  },
+             new MyColumn { Name = "Text", DataPropertyName = "Text"},
+             new MyColumn { Name = "Kategorie", DataPropertyName = "Kategorie"},
+             new MyColumn { Name = "Smazáno", DataPropertyName = "DtDeleted", Type=12},
+          };
+          edt.Title = "Závěr hovoru detail";
+          endOfSpeechDataList = DB.GetEndOfSpeech();
+          subEndOfSpeechDataList = DB.GetSubEndOfSpeech();
+          CreateTable();
+          AddDataToTableSubEndOfSpeech();
+          break;
+        case eAllCodeBooks.eClientCurrentStatus:
+          edt.myColumns = new List<MyColumn>()
+          {
+             new MyColumn { Name = "ID", DataPropertyName = "ClientCurrentStatusId", Type=11  },
+             new MyColumn { Name = "Text", DataPropertyName = "Text"},
+             new MyColumn { Name = "Smazáno", DataPropertyName = "DtDeleted", Type=12},
+          };
+          edt.Title = "Aktuální status klienta";
+          clientCurrentStatusDataList = DB.GetClientCurrentStatus();
+          CreateTable();
+          AddDataToTableClientCurrentStatus();
+          break;
+        case eAllCodeBooks.eSubClientCurrentStatus:
+          edt.myColumns = new List<MyColumn>()
+          {
+             new MyColumn { Name = "ID", DataPropertyName = "SubClientCurrentStatusId", Type=11  },
+             new MyColumn { Name = "Text", DataPropertyName = "Text"},
+             new MyColumn { Name = "Kategorie", DataPropertyName = "Kategorie"},
+             new MyColumn { Name = "Smazáno", DataPropertyName = "DtDeleted", Type=12},
+          };
+          edt.Title = "Aktuální status klienta-detail";
+          clientCurrentStatusDataList = DB.GetClientCurrentStatus();
+          subClientCurrentStatusDataList = DB.GetSubClientCurrentStatus();
+          CreateTable();
+          AddDataToTableSubClientCurrentStatus();
+          break;
+        case eAllCodeBooks.eTopic:
+          edt.myColumns = new List<MyColumn>()
+          {
+             new MyColumn { Name = "ID", DataPropertyName = "ContactTopicId", Type=11  },
+             new MyColumn { Name = "Text", DataPropertyName = "Text"},
+             new MyColumn { Name = "Smazáno", DataPropertyName = "DtDeleted", Type=12},
+          };
+          edt.Title = "Téma kontaktu";
+          topicDataList = DB.GetContactTopic();
+          CreateTable();
+          AddDataToTableTopic();
+          break;
+        case eAllCodeBooks.eSubTopic:
+          edt.myColumns = new List<MyColumn>()
+          {
+             new MyColumn { Name = "ID", DataPropertyName = "SubContactTopicId", Type=11  },
+             new MyColumn { Name = "Text", DataPropertyName = "Text"},
+             new MyColumn { Name = "Kategorie", DataPropertyName = "Kategorie"},
+             new MyColumn { Name = "Smazáno", DataPropertyName = "DtDeleted", Type=12},
+          };
+          edt.Title = "Téma kontaktu-detail";
+          topicDataList = DB.GetContactTopic();
+          subTopicDataList = DB.GetSubContactTopic();
+          CreateTable();
+          AddDataToTableSubTopic();
+          break;
+
+        case eAllCodeBooks.eContactType:
+          edt.myColumns = new List<MyColumn>()
+          {
+             new MyColumn { Name = "ID", DataPropertyName = "ContactTypeId", Type=11  },
+             new MyColumn { Name = "Text", DataPropertyName = "Text"},
+             new MyColumn { Name = "Smazáno", DataPropertyName = "DtDeleted", Type=12},
+          };
+          edt.Title = "Typ kontaktu ";
+          contactTypeDataList = DB.GetContactType();
+          CreateTable();
+          AddDataToTableContactType();
+          break;
+
+        case eAllCodeBooks.eAge:
+          edt.myColumns = new List<MyColumn>()
+          {
+             new MyColumn { Name = "ID", DataPropertyName = "AgeId", Type=11  },
+             new MyColumn { Name = "Text", DataPropertyName = "Text"},
+             new MyColumn { Name = "Smazáno", DataPropertyName = "DtDeleted", Type=12},
+          };
+          edt.Title = "Věk ";
+          ageDataList = DB.GetContactAge();
+          CreateTable();
+          AddDataToTableAge();
+          break;
+        case eAllCodeBooks.eClientFrom:
+          edt.myColumns = new List<MyColumn>()
+          {
+             new MyColumn { Name = "ID", DataPropertyName = "ClientFromId", Type=11  },
+             new MyColumn { Name = "Text", DataPropertyName = "Text"},
+             new MyColumn { Name = "Smazáno", DataPropertyName = "DtDeleted", Type=12},
+          };
+          edt.Title = "Odkud je klient";
+          clientFromDataList = DB.GetClientFrom();
+          CreateTable();
+          AddDataToTableClientFrom();
+          break;
+        case eAllCodeBooks.eTypeService:
+          edt.myColumns = new List<MyColumn>()
+          {
+             new MyColumn { Name = "ID", DataPropertyName = "TypeServiceId", Type=11  },
+             new MyColumn { Name = "Text", DataPropertyName = "Text"},
+             new MyColumn { Name = "Smazáno", DataPropertyName = "DtDeleted", Type=12},
+          };
+          edt.Title = "Typ služby";
+          typeServiceDataList = DB.GetTypeService();
+          CreateTable();
+          AddDataToTableTypeService();
+          break;
 
 
-        default: break;
+        default:
+          throw new NotImplementedException();
       }
       dgw.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
       dgw.BorderStyle = BorderStyle.Fixed3D;
@@ -292,8 +449,159 @@ namespace EvitelApp2.Controls
         //          
         _dataTable.Rows.Add(newRow);
       }
-
     }
+    private void AddDataToTableEndOfSpeech()
+    {
+      _dataTable.Rows.Clear();
+      foreach (var p in endOfSpeechDataList)
+      {
+        DataRow newRow = _dataTable.NewRow();
+        foreach (var col in edt.myColumns)
+        {
+          newRow[col.Name] = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null) ?? DBNull.Value;
+        }
+        //          
+        _dataTable.Rows.Add(newRow);
+      }
+    }
+    private void AddDataToTableSubEndOfSpeech()
+    {
+      _dataTable.Rows.Clear();
+      foreach (var p in subEndOfSpeechDataList)
+      {
+        DataRow newRow = _dataTable.NewRow();
+        foreach (var col in edt.myColumns)
+        {
+          if (col.Name == "Kategorie")
+            newRow[col.Name] = endOfSpeechDataList.Where(x => x.EndOfSpeechId == p.EndOfSpeechId).Select(x => x.Text).First();
+          else
+            newRow[col.Name] = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null) ?? DBNull.Value;
+        }
+        //          
+        _dataTable.Rows.Add(newRow);
+      }
+    }
+    private void AddDataToTableClientCurrentStatus()
+    {
+      _dataTable.Rows.Clear();
+      foreach (var p in clientCurrentStatusDataList)
+      {
+        DataRow newRow = _dataTable.NewRow();
+        foreach (var col in edt.myColumns)
+        {
+          newRow[col.Name] = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null) ?? DBNull.Value;
+        }
+        //          
+        _dataTable.Rows.Add(newRow);
+      }
+    }
+    private void AddDataToTableSubClientCurrentStatus()
+    {
+      _dataTable.Rows.Clear();
+      foreach (var p in subClientCurrentStatusDataList)
+      {
+        DataRow newRow = _dataTable.NewRow();
+        foreach (var col in edt.myColumns)
+        {
+          if (col.Name == "Kategorie")
+            newRow[col.Name] = clientCurrentStatusDataList.Where(x => x.ClientCurrentStatusId == p.ClientCurrentStatusId).Select(x => x.Text).First();
+          else
+            newRow[col.Name] = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null) ?? DBNull.Value;
+        }
+        //          
+        _dataTable.Rows.Add(newRow);
+      }
+    }
+
+    private void AddDataToTableTopic()
+    {
+      _dataTable.Rows.Clear();
+      foreach (var p in topicDataList)
+      {
+        DataRow newRow = _dataTable.NewRow();
+        foreach (var col in edt.myColumns)
+        {
+          newRow[col.Name] = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null) ?? DBNull.Value;
+        }
+        //          
+        _dataTable.Rows.Add(newRow);
+      }
+    }
+    private void AddDataToTableSubTopic()
+    {
+      _dataTable.Rows.Clear();
+      foreach (var p in subTopicDataList)
+      {
+        DataRow newRow = _dataTable.NewRow();
+        foreach (var col in edt.myColumns)
+        {
+          if (col.Name == "Kategorie")
+            newRow[col.Name] = topicDataList.Where(x => x.ContactTopicId == p.ContactTopicId).Select(x => x.Text).First();
+          else
+            newRow[col.Name] = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null) ?? DBNull.Value;
+        }
+        //          
+        _dataTable.Rows.Add(newRow);
+      }
+    }
+    private void AddDataToTableAge()
+    {
+      _dataTable.Rows.Clear();
+      foreach (var p in ageDataList)
+      {
+        DataRow newRow = _dataTable.NewRow();
+        foreach (var col in edt.myColumns)
+        {
+          newRow[col.Name] = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null) ?? DBNull.Value;
+        }
+        //          
+        _dataTable.Rows.Add(newRow);
+      }
+    }
+    private void AddDataToTableContactType()
+    {
+      _dataTable.Rows.Clear();
+      foreach (var p in contactTypeDataList)
+      {
+        DataRow newRow = _dataTable.NewRow();
+        foreach (var col in edt.myColumns)
+        {
+          newRow[col.Name] = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null) ?? DBNull.Value;
+        }
+        //          
+        _dataTable.Rows.Add(newRow);
+      }
+    }
+    private void AddDataToTableClientFrom()
+    {
+      _dataTable.Rows.Clear();
+      foreach (var p in clientFromDataList)
+      {
+        DataRow newRow = _dataTable.NewRow();
+        foreach (var col in edt.myColumns)
+        {
+          newRow[col.Name] = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null) ?? DBNull.Value;
+        }
+        //          
+        _dataTable.Rows.Add(newRow);
+      }
+    }
+    
+  private void AddDataToTableTypeService()
+    {
+      _dataTable.Rows.Clear();
+      foreach (var p in typeServiceDataList)
+      {
+        DataRow newRow = _dataTable.NewRow();
+        foreach (var col in edt.myColumns)
+        {
+          newRow[col.Name] = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null) ?? DBNull.Value;
+        }
+        //          
+        _dataTable.Rows.Add(newRow);
+      }
+    }
+
 
 
     public void MyResize()
@@ -313,95 +621,6 @@ namespace EvitelApp2.Controls
       MyResize();
     }
 
-    private void btnEdit_Click(object sender, EventArgs e)
-    {
-      int RowIndex = GetAktRow();
-      if (RowIndex < 0)
-        return;
-      frmCiselnik frmU = new frmCiselnik();
-      switch (aktCodeBook)
-      {
-        case eAllCodeBooks.eSex:
-          frmU.aktCodeBook = aktCodeBook;
-          frmU.ID = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
-          frmU.Text1 = (string)dgw.Rows[RowIndex].Cells["Text"].Value;
-          frmU.Text = "Číselník " + edt.Title + " --- Věta " + (RowIndex + 1).ToString();
-          frmU.TypeForm = eModifyRow.modifyRow;
-          frmU.ShowDialog();
-          if (frmU.isReturnOK)
-          {
-            DB.UniversalModifySex(eModifyRow.modifyRow, frmU.ID, frmU.Text1);
-            sexDataList = DB.GetSex();
-            AddDataToTableSex();
-          }
-          break;
-        case eAllCodeBooks.eTypeParty:
-          frmU.aktCodeBook = aktCodeBook;
-          frmU.ID = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
-          frmU.Text1 = (string)dgw.Rows[RowIndex].Cells["Text"].Value;
-          frmU.Text = "Číselník " + edt.Title + " --- Věta " + (RowIndex + 1).ToString();
-          frmU.TypeForm = eModifyRow.modifyRow;
-          frmU.ShowDialog();
-          if (frmU.isReturnOK)
-          {
-            DB.UniversalModifyTypeParty(eModifyRow.modifyRow, frmU.ID, frmU.Text1);
-            typePartyDataList = DB.GetTypeParty();
-            AddDataToTableTypeParty();
-          }
-          break;
-        case eAllCodeBooks.eSubTypeIncident:
-          frmU.aktCodeBook = aktCodeBook;
-          frmU.ID = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
-          frmU.Text1 = (string)dgw.Rows[RowIndex].Cells["Text"].Value;
-          frmU.Text2 = (string)dgw.Rows[RowIndex].Cells["Kategorie"].Value;
-          frmU.Label2 = "Kategorie";
-          frmU.ExtensionItem = 1;
-          frmU.Text = "Číselník " + edt.Title + " --- Věta " + (RowIndex + 1).ToString();
-          frmU.TypeForm = eModifyRow.modifyRow;
-          frmU.ShowDialog();
-          if (frmU.isReturnOK)
-          {
-            DB.UniversalModifySubTypeIncident(eModifyRow.modifyRow, frmU.ID, frmU.Text1, frmU.Text2);
-            subTypeIncidentDataList = DB.GetSubTypeIncident();
-            AddDataToTableSubTypeIncident();
-          }
-          break;
-        case eAllCodeBooks.eRegions:
-          frmU.aktCodeBook = aktCodeBook;
-          frmU.ID = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
-          frmU.Text1 = (string)dgw.Rows[RowIndex].Cells["Name"].Value;
-          frmU.Text2 = (string)dgw.Rows[RowIndex].Cells["Zkratka"].Value;
-          frmU.Label2 = "Kategorie";
-          frmU.Text3 = (string)dgw.Rows[RowIndex].Cells["Name2"].Value;
-          frmU.Label3 = "Jméno";
-          frmU.ExtensionItem = 2;
-          frmU.Text = "Číselník " + edt.Title + " --- Věta " + (RowIndex + 1).ToString();
-          frmU.TypeForm = eModifyRow.modifyRow;
-          frmU.ShowDialog();
-          if (frmU.isReturnOK)
-          {
-            DB.UniversalModifyRegion(eModifyRow.modifyRow, frmU.ID, frmU.Text1, frmU.Text2, frmU.Text3);
-            regionDataList = DB.GetRegions();
-            AddDataToTableRegion();
-          }
-          break;
-        case eAllCodeBooks.eNick:
-          frmU.aktCodeBook = aktCodeBook;
-          frmU.ID = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
-          frmU.Text1 = (string)dgw.Rows[RowIndex].Cells["Text"].Value;
-          frmU.Text = "Číselník " + edt.Title + " --- Věta " + (RowIndex + 1).ToString();
-          frmU.TypeForm = eModifyRow.modifyRow;
-          frmU.ShowDialog();
-          if (frmU.isReturnOK)
-          {
-            //            DB.UniversalModifyNick(eModifyRow.modifyRow, frmU.ID, frmU.Text1);
-            //            nickDataList = DB.GetNick();
-            AddDataToTableNick();
-          }
-          break;
-
-      }
-    }
 
     private void btnAdd_Click(object sender, EventArgs e)
     {
@@ -415,30 +634,19 @@ namespace EvitelApp2.Controls
       switch (aktCodeBook)
       {
         case eAllCodeBooks.eSex:
-          frmU.ShowDialog();
-          if (frmU.isReturnOK)
-          {
-            DB.UniversalModifySex(frmU.TypeForm, frmU.ID, frmU.Text1);
-            sexDataList = DB.GetSex();
-            AddDataToTableSex();
-          }
-          break;
         case eAllCodeBooks.eTypeParty:
+        case eAllCodeBooks.eNick:
+        case eAllCodeBooks.eEndOfSpeech:
+        case eAllCodeBooks.eClientCurrentStatus:
+        case eAllCodeBooks.eTopic:
+        case eAllCodeBooks.eAge:
+        case eAllCodeBooks.eContactType:
+        case eAllCodeBooks.eClientFrom:
+        case eAllCodeBooks.eTypeService:
           frmU.ShowDialog();
           if (frmU.isReturnOK)
           {
-            DB.UniversalModifyTypeParty(frmU.TypeForm, frmU.ID, frmU.Text1);
-            typePartyDataList = DB.GetTypeParty();
-            AddDataToTableTypeParty();
-          }
-          break;
-        case eAllCodeBooks.eDruhIntervence:
-          frmU.ShowDialog();
-          if (frmU.isReturnOK)
-          {
-            DB.UniversalModifyDruhIntervence(frmU.TypeForm, frmU.ID, frmU.Text1);
-            druhIntervenceDataList = DB.GetDruhIntervence();
-            AddDataToTableDruhIntervence();
+            RefreshData(eModifyRow.addRow, frmU.ID, frmU.Text1);
           }
           break;
         case eAllCodeBooks.eSubTypeIncident:
@@ -467,20 +675,163 @@ namespace EvitelApp2.Controls
             AddDataToTableRegion();
           }
           break;
-        case eAllCodeBooks.eNick:
+        case eAllCodeBooks.eSubEndOfSpeech:
+          foreach (var r in endOfSpeechDataList)
+          {
+            frmU.cmb.Items.Add(new ComboItem(r.Text, r.EndOfSpeechId.ToString()));
+          }
+          if (endOfSpeechDataList.Count() > 0)
+            frmU.cmb.SelectedIndex = 0;
+          frmU.isCombo = true;
+          frmU.Label2 = "Kategorie";
           frmU.ShowDialog();
           if (frmU.isReturnOK)
           {
-            DB.UniversalModifyNick(frmU.TypeForm, frmU.ID, frmU.Text1);
-            nickDataList = DB.GetNick();
-            AddDataToTableNick();
+            RefreshData(frmU.TypeForm, frmU.ID, frmU.Text1, ((ComboItem)frmU.cmb.SelectedItem).iValue);
+          }
+          break;
+        case eAllCodeBooks.eSubClientCurrentStatus:
+          foreach (var r in clientCurrentStatusDataList)
+          {
+            frmU.cmb.Items.Add(new ComboItem(r.Text, r.ClientCurrentStatusId.ToString()));
+          }
+          if (clientCurrentStatusDataList.Count() > 0)
+            frmU.cmb.SelectedIndex = 0;
+          frmU.isCombo = true;
+          frmU.Label2 = "Kategorie";
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+          {
+            RefreshData(frmU.TypeForm, frmU.ID, frmU.Text1, ((ComboItem)frmU.cmb.SelectedItem).iValue);
+          }
+          break;
+        case eAllCodeBooks.eSubTopic:
+          foreach (var r in topicDataList)
+          {
+            frmU.cmb.Items.Add(new ComboItem(r.Text, r.ContactTopicId.ToString()));
+          }
+          if (topicDataList.Count() > 0)
+            frmU.cmb.SelectedIndex = 0;
+          frmU.isCombo = true;
+          frmU.Label2 = "Kategorie";
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+          {
+            RefreshData(frmU.TypeForm, frmU.ID, frmU.Text1, ((ComboItem)frmU.cmb.SelectedItem).iValue);
           }
           break;
 
         default:
-          break;
+          throw new NotImplementedException();
       }
     }
+
+
+    private void btnEdit_Click(object sender, EventArgs e)
+    {
+      int RowIndex = GetAktRow();
+      if (RowIndex < 0)
+        return;
+      frmCiselnik frmU = new frmCiselnik();
+      frmU.aktCodeBook = aktCodeBook;
+      frmU.ID = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
+      frmU.Text1 = (string)dgw.Rows[RowIndex].Cells["Text"].Value;
+      frmU.Text = "Číselník " + edt.Title + " --- Věta " + (RowIndex + 1).ToString();
+      frmU.TypeForm = eModifyRow.modifyRow;
+
+      switch (aktCodeBook)
+      {
+        case eAllCodeBooks.eSex:
+        case eAllCodeBooks.eTypeParty:
+        case eAllCodeBooks.eNick:
+        case eAllCodeBooks.eEndOfSpeech:
+        case eAllCodeBooks.eClientCurrentStatus:
+        case eAllCodeBooks.eTopic:
+        case eAllCodeBooks.eAge:
+        case eAllCodeBooks.eContactType:
+        case eAllCodeBooks.eClientFrom:
+        case eAllCodeBooks.eTypeService:
+
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+          {
+            RefreshData(eModifyRow.modifyRow, frmU.ID, frmU.Text1);
+          }
+          break;
+        case eAllCodeBooks.eSubTypeIncident:
+          frmU.Text2 = (string)dgw.Rows[RowIndex].Cells["Kategorie"].Value;
+          frmU.Label2 = "Kategorie";
+          frmU.ExtensionItem = 1;
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+          {
+            DB.UniversalModifySubTypeIncident(eModifyRow.modifyRow, frmU.ID, frmU.Text1, frmU.Text2);
+            subTypeIncidentDataList = DB.GetSubTypeIncident();
+            AddDataToTableSubTypeIncident();
+          }
+          break;
+        case eAllCodeBooks.eRegions:
+          frmU.Text2 = (string)dgw.Rows[RowIndex].Cells["Zkratka"].Value;
+          frmU.Label2 = "Kategorie";
+          frmU.Text3 = (string)dgw.Rows[RowIndex].Cells["Name2"].Value;
+          frmU.Label3 = "Jméno";
+          frmU.ExtensionItem = 2;
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+          {
+            DB.UniversalModifyRegion(eModifyRow.modifyRow, frmU.ID, frmU.Text1, frmU.Text2, frmU.Text3);
+            regionDataList = DB.GetRegions();
+            AddDataToTableRegion();
+          }
+          break;
+        case eAllCodeBooks.eSubEndOfSpeech:
+          foreach (var r in endOfSpeechDataList)
+          {
+            frmU.cmb.Items.Add(new ComboItem(r.Text, r.EndOfSpeechId.ToString()));
+            int endOfSpeechId = subEndOfSpeechDataList.Where(x => x.SubEndOfSpeechId == (int)dgw.Rows[RowIndex].Cells["ID"].Value).Select(x => x.EndOfSpeechId).First() ?? 0;
+            if (endOfSpeechId == r.EndOfSpeechId)
+              frmU.cmb.SelectedIndex = frmU.cmb.Items.Count - 1;
+          }
+          frmU.isCombo = true;
+          frmU.Label2 = "Kategorie";
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+            RefreshData(eModifyRow.modifyRow, frmU.ID, frmU.Text1, ((ComboItem)frmU.cmb.SelectedItem).iValue);
+          break;
+        case eAllCodeBooks.eSubClientCurrentStatus:
+          foreach (var r in clientCurrentStatusDataList)
+          {
+            frmU.cmb.Items.Add(new ComboItem(r.Text, r.ClientCurrentStatusId.ToString()));
+            int clientCurrentStatusId = subClientCurrentStatusDataList.Where(x => x.SubClientCurrentStatusId == (int)dgw.Rows[RowIndex].Cells["ID"].Value).Select(x => x.ClientCurrentStatusId).First() ?? 0;
+            if (clientCurrentStatusId == r.ClientCurrentStatusId)
+              frmU.cmb.SelectedIndex = frmU.cmb.Items.Count - 1;
+          }
+          frmU.isCombo = true;
+          frmU.Label2 = "Kategorie";
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+            RefreshData(eModifyRow.modifyRow, frmU.ID, frmU.Text1, ((ComboItem)frmU.cmb.SelectedItem).iValue);
+          break;
+        case eAllCodeBooks.eSubTopic:
+          foreach (var r in topicDataList)
+          {
+            frmU.cmb.Items.Add(new ComboItem(r.Text, r.ContactTopicId.ToString()));
+            int CurrenttopicId = subTopicDataList.Where(x => x.SubContactTopicId == (int)dgw.Rows[RowIndex].Cells["ID"].Value).Select(x => x.ContactTopicId).First() ?? 0;
+            if (CurrenttopicId == r.ContactTopicId)
+              frmU.cmb.SelectedIndex = frmU.cmb.Items.Count - 1;
+          }
+          frmU.isCombo = true;
+          frmU.Label2 = "Kategorie";
+          frmU.ShowDialog();
+          if (frmU.isReturnOK)
+            RefreshData(eModifyRow.modifyRow, frmU.ID, frmU.Text1, ((ComboItem)frmU.cmb.SelectedItem).iValue);
+          break;
+        default:
+          throw new NotImplementedException();
+      }
+    }
+
+
 
     private void btnDelete_Click(object sender, EventArgs e)
     {
@@ -489,71 +840,94 @@ namespace EvitelApp2.Controls
         return;
 
       frmCiselnik frmU = new frmCiselnik();
+      frmU.aktCodeBook = aktCodeBook;
+      frmU.ID = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
+      frmU.Text1 = (string)dgw.Rows[RowIndex].Cells["Text"].Value;
+      frmU.Text = "Číselník " + edt.Title + " --- Věta " + (RowIndex + 1).ToString();
+      frmU.TypeForm = dgw.Rows[RowIndex].Cells["Smazáno"].Value == DBNull.Value ? eModifyRow.deleteRow : eModifyRow.undeleteRow;
+      frmU.ShowDialog();
+      if (frmU.isReturnOK)
+        RefreshData(frmU.TypeForm, frmU.ID, frmU.Text1, 0);
+    }
 
+    private void RefreshData(eModifyRow typeForm, int id, string text, int idMaster = 0)
+    {
       switch (aktCodeBook)
       {
         case eAllCodeBooks.eSex:
-          frmU.aktCodeBook = aktCodeBook;
-          frmU.ID = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
-          frmU.Text1 = (string)dgw.Rows[RowIndex].Cells["Text"].Value;
-          frmU.Text = "Číselník " + edt.Title + " --- Věta " + (RowIndex + 1).ToString();
-          frmU.TypeForm = dgw.Rows[RowIndex].Cells["Smazáno"].Value == DBNull.Value ? eModifyRow.deleteRow : eModifyRow.undeleteRow;
-          frmU.ShowDialog();
-          if (frmU.isReturnOK)
-          {
-            DB.UniversalModifySex(frmU.TypeForm, frmU.ID, frmU.Text1);
-            sexDataList = DB.GetSex();
-            AddDataToTableSex();
-          }
+          DB.UniversalModifySex(typeForm, id, text);
+          sexDataList = DB.GetSex();
+          AddDataToTableSex();
           break;
         case eAllCodeBooks.eTypeParty:
-          frmU.aktCodeBook = aktCodeBook;
-          frmU.ID = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
-          frmU.Text1 = (string)dgw.Rows[RowIndex].Cells["Text"].Value;
-          frmU.Text = "Číselník " + edt.Title + " --- Věta " + (RowIndex + 1).ToString();
-          frmU.TypeForm = dgw.Rows[RowIndex].Cells["Smazáno"].Value == DBNull.Value ? eModifyRow.deleteRow : eModifyRow.undeleteRow;
-          frmU.ShowDialog();
-          if (frmU.isReturnOK)
-          {
-            DB.UniversalModifyTypeParty(frmU.TypeForm, frmU.ID, frmU.Text1);
-            typePartyDataList = DB.GetTypeParty();
-            AddDataToTableTypeParty();
-          }
+          DB.UniversalModifyTypeParty(typeForm, id, text);
+          typePartyDataList = DB.GetTypeParty();
+          AddDataToTableTypeParty();
           break;
         case eAllCodeBooks.eDruhIntervence:
-          frmU.aktCodeBook = aktCodeBook;
-          frmU.ID = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
-          frmU.Text1 = (string)dgw.Rows[RowIndex].Cells["Text"].Value;
-          frmU.Text = "Číselník " + edt.Title + " --- Věta " + (RowIndex + 1).ToString();
-          frmU.TypeForm = dgw.Rows[RowIndex].Cells["Smazáno"].Value == DBNull.Value ? eModifyRow.deleteRow : eModifyRow.undeleteRow;
-          frmU.ShowDialog();
-          if (frmU.isReturnOK)
-          {
-            DB.UniversalModifyDruhIntervence(eModifyRow.addRow, frmU.ID, frmU.Text1);
-            druhIntervenceDataList = DB.GetDruhIntervence();
-            AddDataToTableDruhIntervence();
-          }
+          DB.UniversalModifyDruhIntervence(typeForm, id, text);
+          druhIntervenceDataList = DB.GetDruhIntervence();
+          AddDataToTableDruhIntervence();
           break;
         case eAllCodeBooks.eSubTypeIncident:
-          frmU.aktCodeBook = aktCodeBook;
-          frmU.ID = (int)dgw.Rows[RowIndex].Cells["ID"].Value;
-          frmU.Text1 = (string)dgw.Rows[RowIndex].Cells["Text"].Value;
-          frmU.Text = "Číselník " + edt.Title + " --- Věta " + (RowIndex + 1).ToString();
-          frmU.TypeForm = dgw.Rows[RowIndex].Cells["Smazáno"].Value == DBNull.Value ? eModifyRow.deleteRow : eModifyRow.undeleteRow;
-          frmU.ShowDialog();
-          if (frmU.isReturnOK)
-          {
-            DB.UniversalModifyDruhIntervence(eModifyRow.addRow, frmU.ID, frmU.Text1);
-            druhIntervenceDataList = DB.GetDruhIntervence();
-            AddDataToTableDruhIntervence();
-          }
+          DB.UniversalModifyDruhIntervence(typeForm, id, text);
+          druhIntervenceDataList = DB.GetDruhIntervence();
+          AddDataToTableDruhIntervence();
           break;
-        case eAllCodeBooks.eRegions:
-          MessageBox.Show("Region nelze mazat", "Číselník", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        case eAllCodeBooks.eEndOfSpeech:
+          DB.UniversalModifyEndOfSpeech(typeForm, id, text);
+          endOfSpeechDataList = DB.GetEndOfSpeech();
+          AddDataToTableEndOfSpeech();
           break;
-        default:
+        case eAllCodeBooks.eSubEndOfSpeech:
+          DB.UniversalModifySubEndOfSpeech(typeForm, id, text, idMaster);
+          subEndOfSpeechDataList = DB.GetSubEndOfSpeech();
+          AddDataToTableSubEndOfSpeech();
+          break;
+        case eAllCodeBooks.eClientCurrentStatus:
+          DB.UniversalModifyClientCurrentStatus(typeForm, id, text);
+          clientCurrentStatusDataList = DB.GetClientCurrentStatus();
+          AddDataToTableClientCurrentStatus();
+          break;
+        case eAllCodeBooks.eSubClientCurrentStatus:
+          DB.UniversalModifySubClientCurrentStatus(typeForm, id, text, idMaster);
+          subClientCurrentStatusDataList = DB.GetSubClientCurrentStatus();
+          AddDataToTableSubClientCurrentStatus();
+          break;
+        case eAllCodeBooks.eTopic:
+          DB.UniversalModifyContactTopic(typeForm, id, text);
+          topicDataList = DB.GetContactTopic();
+          AddDataToTableTopic();
+          break;
+        case eAllCodeBooks.eSubTopic:
+          DB.UniversalModifySubContactTopic(typeForm, id, text, idMaster);
+          subTopicDataList = DB.GetSubContactTopic();
+          AddDataToTableSubTopic();
+          break;
+        case eAllCodeBooks.eAge:
+          DB.UniversalModifyAge(typeForm, id, text);
+          ageDataList = DB.GetContactAge(true);
+          AddDataToTableAge();
+          break;
+        case eAllCodeBooks.eContactType:
+          DB.UniversalModifyContactType(typeForm, id, text);
+          contactTypeDataList = DB.GetContactType(true);
+          AddDataToTableContactType();
+          break;
+        case eAllCodeBooks.eTypeService:
+          DB.UniversalModifyTypeService(typeForm, id, text);
+          typeServiceDataList = DB.GetTypeService(true);
+          AddDataToTableTypeService();
+          break;
+        case eAllCodeBooks.eClientFrom:
+          DB.UniversalModifyClientFrom(typeForm, id, text);
+          clientFromDataList = DB.GetClientFrom(true);
+          AddDataToTableClientFrom();
           break;
 
+
+        default:
+          throw new NotImplementedException();
       }
     }
 

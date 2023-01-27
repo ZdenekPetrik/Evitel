@@ -37,6 +37,7 @@
             this.lbl2 = new System.Windows.Forms.Label();
             this.txtText3 = new System.Windows.Forms.TextBox();
             this.lbl3 = new System.Windows.Forms.Label();
+            this.cmb1 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lblId
@@ -130,11 +131,23 @@
             this.lbl3.Text = "label3";
             this.lbl3.Visible = false;
             // 
+            // cmb1
+            // 
+            this.cmb1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb1.FormattingEnabled = true;
+            this.cmb1.Location = new System.Drawing.Point(217, 147);
+            this.cmb1.Name = "cmb1";
+            this.cmb1.Size = new System.Drawing.Size(330, 28);
+            this.cmb1.TabIndex = 9;
+            this.cmb1.Visible = false;
+            this.cmb1.SelectedIndexChanged += new System.EventHandler(this.cmb1_SelectedIndexChanged);
+            // 
             // frmCiselnik
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(597, 261);
+            this.Controls.Add(this.cmb1);
             this.Controls.Add(this.txtText3);
             this.Controls.Add(this.lbl3);
             this.Controls.Add(this.txtText2);
@@ -164,5 +177,6 @@
     private System.Windows.Forms.Label lbl2;
     private System.Windows.Forms.TextBox txtText3;
     private System.Windows.Forms.Label lbl3;
+    private System.Windows.Forms.ComboBox cmb1;
   }
 }

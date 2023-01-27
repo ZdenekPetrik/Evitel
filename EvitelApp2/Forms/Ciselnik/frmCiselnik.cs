@@ -25,6 +25,8 @@ namespace EvitelApp2.Forms1.Ciselnik
     public string Label2 { get { return lbl2.Text; } set { lbl2.Text = value.ToString(); } }
     public string Text3 { get { return txtText3.Text; } set { txtText3.Text = value.ToString(); } }
     public string Label3 { get { return lbl3.Text; } set { lbl3.Text = value.ToString(); } }
+    public ComboBox cmb { get { return cmb1; } set { cmb1 = value; } }
+    public bool isCombo = false;
     public eModifyRow TypeForm;
     public int ExtensionItem = 0;
     public frmCiselnik()
@@ -48,6 +50,7 @@ namespace EvitelApp2.Forms1.Ciselnik
       {
         btnCokoliv.Enabled = false;
         btnCokoliv.Text = "Add";
+        txtID.Text = "";
       }
       else if (TypeForm == eModifyRow.modifyRow)
       {
@@ -58,11 +61,19 @@ namespace EvitelApp2.Forms1.Ciselnik
       {
         btnCokoliv.Enabled = true;
         btnCokoliv.Text = "Delete";
+        txtText.ReadOnly = true;
+        txtText2.ReadOnly = true;
+        txtText3.ReadOnly = true;
+        cmb1.Enabled = false; 
       }
       else if (TypeForm == eModifyRow.undeleteRow)
       {
         btnCokoliv.Enabled = true;
         btnCokoliv.Text = "UnDelete";
+        txtText.ReadOnly = true;
+        txtText2.ReadOnly = true;
+        txtText3.ReadOnly = true;
+        cmb1.Enabled = false;
       }
       if (ExtensionItem > 0) {
         lbl2.Visible = true;
@@ -75,6 +86,13 @@ namespace EvitelApp2.Forms1.Ciselnik
         btnCokoliv.Top += 30;
         Height += 30;
       }
+      if (isCombo)
+      {
+        lbl2.Visible = true;
+        cmb1.Visible = true;
+      }
+      this.ActiveControl = txtText;
+
 
     }
 
@@ -91,7 +109,11 @@ namespace EvitelApp2.Forms1.Ciselnik
     private void txtText3_TextChanged(object sender, EventArgs e)
     {
       btnCokoliv.Enabled = true;
+    }
 
+    private void cmb1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      btnCokoliv.Enabled = true;
     }
   }
 }

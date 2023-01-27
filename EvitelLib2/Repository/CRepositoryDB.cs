@@ -661,7 +661,6 @@ namespace EvitelLib2.Repository
       }
       return -1;
     }
-
     public int WriteIncident(string note, int subTypeIncidentId, DateTime datetimeIncident, int regionId, string place, bool nasledekSmrti, bool dokonane, bool pokusPriprava, int PocetObeti)
     {
       sErr = "";
@@ -691,7 +690,6 @@ namespace EvitelLib2.Repository
       return -1;
 
     }
-
     public int WriteIntervence(DateTime datetimeStartIntervence, DateTime datetimeEndIntervence, int callId, int incidentId, string note, int value, int NrObetemPoskozenym, int NrPozustalymBlizkym, int NrOstatnimOsobam, int InterventId)
     {
       sErr = "";
@@ -725,14 +723,18 @@ namespace EvitelLib2.Repository
       return -1;
     }
 
-    public List<ESex> GetSex()
+
+    #region Read Enums
+    public List<ESex> GetSex(bool isReadAll = false)
     {
       sErr = "";
       Evitel2Context db = new Evitel2Context();
       try
       {
-        var sex = from s in db.ESexes select s;
-        return sex.ToList();
+        var rows = from s in db.ESexes select s;
+        if (isReadAll)
+          rows.Where(x => x.DtDeleted == null);
+        return rows.AsNoTracking().ToList();
       }
       catch (Exception Ex)
       {
@@ -757,16 +759,16 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
-
-
-    public List<ETypeParty> GetTypeParty()
+    public List<ETypeParty> GetTypeParty(bool isReadAll = false)
     {
       sErr = "";
       Evitel2Context db = new Evitel2Context();
       try
       {
-        var typeParty = from tp in db.ETypeParties select tp;
-        return typeParty.ToList();
+        var rows = from tp in db.ETypeParties select tp;
+        if (isReadAll)
+          rows.Where(x => x.DtDeleted == null);
+        return rows.AsNoTracking().ToList();
       }
       catch (Exception Ex)
       {
@@ -775,15 +777,16 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
-
-    public List<EDruhIntervence> GetDruhIntervence()
+    public List<EDruhIntervence> GetDruhIntervence(bool isReadAll = false)
     {
       sErr = "";
       Evitel2Context db = new Evitel2Context();
       try
       {
-        var druhIntervence = from di in db.EDruhIntervences select di;
-        return druhIntervence.ToList();
+        var rows = from di in db.EDruhIntervences select di;
+        if (isReadAll)
+          rows.Where(x => x.DtDeleted == null);
+        return rows.AsNoTracking().ToList();
       }
       catch (Exception Ex)
       {
@@ -792,6 +795,190 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
+    public List<EEndOfSpeech> GetEndOfSpeech(bool isReadAll = false)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var rows = from es in db.EEndOfSpeeches select es;
+        if (isReadAll)
+          rows.Where(x => x.DtDeleted == null);
+        return rows.AsNoTracking().ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetEndOfSpeech() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+    public List<ESubEndOfSpeech> GetSubEndOfSpeech(bool isReadAll = false)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var rows = from ess in db.ESubEndOfSpeeches.Include(x => x.EndOfSpeech) select ess;
+        if (isReadAll)
+          rows.Where(x => x.DtDeleted == null);
+        return rows.AsNoTracking().ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetSubEndOfSpeech() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+    public List<EClientCurrentStatus> GetClientCurrentStatus(bool isReadAll = false)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var rows = from ccs in db.EClientCurrentStatuses select ccs;
+        if (isReadAll)
+          rows.Where(x => x.DtDeleted == null);
+        return rows.AsNoTracking().ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetClientCurrentStatus() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+    public List<ESubClientCurrentStatus> GetSubClientCurrentStatus(bool isReadAll = false)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var rows = from ess in db.ESubClientCurrentStatuses.Include(x => x.ClientCurrentStatus) select ess;
+        if (isReadAll)
+          rows.Where(x => x.DtDeleted == null);
+        return rows.AsNoTracking().ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetSubClientCurrentStatus() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+    public List<EContactTopic> GetContactTopic(bool isReadAll = false)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var rows = from r in db.EContactTopics select r;
+        if (isReadAll)
+          rows.Where(x => x.DtDeleted == null);
+        return rows.AsNoTracking().ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetContactTopic() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+
+    }
+    public List<ESubContactTopic> GetSubContactTopic(bool isReadAll = false)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var rows = from ess in db.ESubContactTopics.Include(x => x.ContactTopic) select ess;
+        if (isReadAll)
+          rows.Where(x => x.DtDeleted == null);
+
+        return rows.AsNoTracking().ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetSubContactTopic() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+    public List<EContactType> GetContactType(bool isReadAll = false)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var rows = from r in db.EContactTypes select r;
+        if (isReadAll)
+          rows.Where(x => x.DtDeleted == null);
+        return rows.AsNoTracking().ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetContactType() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+    public List<EAge> GetContactAge(bool isReadAll = false)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var rows = from r in db.EAges select r;
+        if (isReadAll)
+          rows.Where(x => x.DtDeleted == null);
+        return rows.AsNoTracking().ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetContactAge() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+    public List<EClientFrom> GetClientFrom(bool isReadAll=false )
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var rows = from r in db.EClientFroms select r;
+        if (isReadAll)
+          rows.Where(x => x.DtDeleted == null);
+        return rows.AsNoTracking().ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetClientFrom() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+    public List<ETypeService> GetTypeService(bool isReadAll = false)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var rows = from r in db.ETypeServices select r;
+        if (isReadAll)
+          rows.Where(x => x.DtDeleted == null);
+        return rows.AsNoTracking().ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetClientFrom() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+
+    #endregion
 
     public int AddParticipant(Likoparticipant newRow)
     {
@@ -1082,6 +1269,9 @@ namespace EvitelLib2.Repository
 
     }
 
+    #region Add Delete Update Enum (UniversalModify)
+
+
     public int UniversalModifySex(eModifyRow modifyRow, int id, string text)
     {
       sErr = "";
@@ -1123,7 +1313,7 @@ namespace EvitelLib2.Repository
             break;
         }
         db.SaveChanges();
-        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "Sex " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? "/" + oldText : ""), IdUser);
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "Sex " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? "<=" + oldText : ""), IdUser);
 
         return row?.SexId ?? -1;
       }
@@ -1176,7 +1366,7 @@ namespace EvitelLib2.Repository
             break;
         }
         db.SaveChanges();
-        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "TypeParty " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? "/" + oldText : ""), IdUser);
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "TypeParty " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? "<=" + oldText : ""), IdUser);
         return row?.TypePartyId ?? -1;
       }
       catch (Exception Ex)
@@ -1227,7 +1417,7 @@ namespace EvitelLib2.Repository
             break;
         }
         db.SaveChanges();
-        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "DruhIntervence " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? "/" + oldText : ""), IdUser);
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "DruhIntervence " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? "<=" + oldText : ""), IdUser);
         return row?.DruhIntervenceId ?? -1;
       }
       catch (Exception Ex)
@@ -1283,7 +1473,7 @@ namespace EvitelLib2.Repository
             break;
         }
         db.SaveChanges();
-        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "SubTypeIncidentId " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? "/" + oldText : "") + " Kategorie:" + kategorie + ((modifyRow == eModifyRow.modifyRow) ? "/" + oldText2 : ""), IdUser);
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "SubTypeIncidentId " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? "<=" + oldText : "") + " Kategorie:" + kategorie + ((modifyRow == eModifyRow.modifyRow) ? "<=" + oldText2 : ""), IdUser);
         return row?.SubTypeIncidentId ?? -1;
       }
       catch (Exception Ex)
@@ -1331,7 +1521,7 @@ namespace EvitelLib2.Repository
             break;
         }
         db.SaveChanges();
-        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "SubTypeIncidentId " + modifyRow.ToString() + "id = " + id.ToString(), name + ((modifyRow == eModifyRow.modifyRow) ? "/" + oldText : "") + " ShortName:" + shortName + ((modifyRow == eModifyRow.modifyRow) ? "/" + oldText2 : ""), IdUser);
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "SubTypeIncidentId " + modifyRow.ToString() + "id = " + id.ToString(), name + ((modifyRow == eModifyRow.modifyRow) ? "<=" + oldText : "") + " ShortName:" + shortName + ((modifyRow == eModifyRow.modifyRow) ? "/" + oldText2 : ""), IdUser);
         return row?.RegionId ?? -1;
       }
       catch (Exception Ex)
@@ -1384,7 +1574,7 @@ namespace EvitelLib2.Repository
             break;
         }
         db.SaveChanges();
-        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "Nick " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? "/" + oldText : ""), IdUser);
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "Nick " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? "<=" + oldText : ""), IdUser);
 
         return row?.NickId ?? -1;
       }
@@ -1395,6 +1585,540 @@ namespace EvitelLib2.Repository
       }
       return -1;
     }
+
+    public int UniversalModifyEndOfSpeech(eModifyRow modifyRow, int id, string text)
+    {
+      sErr = "";
+      string oldText = "";
+      Evitel2Context db = new Evitel2Context();
+      EEndOfSpeech row = new EEndOfSpeech();
+      try
+      {
+
+        switch (modifyRow)
+        {
+          case eModifyRow.addRow:
+            {
+              row.Text = text;
+              db.EEndOfSpeeches.Add(row);
+              break;
+            }
+          case eModifyRow.modifyRow:
+            {
+              row = db.EEndOfSpeeches.Where(x => x.EndOfSpeechId == id).First();
+              oldText = row.Text;
+              row.Text = text;
+              break;
+            }
+          case eModifyRow.deleteRow:
+            {
+              row = db.EEndOfSpeeches.Where(x => x.EndOfSpeechId == id).First();
+              row.DtDeleted = DateTime.Now;
+              break;
+            }
+          case eModifyRow.undeleteRow:
+            {
+              row = db.EEndOfSpeeches.Where(x => x.EndOfSpeechId == id).First();
+              row.DtDeleted = null;
+              break;
+            }
+          default:
+            new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyEndOfSpeech() Bad enum ModifyRow", modifyRow.ToString(), IdUser);
+            break;
+        }
+        db.SaveChanges();
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "UniversalModifyEndOfSpeech " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? "<=" + oldText : ""), IdUser);
+
+        return row?.EndOfSpeechId ?? -1;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyEndOfSpeech() " + GetInnerException(Ex), id.ToString(), IdUser);
+      }
+      return -1;
+    }
+
+    public int UniversalModifySubEndOfSpeech(eModifyRow modifyRow, int id, string text, int endOfSpeechId)
+    {
+      sErr = "";
+      string oldText = "";
+      Evitel2Context db = new Evitel2Context();
+      ESubEndOfSpeech row = new ESubEndOfSpeech();
+      try
+      {
+
+        switch (modifyRow)
+        {
+          case eModifyRow.addRow:
+            {
+              row.Text = text;
+              row.EndOfSpeechId = endOfSpeechId;
+              db.ESubEndOfSpeeches.Add(row);
+              break;
+            }
+          case eModifyRow.modifyRow:
+            {
+              row = db.ESubEndOfSpeeches.Where(x => x.SubEndOfSpeechId == id).First();
+              oldText = row.Text;
+              row.EndOfSpeechId = endOfSpeechId;
+              row.Text = text;
+              break;
+            }
+          case eModifyRow.deleteRow:
+            {
+              row = db.ESubEndOfSpeeches.Where(x => x.SubEndOfSpeechId == id).First();
+              row.DtDeleted = DateTime.Now;
+              break;
+            }
+          case eModifyRow.undeleteRow:
+            {
+              row = db.ESubEndOfSpeeches.Where(x => x.SubEndOfSpeechId == id).First();
+              row.DtDeleted = null;
+              break;
+            }
+          default:
+            new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifySubEndOfSpeech() Bad enum ModifyRow", modifyRow.ToString(), IdUser);
+            break;
+        }
+        db.SaveChanges();
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "UniversalModifySubEndOfSpeech " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? "<=" + oldText : ""), IdUser);
+
+        return row?.SubEndOfSpeechId ?? -1;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifySubEndOfSpeech() " + GetInnerException(Ex), id.ToString(), IdUser);
+      }
+      return -1;
+    }
+
+    public int UniversalModifySubClientCurrentStatus(eModifyRow modifyRow, int id, string text, int ClientCurrentStatusId)
+    {
+      sErr = "";
+      string oldText = "";
+      Evitel2Context db = new Evitel2Context();
+      ESubClientCurrentStatus row = new ESubClientCurrentStatus();
+      try
+      {
+
+        switch (modifyRow)
+        {
+          case eModifyRow.addRow:
+            {
+              row.Text = text;
+              row.ClientCurrentStatusId = ClientCurrentStatusId;
+              db.ESubClientCurrentStatuses.Add(row);
+              break;
+            }
+          case eModifyRow.modifyRow:
+            {
+              row = db.ESubClientCurrentStatuses.Where(x => x.SubClientCurrentStatusId == id).First();
+              oldText = row.Text;
+              row.ClientCurrentStatusId = ClientCurrentStatusId;
+              row.Text = text;
+              break;
+            }
+          case eModifyRow.deleteRow:
+            {
+              row = db.ESubClientCurrentStatuses.Where(x => x.SubClientCurrentStatusId == id).First();
+              row.DtDeleted = DateTime.Now;
+              break;
+            }
+          case eModifyRow.undeleteRow:
+            {
+              row = db.ESubClientCurrentStatuses.Where(x => x.SubClientCurrentStatusId == id).First();
+              row.DtDeleted = null;
+              break;
+            }
+          default:
+            new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifySubClientCurrentStatus() Bad enum ModifyRow", modifyRow.ToString(), IdUser);
+            break;
+        }
+        db.SaveChanges();
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "UniversalModifySubClientCurrentStatus " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? "<=" + oldText : ""), IdUser);
+
+        return row?.SubClientCurrentStatusId ?? -1;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifySubClientCurrentStatus() " + GetInnerException(Ex), id.ToString(), IdUser);
+      }
+      return -1;
+    }
+
+    public int UniversalModifyClientCurrentStatus(eModifyRow modifyRow, int id, string text)
+    {
+      sErr = "";
+      string oldText = "";
+      Evitel2Context db = new Evitel2Context();
+      EClientCurrentStatus row = new EClientCurrentStatus();
+      try
+      {
+
+        switch (modifyRow)
+        {
+          case eModifyRow.addRow:
+            {
+              row.Text = text;
+              db.EClientCurrentStatuses.Add(row);
+              break;
+            }
+          case eModifyRow.modifyRow:
+            {
+              row = db.EClientCurrentStatuses.Where(x => x.ClientCurrentStatusId == id).First();
+              oldText = row.Text;
+              row.Text = text;
+              break;
+            }
+          case eModifyRow.deleteRow:
+            {
+              row = db.EClientCurrentStatuses.Where(x => x.ClientCurrentStatusId == id).First();
+              row.DtDeleted = DateTime.Now;
+              break;
+            }
+          case eModifyRow.undeleteRow:
+            {
+              row = db.EClientCurrentStatuses.Where(x => x.ClientCurrentStatusId == id).First();
+              row.DtDeleted = null;
+              break;
+            }
+          default:
+            new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyClientCurrentStatus() Bad enum ModifyRow", modifyRow.ToString(), IdUser);
+            break;
+        }
+        db.SaveChanges();
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "UniversalModifyClientCurrentStatus " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? "<=" + oldText : ""), IdUser);
+
+        return row?.ClientCurrentStatusId ?? -1;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyClientCurrentStatus() " + GetInnerException(Ex), id.ToString(), IdUser);
+      }
+      return -1;
+    }
+
+    public int UniversalModifyContactTopic(eModifyRow modifyRow, int id, string text)
+    {
+      sErr = "";
+      string oldText = "";
+      Evitel2Context db = new Evitel2Context();
+      EContactTopic row = new EContactTopic();
+      try
+      {
+
+        switch (modifyRow)
+        {
+          case eModifyRow.addRow:
+            {
+              row.Text = text;
+              db.EContactTopics.Add(row);
+              break;
+            }
+          case eModifyRow.modifyRow:
+            {
+              row = db.EContactTopics.Where(x => x.ContactTopicId == id).First();
+              oldText = row.Text;
+              row.Text = text;
+              break;
+            }
+          case eModifyRow.deleteRow:
+            {
+              row = db.EContactTopics.Where(x => x.ContactTopicId == id).First();
+              row.DtDeleted = DateTime.Now;
+              break;
+            }
+          case eModifyRow.undeleteRow:
+            {
+              row = db.EContactTopics.Where(x => x.ContactTopicId == id).First();
+              row.DtDeleted = null;
+              break;
+            }
+          default:
+            new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyContactTopic() Bad enum ModifyRow", modifyRow.ToString(), IdUser);
+            break;
+        }
+        db.SaveChanges();
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "UniversalModifyContactTopic " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? " <= " + oldText : ""), IdUser);
+        return row.ContactTopicId;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyContactTopic() " + GetInnerException(Ex), id.ToString(), IdUser);
+      }
+      return -1;
+    }
+
+    public int UniversalModifySubContactTopic(eModifyRow modifyRow, int id, string text, int idContactTopic)
+    {
+      sErr = "";
+      string oldText = "";
+      Evitel2Context db = new Evitel2Context();
+      ESubContactTopic row = new ESubContactTopic();
+      try
+      {
+
+        switch (modifyRow)
+        {
+          case eModifyRow.addRow:
+            {
+              row.Text = text;
+              row.ContactTopicId= idContactTopic;
+              db.ESubContactTopics.Add(row);
+              break;
+            }
+          case eModifyRow.modifyRow:
+            {
+              row = db.ESubContactTopics.Where(x => x.SubContactTopicId == id).First();
+              oldText = row.Text;
+              row.ContactTopicId = idContactTopic;
+              row.Text = text;
+              break;
+            }
+          case eModifyRow.deleteRow:
+            {
+              row = db.ESubContactTopics.Where(x => x.SubContactTopicId == id).First();
+              row.DtDeleted = DateTime.Now;
+              break;
+            }
+          case eModifyRow.undeleteRow:
+            {
+              row = db.ESubContactTopics.Where(x => x.SubContactTopicId == id).First();
+              row.DtDeleted = null;
+              break;
+            }
+          default:
+            new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifySubContactTopic() Bad enum ModifyRow", modifyRow.ToString(), IdUser);
+            break;
+        }
+        db.SaveChanges();
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "UniversalModifySubContactTopic " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? "<=" + oldText : ""), IdUser);
+
+        return row.SubContactTopicId;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifySubContactTopic() " + GetInnerException(Ex), id.ToString(), IdUser);
+      }
+      return -1;
+    }
+
+    public int UniversalModifyAge(eModifyRow modifyRow, int id, string text)
+    {
+      sErr = "";
+      string oldText = "";
+      Evitel2Context db = new Evitel2Context();
+      EAge row = new EAge();
+      try
+      {
+
+        switch (modifyRow)
+        {
+          case eModifyRow.addRow:
+            {
+              row.Text = text;
+              db.EAges.Add(row);
+              break;
+            }
+          case eModifyRow.modifyRow:
+            {
+              row = db.EAges.Where(x => x.AgeId == id).First();
+              oldText = row.Text;
+              row.Text = text;
+              break;
+            }
+          case eModifyRow.deleteRow:
+            {
+              row = db.EAges.Where(x => x.AgeId == id).First();
+              row.DtDeleted = DateTime.Now;
+              break;
+            }
+          case eModifyRow.undeleteRow:
+            {
+              row = db.EAges.Where(x => x.AgeId == id).First();
+              row.DtDeleted = null;
+              break;
+            }
+          default:
+            new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyAge() Bad enum ModifyRow", modifyRow.ToString(), IdUser);
+            break;
+        }
+        db.SaveChanges();
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "UniversalModifyAge " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? " <= " + oldText : ""), IdUser);
+        return row.AgeId;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyAge() " + GetInnerException(Ex), id.ToString(), IdUser);
+      }
+      return -1;
+    }
+
+    public int UniversalModifyContactType(eModifyRow modifyRow, int id, string text)
+    {
+      sErr = "";
+      string oldText = "";
+      Evitel2Context db = new Evitel2Context();
+      EContactType row = new EContactType();
+      try
+      {
+
+        switch (modifyRow)
+        {
+          case eModifyRow.addRow:
+            {
+              row.Text = text;
+              db.EContactTypes.Add(row);
+              break;
+            }
+          case eModifyRow.modifyRow:
+            {
+              row = db.EContactTypes.Where(x => x.ContactTypeId == id).First();
+              oldText = row.Text;
+              row.Text = text;
+              break;
+            }
+          case eModifyRow.deleteRow:
+            {
+              row = db.EContactTypes.Where(x => x.ContactTypeId == id).First();
+              row.DtDeleted = DateTime.Now;
+              break;
+            }
+          case eModifyRow.undeleteRow:
+            {
+              row = db.EContactTypes.Where(x => x.ContactTypeId == id).First();
+              row.DtDeleted = null;
+              break;
+            }
+          default:
+            new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyContactType() Bad enum ModifyRow", modifyRow.ToString(), IdUser);
+            break;
+        }
+        db.SaveChanges();
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "UniversalModifyContactType " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? " <= " + oldText : ""), IdUser);
+        return row.ContactTypeId;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyContactType() " + GetInnerException(Ex), id.ToString(), IdUser);
+      }
+      return -1;
+    }
+
+    public int UniversalModifyTypeService(eModifyRow modifyRow, int id, string text)
+    {
+      sErr = "";
+      string oldText = "";
+      Evitel2Context db = new Evitel2Context();
+      ETypeService row = new ETypeService();
+      try
+      {
+
+        switch (modifyRow)
+        {
+          case eModifyRow.addRow:
+            {
+              row.Text = text;
+              db.ETypeServices.Add(row);
+              break;
+            }
+          case eModifyRow.modifyRow:
+            {
+              row = db.ETypeServices.Where(x => x.TypeServiceId == id).First();
+              oldText = row.Text;
+              row.Text = text;
+              break;
+            }
+          case eModifyRow.deleteRow:
+            {
+              row = db.ETypeServices.Where(x => x.TypeServiceId == id).First();
+              row.DtDeleted = DateTime.Now;
+              break;
+            }
+          case eModifyRow.undeleteRow:
+            {
+              row = db.ETypeServices.Where(x => x.TypeServiceId == id).First();
+              row.DtDeleted = null;
+              break;
+            }
+          default:
+            new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyTypeService() Bad enum ModifyRow", modifyRow.ToString(), IdUser);
+            break;
+        }
+        db.SaveChanges();
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "UniversalModifyTypeService " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? " <= " + oldText : ""), IdUser);
+        return row.TypeServiceId;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyTypeService() " + GetInnerException(Ex), id.ToString(), IdUser);
+      }
+      return -1;
+    }
+
+    public int UniversalModifyClientFrom(eModifyRow modifyRow, int id, string text)
+    {
+      sErr = "";
+      string oldText = "";
+      Evitel2Context db = new Evitel2Context();
+      EClientFrom row = new EClientFrom();
+      try
+      {
+
+        switch (modifyRow)
+        {
+          case eModifyRow.addRow:
+            {
+              row.Text = text;
+              db.EClientFroms.Add(row);
+              break;
+            }
+          case eModifyRow.modifyRow:
+            {
+              row = db.EClientFroms.Where(x => x.ClientFromId == id).First();
+              oldText = row.Text;
+              row.Text = text;
+              break;
+            }
+          case eModifyRow.deleteRow:
+            {
+              row = db.EClientFroms.Where(x => x.ClientFromId == id).First();
+              row.DtDeleted = DateTime.Now;
+              break;
+            }
+          case eModifyRow.undeleteRow:
+            {
+              row = db.EClientFroms.Where(x => x.ClientFromId == id).First();
+              row.DtDeleted = null;
+              break;
+            }
+          default:
+            new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyClientFrom() Bad enum ModifyRow", modifyRow.ToString(), IdUser);
+            break;
+        }
+        db.SaveChanges();
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "UniversalModifyClientFrom " + modifyRow.ToString() + "id = " + id.ToString(), text + ((modifyRow == eModifyRow.modifyRow) ? " <= " + oldText : ""), IdUser);
+        return row.ClientFromId;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyClientFrom() " + GetInnerException(Ex), id.ToString(), IdUser);
+      }
+      return -1;
+    }
+
+    #endregion
+
 
 
     public Intervent GetIntervent(int id)
@@ -1468,6 +2192,8 @@ namespace EvitelLib2.Repository
       }
       return -1;
     }
+
+
   }
 }
 

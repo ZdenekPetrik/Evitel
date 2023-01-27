@@ -57,6 +57,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateLPKData.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -65,6 +66,16 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EvitelApp2\EvitelApp2.csproj">
+      <Project>{32441dee-b5c6-4f09-b34c-0fbc7971c8e9}</Project>
+      <Name>EvitelApp2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EvitelLib2\EvitelLib2.csproj">
+      <Project>{f24c7ada-1815-43a3-818e-4aef67026cac}</Project>
+      <Name>EvitelLib2</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
