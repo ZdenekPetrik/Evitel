@@ -35,6 +35,7 @@ namespace EvitelApp2
       emptyPage,
       EventLog,
       NewCall,
+      LPKCall,
       Intervents,
       Enums,
       LikoParticipant,
@@ -42,6 +43,7 @@ namespace EvitelApp2
       LikoIncident,
       LikoIntervence,
       User,
+      CallAll,
       NecoJineho
     }
 
@@ -72,6 +74,8 @@ namespace EvitelApp2
       ucCallLIKO1.Dock = DockStyle.Fill;
       ucCallLIKO1.ShowDetailIntervence += ShowDetailIntervence;
 
+      ucCallLPK1.Dock = DockStyle.Fill;
+
       ucIntervents1.Dock = DockStyle.Fill;
       splitContainer1.Dock = DockStyle.Fill;
       ucCiselnik1.Dock = DockStyle.Fill;
@@ -90,6 +94,10 @@ namespace EvitelApp2
       ctrlLikoCall1.Dock = DockStyle.Fill;
       ctrlLikoCall1.ShowRowInformation += ShowRowInformation;
       ctrlLikoCall1.ShowDetailIntervence += ShowDetailIntervence;
+
+      ctrlCall1.Dock = DockStyle.Fill;
+      ctrlCall1.ShowRowInformation += ShowRowInformation;
+      ctrlCall1.ShowDetailIntervence += ShowDetailIntervence;
 
       ctrlUser1.Dock = DockStyle.Fill;
       ctrlUser1.ShowRowInformation += ShowRowInformation;
@@ -135,6 +143,9 @@ namespace EvitelApp2
         case eShowWindow.NewCall:
           ucCallLIKO1.Visible = false;
           break;
+        case eShowWindow.LPKCall:
+          ucCallLPK1.Visible = false;
+          break;
         case eShowWindow.Intervents:
           ucIntervents1.Visible = false;
           break;
@@ -156,8 +167,13 @@ namespace EvitelApp2
         case eShowWindow.User:
           ctrlUser1.Visible = false;
           break;
-        case eShowWindow.NecoJineho: break;
-        default: break;
+        case eShowWindow.CallAll:
+          ctrlCall1.Visible = false;
+          break;
+        case eShowWindow.NecoJineho:
+          break;
+        default: 
+          break;
       }
       MenuToolsRemoveFilters.Enabled = false;
       MenuToolsRemoveOrders.Enabled = false;
@@ -203,7 +219,7 @@ namespace EvitelApp2
       {
         ucCallLIKO1.isNewForm = false;
         ucCallLIKO1.LikoIntervenceId = TypeCall;
-        this.Text = Title + " - LIKO Intervence id = " + TypeCall.ToString();
+        this.Text = Title + " - Linka krizové intervence (LIKO)";
 
       }
       else
@@ -217,6 +233,29 @@ namespace EvitelApp2
       lastWindowStack.Add(aktWindow);
 
     }
+
+    private void ShowView_NewCallLPK(int TypeCall = 0)
+    {
+      ucCallLPK1.Visible = true;
+      aktWindow = eShowWindow.LPKCall;
+      if (TypeCall > 0)
+      {
+        ucCallLPK1.isNewForm = false;
+        ucCallLPK1.LPKId = TypeCall;
+        this.Text = Title + " - Linka Pomoci v krizi (LPK)" ;
+
+      }
+      else
+      {
+        ucCallLPK1.isNewForm = true;
+        this.Text = Title + " - LPK Nové volání";
+      }
+      ucCallLPK1.PrepareScreen();
+      lastWindowStack.Add(aktWindow);
+
+    }
+
+
     private void ShowView_Interventi()
     {
       ucIntervents1.Visible = true;
@@ -287,6 +326,25 @@ namespace EvitelApp2
       this.Text = Title + " - Intervenční telefonní hovory";
       lastWindowStack.Add(aktWindow);
     }
+    private void ShowView_CallAll(bool openNeeded = true)
+    {
+      if (openNeeded)
+      {
+        ctrlCall1.ReadDataFirstTime();
+        ctrlCall1.MyResize();
+      }
+      ctrlCall1.Visible = true;
+      MenuToolsRemoveFilters.Enabled = true;
+      MenuToolsRemoveOrders.Enabled = true;
+      MenuToolSetColumnLayout.Enabled = true;
+      MenuToolsRemoveColumnLayout.Enabled = true;
+      FileExportExcel.Enabled = true;
+      FileExportCSV.Enabled = true;
+      aktWindow = eShowWindow.CallAll;
+      this.Text = Title + " - Telefonní hovory (LIKO + LPK)";
+      lastWindowStack.Add(aktWindow);
+    }
+
 
     private void ShowView_LIKOIncidents(bool openNeeded = true)
     {
@@ -378,6 +436,9 @@ namespace EvitelApp2
           case eShowWindow.LikoIntervence:
             ShowView_Intervence(false);
             break;
+          case eShowWindow.CallAll:
+            ShowView_CallAll(false);
+            break;
           default: break;
         }
       }
@@ -403,8 +464,14 @@ namespace EvitelApp2
     {
       HideActualView();
       ShowView_NewCall();
+    }
+    private void newCallLDToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      HideActualView();
+      ShowView_NewCallLPK();
 
     }
+
 
     private void MenuToolEventLog_Click(object sender, EventArgs e)
     {
@@ -427,7 +494,6 @@ namespace EvitelApp2
     {
       HideActualView();
       ShowView_Ciselnik(eAllCodeBooks.eSex);
-
     }
 
 
@@ -651,6 +717,11 @@ namespace EvitelApp2
       HideActualView();
       ShowView_Ciselnik(eAllCodeBooks.eAge);
 
+    }
+    private void MenuToolShowCallsAll_Click(object sender, EventArgs e)
+    {
+      HideActualView();
+      ShowView_CallAll();
     }
 
 

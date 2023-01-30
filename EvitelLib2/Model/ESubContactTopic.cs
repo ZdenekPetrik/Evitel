@@ -11,5 +11,6 @@ namespace EvitelLib2.Model
         public DateTime? DtDeleted { get; set; }
 
         public virtual EContactTopic ContactTopic { get; set; }
+        public virtual LpksubContactTopic LpksubContactTopic { get; set; }
     }
 }

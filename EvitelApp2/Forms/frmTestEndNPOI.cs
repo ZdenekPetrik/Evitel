@@ -3,6 +3,7 @@ using EvitelLib2.Repository;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
@@ -28,6 +29,8 @@ namespace EvitelApp2.Controls
 {
   public partial class frmTestEndNPOI : Form
   {
+    CRepositoryDB DB;
+
     public frmTestEndNPOI()
     {
       InitializeComponent();
@@ -133,9 +136,10 @@ namespace EvitelApp2.Controls
 
     private void frmTestEndNPOI_Load(object sender, EventArgs e)
     {
-      {
-        GlobalFontSettings.FontResolver = new FontResolver();
-        AutoCompleteStringCollection col = new AutoCompleteStringCollection
+      DB = new CRepositoryDB(-1);
+
+      GlobalFontSettings.FontResolver = new FontResolver();
+      AutoCompleteStringCollection col = new AutoCompleteStringCollection
       {
         "adam",
         "adamovič",
@@ -144,12 +148,58 @@ namespace EvitelApp2.Controls
         "broskve"
       };
 
-        txtAutocomplete.AutoCompleteSource = AutoCompleteSource.CustomSource;
-        txtAutocomplete.AutoCompleteCustomSource = col;
-        txtAutocomplete.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+      txtAutocomplete.AutoCompleteSource = AutoCompleteSource.CustomSource;
+      txtAutocomplete.AutoCompleteCustomSource = col;
+      txtAutocomplete.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+
+    }
+
+    private void btnTreeViewRead_Click(object sender, EventArgs e)
+    {
+      var subCSS = DB.GetSubClientCurrentStatus();
+      var css = DB.GetClientCurrentStatus().OrderBy(x => x.ClientCurrentStatusId);
+      var LPKClientCurrentStatus = DB.GetLPKClientCurrentStatus(3);
+      this.treeViewContactTopic.Nodes.Clear();  
+      foreach (var cssItem in css)
+      {
+        TreeNode mainNode = new TreeNode();
+        mainNode.Name = cssItem.ClientCurrentStatusId.ToString();
+        mainNode.Text = cssItem.Text;
+        foreach (var subCssItem in subCSS.Where(x => x.ClientCurrentStatusId == cssItem.ClientCurrentStatusId).OrderBy(x => x.SubClientCurrentStatusId))
+        {
+          TreeNode Node2 = new TreeNode();
+          Node2.Name = subCssItem.SubClientCurrentStatusId.ToString();
+          Node2.Text = subCssItem.Text;
+          Node2.Checked = LPKClientCurrentStatus.Contains(subCssItem.SubClientCurrentStatusId);
+
+          mainNode.Nodes.Add(Node2);
+        }
+        this.treeViewContactTopic.Nodes.Add(mainNode);
 
       }
+      this.treeViewContactTopic.CheckBoxes = true;
+      this.treeViewContactTopic.DrawMode = TreeViewDrawMode.OwnerDrawAll;
+
     }
+
+    private void btnTreeViewWrite_Click(object sender, EventArgs e)
+    {
+      List<int> EditedListID = new List<int>();
+      foreach (TreeNode n in treeViewContactTopic.Nodes)
+      {
+        foreach (TreeNode n2 in n.Nodes)
+        {
+          if (n2.Checked)
+          {
+            EditedListID.Add(int.Parse(n2.Name));
+          }
+        }
+      }
+      DB.SetLPKClientCurrentStatus(3, EditedListID);
+    }
+
+
+
 
     private void button2_Click(object sender, EventArgs e)
     {
@@ -466,5 +516,34 @@ namespace EvitelApp2.Controls
         MessageBox.Show("Nelze provést obnovu databáze. " + Ex.Message);
       }
     }
+
+    private void treeViewContactTopic_DrawNode(object sender, DrawTreeNodeEventArgs e)
+    {
+      if (e.Node.Parent == null)
+      {
+        int d = (int)(0.2 * e.Bounds.Height);
+        Rectangle rect = new Rectangle(d + treeViewContactTopic.Margin.Left, d + e.Bounds.Top, e.Bounds.Height - d * 2, e.Bounds.Height - d * 2);
+        e.Graphics.FillRectangle(new SolidBrush(Color.FromKnownColor(KnownColor.Control)), rect);
+        e.Graphics.DrawRectangle(Pens.Silver, rect);
+        StringFormat sf = new StringFormat() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Center };
+        e.Graphics.DrawString(e.Node.IsExpanded ? "-" : "+", treeViewContactTopic.Font, new SolidBrush(Color.Blue), rect, sf);
+        //Draw the dotted line connecting the expanding/collapsing button and the node Text
+        using (Pen dotted = new Pen(Color.Black) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dot })
+        {
+          e.Graphics.DrawLine(dotted, new Point(rect.Right + 1, rect.Top + rect.Height / 2), new Point(rect.Right + 4, rect.Top + rect.Height / 2));
+        }
+        //Draw text
+        sf.Alignment = StringAlignment.Near;
+        Rectangle textRect = new Rectangle(e.Bounds.Left + rect.Right + 4, e.Bounds.Top, e.Bounds.Width - rect.Right - 4, e.Bounds.Height);
+        if (e.Node.IsSelected)
+        {
+          SizeF textSize = e.Graphics.MeasureString(e.Node.Text, treeViewContactTopic.Font);
+          e.Graphics.FillRectangle(new SolidBrush(SystemColors.Highlight), new RectangleF(textRect.Left, textRect.Top, textSize.Width, textRect.Height));
+        }
+        e.Graphics.DrawString(e.Node.Text, treeViewContactTopic.Font, new SolidBrush(treeViewContactTopic.ForeColor), textRect, sf);
+      }
+      else e.DrawDefault = true;
+    }
+
   }
 }

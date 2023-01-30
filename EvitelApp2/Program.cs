@@ -25,7 +25,7 @@ namespace EvitelApp2
             myLoggedUser = loginManipulation.CheckLogin("ZPT", "12345678");
             if (myLoggedUser != null)
             {
-                Application.Run(new frmMain());
+                 Application.Run(new frmMain());
                 loginManipulation.Logout(myLoggedUser);
             }
             else

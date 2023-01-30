@@ -18,6 +18,7 @@ namespace EvitelLib2.Model
 
     public virtual DbSet<Call> Calls { get; set; }
     public virtual DbSet<EAge> EAges { get; set; }
+    public virtual DbSet<ECallType> ECallTypes { get; set; }
     public virtual DbSet<EClientCurrentStatus> EClientCurrentStatuses { get; set; }
     public virtual DbSet<EClientFrom> EClientFroms { get; set; }
     public virtual DbSet<EContactTopic> EContactTopics { get; set; }
@@ -40,12 +41,17 @@ namespace EvitelLib2.Model
     public virtual DbSet<LoginAccess> LoginAccesses { get; set; }
     public virtual DbSet<LoginAccessUser> LoginAccessUsers { get; set; }
     public virtual DbSet<LoginUser> LoginUsers { get; set; }
+    public virtual DbSet<Lpk> Lpks { get; set; }
+    public virtual DbSet<LpkclientCurrentStatus> LpkclientCurrentStatuses { get; set; }
+    public virtual DbSet<LpksubContactTopic> LpksubContactTopics { get; set; }
+    public virtual DbSet<LpksubEndOfSpeech> LpksubEndOfSpeeches { get; set; }
     public virtual DbSet<MainEventLog> MainEventLogs { get; set; }
     public virtual DbSet<MainSetting> MainSettings { get; set; }
     public virtual DbSet<Region> Regions { get; set; }
     public virtual DbSet<State> States { get; set; }
     public virtual DbSet<UserColumn> UserColumns { get; set; }
     public virtual DbSet<UserSetting> UserSettings { get; set; }
+    public virtual DbSet<WCall> WCalls { get; set; }
     public virtual DbSet<WIntervent> WIntervents { get; set; }
     public virtual DbSet<WLikoall> WLikoalls { get; set; }
     public virtual DbSet<WLikocall> WLikocalls { get; set; }
@@ -58,10 +64,7 @@ namespace EvitelLib2.Model
     {
       if (!optionsBuilder.IsConfigured)
       {
-
-        var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DBEvitel2"]?.ConnectionString;
-        if (connectionString == null)
-          connectionString = "Data Source=localhost;Initial Catalog=Evitel2;Integrated Security=SSPI;Trusted_Connection=True;Application Name=Evitel2;";
+        var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DBEvitel2"].ConnectionString;
         optionsBuilder.UseSqlServer(connectionString);
       }
     }
@@ -70,6 +73,8 @@ namespace EvitelLib2.Model
     {
       modelBuilder.Entity<Call>(entity =>
       {
+        entity.Property(e => e.CallType).HasColumnName("callType");
+
         entity.Property(e => e.DtEndCall).HasColumnName("dtEndCall");
 
         entity.Property(e => e.DtStartCall).HasColumnName("dtStartCall");
@@ -85,6 +90,21 @@ namespace EvitelLib2.Model
         entity.HasKey(e => e.AgeId);
 
         entity.ToTable("eAge");
+
+        entity.Property(e => e.DtDeleted)
+                  .HasColumnType("datetime")
+                  .HasColumnName("dtDeleted");
+
+        entity.Property(e => e.Text).HasMaxLength(50);
+      });
+
+      modelBuilder.Entity<ECallType>(entity =>
+      {
+        entity.HasKey(e => e.CallTypeId);
+
+        entity.ToTable("eCallType");
+
+        entity.Property(e => e.CallTypeId).HasColumnName("callTypeId");
 
         entity.Property(e => e.DtDeleted)
                   .HasColumnType("datetime")
@@ -478,6 +498,131 @@ namespace EvitelLib2.Model
         entity.Property(e => e.LoginPassword).HasMaxLength(50);
       });
 
+      modelBuilder.Entity<Lpk>(entity =>
+      {
+        entity.ToTable("LPK");
+
+        entity.Property(e => e.Lpkid).HasColumnName("LPKId");
+
+        entity.Property(e => e.AgeEid).HasColumnName("AgeEID");
+
+        entity.Property(e => e.ClientFromEid).HasColumnName("ClientFromEID");
+
+        entity.Property(e => e.ContactTypeEid).HasColumnName("ContactTypeEID");
+
+        entity.Property(e => e.Nick).HasMaxLength(50);
+
+        entity.Property(e => e.SexEid).HasColumnName("SexEID");
+
+        entity.Property(e => e.TypeServiceEid).HasColumnName("TypeServiceEID");
+
+        entity.HasOne(d => d.AgeE)
+                  .WithMany(p => p.Lpks)
+                  .HasForeignKey(d => d.AgeEid)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("FK_LPK_eAge");
+
+        entity.HasOne(d => d.Call)
+                  .WithMany(p => p.Lpks)
+                  .HasForeignKey(d => d.CallId)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("FK_LPK_Calls");
+
+        entity.HasOne(d => d.ClientFromE)
+                  .WithMany(p => p.Lpks)
+                  .HasForeignKey(d => d.ClientFromEid)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("FK_LPK_eClientFrom");
+
+        entity.HasOne(d => d.ContactTypeE)
+                  .WithMany(p => p.Lpks)
+                  .HasForeignKey(d => d.ContactTypeEid)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("FK_LPK_eContactType");
+
+        entity.HasOne(d => d.SexE)
+                  .WithMany(p => p.Lpks)
+                  .HasForeignKey(d => d.SexEid)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("FK_LPK_eSex");
+
+        entity.HasOne(d => d.TypeServiceE)
+                  .WithMany(p => p.Lpks)
+                  .HasForeignKey(d => d.TypeServiceEid)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("FK_LPK_eTypeService");
+      });
+
+      modelBuilder.Entity<LpkclientCurrentStatus>(entity =>
+      {
+        entity.HasKey(e => e.LpksubClientCurentStatus);
+
+        entity.ToTable("LPKClientCurrentStatus");
+
+        entity.Property(e => e.LpksubClientCurentStatus).HasColumnName("LPKSubClientCurentStatus");
+
+        entity.Property(e => e.Lpkid).HasColumnName("LPKId");
+
+        entity.Property(e => e.LpksubClientCurrentStatusEid).HasColumnName("LPKSubClientCurrentStatusEID");
+
+        entity.HasOne(d => d.Lpk)
+                  .WithMany(p => p.LpkclientCurrentStatuses)
+                  .HasForeignKey(d => d.Lpkid)
+                  .HasConstraintName("FK_LPKClientCurrentStatus_LPK");
+
+        entity.HasOne(d => d.LpksubClientCurrentStatusE)
+                  .WithMany(p => p.LpkclientCurrentStatuses)
+                  .HasForeignKey(d => d.LpksubClientCurrentStatusEid)
+                  .HasConstraintName("FK_LPKClientCurrentStatus_eSubClientCurrentStatus");
+      });
+
+      modelBuilder.Entity<LpksubContactTopic>(entity =>
+      {
+        entity.ToTable("LPKSubContactTopic");
+
+        entity.Property(e => e.LpksubContactTopicId)
+                  .ValueGeneratedOnAdd()
+                  .HasColumnName("LPKSubContactTopicID");
+
+        entity.Property(e => e.Lpkid).HasColumnName("LPKId");
+
+        entity.Property(e => e.LpksubContactTopicEid).HasColumnName("LPKSubContactTopicEID");
+
+        entity.HasOne(d => d.Lpk)
+                  .WithMany(p => p.LpksubContactTopics)
+                  .HasForeignKey(d => d.Lpkid)
+                  .HasConstraintName("FK_LPKSubContactTopic_LPK");
+
+        entity.HasOne(d => d.LpksubContactTopicNavigation)
+                  .WithOne(p => p.LpksubContactTopic)
+                  .HasForeignKey<LpksubContactTopic>(d => d.LpksubContactTopicId)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("FK_LPKSubContactTopic_eSubContactTopic");
+      });
+
+      modelBuilder.Entity<LpksubEndOfSpeech>(entity =>
+      {
+        entity.ToTable("LPKSubEndOfSpeech");
+
+        entity.Property(e => e.LpksubEndOfSpeechId)
+                  .ValueGeneratedNever()
+                  .HasColumnName("LPKSubEndOfSpeechID");
+
+        entity.Property(e => e.Lpkid).HasColumnName("LPKId");
+
+        entity.Property(e => e.LpksubEndOfSpeechEid).HasColumnName("LPKSubEndOfSpeechEID");
+
+        entity.HasOne(d => d.Lpk)
+                  .WithMany(p => p.LpksubEndOfSpeeches)
+                  .HasForeignKey(d => d.Lpkid)
+                  .HasConstraintName("FK_LPKSubEndOfSpeech_LPK");
+
+        entity.HasOne(d => d.LpksubEndOfSpeechE)
+                  .WithMany(p => p.LpksubEndOfSpeeches)
+                  .HasForeignKey(d => d.LpksubEndOfSpeechEid)
+                  .HasConstraintName("FK_LPKSubEndOfSpeech_eSubEndOfSpeech");
+      });
+
       modelBuilder.Entity<MainEventLog>(entity =>
       {
         entity.Property(e => e.DtCreate).HasColumnName("dtCreate");
@@ -532,6 +677,58 @@ namespace EvitelLib2.Model
         entity.Property(e => e.Name).HasMaxLength(255);
 
         entity.Property(e => e.SValue).HasColumnName("sValue");
+      });
+
+      modelBuilder.Entity<WCall>(entity =>
+      {
+        entity.HasNoKey();
+
+        entity.ToView("wCalls");
+
+        entity.Property(e => e.CallType).HasMaxLength(50);
+
+        entity.Property(e => e.ContactType).HasMaxLength(50);
+
+        entity.Property(e => e.DtCall)
+                  .HasColumnType("date")
+                  .HasColumnName("dtCall");
+
+        entity.Property(e => e.DtEndCall).HasColumnName("dtEndCall");
+
+        entity.Property(e => e.DtStartCall).HasColumnName("dtStartCall");
+
+        entity.Property(e => e.InterventShortName).HasMaxLength(53);
+
+        entity.Property(e => e.LikointervenceId).HasColumnName("LIKOIntervenceId");
+
+        entity.Property(e => e.Lpkid).HasColumnName("LPKId");
+
+        entity.Property(e => e.Nick).HasMaxLength(50);
+
+        entity.Property(e => e.RegionName).HasMaxLength(50);
+
+        entity.Property(e => e.TmDuration)
+                  .HasMaxLength(8)
+                  .IsUnicode(false)
+                  .HasColumnName("tmDuration");
+
+        entity.Property(e => e.TmEndCall)
+                  .HasMaxLength(8)
+                  .IsUnicode(false)
+                  .HasColumnName("tmEndCall");
+
+        entity.Property(e => e.TmStartCall)
+                  .HasMaxLength(8)
+                  .IsUnicode(false)
+                  .HasColumnName("tmStartCall");
+
+        entity.Property(e => e.UsrFirstName)
+                  .HasMaxLength(50)
+                  .HasColumnName("usrFirstName");
+
+        entity.Property(e => e.UsrLastName)
+                  .HasMaxLength(50)
+                  .HasColumnName("usrLastName");
       });
 
       modelBuilder.Entity<WIntervent>(entity =>

@@ -641,7 +641,7 @@ namespace EvitelLib2.Repository
     }
     #endregion
 
-    public int WriteCall(DateTime datetimeStartCall)
+    public int WriteCall(DateTime datetimeStartCall, int callType, DateTime? dateTimeEndCall)
     {
       sErr = "";
       Evitel2Context db = new Evitel2Context();
@@ -649,7 +649,9 @@ namespace EvitelLib2.Repository
       {
         Call call = new Call();
         call.DtStartCall = datetimeStartCall;
+        call.DtEndCall = dateTimeEndCall;
         call.LoginUserId = IdUser;
+        call.CallType = callType;
         db.Calls.Add(call);
         db.SaveChanges();
         return call.CallId;
@@ -777,15 +779,13 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
-    public List<EDruhIntervence> GetDruhIntervence(bool isReadAll = false)
+    public List<EDruhIntervence> GetDruhIntervence()
     {
       sErr = "";
       Evitel2Context db = new Evitel2Context();
       try
       {
         var rows = from di in db.EDruhIntervences select di;
-        if (isReadAll)
-          rows.Where(x => x.DtDeleted == null);
         return rows.AsNoTracking().ToList();
       }
       catch (Exception Ex)
@@ -795,15 +795,13 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
-    public List<EEndOfSpeech> GetEndOfSpeech(bool isReadAll = false)
+    public List<EEndOfSpeech> GetEndOfSpeech()
     {
       sErr = "";
       Evitel2Context db = new Evitel2Context();
       try
       {
         var rows = from es in db.EEndOfSpeeches select es;
-        if (isReadAll)
-          rows.Where(x => x.DtDeleted == null);
         return rows.AsNoTracking().ToList();
       }
       catch (Exception Ex)
@@ -813,15 +811,13 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
-    public List<ESubEndOfSpeech> GetSubEndOfSpeech(bool isReadAll = false)
+    public List<ESubEndOfSpeech> GetSubEndOfSpeech()
     {
       sErr = "";
       Evitel2Context db = new Evitel2Context();
       try
       {
         var rows = from ess in db.ESubEndOfSpeeches.Include(x => x.EndOfSpeech) select ess;
-        if (isReadAll)
-          rows.Where(x => x.DtDeleted == null);
         return rows.AsNoTracking().ToList();
       }
       catch (Exception Ex)
@@ -831,15 +827,13 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
-    public List<EClientCurrentStatus> GetClientCurrentStatus(bool isReadAll = false)
+    public List<EClientCurrentStatus> GetClientCurrentStatus()
     {
       sErr = "";
       Evitel2Context db = new Evitel2Context();
       try
       {
         var rows = from ccs in db.EClientCurrentStatuses select ccs;
-        if (isReadAll)
-          rows.Where(x => x.DtDeleted == null);
         return rows.AsNoTracking().ToList();
       }
       catch (Exception Ex)
@@ -849,15 +843,13 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
-    public List<ESubClientCurrentStatus> GetSubClientCurrentStatus(bool isReadAll = false)
+    public List<ESubClientCurrentStatus> GetSubClientCurrentStatus()
     {
       sErr = "";
       Evitel2Context db = new Evitel2Context();
       try
       {
         var rows = from ess in db.ESubClientCurrentStatuses.Include(x => x.ClientCurrentStatus) select ess;
-        if (isReadAll)
-          rows.Where(x => x.DtDeleted == null);
         return rows.AsNoTracking().ToList();
       }
       catch (Exception Ex)
@@ -867,15 +859,13 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
-    public List<EContactTopic> GetContactTopic(bool isReadAll = false)
+    public List<EContactTopic> GetContactTopic()
     {
       sErr = "";
       Evitel2Context db = new Evitel2Context();
       try
       {
         var rows = from r in db.EContactTopics select r;
-        if (isReadAll)
-          rows.Where(x => x.DtDeleted == null);
         return rows.AsNoTracking().ToList();
       }
       catch (Exception Ex)
@@ -886,16 +876,13 @@ namespace EvitelLib2.Repository
       return null;
 
     }
-    public List<ESubContactTopic> GetSubContactTopic(bool isReadAll = false)
+    public List<ESubContactTopic> GetSubContactTopic()
     {
       sErr = "";
       Evitel2Context db = new Evitel2Context();
       try
       {
         var rows = from ess in db.ESubContactTopics.Include(x => x.ContactTopic) select ess;
-        if (isReadAll)
-          rows.Where(x => x.DtDeleted == null);
-
         return rows.AsNoTracking().ToList();
       }
       catch (Exception Ex)
@@ -905,15 +892,14 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
-    public List<EContactType> GetContactType(bool isReadAll = false)
+    public List<EContactType> GetContactType()
     {
       sErr = "";
       Evitel2Context db = new Evitel2Context();
       try
       {
         var rows = from r in db.EContactTypes select r;
-        if (isReadAll)
-          rows.Where(x => x.DtDeleted == null);
+        rows.Where(x => x.DtDeleted == null);
         return rows.AsNoTracking().ToList();
       }
       catch (Exception Ex)
@@ -923,15 +909,13 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
-    public List<EAge> GetContactAge(bool isReadAll = false)
+    public List<EAge> GetContactAge()
     {
       sErr = "";
       Evitel2Context db = new Evitel2Context();
       try
       {
         var rows = from r in db.EAges select r;
-        if (isReadAll)
-          rows.Where(x => x.DtDeleted == null);
         return rows.AsNoTracking().ToList();
       }
       catch (Exception Ex)
@@ -941,15 +925,13 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
-    public List<EClientFrom> GetClientFrom(bool isReadAll=false )
+    public List<EClientFrom> GetClientFrom()
     {
       sErr = "";
       Evitel2Context db = new Evitel2Context();
       try
       {
         var rows = from r in db.EClientFroms select r;
-        if (isReadAll)
-          rows.Where(x => x.DtDeleted == null);
         return rows.AsNoTracking().ToList();
       }
       catch (Exception Ex)
@@ -959,21 +941,19 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
-    public List<ETypeService> GetTypeService(bool isReadAll = false)
+    public List<ETypeService> GetTypeService()
     {
       sErr = "";
       Evitel2Context db = new Evitel2Context();
       try
       {
         var rows = from r in db.ETypeServices select r;
-        if (isReadAll)
-          rows.Where(x => x.DtDeleted == null);
         return rows.AsNoTracking().ToList();
       }
       catch (Exception Ex)
       {
         sErr = GetInnerException(Ex);
-        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetClientFrom() " + GetInnerException(Ex), "", IdUser);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetTypeService() " + GetInnerException(Ex), "", IdUser);
       }
       return null;
     }
@@ -1029,6 +1009,22 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
+    public List<WCall> GetWCalls()
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        return (from par in db.WCalls orderby par.DtStartCall select par).ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetWCalls() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+
 
     public List<WLikoincident> GetWLIKOIncident()
     {
@@ -1868,7 +1864,7 @@ namespace EvitelLib2.Repository
           case eModifyRow.addRow:
             {
               row.Text = text;
-              row.ContactTopicId= idContactTopic;
+              row.ContactTopicId = idContactTopic;
               db.ESubContactTopics.Add(row);
               break;
             }
@@ -2182,7 +2178,7 @@ namespace EvitelLib2.Repository
         db.ChangeTracker.DetectChanges();
         Console.WriteLine(db.ChangeTracker.DebugView.LongView);
         db.SaveChanges();
-        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "UniversalModifyIntervent " + modifyRow.ToString() + "id = " + oneRow.InterventId.ToString(),"", IdUser);
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CodeBook, "UniversalModifyIntervent " + modifyRow.ToString() + "id = " + oneRow.InterventId.ToString(), "", IdUser);
         return oneRow?.InterventId ?? 0;
       }
       catch (Exception Ex)
@@ -2193,6 +2189,166 @@ namespace EvitelLib2.Repository
       return -1;
     }
 
+    public List<int> GetLPKClientCurrentStatus(int LPKId)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var ids = from r in db.LpkclientCurrentStatuses where r.Lpkid == LPKId select r.LpksubClientCurrentStatusEid ?? 0;
+        return ids.ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetLPKClientCurrentStatus() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+
+    public void SetLPKClientCurrentStatus(int LPKId, List<int> newList)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var oldList = GetLPKClientCurrentStatus(LPKId);
+        var toDelete = oldList.Except(newList).ToList();
+        var toAdd = newList.Except(oldList).ToList();
+        var delRows = from r in db.LpkclientCurrentStatuses where r.Lpkid == LPKId && toDelete.Contains(r.LpksubClientCurrentStatusEid ?? 0) select r;
+        if (delRows.Count() > 0)
+        {
+          db.LpkclientCurrentStatuses.RemoveRange(delRows);
+        }
+        foreach (int id in toAdd)
+        {
+          LpkclientCurrentStatus newRow = new LpkclientCurrentStatus();
+          newRow.Lpkid = LPKId;
+          newRow.LpksubClientCurrentStatusEid = id;
+          db.LpkclientCurrentStatuses.Add(newRow);
+        }
+        db.SaveChanges();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "SetLPKClientCurrentStatus() " + GetInnerException(Ex), "", IdUser);
+      }
+    }
+
+    public List<int> GetLPKContactTopic(int LPKId)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var ids = from r in db.LpksubContactTopics where r.Lpkid == LPKId select r.LpksubContactTopicEid ?? 0;
+        return ids.ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetLPKContactTopic() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+
+    public void SetLPKContactTopic(int LPKId, List<int> newList)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var oldList = GetLPKContactTopic(LPKId);
+        var toDelete = oldList.Except(newList).ToList();
+        var toAdd = newList.Except(oldList).ToList();
+        var delRows = from r in db.LpksubContactTopics where r.Lpkid == LPKId && toDelete.Contains(r.LpksubContactTopicEid ?? 0) select r;
+        if (delRows.Count() > 0)
+        {
+          db.LpksubContactTopics.RemoveRange(delRows);
+        }
+        foreach (int id in toAdd)
+        {
+          LpksubContactTopic newRow = new LpksubContactTopic();
+          newRow.Lpkid = LPKId;
+          newRow.LpksubContactTopicEid = id;
+          db.LpksubContactTopics.Add(newRow);
+        }
+        db.SaveChanges();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "SetLPKcontactTopic() " + GetInnerException(Ex), "", IdUser);
+      }
+    }
+
+    public List<int> GetLPKEndOfSpeech(int LPKId)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var ids = from r in db.LpksubEndOfSpeeches where r.Lpkid == LPKId select r.LpksubEndOfSpeechEid ?? 0;
+        return ids.ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetLPKEndOfSpeech() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+
+    public void SetLPKEndOfSpeech(int LPKId, List<int> newList)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        var oldList = GetLPKEndOfSpeech(LPKId);
+        var toDelete = oldList.Except(newList).ToList();
+        var toAdd = newList.Except(oldList).ToList();
+        var delRows = from r in db.LpksubEndOfSpeeches where r.Lpkid == LPKId && toDelete.Contains(r.LpksubEndOfSpeechEid ?? 0) select r;
+        if (delRows.Count() > 0)
+        {
+          db.LpksubEndOfSpeeches.RemoveRange(delRows);
+        }
+        foreach (int id in toAdd)
+        {
+          /*
+          LpksubEndOfSpeech newRow = new LpkcontactTopic();
+          newRow.Lpkid = LPKId;
+          newRow. = id;
+          db.LpksubEndOfSpeeches.Add(newRow); */
+        }
+        db.SaveChanges();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "SetLPKEndOfSpeech() " + GetInnerException(Ex), "", IdUser);
+      }
+    }
+
+
+    public int WriteRowLPK(Lpk row)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        db.Lpks.Add(row);
+        db.SaveChanges();
+        return row.Lpkid;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "WriteRowLPK() " + GetInnerException(Ex), "", IdUser);
+      }
+      return -1;
+    }
 
   }
 }

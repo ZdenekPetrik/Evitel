@@ -906,22 +906,22 @@ namespace EvitelApp2.Controls
           break;
         case eAllCodeBooks.eAge:
           DB.UniversalModifyAge(typeForm, id, text);
-          ageDataList = DB.GetContactAge(true);
+          ageDataList = DB.GetContactAge();
           AddDataToTableAge();
           break;
         case eAllCodeBooks.eContactType:
           DB.UniversalModifyContactType(typeForm, id, text);
-          contactTypeDataList = DB.GetContactType(true);
+          contactTypeDataList = DB.GetContactType();
           AddDataToTableContactType();
           break;
         case eAllCodeBooks.eTypeService:
           DB.UniversalModifyTypeService(typeForm, id, text);
-          typeServiceDataList = DB.GetTypeService(true);
+          typeServiceDataList = DB.GetTypeService();
           AddDataToTableTypeService();
           break;
         case eAllCodeBooks.eClientFrom:
           DB.UniversalModifyClientFrom(typeForm, id, text);
-          clientFromDataList = DB.GetClientFrom(true);
+          clientFromDataList = DB.GetClientFrom();
           AddDataToTableClientFrom();
           break;
 

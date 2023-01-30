@@ -35,4 +35,11 @@ namespace EvitelLib2
 
     e2CodeBook = 61
   };
+
+  public enum eCallType
+  {
+    eLIKO = 101,
+    ePLK = 102
+  };
+
 }

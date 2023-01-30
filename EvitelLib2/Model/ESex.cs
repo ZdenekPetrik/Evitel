@@ -8,6 +8,7 @@ namespace EvitelLib2.Model
         public ESex()
         {
             Likoparticipants = new HashSet<Likoparticipant>();
+            Lpks = new HashSet<Lpk>();
         }
 
         public int SexId { get; set; }
@@ -15,5 +16,6 @@ namespace EvitelLib2.Model
         public DateTime? DtDeleted { get; set; }
 
         public virtual ICollection<Likoparticipant> Likoparticipants { get; set; }
+        public virtual ICollection<Lpk> Lpks { get; set; }
     }
 }

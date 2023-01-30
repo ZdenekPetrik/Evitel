@@ -38,6 +38,9 @@
             this.btnRestore = new System.Windows.Forms.Button();
             this.txtAutocomplete = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.treeViewContactTopic = new System.Windows.Forms.TreeView();
+            this.btnTreeViewRead = new System.Windows.Forms.Button();
+            this.btnTreeViewWrite = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -99,7 +102,7 @@
             // 
             // btnBackup
             // 
-            this.btnBackup.Location = new System.Drawing.Point(48, 301);
+            this.btnBackup.Location = new System.Drawing.Point(444, 222);
             this.btnBackup.Name = "btnBackup";
             this.btnBackup.Size = new System.Drawing.Size(75, 23);
             this.btnBackup.TabIndex = 6;
@@ -109,7 +112,7 @@
             // 
             // btnRestore
             // 
-            this.btnRestore.Location = new System.Drawing.Point(170, 301);
+            this.btnRestore.Location = new System.Drawing.Point(444, 251);
             this.btnRestore.Name = "btnRestore";
             this.btnRestore.Size = new System.Drawing.Size(75, 23);
             this.btnRestore.TabIndex = 7;
@@ -133,11 +136,42 @@
             this.label2.TabIndex = 9;
             this.label2.Text = "Autocomplete (našeptávač 3 znaky)";
             // 
+            // treeViewContactTopic
+            // 
+            this.treeViewContactTopic.Location = new System.Drawing.Point(70, 122);
+            this.treeViewContactTopic.Name = "treeViewContactTopic";
+            this.treeViewContactTopic.Size = new System.Drawing.Size(297, 270);
+            this.treeViewContactTopic.TabIndex = 10;
+            this.treeViewContactTopic.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.treeViewContactTopic_DrawNode);
+            // 
+            // btnTreeViewRead
+            // 
+            this.btnTreeViewRead.Location = new System.Drawing.Point(70, 398);
+            this.btnTreeViewRead.Name = "btnTreeViewRead";
+            this.btnTreeViewRead.Size = new System.Drawing.Size(92, 23);
+            this.btnTreeViewRead.TabIndex = 11;
+            this.btnTreeViewRead.Text = "Read From DB";
+            this.btnTreeViewRead.UseVisualStyleBackColor = true;
+            this.btnTreeViewRead.Click += new System.EventHandler(this.btnTreeViewRead_Click);
+            // 
+            // btnTreeViewWrite
+            // 
+            this.btnTreeViewWrite.Location = new System.Drawing.Point(292, 398);
+            this.btnTreeViewWrite.Name = "btnTreeViewWrite";
+            this.btnTreeViewWrite.Size = new System.Drawing.Size(75, 23);
+            this.btnTreeViewWrite.TabIndex = 12;
+            this.btnTreeViewWrite.Text = "Write to DB";
+            this.btnTreeViewWrite.UseVisualStyleBackColor = true;
+            this.btnTreeViewWrite.Click += new System.EventHandler(this.btnTreeViewWrite_Click);
+            // 
             // frmTestEndNPOI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnTreeViewWrite);
+            this.Controls.Add(this.btnTreeViewRead);
+            this.Controls.Add(this.treeViewContactTopic);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtAutocomplete);
             this.Controls.Add(this.btnRestore);
@@ -168,5 +202,8 @@
     private System.Windows.Forms.Button btnRestore;
     private System.Windows.Forms.TextBox txtAutocomplete;
     private System.Windows.Forms.Label label2;
+    private System.Windows.Forms.TreeView treeViewContactTopic;
+    private System.Windows.Forms.Button btnTreeViewRead;
+    private System.Windows.Forms.Button btnTreeViewWrite;
   }
 }

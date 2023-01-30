@@ -231,7 +231,7 @@ namespace EvitelApp2.Controls
         }
       }
       DateTime datetimeStartCall = dtCall.Value.Date.Add(TimeSpan.Parse(tmCall.Value.ToShortTimeString()));
-      int CallId = DB.WriteCall(datetimeStartCall);
+      int CallId = DB.WriteCall(datetimeStartCall, (int)eCallType.eLIKO, null);
       if (CallId > 0)
       {
         if (chkSecondIntervence.Checked != true)
@@ -252,7 +252,7 @@ namespace EvitelApp2.Controls
               if (DB.AddParticipant(aktPartycipant) < 1)
                 break;
             }
-            MessageBox.Show("Událost ID = " + IncidentId.ToString() + " uložena");
+            MessageBox.Show("LIKO Hovor ID = " + IncidentId.ToString() + " uložen");
             EmptyAll();
             ucParticipations1.EmptyAllRow();
           }
@@ -420,7 +420,7 @@ namespace EvitelApp2.Controls
     {
       if (cmbIntervent.SelectedIndex == 0)
       {
-        cmbInterventErrorProvider.SetError(this.cmbIntervent, "Volající musí být vyplněn");
+        cmbInterventErrorProvider.SetError(this.cmbIntervent, "Intervent musí být vyplněn");
         e.Cancel = true;
       }
       else
@@ -434,7 +434,7 @@ namespace EvitelApp2.Controls
     {
       if (cmbRegion.SelectedIndex == 0)
       {
-        cmbRegionErrorProvider.SetError(this.cmbRegion, "Volající musí být vyplněn");
+        cmbRegionErrorProvider.SetError(this.cmbRegion, "Region musí být vyplněn");
         e.Cancel = true;
       }
       else
