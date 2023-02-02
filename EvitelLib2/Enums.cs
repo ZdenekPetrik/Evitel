@@ -38,8 +38,8 @@ namespace EvitelLib2
 
   public enum eCallType
   {
-    eLIKO = 101,
-    ePLK = 102
+    eLIKO = 2,
+    ePLK = 1
   };
 
 }

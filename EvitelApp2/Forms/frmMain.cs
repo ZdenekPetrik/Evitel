@@ -1,4 +1,5 @@
 ﻿using EvitelApp2.Controls;
+using EvitelApp2.Forms;
 using EvitelApp2.Forms1;
 using EvitelApp2.Helper;
 using EvitelApp2.Login;
@@ -44,6 +45,7 @@ namespace EvitelApp2
       LikoIntervence,
       User,
       CallAll,
+      LPKRows,
       NecoJineho
     }
 
@@ -98,6 +100,10 @@ namespace EvitelApp2
       ctrlCall1.Dock = DockStyle.Fill;
       ctrlCall1.ShowRowInformation += ShowRowInformation;
       ctrlCall1.ShowDetailIntervence += ShowDetailIntervence;
+
+      ctrllpk1.Dock = DockStyle.Fill;
+      ctrllpk1.ShowRowInformation += ShowRowInformation;
+      ctrllpk1.ShowDetailIntervence += ShowDetailIntervence;
 
       ctrlUser1.Dock = DockStyle.Fill;
       ctrlUser1.ShowRowInformation += ShowRowInformation;
@@ -170,9 +176,12 @@ namespace EvitelApp2
         case eShowWindow.CallAll:
           ctrlCall1.Visible = false;
           break;
+        case eShowWindow.LPKRows:
+          ctrllpk1.Visible = false;
+          break;
         case eShowWindow.NecoJineho:
           break;
-        default: 
+        default:
           break;
       }
       MenuToolsRemoveFilters.Enabled = false;
@@ -242,7 +251,7 @@ namespace EvitelApp2
       {
         ucCallLPK1.isNewForm = false;
         ucCallLPK1.LPKId = TypeCall;
-        this.Text = Title + " - Linka Pomoci v krizi (LPK)" ;
+        this.Text = Title + " - Linka Pomoci v krizi (LPK)";
 
       }
       else
@@ -345,6 +354,24 @@ namespace EvitelApp2
       lastWindowStack.Add(aktWindow);
     }
 
+    private void ShowView_LPKRows(bool openNeeded = true)
+    {
+      if (openNeeded)
+      {
+        ctrllpk1.ReadDataFirstTime();
+        ctrllpk1.MyResize();
+      }
+      ctrllpk1.Visible = true;
+      MenuToolsRemoveFilters.Enabled = true;
+      MenuToolsRemoveOrders.Enabled = true;
+      MenuToolSetColumnLayout.Enabled = true;
+      MenuToolsRemoveColumnLayout.Enabled = true;
+      FileExportExcel.Enabled = true;
+      FileExportCSV.Enabled = true;
+      aktWindow = eShowWindow.LPKRows;
+      this.Text = Title + " - Linka pomoci v krizi";
+      lastWindowStack.Add(aktWindow);
+    }
 
     private void ShowView_LIKOIncidents(bool openNeeded = true)
     {
@@ -410,13 +437,18 @@ namespace EvitelApp2
       ctrlEventLog1.ReReadData();
     }
 
-    // source 1=Call, 2=Incident, 3=Intervence, 4=Participant, -1 ucCallLiko konci
+    // source 1=Call, 2=Incident, 3=Intervence, 4=Participant, 11=LPK, -1 ucCallLiko konci
     void ShowDetailIntervence(int source, int? IntervenceId)
     {
       if (source >= 1 && source <= 4)
       {
         HideActualView();
         ShowView_NewCall(IntervenceId ?? 0);
+      }
+      else if (source == 11)
+      {
+        HideActualView();
+        ShowView_NewCallLPK(IntervenceId ?? 0);
       }
       else if (source == -1)
       {
@@ -723,6 +755,17 @@ namespace EvitelApp2
       HideActualView();
       ShowView_CallAll();
     }
+    private void linkaPomociVKriziLPKToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      HideActualView();
+      ShowView_LPKRows();
+
+    }
+    private void exportDenníProtokolToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      frmExportDenniProtokol frm = new frmExportDenniProtokol();
+      frm.ShowDialog();
+    }
 
 
     #endregion
@@ -749,6 +792,10 @@ namespace EvitelApp2
         rozhrani = (IctrlWithDGW)ucCiselnik1;
       else if (aktWindow == eShowWindow.Intervents)
         rozhrani = (IctrlWithDGW)ucIntervents1;
+      else if (aktWindow == eShowWindow.LPKRows)
+        rozhrani = (IctrlWithDGW)ctrllpk1;
+      else if (aktWindow == eShowWindow.CallAll)
+        rozhrani = (IctrlWithDGW)ctrlCall1;
       return rozhrani;
     }
     private void fileExportCSV_Click(object sender, EventArgs e)

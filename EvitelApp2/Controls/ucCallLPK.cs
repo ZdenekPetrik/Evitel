@@ -75,11 +75,15 @@ namespace EvitelApp2.Controls
       tvCurrentClientStatusErrorProvider = InitializeErrorProvider(1, tvCurrentClientStatus);
       tvEndOfSpeechErrorProvider = InitializeErrorProvider(1, tvEndOfSpeech);
 
+      
+      txtVolajici.AutoCompleteSource = AutoCompleteSource.CustomSource;
+      txtVolajici.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+      txtVolajici.AutoCompleteCustomSource = new AutoCompleteStringCollection();
     }
-  
+
     public void PrepareScreen()
     {
-      cmbContactType.Items.Clear();
+      cmbSex.Items.Clear();
       if (isNewForm)
       {
         cmbSex.Items.Add(new ComboItem("<Nevybráno>", ""));
@@ -104,6 +108,7 @@ namespace EvitelApp2.Controls
         cmbContactType.SelectedIndex = 0;
       }
       else { }
+
       cmbTypeService.Items.Clear();
       if (isNewForm)
       {
@@ -218,6 +223,7 @@ namespace EvitelApp2.Controls
       {
 
       }
+      txtVolajici.AutoCompleteCustomSource.AddRange(DB.GetNick().Select(x => x.Text).ToArray());
 
     }
 
@@ -455,7 +461,7 @@ namespace EvitelApp2.Controls
     {
       if (ValidateChildren())
       {
-        if (DialogResult.Yes == MessageBox.Show("Opravdu zapsat tento hovor?", "LPK hovor", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+        if (DialogResult.Yes == MessageBox.Show("Opravdu zapsat tento hovor?", "LPK Nové volání", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
           if (isNewForm)
             WriteThisNewCall();
           else
@@ -463,7 +469,7 @@ namespace EvitelApp2.Controls
       }
       else
       {
-        MessageBox.Show("Validation failed.");
+        MessageBox.Show("Validation failed.", "LPK - Nové volání",MessageBoxButtons.OK,MessageBoxIcon.Stop);
       }
       return;
     }
@@ -497,9 +503,21 @@ namespace EvitelApp2.Controls
         DB.SetLPKClientCurrentStatus(aktLPKId, currentClientStatusIdList);
         List<int> endOfSpeechIdList = GetActiveNodeId(tvEndOfSpeech);
         DB.SetLPKEndOfSpeech(aktLPKId, endOfSpeechIdList);
+        if (txtVolajici.Text.Length > 0)
+        {
+          if (!txtVolajici.AutoCompleteCustomSource.Contains(txtVolajici.Text))
+          {
+            DB.AddNick(txtVolajici.Text);
+          }
+        }
         PrepareScreen();
       }
     }
 
+    private void ucCallLPK_VisibleChanged(object sender, EventArgs e)
+    {
+      if (this.Visible == false)
+        this.CausesValidation = false; 
+    }
   }
 }

@@ -58,6 +58,7 @@ namespace EvitelLib2.Model
     public virtual DbSet<WLikoincident> WLikoincidents { get; set; }
     public virtual DbSet<WLikointervence> WLikointervences { get; set; }
     public virtual DbSet<WLikoparticipant> WLikoparticipants { get; set; }
+    public virtual DbSet<WLpk> WLpks { get; set; }
     public virtual DbSet<WMainEventLog> WMainEventLogs { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -67,6 +68,7 @@ namespace EvitelLib2.Model
         var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DBEvitel2"].ConnectionString;
         optionsBuilder.UseSqlServer(connectionString);
       }
+
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -508,6 +510,8 @@ namespace EvitelLib2.Model
 
         entity.Property(e => e.ClientFromEid).HasColumnName("ClientFromEID");
 
+        entity.Property(e => e.ContactTopicEid).HasColumnName("ContactTopicEID");
+
         entity.Property(e => e.ContactTypeEid).HasColumnName("ContactTypeEID");
 
         entity.Property(e => e.Nick).HasMaxLength(50);
@@ -604,9 +608,7 @@ namespace EvitelLib2.Model
       {
         entity.ToTable("LPKSubEndOfSpeech");
 
-        entity.Property(e => e.LpksubEndOfSpeechId)
-                  .ValueGeneratedNever()
-                  .HasColumnName("LPKSubEndOfSpeechID");
+        entity.Property(e => e.LpksubEndOfSpeechId).HasColumnName("LPKSubEndOfSpeechID");
 
         entity.Property(e => e.Lpkid).HasColumnName("LPKId");
 
@@ -1009,6 +1011,76 @@ namespace EvitelLib2.Model
         entity.Property(e => e.TypePartyEid).HasColumnName("TypePartyEID");
 
         entity.Property(e => e.TypePartyText).HasMaxLength(50);
+
+        entity.Property(e => e.UsrFirstName)
+                  .HasMaxLength(50)
+                  .HasColumnName("usrFirstName");
+
+        entity.Property(e => e.UsrLastName)
+                  .HasMaxLength(50)
+                  .HasColumnName("usrLastName");
+      });
+
+      modelBuilder.Entity<WLpk>(entity =>
+      {
+        entity.HasNoKey();
+
+        entity.ToView("wLPK");
+
+        entity.Property(e => e.Age).HasMaxLength(50);
+
+        entity.Property(e => e.AgeEid).HasColumnName("AgeEID");
+
+        entity.Property(e => e.CallType).HasMaxLength(50);
+
+        entity.Property(e => e.ClientCurrentStatus).HasMaxLength(4000);
+
+        entity.Property(e => e.ClientFrom).HasMaxLength(50);
+
+        entity.Property(e => e.ClientFromEid).HasColumnName("ClientFromEID");
+
+        entity.Property(e => e.ContactTopic).HasMaxLength(4000);
+
+        entity.Property(e => e.ContactType).HasMaxLength(50);
+
+        entity.Property(e => e.ContactTypeEid).HasColumnName("ContactTypeEID");
+
+        entity.Property(e => e.DtCall)
+                  .HasColumnType("date")
+                  .HasColumnName("dtCall");
+
+        entity.Property(e => e.DtEndCall).HasColumnName("dtEndCall");
+
+        entity.Property(e => e.DtStartCall).HasColumnName("dtStartCall");
+
+        entity.Property(e => e.EndOfSpeech).HasMaxLength(4000);
+
+        entity.Property(e => e.Lpkid).HasColumnName("LPKId");
+
+        entity.Property(e => e.Nick).HasMaxLength(50);
+
+        entity.Property(e => e.Sex).HasMaxLength(50);
+
+        entity.Property(e => e.SexEid).HasColumnName("SexEID");
+
+        entity.Property(e => e.TmDuration)
+                  .HasMaxLength(8)
+                  .IsUnicode(false)
+                  .HasColumnName("tmDuration");
+
+        entity.Property(e => e.TmEndCall)
+                  .HasMaxLength(8)
+                  .IsUnicode(false)
+                  .HasColumnName("tmEndCall");
+
+        entity.Property(e => e.TmStartCall)
+                  .HasMaxLength(8)
+                  .IsUnicode(false)
+                  .HasColumnName("tmStartCall");
+
+        entity.Property(e => e.TypeService).HasMaxLength(50);
+
+        entity.Property(e => e.TypeServiceEid).HasColumnName("TypeServiceEID");
 
         entity.Property(e => e.UsrFirstName)
                   .HasMaxLength(50)

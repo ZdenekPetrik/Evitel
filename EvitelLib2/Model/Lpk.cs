@@ -21,6 +21,7 @@ namespace EvitelLib2.Model
         public int AgeEid { get; set; }
         public string Nick { get; set; }
         public int CallId { get; set; }
+        public int? ContactTopicEid { get; set; }
 
         public virtual EAge AgeE { get; set; }
         public virtual Call Call { get; set; }

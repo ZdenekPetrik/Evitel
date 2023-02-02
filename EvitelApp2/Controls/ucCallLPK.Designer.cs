@@ -107,10 +107,11 @@
             // 
             // cmbTypeService
             // 
+            this.cmbTypeService.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cmbTypeService.FormattingEnabled = true;
             this.cmbTypeService.Location = new System.Drawing.Point(715, 67);
             this.cmbTypeService.Name = "cmbTypeService";
-            this.cmbTypeService.Size = new System.Drawing.Size(176, 23);
+            this.cmbTypeService.Size = new System.Drawing.Size(176, 28);
             this.cmbTypeService.TabIndex = 55;
             this.cmbTypeService.Validating += new System.ComponentModel.CancelEventHandler(this.cmbTypeService_Validating);
             // 
@@ -126,10 +127,11 @@
             // 
             // cmbContactType
             // 
+            this.cmbContactType.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cmbContactType.FormattingEnabled = true;
             this.cmbContactType.Location = new System.Drawing.Point(158, 67);
             this.cmbContactType.Name = "cmbContactType";
-            this.cmbContactType.Size = new System.Drawing.Size(181, 23);
+            this.cmbContactType.Size = new System.Drawing.Size(181, 28);
             this.cmbContactType.TabIndex = 54;
             this.cmbContactType.Validating += new System.ComponentModel.CancelEventHandler(this.cmbContactType_Validating);
             // 
@@ -155,9 +157,10 @@
             // 
             // txtVolajici
             // 
+            this.txtVolajici.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtVolajici.Location = new System.Drawing.Point(715, 27);
             this.txtVolajici.Name = "txtVolajici";
-            this.txtVolajici.Size = new System.Drawing.Size(176, 23);
+            this.txtVolajici.Size = new System.Drawing.Size(176, 27);
             this.txtVolajici.TabIndex = 33;
             // 
             // label1
@@ -271,19 +274,21 @@
             // 
             // cmbFrom
             // 
+            this.cmbFrom.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cmbFrom.FormattingEnabled = true;
             this.cmbFrom.Location = new System.Drawing.Point(147, 29);
             this.cmbFrom.Name = "cmbFrom";
-            this.cmbFrom.Size = new System.Drawing.Size(210, 23);
+            this.cmbFrom.Size = new System.Drawing.Size(210, 28);
             this.cmbFrom.TabIndex = 51;
             this.cmbFrom.Validating += new System.ComponentModel.CancelEventHandler(this.cmbFrom_Validating);
             // 
             // cmbSex
             // 
+            this.cmbSex.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cmbSex.FormattingEnabled = true;
             this.cmbSex.Location = new System.Drawing.Point(526, 29);
             this.cmbSex.Name = "cmbSex";
-            this.cmbSex.Size = new System.Drawing.Size(210, 23);
+            this.cmbSex.Size = new System.Drawing.Size(210, 28);
             this.cmbSex.TabIndex = 53;
             this.cmbSex.Validating += new System.ComponentModel.CancelEventHandler(this.cmbSex_Validating);
             // 
@@ -314,10 +319,11 @@
             // 
             // cmbAge
             // 
+            this.cmbAge.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cmbAge.FormattingEnabled = true;
             this.cmbAge.Location = new System.Drawing.Point(876, 28);
             this.cmbAge.Name = "cmbAge";
-            this.cmbAge.Size = new System.Drawing.Size(210, 23);
+            this.cmbAge.Size = new System.Drawing.Size(210, 28);
             this.cmbAge.TabIndex = 55;
             this.cmbAge.Validating += new System.ComponentModel.CancelEventHandler(this.cmbAge_Validating);
             // 
@@ -416,7 +422,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label9.Location = new System.Drawing.Point(975, 13);
+            this.label9.Location = new System.Drawing.Point(982, 13);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(85, 17);
             this.label9.TabIndex = 60;
@@ -424,6 +430,7 @@
             // 
             // tvEndOfSpeech
             // 
+            this.tvEndOfSpeech.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.tvEndOfSpeech.Location = new System.Drawing.Point(777, 33);
             this.tvEndOfSpeech.Name = "tvEndOfSpeech";
             this.tvEndOfSpeech.Size = new System.Drawing.Size(290, 357);
@@ -436,7 +443,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label8.Location = new System.Drawing.Point(590, 13);
+            this.label8.Location = new System.Drawing.Point(561, 13);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(121, 17);
             this.label8.TabIndex = 58;
@@ -444,6 +451,7 @@
             // 
             // tvCurrentClientStatus
             // 
+            this.tvCurrentClientStatus.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.tvCurrentClientStatus.Location = new System.Drawing.Point(392, 33);
             this.tvCurrentClientStatus.Name = "tvCurrentClientStatus";
             this.tvCurrentClientStatus.Size = new System.Drawing.Size(290, 357);
@@ -464,6 +472,7 @@
             // 
             // tvContactTopic
             // 
+            this.tvContactTopic.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.tvContactTopic.Location = new System.Drawing.Point(10, 33);
             this.tvContactTopic.Name = "tvContactTopic";
             this.tvContactTopic.Size = new System.Drawing.Size(290, 357);
@@ -474,6 +483,7 @@
             // 
             // txtNote
             // 
+            this.txtNote.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtNote.Location = new System.Drawing.Point(1114, 185);
             this.txtNote.Multiline = true;
             this.txtNote.Name = "txtNote";
@@ -504,6 +514,7 @@
             this.Name = "ucCallLPK";
             this.Size = new System.Drawing.Size(1429, 753);
             this.Load += new System.EventHandler(this.ucCallLPK_Load);
+            this.VisibleChanged += new System.EventHandler(this.ucCallLPK_VisibleChanged);
             this.boxCall.ResumeLayout(false);
             this.boxCall.PerformLayout();
             this.boxClient.ResumeLayout(false);

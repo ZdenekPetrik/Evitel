@@ -59,6 +59,7 @@ namespace EvitelApp2.Controls
             this.lblPlace = new System.Windows.Forms.Label();
             this.lblregion1 = new System.Windows.Forms.Label();
             this.boxIntervence = new System.Windows.Forms.GroupBox();
+            this.lblIntervenceSum = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.txtSecondIncidentID = new System.Windows.Forms.NumericUpDown();
             this.btnDruhaIntervence = new System.Windows.Forms.Button();
@@ -82,7 +83,6 @@ namespace EvitelApp2.Controls
             this.tmIntervence = new System.Windows.Forms.DateTimePicker();
             this.ucParticipations1 = new EvitelApp2.Controls.ucParticipations();
             this.btnBack = new System.Windows.Forms.Button();
-            this.lblIntervenceSum = new System.Windows.Forms.Label();
             this.boxCall.SuspendLayout();
             this.boxEvent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtPocetObeti)).BeginInit();
@@ -445,6 +445,16 @@ namespace EvitelApp2.Controls
             this.boxIntervence.TabStop = false;
             this.boxIntervence.Text = "Základní údaje o intervenci";
             // 
+            // lblIntervenceSum
+            // 
+            this.lblIntervenceSum.AutoSize = true;
+            this.lblIntervenceSum.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblIntervenceSum.Location = new System.Drawing.Point(309, 95);
+            this.lblIntervenceSum.Name = "lblIntervenceSum";
+            this.lblIntervenceSum.Size = new System.Drawing.Size(39, 17);
+            this.lblIntervenceSum.TabIndex = 48;
+            this.lblIntervenceSum.Text = "00:00";
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -673,16 +683,6 @@ namespace EvitelApp2.Controls
             this.btnBack.UseVisualStyleBackColor = true;
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
-            // lblIntervenceSum
-            // 
-            this.lblIntervenceSum.AutoSize = true;
-            this.lblIntervenceSum.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblIntervenceSum.Location = new System.Drawing.Point(309, 95);
-            this.lblIntervenceSum.Name = "lblIntervenceSum";
-            this.lblIntervenceSum.Size = new System.Drawing.Size(39, 17);
-            this.lblIntervenceSum.TabIndex = 48;
-            this.lblIntervenceSum.Text = "00:00";
-            // 
             // ucCallLIKO
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -696,6 +696,7 @@ namespace EvitelApp2.Controls
             this.Name = "ucCallLIKO";
             this.Size = new System.Drawing.Size(1397, 702);
             this.Load += new System.EventHandler(this.ucCallLIKO_Load);
+            this.VisibleChanged += new System.EventHandler(this.ucCallLIKO_VisibleChanged);
             this.Resize += new System.EventHandler(this.ucCallLIKO_Resize);
             this.boxCall.ResumeLayout(false);
             this.boxCall.PerformLayout();

@@ -652,5 +652,12 @@ namespace EvitelApp2.Controls
       lblIntervenceSum.Text = ((int)s.TotalHours).ToString("D2") + ":" + s.Minutes.ToString("D2");
 
     }
+
+    private void ucCallLIKO_VisibleChanged(object sender, EventArgs e)
+    {
+      if (this.Visible == false)
+        this.CausesValidation = false;
+
+    }
   }
 }

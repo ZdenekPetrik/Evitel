@@ -18,12 +18,12 @@ using static EvitelApp2.frmMain;
 
 namespace EvitelApp2.Controls
 {
-  public partial class ctrlCall : UserControl, IctrlWithDGW
+  public partial class ctrlLPK : UserControl, IctrlWithDGW
   {
     private CRepositoryDB DB;
     private DataTable _dataTable;
     private DataSet _dataSet;
-    List<WCall> wCalls = new List<WCall>();
+    List<WLpk> wLpks = new List<WLpk>();
     BindingSource bindingSource1;
     private List<MyColumn> myColumns;
     private ColumnLayoutDB cldb;
@@ -43,7 +43,7 @@ namespace EvitelApp2.Controls
 
 
 
-    public ctrlCall()
+    public ctrlLPK()
     {
       InitializeComponent();
     }
@@ -58,17 +58,22 @@ namespace EvitelApp2.Controls
 
       myColumns = new List<MyColumn>()
       {
-         new MyColumn { Name = "ID", DataPropertyName = "CallId", Type=3  },
-         new MyColumn { Name = "Typ Hovoru", DataPropertyName = "CallType"},
+         new MyColumn { Name = "ID", DataPropertyName = "Lpkid", Type=3  },
          new MyColumn { Name = "Volání od", DataPropertyName = "DtStartCall",Type=5, isVisible = false},
          new MyColumn { Name = "Datum volání", DataPropertyName = "DtCall" , Type=5},
          new MyColumn { Name = "Začátek", DataPropertyName = "TmStartCall"  },
          new MyColumn { Name = "Konec", DataPropertyName = "TmEndCall"  },
          new MyColumn { Name = "Doba", DataPropertyName = "TmDuration"  },
-         new MyColumn { Name = "Volající", DataPropertyName = "InterventShortName"},
-         new MyColumn { Name = "Region", DataPropertyName = "RegionName"},
          new MyColumn { Name = "Přezdívka", DataPropertyName = "Nick"},
          new MyColumn { Name = "Kontakt", DataPropertyName = "ContactType"},
+         new MyColumn { Name = "Věk", DataPropertyName = "Age"},
+         new MyColumn { Name = "Typ služby", DataPropertyName = "TypeService"},
+         new MyColumn { Name = "Odkud je klient", DataPropertyName = "ClientFrom"},
+         new MyColumn { Name = "Pohlaví", DataPropertyName = "Sex"},
+         new MyColumn { Name = "Poznámka", DataPropertyName = "Note"},
+         new MyColumn { Name = "Téma kontaktu", DataPropertyName = "ContactTopic"},
+         new MyColumn { Name = "Aktuální stav klienta", DataPropertyName = "ClientCurrentStatus"},
+         new MyColumn { Name = "Závěr hovoru", DataPropertyName = "EndOfSpeech"},
          new MyColumn { Name = "Zapsal", DataPropertyName = "UsrLastName" },
        };
       _dataTable = new DataTable();
@@ -95,7 +100,7 @@ namespace EvitelApp2.Controls
 
     public void ReadDataFirstTime()
     {
-      wCalls = DB.GetWCalls();
+      wLpks = DB.GetWLPK();
       AddDataToTable();
       UpdateColumn();
       cldb = new ColumnLayoutDB(DB, dgw, this.Name + _dataTable.TableName);
@@ -104,7 +109,7 @@ namespace EvitelApp2.Controls
 
     private void CreateTable()
     {
-      _dataTable = _dataSet.Tables.Add("wCall");
+      _dataTable = _dataSet.Tables.Add("wLPK");
       foreach (var col in myColumns)
       {
         _dataTable.Columns.Add(col.Name, col.GetMyType());
@@ -116,7 +121,7 @@ namespace EvitelApp2.Controls
     private void AddDataToTable()
     {
       _dataTable.Rows.Clear();
-      foreach (var p in wCalls)
+      foreach (var p in wLpks)
       {
         DataRow newRow = _dataTable.NewRow();
         foreach (var col in myColumns)
@@ -177,7 +182,7 @@ namespace EvitelApp2.Controls
 
     private void dgw_RowEnter(object sender, DataGridViewCellEventArgs e)
     {
-      ShowRowInformation?.Invoke(e.RowIndex + 1, wCalls.Count);
+      ShowRowInformation?.Invoke(e.RowIndex + 1, wLpks.Count);
     }
 
     private void dgw_DoubleClick(object sender, EventArgs e)
@@ -186,10 +191,8 @@ namespace EvitelApp2.Controls
     }
 
     private void JumpToIntervence()
-    {
-      int CallId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["ID"].Value;
-      int? lpkId = wCalls.Where(x => x.CallId == CallId)?.First().LikointervenceId;
-      ShowDetailIntervence?.Invoke(11,lpkId);
+    { int lpkId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["ID"].Value;
+      ShowDetailIntervence?.Invoke(11, lpkId);
     }
 
     private void dgw_CellContentClick(object sender, DataGridViewCellEventArgs e)

@@ -708,9 +708,8 @@ namespace EvitelLib2.Repository
           ObetemPoskozenym = NrObetemPoskozenym,
           PozustalymBlizkym = NrPozustalymBlizkym,
           Ostatnim = NrOstatnimOsobam,
-
+          Poradi = db.Likointervences.Where(x => x.LikoincidentId == incidentId).Count() + 1,
           InterventId = InterventId
-
         };
         db.Likointervences.Add(intervence);
         db.SaveChanges();
@@ -761,6 +760,27 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
+    public int AddNick(string nick)
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        ENick newRow = new ENick();
+        newRow.Text = nick;
+        db.ENicks.Add(newRow);
+        db.SaveChanges();
+        return newRow.NickId;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "AddNick() " + GetInnerException(Ex), "", IdUser);
+      }
+      return -1;
+
+    }
+
     public List<ETypeParty> GetTypeParty(bool isReadAll = false)
     {
       sErr = "";
@@ -1025,6 +1045,23 @@ namespace EvitelLib2.Repository
       return null;
     }
 
+    public List<WLpk> GetWLPK()
+    {
+      sErr = "";
+      Evitel2Context db = new Evitel2Context();
+      try
+      {
+        return (from par in db.WLpks orderby par.DtStartCall select par).ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetWLPK() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+
+    }
+
 
     public List<WLikoincident> GetWLIKOIncident()
     {
@@ -1115,7 +1152,7 @@ namespace EvitelLib2.Repository
         var row = from r in db.Likoparticipants select r;
         if (TypeSearch == 1)
           row = row.Where(x => x.LikoparticipantId == id);
-        else
+        else if (TypeSearch == 2)
           row = row.Where(x => x.LikointervenceId == id);
         return row.ToList();
       }
@@ -2316,11 +2353,10 @@ namespace EvitelLib2.Repository
         }
         foreach (int id in toAdd)
         {
-          /*
-          LpksubEndOfSpeech newRow = new LpkcontactTopic();
+          LpksubEndOfSpeech newRow = new LpksubEndOfSpeech();
           newRow.Lpkid = LPKId;
-          newRow. = id;
-          db.LpksubEndOfSpeeches.Add(newRow); */
+          newRow.LpksubEndOfSpeechEid = id;
+          db.LpksubEndOfSpeeches.Add(newRow); 
         }
         db.SaveChanges();
       }

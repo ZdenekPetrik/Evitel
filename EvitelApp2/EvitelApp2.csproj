@@ -19,6 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Controls\ctrlLPK.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Controls\ctrlEventLog.cs" />
     <Compile Update="Controls\ctrlEventLog.designer.cs">
       <DependentUpon>ctrlEventLog.cs</DependentUpon>
