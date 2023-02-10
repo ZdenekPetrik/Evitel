@@ -16,6 +16,6 @@ namespace EvitelLib2.Model
         public int? InterventId { get; set; }
         public string InterventShortName { get; set; }
         public string RegionName { get; set; }
-        public string TypHovoru { get; set; }
+        public string CallType { get; set; }
     }
 }

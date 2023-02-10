@@ -4,7 +4,12 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>Resources\Evitel.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Evitel.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="DotNetCore.NPOI" Version="1.2.3" />
@@ -31,6 +36,9 @@
       <DependentUpon>ctrlEventLogFilter.cs</DependentUpon>
     </Compile>
     <Compile Update="Controls\ctrlCall.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\ctrlSKIReport.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Controls\ctrlUser.cs">
@@ -86,6 +94,9 @@
     <None Update="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="Resources\Evitel100.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

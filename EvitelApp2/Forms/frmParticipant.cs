@@ -12,7 +12,6 @@ namespace EvitelApp2
     public Controls.ucParticipations master;
     public Likoparticipant aktRow;
 
-    ComboBox TypePartyEid = new ComboBox();
     private ErrorProvider errTypePartyEid;
     private ErrorProvider errSexEid;
     private ErrorProvider errDruhIntervenceEid;
@@ -60,7 +59,7 @@ namespace EvitelApp2
         if (typeParty.DtDeleted == null)
         {
           cmbTypeParty.Items.Add(new ComboItem(typeParty.Text, typeParty.TypePartyId.ToString()));
-          if ((aktRow.TypePartyEid ?? 0) == typeParty.TypePartyId)
+          if ((aktRow.TypePartyEid) == typeParty.TypePartyId)
             cmbTypeParty.SelectedIndex = cmbTypeParty.Items.Count - 1;
         }
       }
@@ -71,7 +70,7 @@ namespace EvitelApp2
         if (sex.DtDeleted == null)
         {
           cmbSex.Items.Add(new ComboItem(sex.Text, sex.SexId.ToString()));
-          if ((aktRow.SexEid ?? 0) == sex.SexId)
+          if ((aktRow.SexEid) == sex.SexId)
             cmbSex.SelectedIndex = cmbSex.Items.Count - 1;
         }
       }
@@ -82,7 +81,7 @@ namespace EvitelApp2
         if (druhIntervence.DtDeleted == null)
         {
           cmbDruhIntervence.Items.Add(new ComboItem(druhIntervence.Text, druhIntervence.DruhIntervenceId.ToString()));
-          if ((aktRow.DruhIntervenceEid ?? 0) == druhIntervence.DruhIntervenceId)
+          if ((aktRow.DruhIntervenceEid) == druhIntervence.DruhIntervenceId)
             cmbDruhIntervence.SelectedIndex = cmbDruhIntervence.Items.Count - 1;
         }
       }
@@ -96,7 +95,7 @@ namespace EvitelApp2
         {
           cmbIntervent.Items.Add(new ComboItem(intervent.CmbName, intervent.InterventId.ToString()));
           cmbIntervent2.Items.Add(new ComboItem(intervent.CmbName, intervent.InterventId.ToString()));
-          if ((aktRow.InterventId ?? 0) == intervent.InterventId)
+          if ((aktRow.InterventId ) == intervent.InterventId)
             cmbIntervent.SelectedIndex = cmbIntervent.Items.Count - 1;
           if ((aktRow.InterventId2 ?? 0) == intervent.InterventId)
            cmbIntervent2.SelectedIndex = cmbIntervent2.Items.Count - 1;
@@ -124,7 +123,6 @@ namespace EvitelApp2
         if (o is NumericUpDown)
           ((NumericUpDown)o).Enabled = false;
       }
-
     }
 
     private ErrorProvider InitializeErrorProvider(int type, Control myControl)
@@ -194,17 +192,17 @@ namespace EvitelApp2
     {
       for (int i = 0; i < cmbTypeParty.Items.Count; i++)
       {
-        if (((ComboItem)cmbTypeParty.Items[i]).iValue == (aktRow.TypePartyEid ?? -1))
+        if (((ComboItem)cmbTypeParty.Items[i]).iValue == (aktRow.TypePartyEid))
           cmbTypeParty.SelectedIndex = i;
       }
       for (int i = 0; i < cmbSex.Items.Count; i++)
       {
-        if (((ComboItem)cmbSex.Items[i]).iValue == (aktRow.SexEid ?? -1))
+        if (((ComboItem)cmbSex.Items[i]).iValue == (aktRow.SexEid))
           cmbSex.SelectedIndex = i;
       }
       for (int i = 0; i < cmbIntervent.Items.Count; i++)
       {
-        if (((ComboItem)cmbIntervent.Items[i]).iValue == (aktRow.InterventId ?? -1))
+        if (((ComboItem)cmbIntervent.Items[i]).iValue == (aktRow.InterventId))
           cmbIntervent.SelectedIndex = i;
       }
       cmbIntervent2.SelectedIndex = 0;
@@ -215,36 +213,36 @@ namespace EvitelApp2
       }
       for (int i = 0; i < cmbDruhIntervence.Items.Count; i++)
       {
-        if (((ComboItem)cmbDruhIntervence.Items[i]).iValue == (aktRow.DruhIntervenceEid ?? -1))
+        if (((ComboItem)cmbDruhIntervence.Items[i]).iValue == (aktRow.DruhIntervenceEid ))
           cmbDruhIntervence.SelectedIndex = i;
       }
 
-      numAge.Value = (decimal)(aktRow.Age??0) ;
-      chkAgreement.Checked = aktRow.IsAgreement ?? false;
-      chkAgreementBKB.Checked = aktRow.IsAgreementBkb ?? false;
-      chkChildJuvenile.Checked = aktRow.IsChildJuvenile ?? false;
-      chkContact.Checked = aktRow.IsContact ?? false;
-      chkIsDead.Checked = aktRow.IsDead ?? false;
-      chkIsFirstIntervence.Checked = aktRow.IsFirstIntervence ?? false;
-      chkHandyCappedMedical.Checked = aktRow.IsHandyCappedMedical ?? false;
-      chkHandyCappedMentally.Checked = aktRow.IsHandyCappedMentally ?? false;
-      chkIsInjury.Checked = aktRow.IsInjury ?? false;
-      chkIsIntervence.Checked = aktRow.IsIntervence ?? false;
-      chkIsMemberMinorityGroup.Checked = aktRow.IsMemberMinorityGroup ?? false;
-      chkPolicement.Checked = aktRow.IsPolicement ?? false;
-      chkPolicemenClosePerson.Checked = aktRow.IsPolicementClosePerson ?? false;
-      chkSenior.Checked = aktRow.IsSenior ?? false;
+      numAge.Value = (decimal)(aktRow.Age) ;
+      chkAgreement.Checked = aktRow.IsAgreement ;
+      chkAgreementBKB.Checked = aktRow.IsAgreementBkb;
+      chkChildJuvenile.Checked = aktRow.IsChildJuvenile;
+      chkContact.Checked = aktRow.IsContact;
+      chkIsDead.Checked = aktRow.IsDead;
+      chkIsFirstIntervence.Checked = aktRow.IsFirstIntervence;
+      chkHandyCappedMedical.Checked = aktRow.IsHandyCappedMedical ;
+      chkHandyCappedMentally.Checked = aktRow.IsHandyCappedMentally ;
+      chkIsInjury.Checked = aktRow.IsInjury ;
+      chkIsIntervence.Checked = aktRow.IsIntervence ;
+      chkIsMemberMinorityGroup.Checked = aktRow.IsMemberMinorityGroup;
+      chkPolicement.Checked = aktRow.IsPolicement ;
+      chkPolicemenClosePerson.Checked = aktRow.IsPolicementClosePerson;
+      chkSenior.Checked = aktRow.IsSenior ;
       txtNote.Text = aktRow.Note??"";
       txtOrganizace.Text = aktRow.Organization??"";
 
-      
+      /*
       cmbTypeParty.SelectedIndex = 2;
       cmbSex.SelectedIndex = 2;
       cmbIntervent.SelectedIndex = 2;
       cmbDruhIntervence.SelectedIndex = 2;
       numAge.Value = 66;
       chkSenior.Checked = true;
-      
+      */
     }
 
     private void cmbTypeParty_Validating(object sender, CancelEventArgs e)

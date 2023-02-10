@@ -10,6 +10,6 @@ namespace EvitelLib2.Model
         public int? Lpkid { get; set; }
 
         public virtual Lpk Lpk { get; set; }
-        public virtual ESubContactTopic LpksubContactTopicNavigation { get; set; }
+        public virtual ESubContactTopic LpksubContactTopicE { get; set; }
     }
 }

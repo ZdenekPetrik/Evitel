@@ -29,6 +29,7 @@ namespace EvitelApp2.Controls
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucCallLIKO));
             this.dtCall = new System.Windows.Forms.DateTimePicker();
             this.lblDatumACas = new System.Windows.Forms.Label();
             this.lblVolajici = new System.Windows.Forms.Label();
@@ -83,6 +84,7 @@ namespace EvitelApp2.Controls
             this.tmIntervence = new System.Windows.Forms.DateTimePicker();
             this.ucParticipations1 = new EvitelApp2.Controls.ucParticipations();
             this.btnBack = new System.Windows.Forms.Button();
+            this.lblTitulek = new System.Windows.Forms.Label();
             this.boxCall.SuspendLayout();
             this.boxEvent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtPocetObeti)).BeginInit();
@@ -168,7 +170,7 @@ namespace EvitelApp2.Controls
             // btnWrite
             // 
             this.btnWrite.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.btnWrite.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnWrite.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnWrite.Image = global::EvitelApp2.Properties.Resources.save_close24;
             this.btnWrite.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnWrite.Location = new System.Drawing.Point(1167, 17);
@@ -240,7 +242,6 @@ namespace EvitelApp2.Controls
             this.txtEventNote.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtEventNote.Size = new System.Drawing.Size(509, 118);
             this.txtEventNote.TabIndex = 16;
-            this.txtEventNote.TextChanged += new System.EventHandler(this.txtEventNote_TextChanged_1);
             // 
             // lblNoteEvent
             // 
@@ -671,22 +672,37 @@ namespace EvitelApp2.Controls
             this.ucParticipations1.Name = "ucParticipations1";
             this.ucParticipations1.Size = new System.Drawing.Size(1141, 375);
             this.ucParticipations1.TabIndex = 25;
-            this.ucParticipations1.Load += new System.EventHandler(this.ucParticipations1_Load);
             // 
             // btnBack
             // 
-            this.btnBack.Location = new System.Drawing.Point(10, 7);
+            this.btnBack.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnBack.Image = ((System.Drawing.Image)(resources.GetObject("btnBack.Image")));
+            this.btnBack.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBack.Location = new System.Drawing.Point(9, 7);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(75, 23);
+            this.btnBack.Size = new System.Drawing.Size(86, 39);
             this.btnBack.TabIndex = 11;
-            this.btnBack.Text = "<< Zpět";
+            this.btnBack.Text = "Zpět";
+            this.btnBack.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnBack.UseVisualStyleBackColor = true;
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
+            // lblTitulek
+            // 
+            this.lblTitulek.AutoSize = true;
+            this.lblTitulek.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblTitulek.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.lblTitulek.Location = new System.Drawing.Point(269, 5);
+            this.lblTitulek.Name = "lblTitulek";
+            this.lblTitulek.Size = new System.Drawing.Size(88, 32);
+            this.lblTitulek.TabIndex = 26;
+            this.lblTitulek.Text = "Titulek";
             // 
             // ucCallLIKO
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblTitulek);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.ucParticipations1);
             this.Controls.Add(this.boxIntervence);
@@ -771,6 +787,7 @@ namespace EvitelApp2.Controls
     private System.Windows.Forms.NumericUpDown txtSecondIncidentID;
     private System.Windows.Forms.Label label7;
     private System.Windows.Forms.Label lblIntervenceSum;
+    private System.Windows.Forms.Label lblTitulek;
   }
 
 }

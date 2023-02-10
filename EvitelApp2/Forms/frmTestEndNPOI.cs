@@ -404,13 +404,6 @@ namespace EvitelApp2.Controls
           gfx.DrawString((aktCall.DtStartCall ?? DateTime.Now).ToString("HH:mm"), fontRegular, textColor, new XRect(hovorStart + 40, aktY, 30, 20), XStringFormats.CenterLeft);
           gfx.DrawString(aktCall.InterventShortName, fontRegular, textColor, new XRect(hovorStart + 70, aktY, 100, 20), XStringFormats.CenterLeft);
 
-          gfx.DrawString(aktIncident.RegionName, fontRegular, textColor, new XRect(udalostStart, aktY, 100, 20), XStringFormats.CenterLeft);
-          gfx.DrawString((aktIncident.DtIncident ?? DateTime.Now).ToString("dd.MM.yyyy"), fontRegular, textColor, new XRect(udalostStart + 100, aktY, 60, 20), XStringFormats.CenterLeft);
-          gfx.DrawString(aktIncident.Place, fontRegular, textColor, new XRect(udalostStart + 160, aktY, 100, 20), XStringFormats.CenterLeft);
-
-          gfx.DrawString(aktIncident.IncidentName, fontRegular, textColor, new XRect(IntervenceStart, aktY, 140, 20), XStringFormats.CenterLeft);
-          gfx.DrawString(aktIntervence.Poradi.ToString(), fontRegular, textColor, new XRect(IntervenceStart + 140, aktY, 140, 20), XStringFormats.CenterLeft);
-          gfx.DrawString((aktIntervence.DtStartIntervence ?? DateTime.Now).ToString("dd.MM.yyyy"), fontRegular, textColor, new XRect(IntervenceStart + 160, aktY, 40, 20), XStringFormats.CenterLeft);
 
           aktY += 20;
         }
@@ -456,7 +449,7 @@ namespace EvitelApp2.Controls
             var filename = fd.FileName;
             string command = "BACKUP DATABASE Evitel TO DISK = '" + fd.FileName + "'";
 
-            using (var ctx = new Evitel2Context())
+            using (var ctx = new Evitel2DB())
             {
               //Get student name of string type
               var a = ctx.Database.ExecuteSqlRaw(command);
@@ -491,20 +484,20 @@ namespace EvitelApp2.Controls
 
 
           string command = "ALTER DATABASE [" + databaseName + "] SET SINGLE_USER WITH ROLLBACK IMMEDIATE";
-          using (var ctx = new Evitel2Context())
+          using (var ctx = new Evitel2DB())
           {
             //Get student name of string type
             var a = ctx.Database.ExecuteSqlRaw(command);
           }
           command = "RESTORE DATABASE [" + databaseName + "] FROM DISK = N'" + filePath + "' WITH REPLACE";
-          using (var ctx = new Evitel2Context())
+          using (var ctx = new Evitel2DB())
           {
             //Get student name of string type
             var a = ctx.Database.ExecuteSqlRaw(command);
           }
 
           command = "ALTER DATABASE [" + databaseName + "] SET MULTI_USER";
-          using (var ctx = new Evitel2Context())
+          using (var ctx = new Evitel2DB())
           {
             //Get student name of string type
             var a = ctx.Database.ExecuteSqlRaw(command);

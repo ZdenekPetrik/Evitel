@@ -1,19 +1,13 @@
 ﻿using EvitelLib2.Common;
 using EvitelLib2.Model;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using NPOI.POIFS.FileSystem;
-using NPOI.SS.Formula.Functions;
+using NPOI.HSSF.Record.AutoFilter;
+using NPOI.SS.Formula.Atp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Security.Cryptography.X509Certificates;
-using System.Security.Permissions;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
+
 
 
 // Toto je třeba zapsat do OnConfiguration
@@ -89,7 +83,7 @@ namespace EvitelLib2.Repository
 
     public String GetSettingS(string Name)
     {
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       IQueryable<MainSetting> ms = db.MainSettings.Select(n => n).Where(n => n.Name == Name);
       MainSetting[] MainS = ms.ToArray();
       if (ms.Count() == 1)
@@ -104,7 +98,7 @@ namespace EvitelLib2.Repository
     }
     public int GetSettingI(string Name)
     {
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       IQueryable<MainSetting> ms = db.MainSettings.Select(n => n).Where(n => n.Name == Name);
       MainSetting[] MainS = ms.ToArray();
       if (ms.Count() == 1)
@@ -121,7 +115,7 @@ namespace EvitelLib2.Repository
 
     public DateTime GetSettingD(string Name)
     {
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       IQueryable<MainSetting> ms = db.MainSettings.Select(n => n).Where(n => n.Name == Name);
       MainSetting[] MainS = ms.ToArray();
       if (ms.Count() == 1)
@@ -141,7 +135,7 @@ namespace EvitelLib2.Repository
     }
     public bool GetSettingB(string Name)
     {
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       IQueryable<MainSetting> ms = db.MainSettings.Select(n => n).Where(n => n.Name == Name);
       MainSetting[] MainS = ms.ToArray();
       if (ms.Count() == 1)
@@ -156,7 +150,7 @@ namespace EvitelLib2.Repository
     }
     public bool SetSetting(string Name, string sValue)
     {
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         {
@@ -176,7 +170,7 @@ namespace EvitelLib2.Repository
     }
     public bool SetSetting(string Name, int iValue)
     {
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         {
@@ -196,7 +190,7 @@ namespace EvitelLib2.Repository
     }
     public bool SetSetting(string Name, DateTime dtValue)
     {
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var stud = (from s in db.MainSettings
@@ -214,7 +208,7 @@ namespace EvitelLib2.Repository
     }
     public bool SetSetting(string Name, bool bValue)
     {
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         {
@@ -263,7 +257,7 @@ namespace EvitelLib2.Repository
     public LoginUser LoginUserNamePasswordExists(string LoginName, string LoginPassword)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var loginUsr = from l in db.LoginUsers.Include("LoginAccessUsers") where l.LoginName == LoginName && LoginName == l.LoginName && l.LoginPassword == LoginPassword && LoginPassword == l.LoginPassword select l;
@@ -279,7 +273,7 @@ namespace EvitelLib2.Repository
     public LoginUser LoginUserNameExists(string LoginName)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var loginUsr = from l in db.LoginUsers where l.LoginName == LoginName && LoginName == l.LoginName select l;
@@ -295,7 +289,7 @@ namespace EvitelLib2.Repository
     public bool ChangePassword(int loginUserId, string newLoginPassword)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var exp = (from l in db.LoginUsers
@@ -330,7 +324,7 @@ namespace EvitelLib2.Repository
       };
       try
       {
-        Evitel2Context db = new Evitel2Context();
+        Evitel2DB db = new Evitel2DB();
         var cnt = (from l in db.LoginUsers
                    where l.LoginName == loginName
                    select l).Count();
@@ -357,7 +351,7 @@ namespace EvitelLib2.Repository
     public List<LoginUser> GetUsers()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var loginUsr = from l in db.LoginUsers select l;
@@ -374,7 +368,7 @@ namespace EvitelLib2.Repository
     public bool UpdateLoginUser(LoginUser user)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         if (user.LoginUserId > 0)
@@ -413,7 +407,7 @@ namespace EvitelLib2.Repository
     public List<WMainEventLog> GetMainEventLog(string OrderBy, bool AscendingOrder, DateTime? dtFrom, DateTime? dtTo, string program, int? loginUserId, eEventCode? eventCode, eEventSubCode? eventSubCode, string text, string value)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var mainEventLogs = from l in db.WMainEventLogs select l;
@@ -452,7 +446,7 @@ namespace EvitelLib2.Repository
     public List<State> GetAllStates()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var states = from s in db.States select s;
@@ -468,7 +462,7 @@ namespace EvitelLib2.Repository
     public List<WIntervent> GetWIntervents(int? RegionId, string Name, string Contact)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
 
@@ -492,7 +486,7 @@ namespace EvitelLib2.Repository
     public List<Region> GetRegions()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var regions = from r in db.Regions orderby r.RegionOrder select r;
@@ -508,7 +502,7 @@ namespace EvitelLib2.Repository
     public List<ESubTypeIncident> GetSubTypeIncident()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var subTypeIncident = from e in db.ESubTypeIncidents orderby e.TypeIncidentId select e;
@@ -525,7 +519,7 @@ namespace EvitelLib2.Repository
     public bool InterventDeleteUnDelete(int interventId, bool isDelete)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var intervent = (from intv in db.Intervents where intv.InterventId == interventId select intv).FirstOrDefault();
@@ -548,7 +542,7 @@ namespace EvitelLib2.Repository
     public bool SaveUserColumn(string nameOfDGW, int externIdUser, List<UserColumn> userColumns)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         bool RefreshNeeded = false;
@@ -607,7 +601,7 @@ namespace EvitelLib2.Repository
     public void DeleteUserColumn(string nameOfDGW, int idUser)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var userColumnsDB = from uc in db.UserColumns where uc.Name == nameOfDGW /*&& uc.LoginUserId == idUser */ orderby uc.ColumnIndex select uc;
@@ -626,7 +620,7 @@ namespace EvitelLib2.Repository
     public List<UserColumn> GetUserColumn(string nameOfDGW)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var userColumnsDB = from uc in db.UserColumns where uc.Name == nameOfDGW /* && uc.LoginUserId == IdUser */ orderby uc.ColumnIndex select uc;
@@ -644,7 +638,7 @@ namespace EvitelLib2.Repository
     public int WriteCall(DateTime datetimeStartCall, int callType, DateTime? dateTimeEndCall)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         Call call = new Call();
@@ -666,7 +660,7 @@ namespace EvitelLib2.Repository
     public int WriteIncident(string note, int subTypeIncidentId, DateTime datetimeIncident, int regionId, string place, bool nasledekSmrti, bool dokonane, bool pokusPriprava, int PocetObeti)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         Likoincident incident = new Likoincident();
@@ -695,7 +689,7 @@ namespace EvitelLib2.Repository
     public int WriteIntervence(DateTime datetimeStartIntervence, DateTime datetimeEndIntervence, int callId, int incidentId, string note, int value, int NrObetemPoskozenym, int NrPozustalymBlizkym, int NrOstatnimOsobam, int InterventId)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         Likointervence intervence = new Likointervence()
@@ -729,7 +723,7 @@ namespace EvitelLib2.Repository
     public List<ESex> GetSex(bool isReadAll = false)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var rows = from s in db.ESexes select s;
@@ -747,7 +741,7 @@ namespace EvitelLib2.Repository
     public List<ENick> GetNick()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var nick = from n in db.ENicks select n;
@@ -763,7 +757,7 @@ namespace EvitelLib2.Repository
     public int AddNick(string nick)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         ENick newRow = new ENick();
@@ -784,7 +778,7 @@ namespace EvitelLib2.Repository
     public List<ETypeParty> GetTypeParty(bool isReadAll = false)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var rows = from tp in db.ETypeParties select tp;
@@ -802,7 +796,7 @@ namespace EvitelLib2.Repository
     public List<EDruhIntervence> GetDruhIntervence()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var rows = from di in db.EDruhIntervences select di;
@@ -818,7 +812,7 @@ namespace EvitelLib2.Repository
     public List<EEndOfSpeech> GetEndOfSpeech()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var rows = from es in db.EEndOfSpeeches select es;
@@ -834,7 +828,7 @@ namespace EvitelLib2.Repository
     public List<ESubEndOfSpeech> GetSubEndOfSpeech()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var rows = from ess in db.ESubEndOfSpeeches.Include(x => x.EndOfSpeech) select ess;
@@ -850,7 +844,7 @@ namespace EvitelLib2.Repository
     public List<EClientCurrentStatus> GetClientCurrentStatus()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var rows = from ccs in db.EClientCurrentStatuses select ccs;
@@ -866,7 +860,7 @@ namespace EvitelLib2.Repository
     public List<ESubClientCurrentStatus> GetSubClientCurrentStatus()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var rows = from ess in db.ESubClientCurrentStatuses.Include(x => x.ClientCurrentStatus) select ess;
@@ -882,7 +876,7 @@ namespace EvitelLib2.Repository
     public List<EContactTopic> GetContactTopic()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var rows = from r in db.EContactTopics select r;
@@ -899,7 +893,7 @@ namespace EvitelLib2.Repository
     public List<ESubContactTopic> GetSubContactTopic()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var rows = from ess in db.ESubContactTopics.Include(x => x.ContactTopic) select ess;
@@ -915,7 +909,7 @@ namespace EvitelLib2.Repository
     public List<EContactType> GetContactType()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var rows = from r in db.EContactTypes select r;
@@ -932,7 +926,7 @@ namespace EvitelLib2.Repository
     public List<EAge> GetContactAge()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var rows = from r in db.EAges select r;
@@ -948,7 +942,7 @@ namespace EvitelLib2.Repository
     public List<EClientFrom> GetClientFrom()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var rows = from r in db.EClientFroms select r;
@@ -964,7 +958,7 @@ namespace EvitelLib2.Repository
     public List<ETypeService> GetTypeService()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var rows = from r in db.ETypeServices select r;
@@ -980,10 +974,10 @@ namespace EvitelLib2.Repository
 
     #endregion
 
-    public int AddParticipant(Likoparticipant newRow)
+    public int AddParticipantObsolete(Likoparticipant newRow)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         db.Likoparticipants.Add(newRow);
@@ -998,10 +992,49 @@ namespace EvitelLib2.Repository
       return -1;
     }
 
+    // vsichni participants musí být z jedné intervence
+    // Pokud přidáváš tak všechny id = 0. Takže najde jen jeden id k přidání. Ale to nevadí, protože zase si je později všechny najde
+    public void UpdateParticipants(int LikointervenceId, List<Likoparticipant> participantsList)
+    {
+
+      sErr = "";
+      Evitel2DB db = new Evitel2DB();
+      try
+      {
+        var oldList = GetLikoParticipants(LikointervenceId, 2).Select(x => x.LikoparticipantId).ToList();
+        var toDelete = oldList.Except(participantsList.Select(x => x.LikoparticipantId)).ToList();
+        var toAdd = participantsList.Select(x => x.LikoparticipantId).Except(oldList).ToList();
+        var delRows = from r in db.Likoparticipants where toDelete.Contains(r.LikoparticipantId) select r;
+        if (delRows.Count() > 0)
+        {
+          db.Likoparticipants.RemoveRange(delRows);
+        }
+        foreach (var row in participantsList.Where(x => toAdd.Contains(x.LikoparticipantId)))
+        {
+          row.LikointervenceId = LikointervenceId;
+          db.Likoparticipants.Add(row);
+        }
+        db.SaveChanges();
+        foreach (var newRow in participantsList)
+        {
+          var oldRow = db.Likoparticipants.Where(x => x.LikoparticipantId == newRow.LikoparticipantId).First();
+          var entry = db.Entry(oldRow);
+          entry.CurrentValues.SetValues(newRow);
+        }
+        db.SaveChanges();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UpdateParticipants() " + GetInnerException(Ex), "", IdUser);
+      }
+    }
+
+
     public List<WLikoparticipant> GeWtLIKOParticipant(bool isDeepRead)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         return (from par in db.WLikoparticipants select par).ToList();
@@ -1017,7 +1050,7 @@ namespace EvitelLib2.Repository
     public List<WLikocall> GetWLikoCalls()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         return (from par in db.WLikocalls orderby par.DtStartCall select par).ToList();
@@ -1032,7 +1065,7 @@ namespace EvitelLib2.Repository
     public List<WCall> GetWCalls()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         return (from par in db.WCalls orderby par.DtStartCall select par).ToList();
@@ -1048,7 +1081,7 @@ namespace EvitelLib2.Repository
     public List<WLpk> GetWLPK()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         return (from par in db.WLpks orderby par.DtStartCall select par).ToList();
@@ -1062,11 +1095,33 @@ namespace EvitelLib2.Repository
 
     }
 
+    public List<Lpk> GetLPK(int LpkId = -1)
+    {
+      sErr = "";
+      Evitel2DB db = new Evitel2DB();
+      try
+      {
+        var lpk = from l in db.Lpks orderby l.Lpkid select l;
+        if (LpkId > 0)
+        {
+          lpk = (IOrderedQueryable<Lpk>)lpk.Where(x => x.Lpkid == LpkId);
+        }
+        return lpk.ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetLPK() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+
+    }
+
 
     public List<WLikoincident> GetWLIKOIncident()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         return (from par in db.WLikoincidents orderby par.DtIncident select par).ToList();
@@ -1082,7 +1137,7 @@ namespace EvitelLib2.Repository
     public List<WLikointervence> GetWLIKOIntervence()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         return (from par in db.WLikointervences orderby par.DtStartIntervence select par).ToList();
@@ -1095,10 +1150,26 @@ namespace EvitelLib2.Repository
       return null;
     }
 
+    public List<WLikoall> GeWtLIKOAll(bool v)
+    {
+      sErr = "";
+      Evitel2DB db = new Evitel2DB();
+      try
+      {
+        return (from par in db.WLikoalls orderby par.DtIncident select par).ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GeWtLIKOAll() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+
     public Likointervence GetLikoIntervence(int likoIntervenceId)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         return (from par in db.Likointervences where par.LikointervenceId == likoIntervenceId select par).FirstOrDefault();
@@ -1110,13 +1181,12 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
-    public Call GetLikoCall(int id)
+    public Call GetCall(int id)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
-
         var row = db.Calls.Include(u => u.LoginUser).Where(x => x.CallId == id);
         row = row.Where(x => x.CallId == id);
         return row.FirstOrDefault();
@@ -1131,7 +1201,7 @@ namespace EvitelLib2.Repository
     public Likoincident GetLikoIncident(int Id)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         return (from par in db.Likoincidents where par.LikoincidentId == Id select par).FirstOrDefault();
@@ -1146,7 +1216,7 @@ namespace EvitelLib2.Repository
     public List<Likoparticipant> GetLikoParticipants(int id, int TypeSearch)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var row = from r in db.Likoparticipants select r;
@@ -1168,7 +1238,7 @@ namespace EvitelLib2.Repository
     public List<LoginUser> GetLoginUser()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var row = from r in db.LoginUsers.Include("LoginAccessUsers") where r.LoginUserId > 0 select r;
@@ -1185,7 +1255,7 @@ namespace EvitelLib2.Repository
     public List<LoginAccess> GetLoginAccess()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var rows = from r in db.LoginAccesses select r;
@@ -1202,7 +1272,7 @@ namespace EvitelLib2.Repository
     public int GetIncidentNextId()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         int maxId = db.Likoincidents.Max(x => x.LikoincidentId);
@@ -1216,14 +1286,16 @@ namespace EvitelLib2.Repository
       return 0;
     }
 
-    public bool UpdateCall(int callId, DateTime datetimeStartCall)
+    public bool UpdateCall(int callId, DateTime datetimeStartCall, DateTime? datetimeEndCall = null)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var oneCall = db.Calls.Where(x => x.CallId == callId).First();
         oneCall.DtStartCall = datetimeStartCall;
+        if (datetimeEndCall != null)
+          oneCall.DtEndCall = datetimeEndCall;
         db.SaveChanges();
         return true;
       }
@@ -1238,7 +1310,7 @@ namespace EvitelLib2.Repository
     public bool UpdateIntervence(int likoIntervenceId, DateTime datetimeStartIntervence, DateTime datetimeEndIntervence, int NrObetemPoskozenym, int NrPozustalymBlizkym, int NrOstatnimOsobam, string note)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var oneIntervence = db.Likointervences.Where(x => x.LikointervenceId == likoIntervenceId).First();
@@ -1262,7 +1334,7 @@ namespace EvitelLib2.Repository
     public bool UpdateIncident(int likoincidentId, DateTime datetimeIncident, int subTypeIncidentId, int regionId, string note, string place, int pocetObeti, bool isDokonane, bool nasledekSmrti, bool pokusPriprava)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var oneIncident = db.Likoincidents.Where(x => x.LikoincidentId == likoincidentId).First();
@@ -1289,7 +1361,7 @@ namespace EvitelLib2.Repository
     public void SaveChanges()
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         db.SaveChanges();
@@ -1309,7 +1381,7 @@ namespace EvitelLib2.Repository
     {
       sErr = "";
       string oldText = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       ESex row = new ESex();
       try
       {
@@ -1362,7 +1434,7 @@ namespace EvitelLib2.Repository
     {
       sErr = "";
       string oldText = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       ETypeParty row = new ETypeParty();
       try
       {
@@ -1414,7 +1486,7 @@ namespace EvitelLib2.Repository
     {
       sErr = "";
       string oldText = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       EDruhIntervence row = new EDruhIntervence();
       try
       {
@@ -1467,7 +1539,7 @@ namespace EvitelLib2.Repository
       sErr = "";
       string oldText = "";
       string oldText2 = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       ESubTypeIncident row = new ESubTypeIncident();
       try
       {
@@ -1524,7 +1596,7 @@ namespace EvitelLib2.Repository
       string oldText = "";
       string oldText2 = "";
       string oldText3 = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       Region row = new Region();
       try
       {
@@ -1570,7 +1642,7 @@ namespace EvitelLib2.Repository
     {
       sErr = "";
       string oldText = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       ENick row = new ENick();
       try
       {
@@ -1593,14 +1665,12 @@ namespace EvitelLib2.Repository
           case eModifyRow.deleteRow:
             {
               row = db.ENicks.Where(x => x.NickId == id).First();
-              row.DtDeleted = DateTime.Now;
+              db.ENicks.Remove(row);
               break;
             }
           case eModifyRow.undeleteRow:
             {
-              row = db.ENicks.Where(x => x.NickId == id).First();
-              row.DtDeleted = null;
-              break;
+              throw new NotImplementedException();
             }
           default:
             new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UniversalModifyNick() Bad enum ModifyRow", modifyRow.ToString(), IdUser);
@@ -1623,7 +1693,7 @@ namespace EvitelLib2.Repository
     {
       sErr = "";
       string oldText = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       EEndOfSpeech row = new EEndOfSpeech();
       try
       {
@@ -1676,7 +1746,7 @@ namespace EvitelLib2.Repository
     {
       sErr = "";
       string oldText = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       ESubEndOfSpeech row = new ESubEndOfSpeech();
       try
       {
@@ -1731,7 +1801,7 @@ namespace EvitelLib2.Repository
     {
       sErr = "";
       string oldText = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       ESubClientCurrentStatus row = new ESubClientCurrentStatus();
       try
       {
@@ -1786,7 +1856,7 @@ namespace EvitelLib2.Repository
     {
       sErr = "";
       string oldText = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       EClientCurrentStatus row = new EClientCurrentStatus();
       try
       {
@@ -1839,7 +1909,7 @@ namespace EvitelLib2.Repository
     {
       sErr = "";
       string oldText = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       EContactTopic row = new EContactTopic();
       try
       {
@@ -1891,7 +1961,7 @@ namespace EvitelLib2.Repository
     {
       sErr = "";
       string oldText = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       ESubContactTopic row = new ESubContactTopic();
       try
       {
@@ -1946,7 +2016,7 @@ namespace EvitelLib2.Repository
     {
       sErr = "";
       string oldText = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       EAge row = new EAge();
       try
       {
@@ -1998,7 +2068,7 @@ namespace EvitelLib2.Repository
     {
       sErr = "";
       string oldText = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       EContactType row = new EContactType();
       try
       {
@@ -2050,7 +2120,7 @@ namespace EvitelLib2.Repository
     {
       sErr = "";
       string oldText = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       ETypeService row = new ETypeService();
       try
       {
@@ -2102,7 +2172,7 @@ namespace EvitelLib2.Repository
     {
       sErr = "";
       string oldText = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       EClientFrom row = new EClientFrom();
       try
       {
@@ -2157,7 +2227,7 @@ namespace EvitelLib2.Repository
     public Intervent GetIntervent(int id)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var rows = from r in db.Intervents where r.InterventId == id select r;
@@ -2175,7 +2245,7 @@ namespace EvitelLib2.Repository
     public int UniversalModifyIntervent(eModifyRow modifyRow, Intervent oneRow)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
 
       var entry = db.Entry(oneRow);
       entry.CurrentValues.SetValues(oneRow);
@@ -2229,7 +2299,7 @@ namespace EvitelLib2.Repository
     public List<int> GetLPKClientCurrentStatus(int LPKId)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var ids = from r in db.LpkclientCurrentStatuses where r.Lpkid == LPKId select r.LpksubClientCurrentStatusEid ?? 0;
@@ -2246,7 +2316,7 @@ namespace EvitelLib2.Repository
     public void SetLPKClientCurrentStatus(int LPKId, List<int> newList)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var oldList = GetLPKClientCurrentStatus(LPKId);
@@ -2276,7 +2346,7 @@ namespace EvitelLib2.Repository
     public List<int> GetLPKContactTopic(int LPKId)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var ids = from r in db.LpksubContactTopics where r.Lpkid == LPKId select r.LpksubContactTopicEid ?? 0;
@@ -2293,7 +2363,7 @@ namespace EvitelLib2.Repository
     public void SetLPKContactTopic(int LPKId, List<int> newList)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var oldList = GetLPKContactTopic(LPKId);
@@ -2323,7 +2393,7 @@ namespace EvitelLib2.Repository
     public List<int> GetLPKEndOfSpeech(int LPKId)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var ids = from r in db.LpksubEndOfSpeeches where r.Lpkid == LPKId select r.LpksubEndOfSpeechEid ?? 0;
@@ -2340,7 +2410,7 @@ namespace EvitelLib2.Repository
     public void SetLPKEndOfSpeech(int LPKId, List<int> newList)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         var oldList = GetLPKEndOfSpeech(LPKId);
@@ -2356,7 +2426,7 @@ namespace EvitelLib2.Repository
           LpksubEndOfSpeech newRow = new LpksubEndOfSpeech();
           newRow.Lpkid = LPKId;
           newRow.LpksubEndOfSpeechEid = id;
-          db.LpksubEndOfSpeeches.Add(newRow); 
+          db.LpksubEndOfSpeeches.Add(newRow);
         }
         db.SaveChanges();
       }
@@ -2371,7 +2441,7 @@ namespace EvitelLib2.Repository
     public int WriteRowLPK(Lpk row)
     {
       sErr = "";
-      Evitel2Context db = new Evitel2Context();
+      Evitel2DB db = new Evitel2DB();
       try
       {
         db.Lpks.Add(row);
@@ -2384,6 +2454,32 @@ namespace EvitelLib2.Repository
         new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "WriteRowLPK() " + GetInnerException(Ex), "", IdUser);
       }
       return -1;
+    }
+
+    public int UpdateLPK(Lpk lpkRow)
+    {
+      sErr = "";
+      Evitel2DB db = new Evitel2DB();
+
+      try
+      {
+        var row = db.Lpks.Where(x => x.Lpkid == lpkRow.Lpkid).First();
+        var entry = db.Entry(row);
+        entry.CurrentValues.SetValues(lpkRow);
+
+        var x1 = db.ChangeTracker.DebugView.LongView;
+        db.ChangeTracker.DetectChanges();
+        var x2 = db.ChangeTracker.DebugView.LongView;
+        db.SaveChanges();
+        return lpkRow.Lpkid;
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "UpdateLPK() " + GetInnerException(Ex), lpkRow.Lpkid.ToString(), IdUser);
+      }
+      return -1;
+
     }
 
   }

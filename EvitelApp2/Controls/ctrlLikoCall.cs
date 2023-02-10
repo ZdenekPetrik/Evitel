@@ -29,7 +29,7 @@ namespace EvitelApp2.Controls
     private ColumnLayoutDB cldb;
     ToolStripMenuItem toolStripItem1 = new ToolStripMenuItem();
     public event RowInformation ShowRowInformation;
-    public event DetailIntervence ShowDetailIntervence;
+    public event DetailIntervence ShowDetailUserControl;
     private DataGridViewCellEventArgs mouseLocation;
     public DataTable dataTable { 
       get {
@@ -59,7 +59,7 @@ namespace EvitelApp2.Controls
       myColumns = new List<MyColumn>()
       {
          new MyColumn { Name = "ID", DataPropertyName = "CallId", Type=3  },
-         new MyColumn { Name = "Typ Hovoru", DataPropertyName = "TypHovoru"},
+         new MyColumn { Name = "Typ Hovoru", DataPropertyName = "CallType"},
          new MyColumn { Name = "Volání od", DataPropertyName = "DtStartCall",Type=5, isVisible = false},
          new MyColumn { Name = "Datum volání", DataPropertyName = "DtCall" , Type=5},
          new MyColumn { Name = "Začátek", DataPropertyName = "TmStartCall"  },
@@ -178,14 +178,15 @@ namespace EvitelApp2.Controls
 
     private void dgw_DoubleClick(object sender, EventArgs e)
     {
-      JumpToIntervence();
+      if (mouseLocation.RowIndex >=0)
+        JumpToIntervence();
     }
 
     private void JumpToIntervence()
     {
       int CallId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["ID"].Value;
       int? likoIntervenceId = wLikoCalls.Where(x => x.CallId == CallId)?.First().LikointervenceId;
-      ShowDetailIntervence?.Invoke(1, likoIntervenceId);
+      ShowDetailUserControl?.Invoke(1, likoIntervenceId);
     }
 
     private void dgw_CellContentClick(object sender, DataGridViewCellEventArgs e)

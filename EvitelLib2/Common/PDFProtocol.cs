@@ -50,7 +50,7 @@ namespace EvitelLib2.Common
       intervenceList = DB.GetWLIKOIntervence().Where(x => x.DtStartIntervence >= dtFrom && x.DtStartIntervence <= dtTo).ToList();
       callsList = DB.GetWLikoCalls().Where(x => intervenceList.Select(x => x.LikointervenceId).Contains(x.LikointervenceId)).ToList();
       incidentsList = DB.GetWLIKOIncident().Where(x => intervenceList.Select(x => x.LikoincidentId).Contains(x.LikoincidentId)).ToList();
-      participantList = DB.GetLikoParticipants(0, 0).Where(x => intervenceList.Select(x=>x.LikointervenceId).Contains(x.LikointervenceId??0)).ToList();
+      participantList = DB.GetLikoParticipants(0, 0).Where(x => intervenceList.Select(x=>x.LikointervenceId).Contains(x.LikointervenceId)).ToList();
 
     }
 
@@ -164,7 +164,11 @@ namespace EvitelLib2.Common
             aktY += 18;
           }
           gfx.DrawLine(pen, new XPoint(0, (int)page.Height - 20), new XPoint(page.Width, (int)page.Height - 20));
-          gfx.DrawString("Evitel", fontRegular, textColor, new XRect(hovorStart, (int)page.Height - 20, 20, 15), XStringFormats.BottomCenter);
+
+          var image = XImage.FromFile("Resources/Evitel100.png");
+          gfx.DrawImage(image , new XRect(hovorStart, (int)page.Height - 20, 20, 20));
+
+          gfx.DrawString("Evitel", fontRegular, textColor, new XRect(hovorStart+25, (int)page.Height - 20, 20, 15), XStringFormats.BottomCenter);
           gfx.DrawString("Stránka " + (aktPage + 1).ToString() + " / " + nrPages.ToString(), fontRegular, textColor, new XRect(((int)(page.Width / 2)) - 10, (int)page.Height - 20, 20, 15), XStringFormats.BottomCenter);
           gfx.DrawString("Tisk:  " + DateTime.Now.ToString("dd.MM.yyyy HH:mm"), fontRegular, textColor, new XRect(((int)page.Width) - 140, (int)page.Height - 20, 140, 15), XStringFormats.BottomCenter);
 
@@ -202,12 +206,12 @@ namespace EvitelLib2.Common
       gfx.DrawString((aktCall.DtStartCall ?? DateTime.Now).ToString("HH:mm"), fontRegular, textColor, new XRect(hovorStart + 25, aktY, 30, 20), XStringFormats.CenterLeft);
       gfx.DrawString(aktCall.InterventShortName, fontRegular, textColor, new XRect(hovorStart + 50, aktY, 100, 20), XStringFormats.CenterLeft);
 
-      gfx.DrawString(aktIncident.RegionName, fontRegular, textColor, new XRect(udalostStart, aktY, 100, 20), XStringFormats.CenterLeft);
+      gfx.DrawString(aktIncident.UdalostRegion, fontRegular, textColor, new XRect(udalostStart, aktY, 100, 20), XStringFormats.CenterLeft);
       gfx.DrawString((aktIncident.DtIncident ?? DateTime.Now).ToString("dd.MM.yy"), fontRegular, textColor, new XRect(udalostStart + 80, aktY, 60, 20), XStringFormats.CenterLeft);
-      gfx.DrawString(aktIncident.Place.Substring(0, Math.Min(aktIncident.Place.Length, 30)), fontRegular, textColor, new XRect(udalostStart + 120, aktY, 100, 20), XStringFormats.CenterLeft);
+      gfx.DrawString(aktIncident.UdalostMisto.Substring(0, Math.Min(aktIncident.UdalostMisto.Length, 30)), fontRegular, textColor, new XRect(udalostStart + 120, aktY, 100, 20), XStringFormats.CenterLeft);
 
-      gfx.DrawString(aktIncident.IncidentName.Substring(0, Math.Min(aktIncident.IncidentName.Length, 36)), fontRegular, textColor, new XRect(IntervenceStart, aktY, 140, 20), XStringFormats.CenterLeft);
-      gfx.DrawString(aktIntervence.Poradi.ToString(), fontRegular, textColor, new XRect(IntervenceStart + 160, aktY, 140, 20), XStringFormats.CenterLeft);
+      gfx.DrawString(aktIncident.DruhUdalosti.Substring(0, Math.Min(aktIncident.DruhUdalosti.Length, 36)), fontRegular, textColor, new XRect(IntervenceStart, aktY, 140, 20), XStringFormats.CenterLeft);
+      gfx.DrawString(aktIntervence.IntervPoradi.ToString(), fontRegular, textColor, new XRect(IntervenceStart + 160, aktY, 140, 20), XStringFormats.CenterLeft);
       gfx.DrawString((aktIntervence.DtStartIntervence ?? DateTime.Now).ToString("dd.MM.yy"), fontRegular, textColor, new XRect(IntervenceStart + 175, aktY, 40, 20), XStringFormats.CenterLeft);
 
       gfx.DrawString(aktIncident.PocetPoskozenych.ToString(), fontRegular, textColor, new XRect(PredaniStart + 15, aktY, 140, 20), XStringFormats.CenterLeft);

@@ -38,9 +38,8 @@ namespace EvitelApp2.Controls
     eSubEndOfSpeech,
     eClientCurrentStatus,
     eSubClientCurrentStatus,
-    eTopic,
-    eSubTopic,
     eContactTopic,
+    eSubContactTopic,
     eContactType,
     eAge,
     eClientFrom,
@@ -189,9 +188,9 @@ namespace EvitelApp2.Controls
           edt.myColumns = new List<MyColumn>()
           {
              new MyColumn { Name = "ID", DataPropertyName = "RegionId", Type=11  },
-             new MyColumn { Name = "Name", DataPropertyName = "Name"},
+             new MyColumn { Name = "Text", DataPropertyName = "Name"},
              new MyColumn { Name = "Zkratka", DataPropertyName = "ShortName"},
-             new MyColumn { Name = "Name2", DataPropertyName = "Name2"},
+             new MyColumn { Name = "Jméno2", DataPropertyName = "Name2"},
           };
           edt.Title = "Kraje";
           regionDataList = DB.GetRegions();
@@ -203,6 +202,7 @@ namespace EvitelApp2.Controls
           {
              new MyColumn { Name = "ID", DataPropertyName = "NickId", Type=11  },
              new MyColumn { Name = "Text", DataPropertyName = "Text"},
+             new MyColumn { Name = "Smazáno", DataPropertyName = "DtDeleted", Type=12, isVisible = false},
           };
           edt.Title = "Přezdívky";
           nickDataList = DB.GetNick();
@@ -261,7 +261,7 @@ namespace EvitelApp2.Controls
           CreateTable();
           AddDataToTableSubClientCurrentStatus();
           break;
-        case eAllCodeBooks.eTopic:
+        case eAllCodeBooks.eContactTopic:
           edt.myColumns = new List<MyColumn>()
           {
              new MyColumn { Name = "ID", DataPropertyName = "ContactTopicId", Type=11  },
@@ -273,7 +273,7 @@ namespace EvitelApp2.Controls
           CreateTable();
           AddDataToTableTopic();
           break;
-        case eAllCodeBooks.eSubTopic:
+        case eAllCodeBooks.eSubContactTopic:
           edt.myColumns = new List<MyColumn>()
           {
              new MyColumn { Name = "ID", DataPropertyName = "SubContactTopicId", Type=11  },
@@ -635,10 +635,11 @@ namespace EvitelApp2.Controls
       {
         case eAllCodeBooks.eSex:
         case eAllCodeBooks.eTypeParty:
+        case eAllCodeBooks.eDruhIntervence:
         case eAllCodeBooks.eNick:
         case eAllCodeBooks.eEndOfSpeech:
         case eAllCodeBooks.eClientCurrentStatus:
-        case eAllCodeBooks.eTopic:
+        case eAllCodeBooks.eContactTopic:
         case eAllCodeBooks.eAge:
         case eAllCodeBooks.eContactType:
         case eAllCodeBooks.eClientFrom:
@@ -687,7 +688,7 @@ namespace EvitelApp2.Controls
           frmU.ShowDialog();
           if (frmU.isReturnOK)
           {
-            RefreshData(frmU.TypeForm, frmU.ID, frmU.Text1, ((ComboItem)frmU.cmb.SelectedItem).iValue);
+            RefreshData(frmU.TypeForm, frmU.ID, frmU.Text1, "", ((ComboItem)frmU.cmb.SelectedItem).iValue);
           }
           break;
         case eAllCodeBooks.eSubClientCurrentStatus:
@@ -702,10 +703,10 @@ namespace EvitelApp2.Controls
           frmU.ShowDialog();
           if (frmU.isReturnOK)
           {
-            RefreshData(frmU.TypeForm, frmU.ID, frmU.Text1, ((ComboItem)frmU.cmb.SelectedItem).iValue);
+            RefreshData(frmU.TypeForm, frmU.ID, frmU.Text1, "", ((ComboItem)frmU.cmb.SelectedItem).iValue);
           }
           break;
-        case eAllCodeBooks.eSubTopic:
+        case eAllCodeBooks.eSubContactTopic:
           foreach (var r in topicDataList)
           {
             frmU.cmb.Items.Add(new ComboItem(r.Text, r.ContactTopicId.ToString()));
@@ -717,7 +718,7 @@ namespace EvitelApp2.Controls
           frmU.ShowDialog();
           if (frmU.isReturnOK)
           {
-            RefreshData(frmU.TypeForm, frmU.ID, frmU.Text1, ((ComboItem)frmU.cmb.SelectedItem).iValue);
+            RefreshData(frmU.TypeForm, frmU.ID, frmU.Text1, "",((ComboItem)frmU.cmb.SelectedItem).iValue);
           }
           break;
 
@@ -743,10 +744,11 @@ namespace EvitelApp2.Controls
       {
         case eAllCodeBooks.eSex:
         case eAllCodeBooks.eTypeParty:
+        case eAllCodeBooks.eDruhIntervence:
         case eAllCodeBooks.eNick:
         case eAllCodeBooks.eEndOfSpeech:
         case eAllCodeBooks.eClientCurrentStatus:
-        case eAllCodeBooks.eTopic:
+        case eAllCodeBooks.eContactTopic:
         case eAllCodeBooks.eAge:
         case eAllCodeBooks.eContactType:
         case eAllCodeBooks.eClientFrom:
@@ -772,9 +774,9 @@ namespace EvitelApp2.Controls
           break;
         case eAllCodeBooks.eRegions:
           frmU.Text2 = (string)dgw.Rows[RowIndex].Cells["Zkratka"].Value;
-          frmU.Label2 = "Kategorie";
-          frmU.Text3 = (string)dgw.Rows[RowIndex].Cells["Name2"].Value;
-          frmU.Label3 = "Jméno";
+          frmU.Label2 = "Zkratka";
+          frmU.Text3 = (string)dgw.Rows[RowIndex].Cells["Jméno2"].Value;
+          frmU.Label3 = "Jméno2";
           frmU.ExtensionItem = 2;
           frmU.ShowDialog();
           if (frmU.isReturnOK)
@@ -796,7 +798,7 @@ namespace EvitelApp2.Controls
           frmU.Label2 = "Kategorie";
           frmU.ShowDialog();
           if (frmU.isReturnOK)
-            RefreshData(eModifyRow.modifyRow, frmU.ID, frmU.Text1, ((ComboItem)frmU.cmb.SelectedItem).iValue);
+            RefreshData(eModifyRow.modifyRow, frmU.ID, frmU.Text1,"", ((ComboItem)frmU.cmb.SelectedItem).iValue);
           break;
         case eAllCodeBooks.eSubClientCurrentStatus:
           foreach (var r in clientCurrentStatusDataList)
@@ -810,9 +812,9 @@ namespace EvitelApp2.Controls
           frmU.Label2 = "Kategorie";
           frmU.ShowDialog();
           if (frmU.isReturnOK)
-            RefreshData(eModifyRow.modifyRow, frmU.ID, frmU.Text1, ((ComboItem)frmU.cmb.SelectedItem).iValue);
+            RefreshData(eModifyRow.modifyRow, frmU.ID, frmU.Text1, "", ((ComboItem)frmU.cmb.SelectedItem).iValue);
           break;
-        case eAllCodeBooks.eSubTopic:
+        case eAllCodeBooks.eSubContactTopic:
           foreach (var r in topicDataList)
           {
             frmU.cmb.Items.Add(new ComboItem(r.Text, r.ContactTopicId.ToString()));
@@ -824,7 +826,7 @@ namespace EvitelApp2.Controls
           frmU.Label2 = "Kategorie";
           frmU.ShowDialog();
           if (frmU.isReturnOK)
-            RefreshData(eModifyRow.modifyRow, frmU.ID, frmU.Text1, ((ComboItem)frmU.cmb.SelectedItem).iValue);
+            RefreshData(eModifyRow.modifyRow, frmU.ID, frmU.Text1, "", ((ComboItem)frmU.cmb.SelectedItem).iValue);
           break;
         default:
           throw new NotImplementedException();
@@ -835,6 +837,12 @@ namespace EvitelApp2.Controls
 
     private void btnDelete_Click(object sender, EventArgs e)
     {
+      if (aktCodeBook == eAllCodeBooks.eRegions)
+      {
+        MessageBox.Show("Kraje nelze mazat", "Evitel", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+        return;
+      }
+
       int RowIndex = GetAktRow();
       if (RowIndex < 0)
         return;
@@ -847,10 +855,10 @@ namespace EvitelApp2.Controls
       frmU.TypeForm = dgw.Rows[RowIndex].Cells["Smazáno"].Value == DBNull.Value ? eModifyRow.deleteRow : eModifyRow.undeleteRow;
       frmU.ShowDialog();
       if (frmU.isReturnOK)
-        RefreshData(frmU.TypeForm, frmU.ID, frmU.Text1, 0);
+        RefreshData(frmU.TypeForm, frmU.ID, frmU.Text1, "", 0);
     }
 
-    private void RefreshData(eModifyRow typeForm, int id, string text, int idMaster = 0)
+    private void RefreshData(eModifyRow typeForm, int id, string text, string text2= "",int idMaster = 0)
     {
       switch (aktCodeBook)
       {
@@ -870,9 +878,9 @@ namespace EvitelApp2.Controls
           AddDataToTableDruhIntervence();
           break;
         case eAllCodeBooks.eSubTypeIncident:
-          DB.UniversalModifyDruhIntervence(typeForm, id, text);
-          druhIntervenceDataList = DB.GetDruhIntervence();
-          AddDataToTableDruhIntervence();
+          DB.UniversalModifySubTypeIncident(typeForm, id, text,text2);
+          subTypeIncidentDataList = DB.GetSubTypeIncident();
+          AddDataToTableSubTypeIncident();
           break;
         case eAllCodeBooks.eEndOfSpeech:
           DB.UniversalModifyEndOfSpeech(typeForm, id, text);
@@ -894,12 +902,12 @@ namespace EvitelApp2.Controls
           subClientCurrentStatusDataList = DB.GetSubClientCurrentStatus();
           AddDataToTableSubClientCurrentStatus();
           break;
-        case eAllCodeBooks.eTopic:
+        case eAllCodeBooks.eContactTopic:
           DB.UniversalModifyContactTopic(typeForm, id, text);
           topicDataList = DB.GetContactTopic();
           AddDataToTableTopic();
           break;
-        case eAllCodeBooks.eSubTopic:
+        case eAllCodeBooks.eSubContactTopic:
           DB.UniversalModifySubContactTopic(typeForm, id, text, idMaster);
           subTopicDataList = DB.GetSubContactTopic();
           AddDataToTableSubTopic();
@@ -923,6 +931,11 @@ namespace EvitelApp2.Controls
           DB.UniversalModifyClientFrom(typeForm, id, text);
           clientFromDataList = DB.GetClientFrom();
           AddDataToTableClientFrom();
+          break;
+        case eAllCodeBooks.eNick:
+          DB.UniversalModifyNick(typeForm, id, text);
+          nickDataList = DB.GetNick();
+          AddDataToTableNick();
           break;
 
 

@@ -29,6 +29,7 @@ namespace EvitelApp2.Login
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmChangePassword));
             this.label2 = new System.Windows.Forms.Label();
             this.txtOldPassword = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -103,7 +104,7 @@ namespace EvitelApp2.Login
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // frmChagePassword
+            // frmChangePassword
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -115,8 +116,9 @@ namespace EvitelApp2.Login
             this.Controls.Add(this.txtNewPassword1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtOldPassword);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Name = "frmChagePassword";
+            this.Name = "frmChangePassword";
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();

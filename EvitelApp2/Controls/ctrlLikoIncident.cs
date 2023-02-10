@@ -21,7 +21,7 @@ namespace EvitelApp2.Controls
     private ColumnLayoutDB cldb;
     ToolStripMenuItem toolStripItem1 = new ToolStripMenuItem();
     public event RowInformation ShowRowInformation;
-    public event DetailIntervence ShowDetailIntervence;
+    public event DetailIntervence ShowDetailUserControl;
     private DataGridViewCellEventArgs mouseLocation;
     public DataTable dataTable
     {
@@ -50,20 +50,22 @@ namespace EvitelApp2.Controls
 
       myColumns = new List<MyColumn>()
       {
-         new MyColumn { Name = "ID", DataPropertyName = "LikoincidentId", Type = 3 },
-         new MyColumn { Name = "Datum čas", DataPropertyName = "DtIncident",Type=5, isVisible = false},
-         new MyColumn { Name = "Datum", DataPropertyName = "DtIncidentDate" , Type=5},
-         new MyColumn { Name = "Čas", DataPropertyName = "TmIncident" },
-         new MyColumn { Name = "Typ", DataPropertyName = "IncidentName"  },
-         new MyColumn { Name = "Kategorie", DataPropertyName = "IncidentCategory"  },
-         new MyColumn { Name = "Region", DataPropertyName = "RegionName"  },
-         new MyColumn { Name = "Místo", DataPropertyName = "Place"},
-         new MyColumn { Name = "Počet poškozených", DataPropertyName = "PocetPoskozenych",Type = 3 },
-         new MyColumn { Name = "Následek Smrti", DataPropertyName = "NasledekSmrti" , Type = 2  },
-         new MyColumn { Name = "Dokonané", DataPropertyName = "Dokonane", Type = 2  },
-         new MyColumn { Name = "Pokus Příprava", DataPropertyName = "PokusPriprava",  Type=2 },
-         new MyColumn { Name = "# intervence", DataPropertyName = "IntervenceCount", Type = 3 },
 
+         new MyColumn { Name = "ID", DataPropertyName = "LikoincidentId" , Type = 3},
+         new MyColumn { Name = "Datum", DataPropertyName = "DtUdalost", Type=5},
+         new MyColumn { Name = "Čas", DataPropertyName = "TmUdalost", Type=6},
+         new MyColumn { Name = "Událost", DataPropertyName = "DruhUdalosti"},
+         new MyColumn { Name = "Kategorie", DataPropertyName = "KategorieUdalosti"},
+         new MyColumn { Name = "Kraj", DataPropertyName = "UdalostRegion"},
+         new MyColumn { Name = "Místo", DataPropertyName = "UdalostMisto"},
+         new MyColumn { Name = "Následek Smrti", DataPropertyName = "NasledekSmrti", Type = 2},
+         new MyColumn { Name = "Dokonané", DataPropertyName = "Dokonane", Type = 2},
+         new MyColumn { Name = "Pokus Příprava", DataPropertyName = "PokusPriprava", Type = 2},
+         new MyColumn { Name = "Počet Poškocených", DataPropertyName = "PocetPoskozenych",Type=3},
+         new MyColumn { Name = "Volání datum", DataPropertyName = "DtCall", Type=5},
+         new MyColumn { Name = "Čas tf. ", DataPropertyName = "TmCall", Type=6},
+         new MyColumn { Name = "Volajici", DataPropertyName = "Volajici"},
+         new MyColumn { Name = "Kraj Volajicí", DataPropertyName = "VolajiciKraj"},
          };
       _dataTable = new DataTable();
       _dataSet = new DataSet();
@@ -166,15 +168,16 @@ namespace EvitelApp2.Controls
 
     private void dgw_DoubleClick(object sender, EventArgs e)
     {
-      JumpToIntervence();
+      if (mouseLocation.RowIndex >= 0)
+        JumpToIntervence();
     }
 
     private void JumpToIntervence()
     {
       int Id = (int)dgw.Rows[mouseLocation.RowIndex].Cells["ID"].Value;
       var x = DB.GetWLIKOIntervence();
-      int? likoIntervenceId = DB.GetWLIKOIntervence().Where(x => x.LikoincidentId == Id && x.Poradi == 1).FirstOrDefault().LikointervenceId;
-      ShowDetailIntervence?.Invoke(2, likoIntervenceId);
+      int? likoIntervenceId = DB.GetWLIKOIntervence().Where(x => x.LikoincidentId == Id && x.IntervPoradi == 1).FirstOrDefault().LikointervenceId;
+      ShowDetailUserControl?.Invoke(2, likoIntervenceId);
     }
 
     private void toolStripItem1_Click(object sender, EventArgs args)

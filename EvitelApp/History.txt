@@ -61,3 +61,11 @@
  Mùžou být 2 interventi na jednoho Participanta
  Bylo by dobré exportovat jen vyfiltrovanou tabulku (nyní se ukládá celá table). A zároveò akceptovat øazení. Asi exportovat podle ID DGW.
 
+
+ https://icons8.com/icons/set/back
+ 31.1.2022 - Simona + 1. Zatím testování protože nejde protokol ani editace LPvK
+ 08.02.2023 - Simona s Pavlem. Dáno do provozu
+  USER - nesmí editovat èíselníky - jen prohlížet
+  Poèítání èasu u tf. hovoru u LPvK
+  Rychlý pøeskok mezi obìmi zadávacími ikny SKI vers. LPvK
+  ALIK - NAèti klienta z posledního hovoru

@@ -1,4 +1,5 @@
 ﻿using EvitelLib2;
+using EvitelLib2.Common;
 using EvitelLib2.Model;
 using EvitelLib2.Repository;
 using NPOI.SS.Formula.Functions;
@@ -11,12 +12,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static EvitelApp2.frmMain;
 
 namespace EvitelApp2.Controls
 {
   public partial class ucCallLPK : UserControl
   {
     public bool isNewForm;
+    public bool isEditMode;
     public int LPKId;               // Pokud je isNewForm=true zde najdeš ID 
 
     private ErrorProvider cmbContactTypeErrorProvider;
@@ -41,6 +44,30 @@ namespace EvitelApp2.Controls
     private List<EContactTopic> contactTopic;
     private List<ESubEndOfSpeech> subEndOfSpeech;
     private List<EEndOfSpeech> endOfSpeech;
+    private List<int> endOfSpeech_Selected;
+    private List<int> clientCurrentStatus_Selected;
+    private List<int> contactTopic_Selected;
+ 
+    public event DetailIntervence ShowDetailUserControl;
+
+
+    Call aktCall;
+    Lpk lpkRow;
+    // pokud zmeni nejakou hodnotu pri editu tak uvolni button Save
+    private bool changedAnyValue { get { return _changedAnyValue; } set { if (isNewForm == false && isEditMode) { _changedAnyValue = true; btnWrite.Enabled = true; } } }
+    private bool _changedAnyValue = false;
+    public string Title
+    {
+      set { this.lblTitulek.Text = value; }
+    }
+
+    private bool isHovor
+    {
+      get
+      {
+        return ((ComboItem)cmbTypeService.SelectedItem).iValue == 1;
+      }
+    }
 
 
     public ucCallLPK()
@@ -72,17 +99,66 @@ namespace EvitelApp2.Controls
       cmbSexErrorProvider = InitializeErrorProvider(1, cmbSex);
       cmbAgeErrorProvider = InitializeErrorProvider(1, cmbAge);
       tvContactTopicErrorProvider = InitializeErrorProvider(1, tvContactTopic);
-      tvCurrentClientStatusErrorProvider = InitializeErrorProvider(1, tvCurrentClientStatus);
+      tvCurrentClientStatusErrorProvider = InitializeErrorProvider(1, tvClientCurrentStatus);
       tvEndOfSpeechErrorProvider = InitializeErrorProvider(1, tvEndOfSpeech);
 
-      
+
       txtVolajici.AutoCompleteSource = AutoCompleteSource.CustomSource;
       txtVolajici.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
       txtVolajici.AutoCompleteCustomSource = new AutoCompleteStringCollection();
+
+      this.dtCall.ValueChanged += this.Any_ValueChanged;
+      this.tmCall.ValueChanged += this.Any_ValueChanged;
+      this.tmCallTo.ValueChanged += this.Any_ValueChanged;
+      this.txtVolajici.TextChanged += this.Any_ValueChanged;
+      this.txtNote.TextChanged += this.Any_ValueChanged;
+      this.cmbContactType.SelectedIndexChanged += this.Any_ValueChanged;
+      this.cmbTypeService.SelectedIndexChanged += this.Any_ValueChanged;
+      this.cmbFrom.SelectedIndexChanged += this.Any_ValueChanged;
+      this.cmbSex.SelectedIndexChanged += this.Any_ValueChanged;
+      this.cmbAge.SelectedIndexChanged += this.Any_ValueChanged;
+      tvContactTopic.AfterCheck += this.Any_ValueChanged;
+      tvClientCurrentStatus.AfterCheck += this.Any_ValueChanged;
+      tvEndOfSpeech.AfterCheck += this.Any_ValueChanged;
     }
+
 
     public void PrepareScreen()
     {
+      if (isNewForm)
+      {
+        btnBack.Visible = false;
+        btnWrite.Enabled = true;
+        btnWrite.Text = "Uložit";
+        lblContactTopic.Text = "";
+        lblCurrentClientStatus.Text = "";
+        lblEndOfSpeech.Text = "";
+        txtLoginUser.Text = Program.myLoggedUser.FirstName + " " + Program.myLoggedUser.LastName;
+        txtNote.Text = "";
+        txtVolajici.Text = "";
+        tmCall.Value = DateTime.Now;
+        tmCallTo.Value = DateTime.Now;
+        lblEditInfo.Visible = false;
+      }
+      else
+      {
+        btnBack.Visible = true;
+        lpkRow = DB.GetLPK(LPKId).First();
+        aktCall = DB.GetCall(lpkRow.CallId);
+        isEditMode = (Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser) || (aktCall.DtEndCall?.AddMonths(1) > DateTime.Now && aktCall.LoginUserId == Program.myLoggedUser.LoginUserId));
+        var anyUser = DB.GetUsers().Where(x => x.LoginUserId == aktCall.LoginUserId).FirstOrDefault();
+        txtLoginUser.Text = anyUser.FirstName + " " + anyUser.LastName;
+        btnWrite.Enabled = false;     // je nutné nakonec - mění se při první změně
+        txtVolajici.Text = lpkRow.Nick;
+        txtNote.Text = lpkRow.Note;
+        dtCall.Value = (DateTime)aktCall.DtStartCall;
+        tmCall.Value = (DateTime)aktCall.DtStartCall;
+        tmCallTo.Value = (DateTime)aktCall.DtEndCall;
+        lblEditInfo.Text = "Id:" + lpkRow.Lpkid.ToString() + "; " + (isEditMode ? "EDIT" : "NO-EDIT");
+        lblEditInfo.Visible = true;
+        ReWriteScreen();
+      }
+
       cmbSex.Items.Clear();
       if (isNewForm)
       {
@@ -94,7 +170,16 @@ namespace EvitelApp2.Controls
         }
         cmbSex.SelectedIndex = 0;
       }
-      else { }
+      else
+      {
+        foreach (var row in sex)
+        {
+          if (row.DtDeleted == null || lpkRow.SexEid == row.SexId)
+            cmbSex.Items.Add(new ComboItem(row.Text, row.SexId.ToString()));
+          if (lpkRow.SexEid == row.SexId)
+            cmbSex.SelectedIndex = cmbSex.Items.Count - 1;
+        }
+      }
 
       cmbContactType.Items.Clear();
       if (isNewForm)
@@ -107,7 +192,16 @@ namespace EvitelApp2.Controls
         }
         cmbContactType.SelectedIndex = 0;
       }
-      else { }
+      else
+      {
+        foreach (var row in contactType)
+        {
+          if (row.DtDeleted == null || lpkRow.ContactTypeEid == row.ContactTypeId)
+            cmbContactType.Items.Add(new ComboItem(row.Text, row.ContactTypeId.ToString()));
+          if (lpkRow.ContactTypeEid == row.ContactTypeId)
+            cmbContactType.SelectedIndex = cmbContactType.Items.Count - 1;
+        }
+      }
 
       cmbTypeService.Items.Clear();
       if (isNewForm)
@@ -120,7 +214,16 @@ namespace EvitelApp2.Controls
         }
         cmbTypeService.SelectedIndex = 0;
       }
-      else { }
+      else
+      {
+        foreach (var row in typeService)
+        {
+          if (row.DtDeleted == null || lpkRow.TypeServiceEid == row.TypeServiceId)
+            cmbTypeService.Items.Add(new ComboItem(row.Text, row.TypeServiceId.ToString()));
+          if (lpkRow.TypeServiceEid == row.TypeServiceId)
+            cmbTypeService.SelectedIndex = cmbTypeService.Items.Count - 1;
+        }
+      }
 
       cmbFrom.Items.Clear();
       if (isNewForm)
@@ -133,7 +236,16 @@ namespace EvitelApp2.Controls
         }
         cmbFrom.SelectedIndex = 0;
       }
-      else { }
+      else
+      {
+        foreach (var row in clientFrom)
+        {
+          if (row.DtDeleted == null || lpkRow.ClientFromEid == row.ClientFromId)
+            cmbFrom.Items.Add(new ComboItem(row.Text, row.ClientFromId.ToString()));
+          if (lpkRow.ClientFromEid == row.ClientFromId)
+            cmbFrom.SelectedIndex = cmbFrom.Items.Count - 1;
+        }
+      }
 
       cmbAge.Items.Clear();
       if (isNewForm)
@@ -146,9 +258,19 @@ namespace EvitelApp2.Controls
         }
         cmbAge.SelectedIndex = 0;
       }
-      else { }
+      else
+      {
+        foreach (var row in age)
+        {
+          if (row.DtDeleted == null || lpkRow.AgeEid == row.AgeId)
+            cmbAge.Items.Add(new ComboItem(row.Text, row.AgeId.ToString()));
+          if (lpkRow.AgeEid == row.AgeId)
+            cmbAge.SelectedIndex = cmbAge.Items.Count - 1;
 
-      this.tvCurrentClientStatus.Nodes.Clear();
+        }
+      }
+
+      this.tvClientCurrentStatus.Nodes.Clear();
       foreach (var cssItem in clientCurrentStatus)
       {
         TreeNode mainNode = new TreeNode();
@@ -161,11 +283,11 @@ namespace EvitelApp2.Controls
           Node2.Text = subCssItem.Text;
           mainNode.Nodes.Add(Node2);
         }
-        this.tvCurrentClientStatus.Nodes.Add(mainNode);
+        this.tvClientCurrentStatus.Nodes.Add(mainNode);
 
       }
-      this.tvCurrentClientStatus.CheckBoxes = true;
-      this.tvCurrentClientStatus.DrawMode = TreeViewDrawMode.OwnerDrawAll;
+      this.tvClientCurrentStatus.CheckBoxes = true;
+      this.tvClientCurrentStatus.DrawMode = TreeViewDrawMode.OwnerDrawAll;
 
       this.tvContactTopic.Nodes.Clear();
       foreach (var cssItem in contactTopic.Where(x => x.DtDeleted == null || !isNewForm).ToList())
@@ -204,26 +326,28 @@ namespace EvitelApp2.Controls
       this.tvEndOfSpeech.CheckBoxes = true;
       this.tvEndOfSpeech.DrawMode = TreeViewDrawMode.OwnerDrawAll;
 
-
-      if (isNewForm)
+      if (isNewForm == false)
       {
-        btnBack.Visible = false;
-        btnWrite.Enabled = true;
-        btnWrite.Text = "Uložit";
-        lblContactTopic.Text = "";
-        lblCurrentClientStatus.Text = "";
-        lblEndOfSpeech.Text = "";
-        txtLoginUser.Text = Program.myLoggedUser.FirstName + " " + Program.myLoggedUser.LastName;
-        txtNote.Text = "";
-        txtVolajici.Text = "";
-        tmCall.Value = DateTime.Now;
-        tmCallTo.Value = DateTime.Now;
+        endOfSpeech_Selected = DB.GetLPKEndOfSpeech(LPKId);
+        clientCurrentStatus_Selected = DB.GetLPKClientCurrentStatus(LPKId);
+        contactTopic_Selected = DB.GetLPKContactTopic(LPKId);
+        SetActiveNodeId(tvEndOfSpeech, endOfSpeech_Selected);
+        SetActiveNodeId(tvClientCurrentStatus, clientCurrentStatus_Selected);
+        SetActiveNodeId(tvContactTopic, contactTopic_Selected);
+        btnWrite.Text = "Upravit";
+        btnWrite.Enabled = false;
       }
-      else
-      {
 
-      }
       txtVolajici.AutoCompleteCustomSource.AddRange(DB.GetNick().Select(x => x.Text).ToArray());
+      ReWriteScreen();
+
+    }
+    private void ReWriteScreen()
+    {
+      boxCall.Top = 40; btnWrite.Top = 70;
+      boxCall.Left = boxClient.Left = boxResult.Left = 3;
+      boxClient.Top = boxCall.Top + boxCall.Height + 5;
+      boxResult.Top = boxClient.Top + boxClient.Height + 5;
 
     }
 
@@ -291,22 +415,34 @@ namespace EvitelApp2.Controls
       lblEndOfSpeech.Text = string.Join(", ", subEndOfSpeech.Where(p => activeNodeId.Contains(p.SubEndOfSpeechId)).Select(p => p.Text.ToString()));
     }
 
-    private List<int> GetActiveNodeId(TreeView sender)
+    private List<int> GetActiveNodeId(TreeView AnyLV)
     {
       List<int> EditedListID = new List<int>();
-      foreach (TreeNode n in sender.Nodes)
+      foreach (TreeNode nL1 in AnyLV.Nodes)
       {
-        foreach (TreeNode n2 in n.Nodes)
+        foreach (TreeNode nL2 in nL1.Nodes)
         {
-          if (n2.Checked)
+          if (nL2.Checked)
           {
-            EditedListID.Add(int.Parse(n2.Name));
+            EditedListID.Add(int.Parse(nL2.Name));
           }
         }
       }
       return EditedListID;
     }
-
+    private void SetActiveNodeId(TreeView AnyTV, List<int> EditedListID)
+    {
+      List<string> sEditedListID = EditedListID.Select(x => x.ToString()).ToList();
+      foreach (TreeNode nL1 in AnyTV.Nodes)
+      {
+        foreach (TreeNode nL2 in nL1.Nodes)
+        {
+          nL2.Checked = sEditedListID.Contains(nL2.Name);
+          if (nL2.Checked)
+            nL1.Expand();
+        }
+      }
+    }
 
 
     private void SpoctiDobu()
@@ -326,6 +462,10 @@ namespace EvitelApp2.Controls
     {
       SpoctiDobu();
     }
+
+
+
+    #region Validation
     private ErrorProvider InitializeErrorProvider(int type, Control myControl)
     {
       var x = new System.Windows.Forms.ErrorProvider();
@@ -412,7 +552,7 @@ namespace EvitelApp2.Controls
     private void tvContactTopic_Validating(object sender, CancelEventArgs e)
     {
       List<int> activeNodeId = GetActiveNodeId(tvContactTopic);
-      if (activeNodeId.Count() == 0)
+      if (activeNodeId.Count() == 0 && isHovor)
       {
         tvContactTopicErrorProvider.SetError(this.tvContactTopic, "Téma kontaktu - alespoň jedna možnost musí být zaškrtnuta");
         e.Cancel = true;
@@ -427,15 +567,15 @@ namespace EvitelApp2.Controls
 
     private void tvCurrentClientStatus_Validating(object sender, CancelEventArgs e)
     {
-      List<int> activeNodeId = GetActiveNodeId(tvCurrentClientStatus);
-      if (activeNodeId.Count() == 0)
+      List<int> activeNodeId = GetActiveNodeId(tvClientCurrentStatus);
+      if (activeNodeId.Count() == 0 &&  isHovor)
       {
-        tvCurrentClientStatusErrorProvider.SetError(this.tvCurrentClientStatus, "Aktuální stav klienta - alespoň jedna možnost musí být zaškrtnuta");
+        tvCurrentClientStatusErrorProvider.SetError(this.tvClientCurrentStatus, "Aktuální stav klienta - alespoň jedna možnost musí být zaškrtnuta");
         e.Cancel = true;
       }
       else
       {
-        tvCurrentClientStatusErrorProvider.SetError(this.tvCurrentClientStatus, "");
+        tvCurrentClientStatusErrorProvider.SetError(this.tvClientCurrentStatus, "");
         e.Cancel = false;
       }
 
@@ -444,7 +584,7 @@ namespace EvitelApp2.Controls
     private void tvEndOfSpeech_Validating(object sender, CancelEventArgs e)
     {
       List<int> activeNodeId = GetActiveNodeId(tvEndOfSpeech);
-      if (activeNodeId.Count() == 0)
+      if (activeNodeId.Count() == 0 && isHovor)
       {
         tvEndOfSpeechErrorProvider.SetError(this.tvEndOfSpeech, "Závěr hovoru - alespoň jedna možnost musí být zaškrtnuta");
         e.Cancel = true;
@@ -456,6 +596,8 @@ namespace EvitelApp2.Controls
       }
 
     }
+
+    #endregion
 
     private void btnWrite_Click(object sender, EventArgs e)
     {
@@ -469,14 +611,69 @@ namespace EvitelApp2.Controls
       }
       else
       {
-        MessageBox.Show("Validation failed.", "LPK - Nové volání",MessageBoxButtons.OK,MessageBoxIcon.Stop);
+        MessageBox.Show("Validation failed.", "LPK - Nové volání", MessageBoxButtons.OK, MessageBoxIcon.Stop);
       }
       return;
     }
 
     private void UpdateThisNewCall()
     {
-      throw new NotImplementedException();
+      DateTime datetimeStartCall = dtCall.Value.Date.Add(TimeSpan.Parse(tmCall.Value.ToShortTimeString()));
+      DateTime datetimeEndCall = dtCall.Value.Date.Add(TimeSpan.Parse(tmCallTo.Value.ToShortTimeString()));
+      if (datetimeStartCall != aktCall.DtStartCall || datetimeEndCall != aktCall.DtEndCall)
+      {
+        DB.UpdateCall(aktCall.CallId, datetimeStartCall, datetimeEndCall);
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2CallTable, aktCall.DtStartCall.ToString() + " -> " + datetimeStartCall.ToString() + "  " + aktCall.DtEndCall.ToString() + " -> " + datetimeEndCall.ToString(), aktCall.CallId.ToString(), Program.myLoggedUser.LoginUserId);
+        aktCall = DB.GetCall(aktCall.CallId);
+      }
+      if (((ComboItem)cmbSex.SelectedItem).iValue != lpkRow.SexEid)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2LPvKTable, "Pohlaví", ((ComboItem)cmbSex.SelectedItem).Text + " -> " + sex.Where(x => x.SexId == lpkRow.SexEid).Select(x => x.Text), Program.myLoggedUser.LoginUserId);
+        lpkRow.SexEid = ((ComboItem)cmbSex.SelectedItem).iValue;
+      }
+      if (((ComboItem)cmbAge.SelectedItem).iValue != lpkRow.AgeEid)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2LPvKTable, "Věk", ((ComboItem)cmbAge.SelectedItem).Text + " -> " + age.Where(x => x.AgeId == lpkRow.AgeEid).Select(x => x.Text), Program.myLoggedUser.LoginUserId);
+        lpkRow.AgeEid = ((ComboItem)cmbAge.SelectedItem).iValue;
+      }
+      if (((ComboItem)cmbFrom.SelectedItem).iValue != lpkRow.ClientFromEid)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2LPvKTable, "Odkud je klient", ((ComboItem)cmbFrom.SelectedItem).Text + " -> " + clientFrom.Where(x => x.ClientFromId == lpkRow.ClientFromEid).Select(x => x.Text), Program.myLoggedUser.LoginUserId);
+        lpkRow.ClientFromEid = ((ComboItem)cmbFrom.SelectedItem).iValue;
+      }
+      if (((ComboItem)cmbContactType.SelectedItem).iValue != lpkRow.ContactTypeEid)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2LPvKTable, "Typ klienta", ((ComboItem)cmbContactType.SelectedItem).Text + " -> " + contactType.Where(x => x.ContactTypeId == lpkRow.ContactTypeEid).Select(x => x.Text), Program.myLoggedUser.LoginUserId);
+        lpkRow.ContactTypeEid = ((ComboItem)cmbContactType.SelectedItem).iValue;
+      }
+      if (((ComboItem)cmbTypeService.SelectedItem).iValue != lpkRow.TypeServiceEid)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2LPvKTable, "Typ služby", ((ComboItem)cmbTypeService.SelectedItem).Text + " -> " + typeService.Where(x => x.TypeServiceId == lpkRow.TypeServiceEid).Select(x => x.Text), Program.myLoggedUser.LoginUserId);
+        lpkRow.TypeServiceEid = ((ComboItem)cmbTypeService.SelectedItem).iValue;
+      }
+
+      List<int> contactTopic_New = GetActiveNodeId(tvContactTopic);
+      if (!contactTopic_Selected.SequenceEqual(contactTopic_New))
+      {
+        DB.SetLPKContactTopic(lpkRow.Lpkid, contactTopic_New);
+        contactTopic_Selected = DB.GetLPKContactTopic(LPKId);
+      }
+      List<int> clientCurrentStatus_New = GetActiveNodeId(tvClientCurrentStatus);
+      if (!clientCurrentStatus_Selected.SequenceEqual(clientCurrentStatus_New))
+      {
+        DB.SetLPKClientCurrentStatus(lpkRow.Lpkid, clientCurrentStatus_New);
+        clientCurrentStatus_Selected = DB.GetLPKClientCurrentStatus(LPKId);
+      }
+      List<int> endOfSpeech_New = GetActiveNodeId(tvEndOfSpeech);
+      if (!endOfSpeech_Selected.SequenceEqual(endOfSpeech_New))
+      {
+        DB.SetLPKEndOfSpeech(lpkRow.Lpkid, endOfSpeech_New);
+        endOfSpeech_Selected = DB.GetLPKEndOfSpeech(LPKId);
+      }
+      lpkRow.Note = txtNote.Text;
+      lpkRow.Nick = txtVolajici.Text;
+      DB.UpdateLPK(lpkRow);
+      btnWrite.Enabled = false;
     }
 
     private void WriteThisNewCall()
@@ -499,7 +696,7 @@ namespace EvitelApp2.Controls
         int aktLPKId = DB.WriteRowLPK(row);
         List<int> contactTopicIdList = GetActiveNodeId(tvContactTopic);
         DB.SetLPKContactTopic(aktLPKId, contactTopicIdList);
-        List<int> currentClientStatusIdList = GetActiveNodeId(tvCurrentClientStatus);
+        List<int> currentClientStatusIdList = GetActiveNodeId(tvClientCurrentStatus);
         DB.SetLPKClientCurrentStatus(aktLPKId, currentClientStatusIdList);
         List<int> endOfSpeechIdList = GetActiveNodeId(tvEndOfSpeech);
         DB.SetLPKEndOfSpeech(aktLPKId, endOfSpeechIdList);
@@ -517,7 +714,27 @@ namespace EvitelApp2.Controls
     private void ucCallLPK_VisibleChanged(object sender, EventArgs e)
     {
       if (this.Visible == false)
-        this.CausesValidation = false; 
+        this.CausesValidation = false;
+    }
+
+    private void btnBack_Click(object sender, EventArgs e)
+    {
+      ShowDetailUserControl?.Invoke(-1, 0);
+    }
+    private void Any_ValueChanged(object sender, EventArgs e)
+    {
+      changedAnyValue = true;
+    }
+
+    private void ucCallLPK_Resize(object sender, EventArgs e)
+    {
+      boxResult.Height = Math.Max(this.Height - (boxResult.Top + 20), 300);
+      lblContactTopic1.Top = lblContactTopic.Top = boxResult.Height - 60;
+      lblCurrentClientStatus1.Top = lblCurrentClientStatus.Top = boxResult.Height - 40;
+      lblEndOfSpeech1.Top = lblEndOfSpeech.Top = boxResult.Height - 20;
+      this.tvEndOfSpeech.Height = this.tvContactTopic.Height = this.tvClientCurrentStatus.Height = (boxResult.Height - 100);
+      this.txtNote.Height = this.tvEndOfSpeech.Height + 100;
+
     }
   }
 }

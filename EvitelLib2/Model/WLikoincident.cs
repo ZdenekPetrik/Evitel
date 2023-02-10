@@ -5,22 +5,27 @@ namespace EvitelLib2.Model
 {
     public partial class WLikoincident
     {
-        public int LikoincidentId { get; set; }
-        public string Title { get; set; }
-        public string Note { get; set; }
-        public int? SubTypeIncidentEid { get; set; }
-        public int? RegionId { get; set; }
         public DateTime? DtIncident { get; set; }
+        public DateTime? DtUdalost { get; set; }
+        public string TmUdalost { get; set; }
+        public string UdalostRegion { get; set; }
+        public string UdalostMisto { get; set; }
+        public string UdalostNote { get; set; }
+        public string DruhUdalosti { get; set; }
+        public string KategorieUdalosti { get; set; }
         public bool? NasledekSmrti { get; set; }
         public bool? Dokonane { get; set; }
         public bool? PokusPriprava { get; set; }
-        public string Place { get; set; }
         public int? PocetPoskozenych { get; set; }
-        public int? IntervenceCount { get; set; }
-        public string RegionName { get; set; }
-        public string IncidentName { get; set; }
-        public string IncidentCategory { get; set; }
-        public DateTime? DtIncidentDate { get; set; }
-        public string TmIncident { get; set; }
+        public int LikoincidentId { get; set; }
+        public DateTime? DtStartCall { get; set; }
+        public DateTime? DtCall { get; set; }
+        public string TmCall { get; set; }
+        public string Volajici { get; set; }
+        public string VolajiciKraj { get; set; }
+        public int? CallId { get; set; }
+        public string UserLastName { get; set; }
+        public string UserFirstName { get; set; }
+        public int? LoginUserId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 using EvitelApp2.Login;
+using EvitelLib2;
 using EvitelLib2.Business;
 using EvitelLib2.Common;
 using Microsoft.VisualBasic.ApplicationServices;
@@ -23,7 +24,7 @@ namespace EvitelApp2
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
       loginManipulation = new CLoginManipulation();
-      if (ConfigurationManager.AppSettings["NoLogin"] == "Yes")
+      if (ConfigurationManager.AppSettings["Debug"] == "Yes")
         myLoggedUser = loginManipulation.CheckLogin("ZPT", "12345678");
       else
       {
@@ -32,8 +33,27 @@ namespace EvitelApp2
       }
       if (myLoggedUser != null)
       {
-        Application.Run(new frmMain());
-        loginManipulation.Logout(myLoggedUser);
+        if (ConfigurationManager.AppSettings["Debug"] == "Yes")
+        {
+          Application.Run(new frmMain());
+          loginManipulation.Logout(myLoggedUser);
+        }
+        else
+        {
+          try
+          {
+            Application.Run(new frmMain());
+          }
+          catch (Exception Ex)
+          {
+            new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, Ex.Message, Ex.StackTrace.ToString(), myLoggedUser.LoginUserId);
+            MessageBox.Show(Ex.Message);
+          }
+          finally
+          {
+            loginManipulation.Logout(myLoggedUser);
+          }
+        }
       }
       else
       {

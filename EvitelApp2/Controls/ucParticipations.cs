@@ -32,13 +32,15 @@ namespace EvitelApp2.Controls
     public bool isNew = true;                 // tvorime nove participanty
     public bool isEditMode = true;            // zobrazeni existujici skupiny participantu (tj. isNew == false). Tak ještě je třeba rozhodnout zdali smíme editovat.
 
+    public int supposeIntervent = -1;
+
     public ucParticipations()
     {
       InitializeComponent();
       dgw.AutoGenerateColumns = false;
       myColumns = new List<MyColumn>()
       {
-         new MyColumn { Name = "LIKOParticipantId", DataPropertyName = "LIKOParticipantId", isVisible = false },
+         new MyColumn { Name = "ID", DataPropertyName = "LIKOParticipantId", isVisible = false },
          new MyColumn { Name = "LIKOIncidentId", DataPropertyName = "LIKOIncidentId", isVisible = false },
          new MyColumn { Name = "IsDeleted", DataPropertyName = "IsDeleted", isVisible = false },
          new MyColumn { Name = "Forma účasti", DataPropertyName = "TypePartyEid", Type = 3 },
@@ -59,7 +61,7 @@ namespace EvitelApp2.Controls
          new MyColumn { Name = "Blízká polic.", DataPropertyName = "IsPolicementClosePerson",Type = 2 },
          new MyColumn { Name = "Senior", DataPropertyName = "IsSenior",Type = 2 },
          new MyColumn { Name = "Mladiství", DataPropertyName = "IsChildJuvenile",Type = 2 },
-         new MyColumn { Name = "ZPT", DataPropertyName = "IsHandyCappedMedical" ,Type = 2},
+         new MyColumn { Name = "ZTP", DataPropertyName = "IsHandyCappedMedical" ,Type = 2},
          new MyColumn { Name = "Duševní por.", DataPropertyName = "IsHandyCappedMentally" ,Type = 2},
          new MyColumn { Name = "Minorita", DataPropertyName = "IsMemberMinorityGroup" ,Type = 2},
          new MyColumn { Name = "Organizace", DataPropertyName = "Organization" }
@@ -169,6 +171,7 @@ namespace EvitelApp2.Controls
       frmParticipant f = new frmParticipant();
       f.master = this;
       f.aktRow = new Likoparticipant();
+      f.aktRow.InterventId = supposeIntervent;
       f.TypOkna = 'C';
       f.ShowDialog();
       if (f.isOK)

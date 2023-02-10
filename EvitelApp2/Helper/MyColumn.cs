@@ -33,6 +33,8 @@ namespace EvitelApp2.Helper
           return typeof(int);
         case 5:
           return typeof(DateTime);
+        case 6:
+          return typeof(TimeSpan);
         case 11:
           return typeof(int);
         case 12:

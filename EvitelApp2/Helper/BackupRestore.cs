@@ -31,7 +31,7 @@ namespace EvitelApp2.Helper
             var filename = fd.FileName;
             string command = "BACKUP DATABASE "+databaseName+" TO DISK = '" + fd.FileName + "'";
 
-            using (var ctx = new Evitel2Context())
+            using (var ctx = new Evitel2DB())
             {
               //Get student name of string type
               var a = ctx.Database.ExecuteSqlRaw(command);
@@ -65,13 +65,13 @@ namespace EvitelApp2.Helper
         if (filePath.Length > 0)
         {
           string command = "ALTER DATABASE [" + databaseName + "] SET SINGLE_USER WITH ROLLBACK IMMEDIATE";
-          using (var ctx = new Evitel2Context())
+          using (var ctx = new Evitel2DB())
           {
             //Get student name of string type
             var a = ctx.Database.ExecuteSqlRaw(command);
           }
           command = "USE MASTER; RESTORE DATABASE [" + databaseName + "] FROM DISK = N'" + filePath + "' WITH REPLACE";
-          using (var ctx = new Evitel2Context())
+          using (var ctx = new Evitel2DB())
           {
             //Get student name of string type
             var a = ctx.Database.ExecuteSqlRaw(command);
@@ -87,7 +87,7 @@ namespace EvitelApp2.Helper
       finally
       {
         string command = "ALTER DATABASE [" + databaseName + "] SET MULTI_USER";
-        using (var ctx = new Evitel2Context())
+        using (var ctx = new Evitel2DB())
         {
           //Get student name of string type
           var a = ctx.Database.ExecuteSqlRaw(command);

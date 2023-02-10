@@ -43,9 +43,9 @@ namespace EvitelLib2.Model
         public string DruhIntervenceText { get; set; }
         public string TypePartyText { get; set; }
         public int? MainInterventId { get; set; }
-        public string InterventShortName { get; set; }
         public string RegionName { get; set; }
-        public string CmbName { get; set; }
+        public string InterventName { get; set; }
+        public string InterventName2 { get; set; }
         public int? Poradi { get; set; }
     }
 }

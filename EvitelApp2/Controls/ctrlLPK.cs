@@ -29,7 +29,7 @@ namespace EvitelApp2.Controls
     private ColumnLayoutDB cldb;
     ToolStripMenuItem toolStripItem1 = new ToolStripMenuItem();
     public event RowInformation ShowRowInformation;
-    public event DetailIntervence ShowDetailIntervence;
+    public event DetailIntervence ShowDetailUserControl;
     private DataGridViewCellEventArgs mouseLocation;
     public DataTable dataTable { 
       get {
@@ -192,7 +192,7 @@ namespace EvitelApp2.Controls
 
     private void JumpToIntervence()
     { int lpkId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["ID"].Value;
-      ShowDetailIntervence?.Invoke(11, lpkId);
+      ShowDetailUserControl?.Invoke(11, lpkId);
     }
 
     private void dgw_CellContentClick(object sender, DataGridViewCellEventArgs e)

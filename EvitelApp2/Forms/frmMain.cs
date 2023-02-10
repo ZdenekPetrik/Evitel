@@ -8,6 +8,7 @@ using EvitelLib2.Model;
 using EvitelLib2.Repository;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 
@@ -35,17 +36,18 @@ namespace EvitelApp2
     {
       emptyPage,
       EventLog,
-      NewCall,
-      LPKCall,
+      SKINewCall,
+      LPvKNewCall,
       Intervents,
       Enums,
-      LikoParticipant,
-      LikoCall,
-      LikoIncident,
-      LikoIntervence,
+      SKIParticipant,
+      SKICall,
+      SKIIncident,
+      SKIIntervence,
       User,
       CallAll,
-      LPKRows,
+      LPvKRows,
+      SKIReport,
       NecoJineho
     }
 
@@ -65,51 +67,66 @@ namespace EvitelApp2
       toolStripTime.Text = "00:00:00";
       timer1.Interval = 1000;
       timer1.Start();
+      // Nastavení viditelnosti menu dle práv
       if (Program.myLoggedUser.loginMode != eLoginMode.PasswordName)
       {
         MenuItemChangePassword.Visible = false;
       }
+      if (ConfigurationManager.AppSettings["Debug"] != "Yes")
+      {
+        testToolStripMenuItem.Visible = false;
+      }
+      MenuItemBackup.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.Archive);
+      MenuItemRestore.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.Archive);
       MenuItemUsers.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.Admin);
       MenuItemNewUser.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.Admin);
 
+      // 
       CRepositoryDB repo = new CRepositoryDB();
       ucCallLIKO1.Dock = DockStyle.Fill;
-      ucCallLIKO1.ShowDetailIntervence += ShowDetailIntervence;
+      ucCallLIKO1.ShowDetailUserControl += ShowDetailUserControl_Obsluha;
 
       ucCallLPK1.Dock = DockStyle.Fill;
+      ucCallLPK1.ShowDetailUserControl += ShowDetailUserControl_Obsluha;
+
 
       ucIntervents1.Dock = DockStyle.Fill;
       splitContainer1.Dock = DockStyle.Fill;
       ucCiselnik1.Dock = DockStyle.Fill;
       ctrlParticipation1.Dock = DockStyle.Fill;
       ctrlParticipation1.ShowRowInformation += ShowRowInformation;
-      ctrlParticipation1.ShowDetailIntervence += ShowDetailIntervence;
+      ctrlParticipation1.ShowDetailUserControl += ShowDetailUserControl_Obsluha;
 
       ctrllikoIncident1.Dock = DockStyle.Fill;
       ctrllikoIncident1.ShowRowInformation += ShowRowInformation;
-      ctrllikoIncident1.ShowDetailIntervence += ShowDetailIntervence;
+      ctrllikoIncident1.ShowDetailUserControl += ShowDetailUserControl_Obsluha;
 
       ctrllikoIntervence1.Dock = DockStyle.Fill;
       ctrllikoIntervence1.ShowRowInformation += ShowRowInformation;
-      ctrllikoIntervence1.ShowDetailIntervence += ShowDetailIntervence;
+      ctrllikoIntervence1.ShowDetailUserControl += ShowDetailUserControl_Obsluha;
 
       ctrlLikoCall1.Dock = DockStyle.Fill;
       ctrlLikoCall1.ShowRowInformation += ShowRowInformation;
-      ctrlLikoCall1.ShowDetailIntervence += ShowDetailIntervence;
+      ctrlLikoCall1.ShowDetailUserControl += ShowDetailUserControl_Obsluha;
 
       ctrlCall1.Dock = DockStyle.Fill;
       ctrlCall1.ShowRowInformation += ShowRowInformation;
-      ctrlCall1.ShowDetailIntervence += ShowDetailIntervence;
+      ctrlCall1.ShowDetailUserControl += ShowDetailUserControl_Obsluha;
 
       ctrllpk1.Dock = DockStyle.Fill;
       ctrllpk1.ShowRowInformation += ShowRowInformation;
-      ctrllpk1.ShowDetailIntervence += ShowDetailIntervence;
+      ctrllpk1.ShowDetailUserControl += ShowDetailUserControl_Obsluha;
 
       ctrlUser1.Dock = DockStyle.Fill;
       ctrlUser1.ShowRowInformation += ShowRowInformation;
 
       ucCiselnik1.ShowRowInformation += ShowRowInformation;
       ucIntervents1.ShowRowInformation += ShowRowInformation;
+
+      ctrlSKIReport1.Dock = DockStyle.Fill;
+      ctrlSKIReport1.ShowRowInformation += ShowRowInformation;
+      ctrlSKIReport1.ShowDetailUserControl += ShowDetailUserControl_Obsluha;
+
       HideAll();
       ShowView_NewCall();
     }
@@ -146,10 +163,10 @@ namespace EvitelApp2
         case eShowWindow.EventLog:
           splitContainer1.Visible = false;
           break;
-        case eShowWindow.NewCall:
+        case eShowWindow.SKINewCall:
           ucCallLIKO1.Visible = false;
           break;
-        case eShowWindow.LPKCall:
+        case eShowWindow.LPvKNewCall:
           ucCallLPK1.Visible = false;
           break;
         case eShowWindow.Intervents:
@@ -158,16 +175,16 @@ namespace EvitelApp2
         case eShowWindow.Enums:
           ucCiselnik1.Visible = false;
           break;
-        case eShowWindow.LikoParticipant:
+        case eShowWindow.SKIParticipant:
           ctrlParticipation1.Visible = false;
           break;
-        case eShowWindow.LikoCall:
+        case eShowWindow.SKICall:
           ctrlLikoCall1.Visible = false;
           break;
-        case eShowWindow.LikoIncident:
+        case eShowWindow.SKIIncident:
           ctrllikoIncident1.Visible = false;
           break;
-        case eShowWindow.LikoIntervence:
+        case eShowWindow.SKIIntervence:
           ctrllikoIntervence1.Visible = false;
           break;
         case eShowWindow.User:
@@ -176,8 +193,11 @@ namespace EvitelApp2
         case eShowWindow.CallAll:
           ctrlCall1.Visible = false;
           break;
-        case eShowWindow.LPKRows:
+        case eShowWindow.LPvKRows:
           ctrllpk1.Visible = false;
+          break;
+        case eShowWindow.SKIReport:
+          ctrlSKIReport1.Visible = false;
           break;
         case eShowWindow.NecoJineho:
           break;
@@ -223,19 +243,20 @@ namespace EvitelApp2
     private void ShowView_NewCall(int TypeCall = 0)
     {
       ucCallLIKO1.Visible = true;
-      aktWindow = eShowWindow.NewCall;
+      aktWindow = eShowWindow.SKINewCall;
       if (TypeCall > 0)
       {
         ucCallLIKO1.isNewForm = false;
         ucCallLIKO1.LikoIntervenceId = TypeCall;
-        this.Text = Title + " - Linka krizové intervence (LIKO)";
+        this.Text = Title + " - Linka krizové intervence (SKI) Detail";
 
       }
       else
       {
         ucCallLIKO1.isNewForm = true;
-        this.Text = Title + " - LIKO Nové volání";
+        this.Text = Title + " - Linka krizové intervence (SKI) Nové volání";
       }
+      ucCallLIKO1.Title = this.Text;
       MenuToolSetColumnLayout.Enabled = true;
       MenuToolsRemoveColumnLayout.Enabled = true;
       ucCallLIKO1.PrepareScreen();
@@ -246,19 +267,20 @@ namespace EvitelApp2
     private void ShowView_NewCallLPK(int TypeCall = 0)
     {
       ucCallLPK1.Visible = true;
-      aktWindow = eShowWindow.LPKCall;
+      aktWindow = eShowWindow.LPvKNewCall;
       if (TypeCall > 0)
       {
         ucCallLPK1.isNewForm = false;
         ucCallLPK1.LPKId = TypeCall;
-        this.Text = Title + " - Linka Pomoci v krizi (LPK)";
+        this.Text = Title + " - Linka Pomoci v krizi (LPvK) Detail";
 
       }
       else
       {
         ucCallLPK1.isNewForm = true;
-        this.Text = Title + " - LPK Nové volání";
+        this.Text = Title + " - Linka Pomoci v krizi (LPvK) Nové volání";
       }
+      ucCallLPK1.Title = this.Text;
       ucCallLPK1.PrepareScreen();
       lastWindowStack.Add(aktWindow);
 
@@ -270,13 +292,13 @@ namespace EvitelApp2
       ucIntervents1.Visible = true;
       if (!ucIntervents1.isData)
         ucIntervents1.ReadDataFirstTime();
+      aktWindow = eShowWindow.Intervents;
       MenuToolsRemoveFilters.Enabled = true;
       MenuToolsRemoveOrders.Enabled = true;
       MenuToolSetColumnLayout.Enabled = true;
       MenuToolsRemoveColumnLayout.Enabled = true;
-      FileExportExcel.Enabled = true;
-      FileExportCSV.Enabled = true;
-      aktWindow = eShowWindow.Intervents;
+      FileExportExcel.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser);
+      FileExportCSV.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser);
       this.Text = Title + " - Interventi";
       lastWindowStack.Add(aktWindow);
 
@@ -311,7 +333,7 @@ namespace EvitelApp2
       MenuToolsRemoveColumnLayout.Enabled = true;
       FileExportExcel.Enabled = true;
       FileExportCSV.Enabled = true;
-      aktWindow = eShowWindow.LikoParticipant;
+      aktWindow = eShowWindow.SKIParticipant;
       this.Text = Title + "Účastníci intervence";
       lastWindowStack.Add(aktWindow);
 
@@ -331,7 +353,7 @@ namespace EvitelApp2
       MenuToolsRemoveColumnLayout.Enabled = true;
       FileExportExcel.Enabled = true;
       FileExportCSV.Enabled = true;
-      aktWindow = eShowWindow.LikoCall;
+      aktWindow = eShowWindow.SKICall;
       this.Text = Title + " - Intervenční telefonní hovory";
       lastWindowStack.Add(aktWindow);
     }
@@ -350,7 +372,7 @@ namespace EvitelApp2
       FileExportExcel.Enabled = true;
       FileExportCSV.Enabled = true;
       aktWindow = eShowWindow.CallAll;
-      this.Text = Title + " - Telefonní hovory (LIKO + LPK)";
+      this.Text = Title + " - Telefonní hovory (SKI + LPvK)";
       lastWindowStack.Add(aktWindow);
     }
 
@@ -368,8 +390,8 @@ namespace EvitelApp2
       MenuToolsRemoveColumnLayout.Enabled = true;
       FileExportExcel.Enabled = true;
       FileExportCSV.Enabled = true;
-      aktWindow = eShowWindow.LPKRows;
-      this.Text = Title + " - Linka pomoci v krizi";
+      aktWindow = eShowWindow.LPvKRows;
+      this.Text = Title + " - Linka pomoci v krizi (LPvK)";
       lastWindowStack.Add(aktWindow);
     }
 
@@ -387,8 +409,8 @@ namespace EvitelApp2
       MenuToolsRemoveColumnLayout.Enabled = true;
       FileExportExcel.Enabled = true;
       FileExportCSV.Enabled = true;
-      aktWindow = eShowWindow.LikoIncident;
-      this.Text = Title + " - Incidenty";
+      aktWindow = eShowWindow.SKIIncident;
+      this.Text = Title + " - SKI Události";
       lastWindowStack.Add(aktWindow);
 
     }
@@ -406,8 +428,27 @@ namespace EvitelApp2
       MenuToolsRemoveColumnLayout.Enabled = true;
       FileExportExcel.Enabled = true;
       FileExportCSV.Enabled = true;
-      aktWindow = eShowWindow.LikoIntervence;
-      this.Text = Title + " - Intervence";
+      aktWindow = eShowWindow.SKIIntervence;
+      this.Text = Title + " - SKI Intervence";
+      lastWindowStack.Add(aktWindow);
+    }
+
+    private void ShowView_SKIReport(bool openNeeded = true)
+    {
+      if (openNeeded)
+      {
+        ctrlSKIReport1.ReadDataFirstTime();
+        ctrlSKIReport1.MyResize();
+      }
+      ctrlSKIReport1.Visible = true;
+      MenuToolsRemoveFilters.Enabled = true;
+      MenuToolsRemoveOrders.Enabled = true;
+      MenuToolSetColumnLayout.Enabled = true;
+      MenuToolsRemoveColumnLayout.Enabled = true;
+      FileExportExcel.Enabled = true;
+      FileExportCSV.Enabled = true;
+      aktWindow = eShowWindow.SKIReport;
+      this.Text = Title + " - SKI Report";
       lastWindowStack.Add(aktWindow);
     }
 
@@ -438,9 +479,9 @@ namespace EvitelApp2
     }
 
     // source 1=Call, 2=Incident, 3=Intervence, 4=Participant, 11=LPK, -1 ucCallLiko konci
-    void ShowDetailIntervence(int source, int? IntervenceId)
+    private void ShowDetailUserControl_Obsluha(int source, int? IntervenceId)
     {
-      if (source >= 1 && source <= 4)
+      if (source >= 1 && source <= 5)
       {
         HideActualView();
         ShowView_NewCall(IntervenceId ?? 0);
@@ -456,20 +497,26 @@ namespace EvitelApp2
         aktWindow = lastWindowStack[lastWindowStack.Count - 2];
         switch (aktWindow)
         {
-          case eShowWindow.LikoParticipant:
+          case eShowWindow.SKIReport:
+            ShowView_SKIReport(false);
+            break;
+          case eShowWindow.SKIParticipant:
             ShowView_Participant(false);
             break;
-          case eShowWindow.LikoCall:
+          case eShowWindow.SKICall:
             ShowView_LikoCalls(false);
             break;
-          case eShowWindow.LikoIncident:
+          case eShowWindow.SKIIncident:
             ShowView_LIKOIncidents(false);
             break;
-          case eShowWindow.LikoIntervence:
+          case eShowWindow.SKIIntervence:
             ShowView_Intervence(false);
             break;
           case eShowWindow.CallAll:
             ShowView_CallAll(false);
+            break;
+          case eShowWindow.LPvKRows:
+            ShowView_LPKRows(false);
             break;
           default: break;
         }
@@ -714,14 +761,14 @@ namespace EvitelApp2
     private void EnumTemaKontaktuMenuItem_Click(object sender, EventArgs e)
     {
       HideActualView();
-      ShowView_Ciselnik(eAllCodeBooks.eTopic);
+      ShowView_Ciselnik(eAllCodeBooks.eContactTopic);
 
     }
 
     private void EnumTemaKontaktuDetailMenuItem_Click(object sender, EventArgs e)
     {
       HideActualView();
-      ShowView_Ciselnik(eAllCodeBooks.eSubTopic);
+      ShowView_Ciselnik(eAllCodeBooks.eSubContactTopic);
     }
     private void EnumContactTypeMenuItem_Click(object sender, EventArgs e)
     {
@@ -766,6 +813,17 @@ namespace EvitelApp2
       frmExportDenniProtokol frm = new frmExportDenniProtokol();
       frm.ShowDialog();
     }
+    private void oAplikaciToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      frmAbout frm = new frmAbout();
+      frm.ShowDialog();
+
+    }
+    private void MenuToolShowSKIReport_Click(object sender, EventArgs e)
+    {
+      HideActualView();
+      ShowView_SKIReport();
+    }
 
 
     #endregion
@@ -776,26 +834,28 @@ namespace EvitelApp2
     {
 
       IctrlWithDGW rozhrani = null;
-      if (aktWindow == eShowWindow.LikoCall)
+      if (aktWindow == eShowWindow.SKICall)
         rozhrani = (IctrlWithDGW)ctrlLikoCall1;
-      else if (aktWindow == eShowWindow.LikoIncident)
+      else if (aktWindow == eShowWindow.SKIIncident)
         rozhrani = (IctrlWithDGW)ctrllikoIncident1;
-      else if (aktWindow == eShowWindow.LikoIntervence)
+      else if (aktWindow == eShowWindow.SKIIntervence)
         rozhrani = (IctrlWithDGW)ctrllikoIntervence1;
-      else if (aktWindow == eShowWindow.LikoParticipant)
+      else if (aktWindow == eShowWindow.SKIParticipant)
         rozhrani = (IctrlWithDGW)ctrlParticipation1;
       else if (aktWindow == eShowWindow.User)
         rozhrani = (IctrlWithDGW)ctrlUser1;
-      else if (aktWindow == eShowWindow.NewCall)
+      else if (aktWindow == eShowWindow.SKINewCall)
         rozhrani = (IctrlWithDGW)ucCallLIKO1;
       else if (aktWindow == eShowWindow.Enums)
         rozhrani = (IctrlWithDGW)ucCiselnik1;
       else if (aktWindow == eShowWindow.Intervents)
         rozhrani = (IctrlWithDGW)ucIntervents1;
-      else if (aktWindow == eShowWindow.LPKRows)
+      else if (aktWindow == eShowWindow.LPvKRows)
         rozhrani = (IctrlWithDGW)ctrllpk1;
       else if (aktWindow == eShowWindow.CallAll)
         rozhrani = (IctrlWithDGW)ctrlCall1;
+      else if (aktWindow == eShowWindow.SKIReport)
+        rozhrani = (IctrlWithDGW)ctrlSKIReport1;
       return rozhrani;
     }
     private void fileExportCSV_Click(object sender, EventArgs e)

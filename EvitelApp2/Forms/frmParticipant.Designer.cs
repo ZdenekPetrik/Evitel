@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmParticipant));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -234,7 +235,7 @@
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(34, 20);
             this.label17.TabIndex = 16;
-            this.label17.Text = "ZPT";
+            this.label17.Text = "ZTP";
             // 
             // label18
             // 
@@ -269,7 +270,7 @@
             // btnCokoli
             // 
             this.btnCokoli.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnCokoli.Location = new System.Drawing.Point(122, 748);
+            this.btnCokoli.Location = new System.Drawing.Point(120, 793);
             this.btnCokoli.Name = "btnCokoli";
             this.btnCokoli.Size = new System.Drawing.Size(109, 33);
             this.btnCokoli.TabIndex = 20;
@@ -346,11 +347,12 @@
             // 
             // txtNote
             // 
-            this.txtNote.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtNote.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtNote.Location = new System.Drawing.Point(13, 675);
             this.txtNote.Multiline = true;
             this.txtNote.Name = "txtNote";
-            this.txtNote.Size = new System.Drawing.Size(322, 66);
+            this.txtNote.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtNote.Size = new System.Drawing.Size(322, 112);
             this.txtNote.TabIndex = 28;
             // 
             // chkIsDead
@@ -526,7 +528,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(355, 793);
+            this.ClientSize = new System.Drawing.Size(355, 838);
             this.Controls.Add(this.cmbIntervent2);
             this.Controls.Add(this.label22);
             this.Controls.Add(this.chkAgreementBKB);
@@ -572,6 +574,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmParticipant";
             this.Text = "Účastník intervence";
             this.Load += new System.EventHandler(this.frmParticipant_Load);

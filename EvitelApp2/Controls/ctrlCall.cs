@@ -29,7 +29,7 @@ namespace EvitelApp2.Controls
     private ColumnLayoutDB cldb;
     ToolStripMenuItem toolStripItem1 = new ToolStripMenuItem();
     public event RowInformation ShowRowInformation;
-    public event DetailIntervence ShowDetailIntervence;
+    public event DetailIntervence ShowDetailUserControl;
     private DataGridViewCellEventArgs mouseLocation;
     public DataTable dataTable { 
       get {
@@ -188,8 +188,18 @@ namespace EvitelApp2.Controls
     private void JumpToIntervence()
     {
       int CallId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["ID"].Value;
-      int? lpkId = wCalls.Where(x => x.CallId == CallId)?.First().LikointervenceId;
-      ShowDetailIntervence?.Invoke(11,lpkId);
+      int? callTypeId = wCalls.Where(x => x.CallId == CallId)?.First().CallTypeId;
+      if (callTypeId == 1)
+      {
+        ShowDetailUserControl?.Invoke(11, wCalls.Where(x => x.CallId == CallId)?.First().Lpkid);
+      }
+      else if (callTypeId == 2)
+      {
+        ShowDetailUserControl?.Invoke(1, wCalls.Where(x => x.CallId == CallId)?.First().LikointervenceId);
+      }
+      else {
+        MessageBox.Show("Ani LPvK ani SKI. To Je Divná věta");
+      }
     }
 
     private void dgw_CellContentClick(object sender, DataGridViewCellEventArgs e)
