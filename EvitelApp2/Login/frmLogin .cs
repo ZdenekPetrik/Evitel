@@ -17,16 +17,15 @@ namespace EvitelApp2.Login
     public CLoggedUser myLoggedUser;
     public int Mode = 1;
 
+
     public frmLogin()
     {
       InitializeComponent();
       myLoggedUser = null;
-
     }
 
     private void btnLogin_Click(object sender, EventArgs e)
     {
-
       CLoginManipulation l = new CLoginManipulation();
       myLoggedUser = l.CheckLogin(this.userName.Text, this.userPassword.Text);
       if (myLoggedUser != null)
@@ -46,7 +45,7 @@ namespace EvitelApp2.Login
       else
       {
         MessageBox.Show("Uživatel '" + this.userName.Text + "' neexistuje, nebo nemá práva pro přihlášení do systému Evitel", "No-Login", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-        this.userName.Text = "";
+//        this.userName.Text = "";
         this.userPassword.Text = "";
       }
 
@@ -70,6 +69,26 @@ namespace EvitelApp2.Login
       {
         btnLogin_Click(null, null);
       }
+      if (e.KeyChar == 27)
+      {
+        this.DialogResult = DialogResult.Cancel;
+        this.Close();
+      }
+    }
+
+
+    private void frmLogin_FormClosing(object sender, FormClosingEventArgs e)
+    {
+    }
+
+    private void userName_KeyPress(object sender, KeyPressEventArgs e)
+    {
+      if (e.KeyChar == 27)
+      {
+        this.DialogResult = DialogResult.Cancel;
+        this.Close();
+      }
+
     }
   }
 }

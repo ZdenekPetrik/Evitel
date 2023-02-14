@@ -80,7 +80,7 @@ namespace EvitelApp2
       MenuItemRestore.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.Archive);
       MenuItemUsers.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.Admin);
       MenuItemNewUser.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.Admin);
-
+      MenuItemPromenneAplikace.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser);
       // 
       CRepositoryDB repo = new CRepositoryDB();
       ucCallLIKO1.Dock = DockStyle.Fill;
@@ -824,6 +824,11 @@ namespace EvitelApp2
       HideActualView();
       ShowView_SKIReport();
     }
+    private void MenuItemPromenneAplikace_Click(object sender, EventArgs e)
+    {
+      frmSetting frm = new frmSetting();
+      frm.ShowDialog();
+    }
 
 
     #endregion
@@ -930,5 +935,5 @@ namespace EvitelApp2
 
     }
 
-   }
+  }
 }

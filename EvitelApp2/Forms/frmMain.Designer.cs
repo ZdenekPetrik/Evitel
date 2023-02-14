@@ -33,10 +33,12 @@ namespace EvitelApp2
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.souborToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuSystemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.FileExportExcel = new System.Windows.Forms.ToolStripMenuItem();
             this.FileExportCSV = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.exportDenníProtokolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.MenuSystemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuToolsRemoveFilters = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuToolsRemoveOrders = new System.Windows.Forms.ToolStripMenuItem();
@@ -107,8 +109,9 @@ namespace EvitelApp2
             this.ctrlCall1 = new EvitelApp2.Controls.ctrlCall();
             this.ctrllpk1 = new EvitelApp2.Controls.ctrlLPK();
             this.ctrlSKIReport1 = new EvitelApp2.Controls.ctrlSKIReport();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.MenuItemPromenneAplikace = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -143,13 +146,6 @@ namespace EvitelApp2
             this.souborToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.souborToolStripMenuItem.Text = "Soubor";
             // 
-            // MenuSystemExit
-            // 
-            this.MenuSystemExit.Name = "MenuSystemExit";
-            this.MenuSystemExit.Size = new System.Drawing.Size(212, 22);
-            this.MenuSystemExit.Text = "Exit";
-            this.MenuSystemExit.Click += new System.EventHandler(this.MenuSystemExit_Click);
-            // 
             // FileExportExcel
             // 
             this.FileExportExcel.Name = "FileExportExcel";
@@ -164,12 +160,29 @@ namespace EvitelApp2
             this.FileExportCSV.Text = "Export CSV";
             this.FileExportCSV.Click += new System.EventHandler(this.fileExportCSV_Click);
             // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(209, 6);
+            // 
             // exportDenníProtokolToolStripMenuItem
             // 
             this.exportDenníProtokolToolStripMenuItem.Name = "exportDenníProtokolToolStripMenuItem";
             this.exportDenníProtokolToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.exportDenníProtokolToolStripMenuItem.Text = "SKI - Denní protokol (PDF)";
             this.exportDenníProtokolToolStripMenuItem.Click += new System.EventHandler(this.exportDenníProtokolToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(209, 6);
+            // 
+            // MenuSystemExit
+            // 
+            this.MenuSystemExit.Name = "MenuSystemExit";
+            this.MenuSystemExit.Size = new System.Drawing.Size(212, 22);
+            this.MenuSystemExit.Text = "Exit";
+            this.MenuSystemExit.Click += new System.EventHandler(this.MenuSystemExit_Click);
             // 
             // toolsToolStripMenuItem
             // 
@@ -511,6 +524,9 @@ namespace EvitelApp2
             this.toolStripSeparator1,
             this.MenuItemBackup,
             this.MenuItemRestore,
+            this.toolStripSeparator8,
+            this.MenuItemPromenneAplikace,
+            this.toolStripSeparator9,
             this.oAplikaciToolStripMenuItem});
             this.SettingToolStripMenuItem.Name = "SettingToolStripMenuItem";
             this.SettingToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
@@ -709,15 +725,22 @@ namespace EvitelApp2
             this.ctrlSKIReport1.Size = new System.Drawing.Size(259, 168);
             this.ctrlSKIReport1.TabIndex = 16;
             // 
-            // toolStripSeparator6
+            // toolStripSeparator8
             // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(209, 6);
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(211, 6);
             // 
-            // toolStripSeparator7
+            // toolStripSeparator9
             // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(209, 6);
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(211, 6);
+            // 
+            // MenuItemPromenneAplikace
+            // 
+            this.MenuItemPromenneAplikace.Name = "MenuItemPromenneAplikace";
+            this.MenuItemPromenneAplikace.Size = new System.Drawing.Size(214, 22);
+            this.MenuItemPromenneAplikace.Text = "Proměnné aplikace";
+            this.MenuItemPromenneAplikace.Click += new System.EventHandler(this.MenuItemPromenneAplikace_Click);
             // 
             // frmMain
             // 
@@ -835,6 +858,9 @@ namespace EvitelApp2
     private Controls.ctrlSKIReport ctrlSKIReport1;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+    private System.Windows.Forms.ToolStripMenuItem MenuItemPromenneAplikace;
   }
 }
 

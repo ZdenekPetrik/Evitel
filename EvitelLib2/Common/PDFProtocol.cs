@@ -22,6 +22,7 @@ namespace EvitelLib2.Common
     DateTime dtFrom;
     int userId;
     string fileName;
+    string cisloJednaci;
 
 
     List<WLikointervence> intervenceList;
@@ -40,12 +41,13 @@ namespace EvitelLib2.Common
 
     int nrRowPerPage = 30;
 
-    public PDFProtocol(int userId, DateTime dtFrom, DateTime dtTo, string FileName)
+    public PDFProtocol(int userId, DateTime dtFrom, DateTime dtTo, string cisloJednaci, string fileName)
     {
       this.userId = userId;
       this.dtFrom = dtFrom;
       this.dtTo = dtTo;
-      this.fileName = FileName;
+      this.fileName = fileName;
+      this.cisloJednaci = cisloJednaci;
       DB = new CRepositoryDB(userId);
       intervenceList = DB.GetWLIKOIntervence().Where(x => x.DtStartIntervence >= dtFrom && x.DtStartIntervence <= dtTo).ToList();
       callsList = DB.GetWLikoCalls().Where(x => intervenceList.Select(x => x.LikointervenceId).Contains(x.LikointervenceId)).ToList();
@@ -72,7 +74,6 @@ namespace EvitelLib2.Common
       textColorBlack = XBrushes.Black;
       textColor = XBrushes.DarkSlateGray;
       var format = XStringFormats.TopLeft;
-      XRect rect = new XRect(20, 20, 250, 220);
       var pen = new XPen(XColor.FromArgb(127, 127, 127));
 
 
@@ -87,11 +88,13 @@ namespace EvitelLib2.Common
 
 
 
+      XRect rect = new XRect(20, 20, 250, 220);
       gfx.DrawString("Protokol nahlášených krizových intervencí", fontTitle, textColorBlack, rect, format);
       rect = new XRect(page.Width - 140, 20, 100, 20);
       gfx.DrawString("Od:  " + dtFrom.ToString("dd.MM.yyyy HH:mm"), fontRegular, textColor, rect, format);
       rect = new XRect(page.Width - 140, 35, 100, 20);
       gfx.DrawString("Do:  " + dtTo.ToString("dd.MM.yyyy HH:mm"), fontRegular, textColor, rect, format);
+      gfx.DrawString(cisloJednaci, fontBold, textColor,new XRect(400, 25, 100, 20), format);
 
       if (intervenceList.Count() == 0)
       {

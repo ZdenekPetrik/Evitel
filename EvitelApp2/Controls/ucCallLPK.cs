@@ -65,7 +65,7 @@ namespace EvitelApp2.Controls
     {
       get
       {
-        return ((ComboItem)cmbTypeService.SelectedItem).iValue == 1;
+        return ((ComboItem)cmbTypeService.SelectedItem).iValue == 1 && ((ComboItem)cmbContactType.SelectedItem).iValue == 1; // Telefon + Hovor
       }
     }
 

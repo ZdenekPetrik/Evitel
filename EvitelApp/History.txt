@@ -67,5 +67,8 @@
  08.02.2023 - Simona s Pavlem. Dáno do provozu
   USER - nesmí editovat èíselníky - jen prohlížet
   Poèítání èasu u tf. hovoru u LPvK
-  Rychlý pøeskok mezi obìmi zadávacími ikny SKI vers. LPvK
-  ALIK - NAèti klienta z posledního hovoru
+  Rychlý pøeskok mezi obìmi zadávacími okny SKI vers. LPvK
+  ALIK - Naèti klienta z posledního hovoru
+  U obìšeného neexistuje Intervet. TZN. Pokud nebude isIntervence, tak nevyžaduj interventa.
+  Protokol Událostí Datum US.
+  Protokol událostí - èíslo jednací.

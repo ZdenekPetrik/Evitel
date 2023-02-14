@@ -47,6 +47,7 @@ namespace EvitelApp2.Login
             this.userName.Name = "userName";
             this.userName.Size = new System.Drawing.Size(151, 23);
             this.userName.TabIndex = 0;
+            this.userName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.userName_KeyPress);
             // 
             // userPassword
             // 
@@ -130,6 +131,7 @@ namespace EvitelApp2.Login
             this.Name = "frmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Evitel - Login";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmLogin_FormClosing);
             this.Load += new System.EventHandler(this.frmLogin_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);

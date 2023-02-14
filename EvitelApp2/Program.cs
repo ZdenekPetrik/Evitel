@@ -29,7 +29,8 @@ namespace EvitelApp2
       else
       {
         myLoggedUser = null;
-        Login();
+        if (Login() == false)         // uživatel není pøihlášen pøes okno - takže buï Escape nebo End.
+          return;
       }
       if (myLoggedUser != null)
       {

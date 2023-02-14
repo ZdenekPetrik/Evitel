@@ -1,4 +1,5 @@
 ﻿using EvitelLib2.Common;
+using EvitelLib2.Repository;
 using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace EvitelApp2.Forms
 {
   public partial class frmExportDenniProtokol : Form
   {
+    CRepositoryDB DB;
     public frmExportDenniProtokol()
     {
       InitializeComponent();
@@ -22,14 +24,12 @@ namespace EvitelApp2.Forms
 
     private void frmExportDenniProtokol_Load(object sender, EventArgs e)
     {
-      dateTimePickerFrom.Format = DateTimePickerFormat.Custom;
-      dateTimePickerFrom.CustomFormat = "MM/dd/yyyy hh:mm";
-      dateTimePickerTo.Format = DateTimePickerFormat.Custom;
-      dateTimePickerTo.CustomFormat = "MM/dd/yyyy HH:mm";
+      DB = new CRepositoryDB(Program.myLoggedUser.LoginUserId);
 
       dateTimePickerFrom.Value = DateTime.Now.Date.AddDays(-1).AddHours(8);
-      dateTimePickerTo.Value = DateTime.Now.Date.AddDays(-1).AddHours(20);
-
+      dtTo.Value = DateTime.Now.Date.AddDays(-1).AddHours(20);
+      numIncrement.Value = DB.GetSettingI("CisloJednaciIncrement");
+      txtCisloJednaci.Text = DB.GetSettingS("CisloJednaci");
     }
 
     private void btnGenerate_Click(object sender, EventArgs e)
@@ -40,11 +40,13 @@ namespace EvitelApp2.Forms
         fd.Title = "Save protocol to PDF File";
         fd.OverwritePrompt = true;
         fd.CreatePrompt = true;
-        fd.FileName =  "ProtokolSKI_From" + dateTimePickerFrom.Value.ToString("yyyMMdd_HHmm") + "To_"+ dateTimePickerTo.Value.ToString("yyyMMdd_HHmm")+".pdf";
+        fd.FileName =  "ProtokolSKI_From" + dateTimePickerFrom.Value.ToString("yyyMMdd_HHmm") + "To_"+ dtTo.Value.ToString("yyyMMdd_HHmm")+".pdf";
         if (fd.ShowDialog() == DialogResult.OK)
         {
-
-          PDFProtocol PDF = new PDFProtocol(Program.myLoggedUser.LoginUserId, dateTimePickerFrom.Value, dateTimePickerTo.Value, fd.FileName);
+          string CisloJednaci = DB.GetSettingS("CisloJednaci");
+          CisloJednaci = CisloJednaci.Replace("<ID>", ((int)numIncrement.Value).ToString());
+          DB.SetSetting("CisloJednaciIncrement", (int)numIncrement.Value + 1);
+          PDFProtocol PDF = new PDFProtocol(Program.myLoggedUser.LoginUserId, dateTimePickerFrom.Value, dtTo.Value, CisloJednaci, fd.FileName);
           PDF.Generate();
           var p = new Process();
           p.StartInfo = new ProcessStartInfo(fd.FileName)
