@@ -17,6 +17,7 @@ namespace EvitelLib2.Model
         }
 
         public virtual DbSet<Call> Calls { get; set; }
+        public virtual DbSet<DimDateTime> DimDateTimes { get; set; }
         public virtual DbSet<EAge> EAges { get; set; }
         public virtual DbSet<ECallType> ECallTypes { get; set; }
         public virtual DbSet<EClientCurrentStatus> EClientCurrentStatuses { get; set; }
@@ -25,6 +26,7 @@ namespace EvitelLib2.Model
         public virtual DbSet<EContactType> EContactTypes { get; set; }
         public virtual DbSet<EDruhIntervence> EDruhIntervences { get; set; }
         public virtual DbSet<EEndOfSpeech> EEndOfSpeeches { get; set; }
+        public virtual DbSet<EGrouping> EGroupings { get; set; }
         public virtual DbSet<ENick> ENicks { get; set; }
         public virtual DbSet<ESex> ESexes { get; set; }
         public virtual DbSet<ESubClientCurrentStatus> ESubClientCurrentStatuses { get; set; }
@@ -85,6 +87,72 @@ namespace EvitelLib2.Model
                     .WithMany(p => p.Calls)
                     .HasForeignKey(d => d.LoginUserId)
                     .HasConstraintName("FK_Calls_LoginUsers");
+            });
+
+            modelBuilder.Entity<DimDateTime>(entity =>
+            {
+                entity.HasKey(e => e.Date)
+                    .HasName("PK__dimDateT__D9DE21FCF91386B3");
+
+                entity.ToTable("dimDateTime");
+
+                entity.Property(e => e.Date)
+                    .HasColumnType("date")
+                    .HasColumnName("date");
+
+                entity.Property(e => e.Day)
+                    .HasColumnName("day")
+                    .HasComputedColumnSql("(datepart(day,[date]))", false);
+
+                entity.Property(e => e.DayOfWeek).HasComputedColumnSql("(datepart(weekday,[date]))", false);
+
+                entity.Property(e => e.FirstOfMonth)
+                    .HasColumnType("date")
+                    .HasComputedColumnSql("(CONVERT([date],dateadd(month,datediff(month,(0),[date]),(0)),(0)))", false);
+
+                entity.Property(e => e.FirstOfYear)
+                    .HasColumnType("date")
+                    .HasComputedColumnSql("(CONVERT([date],dateadd(year,datediff(year,(0),[date]),(0)),(0)))", false);
+
+                entity.Property(e => e.HalfOfYear)
+                    .HasColumnName("halfOfYear")
+                    .HasComputedColumnSql("(case when datepart(weekday,[date])>(2) then (2) else (1) end)", false);
+
+                entity.Property(e => e.Isoweek)
+                    .HasColumnName("ISOweek")
+                    .HasComputedColumnSql("(datepart(iso_week,[date]))", false);
+
+                entity.Property(e => e.Month)
+                    .HasColumnName("month")
+                    .HasComputedColumnSql("(datepart(month,[date]))", false);
+
+                entity.Property(e => e.MonthName)
+                    .HasMaxLength(30)
+                    .HasComputedColumnSql("(datename(month,[date]))", false);
+
+                entity.Property(e => e.Quarter)
+                    .HasColumnName("quarter")
+                    .HasComputedColumnSql("(datepart(quarter,[date]))", false);
+
+                entity.Property(e => e.Style101)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasComputedColumnSql("(CONVERT([char](10),[date],(101)))", false)
+                    .IsFixedLength();
+
+                entity.Property(e => e.Style112)
+                    .HasMaxLength(8)
+                    .IsUnicode(false)
+                    .HasComputedColumnSql("(CONVERT([char](8),[date],(112)))", false)
+                    .IsFixedLength();
+
+                entity.Property(e => e.Week)
+                    .HasColumnName("week")
+                    .HasComputedColumnSql("(datepart(week,[date]))", false);
+
+                entity.Property(e => e.Year)
+                    .HasColumnName("year")
+                    .HasComputedColumnSql("(datepart(year,[date]))", false);
             });
 
             modelBuilder.Entity<EAge>(entity =>
@@ -192,6 +260,23 @@ namespace EvitelLib2.Model
                     .HasColumnName("dtDeleted");
 
                 entity.Property(e => e.Text).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<EGrouping>(entity =>
+            {
+                entity.HasKey(e => e.GroupingId);
+
+                entity.ToTable("eGrouping");
+
+                entity.Property(e => e.GroupingId).HasColumnName("groupingId");
+
+                entity.Property(e => e.DtDeleted)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dtDeleted");
+
+                entity.Property(e => e.Text).HasMaxLength(50);
+
+                entity.Property(e => e.Value).HasMaxLength(50);
             });
 
             modelBuilder.Entity<ENick>(entity =>

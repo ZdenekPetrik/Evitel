@@ -5,6 +5,7 @@ using NPOI.HSSF.Record.AutoFilter;
 using NPOI.SS.Formula.Atp;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 
@@ -38,6 +39,8 @@ namespace EvitelLib2.Repository
     private string _applicationName;
     private int _idUser;
     private DateTime MyMinDate = new DateTime(2000, 01, 01);
+
+    public string ConnectionString { get { return (new Evitel2DB()).Database.GetDbConnection().ConnectionString; } }
 
     public CRepositoryDB(int IdUser)
       : this()
@@ -490,7 +493,7 @@ namespace EvitelLib2.Repository
       try
       {
         var regions = from r in db.Regions orderby r.RegionOrder select r;
-        return regions.ToList();
+        return regions.AsNoTracking().ToList();
       }
       catch (Exception Ex)
       {
@@ -499,6 +502,23 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
+    public List<ETypeIncident> GetTypeIncident()
+    {
+      sErr = "";
+      Evitel2DB db = new Evitel2DB();
+      try
+      {
+        var typeIncident = from e in db.ETypeIncidents orderby e.TypeIncidentId select e;
+        return typeIncident.AsNoTracking().ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetTypeIncident() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+
     public List<ESubTypeIncident> GetSubTypeIncident()
     {
       sErr = "";
@@ -506,7 +526,7 @@ namespace EvitelLib2.Repository
       try
       {
         var subTypeIncident = from e in db.ESubTypeIncidents orderby e.TypeIncidentId select e;
-        return subTypeIncident.ToList();
+        return subTypeIncident.AsNoTracking().ToList();
       }
       catch (Exception Ex)
       {
@@ -754,6 +774,24 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
+    // NAčte číselník pro statistiku (seskupování po dne, týdnech, měsících)
+    public List<EGrouping> GetGrouping()
+    {
+      sErr = "";
+      Evitel2DB db = new Evitel2DB();
+      try
+      {
+        var group = from g in db.EGroupings select g;
+        return group.AsNoTracking().ToList();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetGrouping() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
+
     public int AddNick(string nick)
     {
       sErr = "";

@@ -644,5 +644,10 @@ namespace EvitelApp2.Controls
       if (this.Visible == false)
         this.CausesValidation = false;
     }
+
+    private void boxIntervence_Enter(object sender, EventArgs e)
+    {
+
+    }
   }
 }

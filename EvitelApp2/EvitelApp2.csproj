@@ -24,6 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Controls\ctrlStatistika.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Controls\ctrlLPK.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -55,6 +58,9 @@
     </Compile>
     <Compile Update="Controls\ucCiselnik.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\frmStatisticsEvent.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>

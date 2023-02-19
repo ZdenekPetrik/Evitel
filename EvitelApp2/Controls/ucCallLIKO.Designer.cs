@@ -445,6 +445,7 @@ namespace EvitelApp2.Controls
             this.boxIntervence.TabIndex = 24;
             this.boxIntervence.TabStop = false;
             this.boxIntervence.Text = "Základní údaje o intervenci";
+            this.boxIntervence.Enter += new System.EventHandler(this.boxIntervence_Enter);
             // 
             // lblIntervenceSum
             // 
@@ -678,7 +679,7 @@ namespace EvitelApp2.Controls
             this.btnBack.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnBack.Image = ((System.Drawing.Image)(resources.GetObject("btnBack.Image")));
             this.btnBack.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnBack.Location = new System.Drawing.Point(9, 7);
+            this.btnBack.Location = new System.Drawing.Point(9, 5);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(86, 39);
             this.btnBack.TabIndex = 11;

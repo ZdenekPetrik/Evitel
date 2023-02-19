@@ -1,5 +1,6 @@
-﻿using EvitelApp2.Controls;
+﻿ using EvitelApp2.Controls;
 using EvitelLib2.Common;
+using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,5 +23,42 @@ namespace EvitelApp2.Helper
         }
       }
     }
+    public static int GetQuarter(this DateTime date)
+    {
+      if (date.Month >= 4 && date.Month <= 6)
+        return 2;
+      else if (date.Month >= 7 && date.Month <= 9)
+        return 3;
+      else if (date.Month >= 10 && date.Month <= 12)
+        return 4;
+      else
+        return 1;
+    }
+    public static int GetHalfYear(this DateTime date)
+    {
+      if (date.Month > 6)
+        return 2;
+      else
+        return 1;
+    }
+
+    // Najde vždy datum Pondělí 
+    public static DateTime FirstDayOfWeek(this DateTime date)
+    {
+      int dayOfWeak = (int)date.DayOfWeek;
+      if (dayOfWeak == 0)
+        dayOfWeak = 7;
+      return date.AddDays(-(dayOfWeak - 1));
+    }
+
+    public static DateTime FirstDayQuarter(this DateTime date)
+    {
+      return new DateTime(date.Year, (((date.GetQuarter() - 1) * 3) + 1), 1);
+    }
+    public static DateTime FirstDayHalfYear(this DateTime date)
+    {
+      return new DateTime(date.Year, (((date.GetHalfYear() - 1) * 6) + 1), 1);
+    }
+
   }
 }

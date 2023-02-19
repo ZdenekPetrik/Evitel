@@ -48,6 +48,7 @@ namespace EvitelApp2
       CallAll,
       LPvKRows,
       SKIReport,
+      Statistika,
       NecoJineho
     }
 
@@ -127,6 +128,10 @@ namespace EvitelApp2
       ctrlSKIReport1.ShowRowInformation += ShowRowInformation;
       ctrlSKIReport1.ShowDetailUserControl += ShowDetailUserControl_Obsluha;
 
+      ctrlStatistika1.Dock = DockStyle.Fill;
+      ctrlStatistika1.ShowRowInformation += ShowRowInformation;
+      ctrlStatistika1.ShowDetailUserControl += ShowDetailUserControl_Obsluha;
+
       HideAll();
       ShowView_NewCall();
     }
@@ -198,6 +203,9 @@ namespace EvitelApp2
           break;
         case eShowWindow.SKIReport:
           ctrlSKIReport1.Visible = false;
+          break;
+        case eShowWindow.Statistika:
+          ctrlStatistika1.Visible = false;
           break;
         case eShowWindow.NecoJineho:
           break;
@@ -468,6 +476,15 @@ namespace EvitelApp2
       FileExportCSV.Enabled = true;
       aktWindow = eShowWindow.User;
       this.Text = Title + " - Uživatelé";
+      lastWindowStack.Add(aktWindow);
+    }
+    private void ShowView_Statistika(string Titulek)
+    {
+      ctrlStatistika1.Visible = true;
+      aktWindow = eShowWindow.Statistika;
+      FileExportExcel.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser);
+      FileExportCSV.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser);
+      this.Text = Title + " - Statistika " + Titulek;
       lastWindowStack.Add(aktWindow);
     }
 
@@ -829,6 +846,26 @@ namespace EvitelApp2
       frmSetting frm = new frmSetting();
       frm.ShowDialog();
     }
+    private void statistikaVoláníToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      frmStatisticsCall frm = new frmStatisticsCall();
+      if (frm.ShowDialog() == DialogResult.OK)
+      {
+        ctrlStatistika1.dataTable = frm.aktStatistikaTable;
+        ShowView_Statistika("Volání");
+      }
+    }
+    private void statistikaSKIUdálostíToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      frmStatisticsEvent frm = new frmStatisticsEvent();
+      if (frm.ShowDialog() == DialogResult.OK)
+      {
+        ctrlStatistika1.dataTable = frm.aktStatistikaTable;
+        ShowView_Statistika("Volání");
+      }
+
+    }
+
 
 
     #endregion
@@ -861,8 +898,11 @@ namespace EvitelApp2
         rozhrani = (IctrlWithDGW)ctrlCall1;
       else if (aktWindow == eShowWindow.SKIReport)
         rozhrani = (IctrlWithDGW)ctrlSKIReport1;
+      else if (aktWindow == eShowWindow.Statistika)
+        rozhrani = (IctrlWithDGW)ctrlStatistika1;
       return rozhrani;
     }
+   
     private void fileExportCSV_Click(object sender, EventArgs e)
     {
       IctrlWithDGW r = GetActiveCtrl(aktWindow);
@@ -935,5 +975,5 @@ namespace EvitelApp2
 
     }
 
-  }
+    }
 }

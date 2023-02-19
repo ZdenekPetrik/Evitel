@@ -89,7 +89,12 @@ namespace EvitelApp2
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuItemBackup = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemRestore = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.MenuItemPromenneAplikace = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.oAplikaciToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statistikaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statistikaVoláníToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripUser = new System.Windows.Forms.ToolStripStatusLabel();
@@ -109,9 +114,8 @@ namespace EvitelApp2
             this.ctrlCall1 = new EvitelApp2.Controls.ctrlCall();
             this.ctrllpk1 = new EvitelApp2.Controls.ctrlLPK();
             this.ctrlSKIReport1 = new EvitelApp2.Controls.ctrlSKIReport();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.MenuItemPromenneAplikace = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctrlStatistika1 = new EvitelApp2.Controls.ctrlStatistika();
+            this.statistikaSKIUdálostíToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -126,7 +130,8 @@ namespace EvitelApp2
             this.viewsToolStripMenuItem,
             this.NewCallToolStripMenuItem,
             this.testToolStripMenuItem,
-            this.SettingToolStripMenuItem});
+            this.SettingToolStripMenuItem,
+            this.statistikaToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1555, 24);
@@ -572,12 +577,45 @@ namespace EvitelApp2
             this.MenuItemRestore.Text = "Obnova databáze Evitel";
             this.MenuItemRestore.Click += new System.EventHandler(this.MenuItemRestore_Click);
             // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(211, 6);
+            // 
+            // MenuItemPromenneAplikace
+            // 
+            this.MenuItemPromenneAplikace.Name = "MenuItemPromenneAplikace";
+            this.MenuItemPromenneAplikace.Size = new System.Drawing.Size(214, 22);
+            this.MenuItemPromenneAplikace.Text = "Proměnné aplikace";
+            this.MenuItemPromenneAplikace.Click += new System.EventHandler(this.MenuItemPromenneAplikace_Click);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(211, 6);
+            // 
             // oAplikaciToolStripMenuItem
             // 
             this.oAplikaciToolStripMenuItem.Name = "oAplikaciToolStripMenuItem";
             this.oAplikaciToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.oAplikaciToolStripMenuItem.Text = "O aplikaci";
             this.oAplikaciToolStripMenuItem.Click += new System.EventHandler(this.oAplikaciToolStripMenuItem_Click);
+            // 
+            // statistikaToolStripMenuItem
+            // 
+            this.statistikaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statistikaVoláníToolStripMenuItem,
+            this.statistikaSKIUdálostíToolStripMenuItem});
+            this.statistikaToolStripMenuItem.Name = "statistikaToolStripMenuItem";
+            this.statistikaToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.statistikaToolStripMenuItem.Text = "Statistika";
+            // 
+            // statistikaVoláníToolStripMenuItem
+            // 
+            this.statistikaVoláníToolStripMenuItem.Name = "statistikaVoláníToolStripMenuItem";
+            this.statistikaVoláníToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.statistikaVoláníToolStripMenuItem.Text = "Statistika Volání";
+            this.statistikaVoláníToolStripMenuItem.Click += new System.EventHandler(this.statistikaVoláníToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -725,28 +763,26 @@ namespace EvitelApp2
             this.ctrlSKIReport1.Size = new System.Drawing.Size(259, 168);
             this.ctrlSKIReport1.TabIndex = 16;
             // 
-            // toolStripSeparator8
+            // ctrlStatistika1
             // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(211, 6);
+            this.ctrlStatistika1.Location = new System.Drawing.Point(1065, 473);
+            this.ctrlStatistika1.Name = "ctrlStatistika1";
+            this.ctrlStatistika1.Size = new System.Drawing.Size(259, 168);
+            this.ctrlStatistika1.TabIndex = 17;
             // 
-            // toolStripSeparator9
+            // statistikaSKIUdálostíToolStripMenuItem
             // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(211, 6);
-            // 
-            // MenuItemPromenneAplikace
-            // 
-            this.MenuItemPromenneAplikace.Name = "MenuItemPromenneAplikace";
-            this.MenuItemPromenneAplikace.Size = new System.Drawing.Size(214, 22);
-            this.MenuItemPromenneAplikace.Text = "Proměnné aplikace";
-            this.MenuItemPromenneAplikace.Click += new System.EventHandler(this.MenuItemPromenneAplikace_Click);
+            this.statistikaSKIUdálostíToolStripMenuItem.Name = "statistikaSKIUdálostíToolStripMenuItem";
+            this.statistikaSKIUdálostíToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.statistikaSKIUdálostíToolStripMenuItem.Text = "Statistika SKI událostí";
+            this.statistikaSKIUdálostíToolStripMenuItem.Click += new System.EventHandler(this.statistikaSKIUdálostíToolStripMenuItem_Click);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1555, 818);
+            this.Controls.Add(this.ctrlStatistika1);
             this.Controls.Add(this.ctrlSKIReport1);
             this.Controls.Add(this.ctrllpk1);
             this.Controls.Add(this.ctrlCall1);
@@ -861,6 +897,10 @@ namespace EvitelApp2
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
     private System.Windows.Forms.ToolStripMenuItem MenuItemPromenneAplikace;
+    private System.Windows.Forms.ToolStripMenuItem statistikaToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem statistikaVoláníToolStripMenuItem;
+    private Controls.ctrlStatistika ctrlStatistika1;
+    private System.Windows.Forms.ToolStripMenuItem statistikaSKIUdálostíToolStripMenuItem;
   }
 }
 

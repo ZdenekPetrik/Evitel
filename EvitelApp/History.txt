@@ -72,3 +72,5 @@
   U obìšeného neexistuje Intervet. TZN. Pokud nebude isIntervence, tak nevyžaduj interventa.
   Protokol Událostí Datum US.
   Protokol událostí - èíslo jednací.
+
+19.02 - eGrouping, dimDateTime, + MainSettings (CisloJednaci,CisloJednaciIncrement)
