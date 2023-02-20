@@ -93,15 +93,15 @@ namespace EvitelApp2.Forms1.Ciselnik
 
     private void btnCokoliv_Click(object sender, EventArgs e)
     {
-      if ((int)txtHodnost.Tag == 1) oneRow.Rank = txtHodnost.Text;
-      if ((int)txtTitle.Tag == 1) oneRow.Title = txtTitle.Text;
-      if ((int)txtName.Tag == 1) oneRow.Name = txtName.Text;
-      if ((int)txtSurName.Tag == 1) oneRow.SurName = txtSurName.Text;
-      if ((int)txtPhone.Tag == 1) oneRow.Phone = txtPhone.Text;
-      if ((int)txtPrivatePhone.Tag == 1) oneRow.PrivatePhone = txtPrivatePhone.Text;
-      if ((int)txtMobilPhone.Tag == 1) oneRow.MobilPhone = txtMobilPhone.Text;
-      if ((int)txtEmail.Tag == 1) oneRow.Email = txtEmail.Text;
-      if ((int)cmbRegion.Tag == 1) oneRow.RegionId = ((ComboItem)cmbRegion.SelectedItem).iValue;
+      oneRow.Rank = txtHodnost.Text;
+      oneRow.Title = txtTitle.Text;
+      oneRow.Name = txtName.Text;
+      oneRow.SurName = txtSurName.Text;
+      oneRow.Phone = txtPhone.Text;
+      oneRow.PrivatePhone = txtPrivatePhone.Text;
+      oneRow.MobilPhone = txtMobilPhone.Text;
+      oneRow.Email = txtEmail.Text;
+      oneRow.RegionId = ((ComboItem)cmbRegion.SelectedItem).iValue;
       isReturnOK = true;
       Close();
 
@@ -110,13 +110,11 @@ namespace EvitelApp2.Forms1.Ciselnik
     private void Any_TextChanged(object sender, EventArgs e)
     {
       btnCokoliv.Enabled = true;
-      ((TextBox)sender).Tag = 1;
     }
 
     private void cmbRegion_SelectedIndexChanged(object sender, EventArgs e)
     {
       btnCokoliv.Enabled = true;
-      cmbRegion.Tag = 1;
     }
   }
 }

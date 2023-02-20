@@ -471,6 +471,11 @@ namespace EvitelApp2.Controls
             // 
             this.txtSecondIncidentID.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtSecondIncidentID.Location = new System.Drawing.Point(203, 127);
+            this.txtSecondIncidentID.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
             this.txtSecondIncidentID.Name = "txtSecondIncidentID";
             this.txtSecondIncidentID.Size = new System.Drawing.Size(61, 27);
             this.txtSecondIncidentID.TabIndex = 45;

@@ -305,7 +305,7 @@ namespace EvitelApp2
 
     private void cmbIntervent_Validating(object sender, CancelEventArgs e)
     {
-      if (cmbIntervent.SelectedIndex == 0)
+      if (cmbIntervent.SelectedIndex == 0 && ((ComboItem)cmbTypeParty.SelectedItem).iValue != 1)
       {
         errIntervent.SetError(this.cmbIntervent, "Položka Intervent musí být vyplněna");
         e.Cancel = true;

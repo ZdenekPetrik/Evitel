@@ -4,6 +4,7 @@ using EvitelLib2.Common;
 using EvitelLib2.Model;
 using EvitelLib2.Repository;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -186,7 +187,10 @@ namespace EvitelApp2.Controls
       frm.ShowDialog();
       if (frm.isReturnOK)
       {
-        DB.UniversalModifyIntervent(frm.TypeForm, frm.oneRow);
+        if (DB.UniversalModifyIntervent(frm.TypeForm, frm.oneRow) == -1)
+        {
+          MessageBox.Show(DB.sErr,"Chyba Databáze",MessageBoxButtons.OK, MessageBoxIcon.Hand);
+        }
         winterventi = DB.GetWIntervents(null, "", "");
         AddDataToTable();
       }
