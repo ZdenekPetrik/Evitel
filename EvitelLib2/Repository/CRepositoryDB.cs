@@ -476,7 +476,7 @@ namespace EvitelLib2.Repository
           wIntervents = wIntervents.Where(x => x.Name.Contains(Name) || x.SurName.Contains(Name));
         if (Contact.Length > 0)
           wIntervents = wIntervents.Where(x => x.PrivatePhone.Contains(Name) || x.Phone.Contains(Name) || x.MobilPhone.Contains(Name) || x.Email.Contains(Name));
-        wIntervents = wIntervents.OrderBy(p => p.RegionOrder);
+        wIntervents = wIntervents.OrderBy(p => p.RegionOrder).ThenBy(p => p.SurName);
         return wIntervents.ToList();
       }
       catch (Exception Ex)
@@ -1069,7 +1069,7 @@ namespace EvitelLib2.Repository
     }
 
 
-    public List<WLikoparticipant> GeWtLIKOParticipant(bool isDeepRead)
+    public List<WLikoparticipant> GeWLIKOParticipant(bool isDeepRead)
     {
       sErr = "";
       Evitel2DB db = new Evitel2DB();
@@ -1122,7 +1122,7 @@ namespace EvitelLib2.Repository
       Evitel2DB db = new Evitel2DB();
       try
       {
-        return (from par in db.WLpks orderby par.DtStartCall select par).ToList();
+        return (from par in db.WLpks select par).ToList();
       }
       catch (Exception Ex)
       {

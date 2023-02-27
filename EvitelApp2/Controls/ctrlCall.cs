@@ -60,7 +60,6 @@ namespace EvitelApp2.Controls
       {
          new MyColumn { Name = "ID", DataPropertyName = "CallId", Type=3  },
          new MyColumn { Name = "Typ Hovoru", DataPropertyName = "CallType"},
-         new MyColumn { Name = "Volání od", DataPropertyName = "DtStartCall",Type=5, isVisible = false},
          new MyColumn { Name = "Datum volání", DataPropertyName = "DtCall" , Type=5},
          new MyColumn { Name = "Začátek", DataPropertyName = "TmStartCall"  },
          new MyColumn { Name = "Konec", DataPropertyName = "TmEndCall"  },
@@ -135,7 +134,8 @@ namespace EvitelApp2.Controls
       {
         dgw.Columns[col.Name].Visible = col.isVisible;
       }
-      dgw.SortASC(dgw.Columns["Volání od"]);
+      dgw.SortDESC(dgw.Columns["Datum volání"]);
+      dgw.SortDESC(dgw.Columns["Začátek"]);
 
       toolStripItem1.Text = "Detail Hovoru";
       toolStripItem1.Click += new EventHandler(toolStripItem1_Click);

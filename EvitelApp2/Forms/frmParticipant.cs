@@ -95,10 +95,10 @@ namespace EvitelApp2
         {
           cmbIntervent.Items.Add(new ComboItem(intervent.CmbName, intervent.InterventId.ToString()));
           cmbIntervent2.Items.Add(new ComboItem(intervent.CmbName, intervent.InterventId.ToString()));
-          if ((aktRow.InterventId ) == intervent.InterventId)
+          if ((aktRow.InterventId) == intervent.InterventId)
             cmbIntervent.SelectedIndex = cmbIntervent.Items.Count - 1;
           if ((aktRow.InterventId2 ?? 0) == intervent.InterventId)
-           cmbIntervent2.SelectedIndex = cmbIntervent2.Items.Count - 1;
+            cmbIntervent2.SelectedIndex = cmbIntervent2.Items.Count - 1;
         }
       }
       errTypePartyEid = InitializeErrorProvider(1, cmbTypeParty);
@@ -166,9 +166,13 @@ namespace EvitelApp2
       aktRow.SexEid = ((ComboItem)cmbSex.SelectedItem).iValue;
       aktRow.InterventId = ((ComboItem)cmbIntervent.SelectedItem).iValue;
       aktRow.InterventId2 = ((ComboItem)cmbIntervent2.SelectedItem).iValue;
+      aktRow.DruhIntervenceEid = ((ComboItem)cmbDruhIntervence.SelectedItem).iValue;
+      if (aktRow.DruhIntervenceEid == -1)
+        aktRow.DruhIntervenceEid = null;
+      if (aktRow.InterventId == -1)
+        aktRow.InterventId = null;
       if (aktRow.InterventId2 == -1)
         aktRow.InterventId2 = null;
-      aktRow.DruhIntervenceEid = ((ComboItem)cmbDruhIntervence.SelectedItem).iValue;
       aktRow.Age = (int)numAge.Value;
       aktRow.IsAgreement = chkAgreement.Checked;
       aktRow.IsAgreementBkb = chkAgreementBKB.Checked;
@@ -213,27 +217,27 @@ namespace EvitelApp2
       }
       for (int i = 0; i < cmbDruhIntervence.Items.Count; i++)
       {
-        if (((ComboItem)cmbDruhIntervence.Items[i]).iValue == (aktRow.DruhIntervenceEid ))
+        if (((ComboItem)cmbDruhIntervence.Items[i]).iValue == (aktRow.DruhIntervenceEid))
           cmbDruhIntervence.SelectedIndex = i;
       }
 
-      numAge.Value = (decimal)(aktRow.Age) ;
-      chkAgreement.Checked = aktRow.IsAgreement ;
+      numAge.Value = (decimal)(aktRow.Age);
+      chkAgreement.Checked = aktRow.IsAgreement;
       chkAgreementBKB.Checked = aktRow.IsAgreementBkb;
       chkChildJuvenile.Checked = aktRow.IsChildJuvenile;
       chkContact.Checked = aktRow.IsContact;
       chkIsDead.Checked = aktRow.IsDead;
       chkIsFirstIntervence.Checked = aktRow.IsFirstIntervence;
-      chkHandyCappedMedical.Checked = aktRow.IsHandyCappedMedical ;
-      chkHandyCappedMentally.Checked = aktRow.IsHandyCappedMentally ;
-      chkIsInjury.Checked = aktRow.IsInjury ;
-      chkIsIntervence.Checked = aktRow.IsIntervence ;
+      chkHandyCappedMedical.Checked = aktRow.IsHandyCappedMedical;
+      chkHandyCappedMentally.Checked = aktRow.IsHandyCappedMentally;
+      chkIsInjury.Checked = aktRow.IsInjury;
+      chkIsIntervence.Checked = aktRow.IsIntervence;
       chkIsMemberMinorityGroup.Checked = aktRow.IsMemberMinorityGroup;
-      chkPolicement.Checked = aktRow.IsPolicement ;
+      chkPolicement.Checked = aktRow.IsPolicement;
       chkPolicemenClosePerson.Checked = aktRow.IsPolicementClosePerson;
-      chkSenior.Checked = aktRow.IsSenior ;
-      txtNote.Text = aktRow.Note??"";
-      txtOrganizace.Text = aktRow.Organization??"";
+      chkSenior.Checked = aktRow.IsSenior;
+      txtNote.Text = aktRow.Note ?? "";
+      txtOrganizace.Text = aktRow.Organization ?? "";
 
       /*
       cmbTypeParty.SelectedIndex = 2;
@@ -275,9 +279,9 @@ namespace EvitelApp2
 
     private void numAge_Validating(object sender, CancelEventArgs e)
     {
-      if ((int)this.numAge.Value < 1 || (int)this.numAge.Value > 120)
+      if ((int)this.numAge.Value < -1 || (int)this.numAge.Value > 120)
       {
-        errNumAge.SetError(this.numAge, "Položka Věk musí být vyplněna v rozmezí 1-120");
+        errNumAge.SetError(this.numAge, "Položka Věk musí být vyplněna v rozmezí 0-120 (-1 nezjištěno)");
         e.Cancel = true;
       }
       else
@@ -290,7 +294,7 @@ namespace EvitelApp2
 
     private void cmbDruhIntervence_Validating(object sender, CancelEventArgs e)
     {
-      if (cmbDruhIntervence.SelectedIndex == 0)
+      if (cmbDruhIntervence.SelectedIndex == 0 && chkIsIntervence.Checked == true)
       {
         errDruhIntervenceEid.SetError(this.cmbDruhIntervence, "Položka Druh intervence musí být vyplněna");
         e.Cancel = true;
@@ -305,7 +309,7 @@ namespace EvitelApp2
 
     private void cmbIntervent_Validating(object sender, CancelEventArgs e)
     {
-      if (cmbIntervent.SelectedIndex == 0 && ((ComboItem)cmbTypeParty.SelectedItem).iValue != 1)
+      if (cmbIntervent.SelectedIndex == 0 && chkIsIntervence.Checked == true)
       {
         errIntervent.SetError(this.cmbIntervent, "Položka Intervent musí být vyplněna");
         e.Cancel = true;
@@ -316,6 +320,11 @@ namespace EvitelApp2
         e.Cancel = false;
       }
 
+
+    }
+
+    private void label14_Click(object sender, EventArgs e)
+    {
 
     }
   }

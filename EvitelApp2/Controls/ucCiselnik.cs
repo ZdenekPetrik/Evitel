@@ -111,6 +111,11 @@ namespace EvitelApp2.Controls
       InitializeComponent();
       dgw.AllowUserToAddRows = false;
       dgw.AllowUserToDeleteRows = false;
+      if (Program.myLoggedUser.HasAccess(EvitelLib2.Common.eLoginAccess.PowerUser)==false){
+        btnAdd.Enabled= false;
+        btnEdit.Enabled= false;
+        btnDelete.Enabled= false;
+      }
     }
 
     private void ucCiselnik2_Load(object sender, EventArgs e)

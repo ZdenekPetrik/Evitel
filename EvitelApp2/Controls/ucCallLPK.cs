@@ -3,6 +3,7 @@ using EvitelLib2.Common;
 using EvitelLib2.Model;
 using EvitelLib2.Repository;
 using NPOI.SS.Formula.Functions;
+using PdfSharpCore.Drawing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -47,8 +48,9 @@ namespace EvitelApp2.Controls
     private List<int> endOfSpeech_Selected;
     private List<int> clientCurrentStatus_Selected;
     private List<int> contactTopic_Selected;
- 
+
     public event DetailIntervence ShowDetailUserControl;
+    private bool isTimer;
 
 
     Call aktCall;
@@ -156,19 +158,19 @@ namespace EvitelApp2.Controls
         tmCallTo.Value = (DateTime)aktCall.DtEndCall;
         lblEditInfo.Text = "Id:" + lpkRow.Lpkid.ToString() + "; " + (isEditMode ? "EDIT" : "NO-EDIT");
         lblEditInfo.Visible = true;
+        btnQuickLPvK.Visible = false;
         ReWriteScreen();
       }
 
       cmbSex.Items.Clear();
+      cmbSex.Items.Add(new ComboItem("<Nevybráno>", ""));
       if (isNewForm)
       {
-        cmbSex.Items.Add(new ComboItem("<Nevybráno>", ""));
         foreach (var row in sex)
         {
           if (row.DtDeleted == null)
             cmbSex.Items.Add(new ComboItem(row.Text, row.SexId.ToString()));
         }
-        cmbSex.SelectedIndex = 0;
       }
       else
       {
@@ -180,6 +182,8 @@ namespace EvitelApp2.Controls
             cmbSex.SelectedIndex = cmbSex.Items.Count - 1;
         }
       }
+      if (cmbSex.SelectedItem == null)      // Protoze je potreba i osetrit moznost NULL (není vybrán žádný sex - třeba u Omylu, nebo prozvonění)
+        cmbSex.SelectedIndex = 0;
 
       cmbContactType.Items.Clear();
       if (isNewForm)
@@ -213,6 +217,7 @@ namespace EvitelApp2.Controls
             cmbTypeService.Items.Add(new ComboItem(row.Text, row.TypeServiceId.ToString()));
         }
         cmbTypeService.SelectedIndex = 0;
+
       }
       else
       {
@@ -226,15 +231,14 @@ namespace EvitelApp2.Controls
       }
 
       cmbFrom.Items.Clear();
+      cmbFrom.Items.Add(new ComboItem("<Nevybráno>", ""));
       if (isNewForm)
       {
-        cmbFrom.Items.Add(new ComboItem("<Nevybráno>", ""));
         foreach (var row in clientFrom)
         {
           if (row.DtDeleted == null)
             cmbFrom.Items.Add(new ComboItem(row.Text, row.ClientFromId.ToString()));
         }
-        cmbFrom.SelectedIndex = 0;
       }
       else
       {
@@ -246,11 +250,13 @@ namespace EvitelApp2.Controls
             cmbFrom.SelectedIndex = cmbFrom.Items.Count - 1;
         }
       }
+      if (cmbFrom.SelectedItem == null)      // Protoze je potreba i osetrit moznost NULL (není vybrán žádný sex - třeba u Omylu, nebo prozvonění)
+        cmbFrom.SelectedIndex = 0;
 
       cmbAge.Items.Clear();
+      cmbAge.Items.Add(new ComboItem("<Nevybráno>", ""));
       if (isNewForm)
       {
-        cmbAge.Items.Add(new ComboItem("<Nevybráno>", ""));
         foreach (var row in age)
         {
           if (row.DtDeleted == null)
@@ -269,6 +275,9 @@ namespace EvitelApp2.Controls
 
         }
       }
+      if (cmbAge.SelectedItem == null)      // Protoze je potreba i osetrit moznost NULL (není vybrán žádný sex - třeba u Omylu, nebo prozvonění)
+        cmbAge.SelectedIndex = 0;
+
 
       this.tvClientCurrentStatus.Nodes.Clear();
       foreach (var cssItem in clientCurrentStatus)
@@ -336,6 +345,10 @@ namespace EvitelApp2.Controls
         SetActiveNodeId(tvContactTopic, contactTopic_Selected);
         btnWrite.Text = "Upravit";
         btnWrite.Enabled = false;
+      }
+      else
+      {
+        StartTimer(); 
       }
 
       txtVolajici.AutoCompleteCustomSource.AddRange(DB.GetNick().Select(x => x.Text).ToArray());
@@ -447,10 +460,8 @@ namespace EvitelApp2.Controls
 
     private void SpoctiDobu()
     {
-      DateTime datetimeStart = DateTime.Now.Date.Add(TimeSpan.Parse(tmCall.Value.ToShortTimeString()));
-      DateTime datetimeEnd = DateTime.Now.Date.Add(TimeSpan.Parse(tmCallTo.Value.ToShortTimeString()));
-      TimeSpan s = datetimeEnd - datetimeStart;
-      lblCallTimeSum.Text = ((int)s.TotalHours).ToString("D2") + ":" + s.Minutes.ToString("D2");
+      TimeSpan x = tmCallTo.Value - tmCall.Value;
+      lblCallTimeSum.Text = ((int)x.TotalHours).ToString("D2") + ":" + x.Minutes.ToString("D2") + ":" + x.Seconds.ToString("D2");
     }
 
     private void tmCall_ValueChanged(object sender, EventArgs e)
@@ -507,7 +518,7 @@ namespace EvitelApp2.Controls
 
     private void cmbFrom_Validating(object sender, CancelEventArgs e)
     {
-      if (cmbFrom.SelectedIndex == 0 && isNewForm)
+      if (cmbFrom.SelectedIndex == 0 && isHovor)
       {
         cmbFromErrorProvider.SetError(this.cmbFrom, "Odkud je klient musí být vyplněn");
         e.Cancel = true;
@@ -522,7 +533,7 @@ namespace EvitelApp2.Controls
 
     private void cmbSex_Validating(object sender, CancelEventArgs e)
     {
-      if (cmbSex.SelectedIndex == 0 && isNewForm)
+      if (cmbSex.SelectedIndex == 0 &&  isHovor)
       {
         cmbSexErrorProvider.SetError(this.cmbSex, "Pohlaví musí být vyplněn");
         e.Cancel = true;
@@ -536,7 +547,7 @@ namespace EvitelApp2.Controls
 
     private void cmbAge_Validating(object sender, CancelEventArgs e)
     {
-      if (cmbAge.SelectedIndex == 0 && isNewForm)
+      if (cmbAge.SelectedIndex == 0 && isHovor)
       {
         cmbAgeErrorProvider.SetError(this.cmbAge, "Věk musí být vyplněn");
         e.Cancel = true;
@@ -568,7 +579,7 @@ namespace EvitelApp2.Controls
     private void tvCurrentClientStatus_Validating(object sender, CancelEventArgs e)
     {
       List<int> activeNodeId = GetActiveNodeId(tvClientCurrentStatus);
-      if (activeNodeId.Count() == 0 &&  isHovor)
+      if (activeNodeId.Count() == 0 && isHovor)
       {
         tvCurrentClientStatusErrorProvider.SetError(this.tvClientCurrentStatus, "Aktuální stav klienta - alespoň jedna možnost musí být zaškrtnuta");
         e.Cancel = true;
@@ -603,9 +614,12 @@ namespace EvitelApp2.Controls
     {
       if (ValidateChildren())
       {
+        StopTimer();
         if (DialogResult.Yes == MessageBox.Show("Opravdu zapsat tento hovor?", "LPK Nové volání", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
           if (isNewForm)
+          {
             WriteThisNewCall();
+          }
           else
             UpdateThisNewCall();
       }
@@ -629,17 +643,18 @@ namespace EvitelApp2.Controls
       if (((ComboItem)cmbSex.SelectedItem).iValue != lpkRow.SexEid)
       {
         new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2LPvKTable, "Pohlaví", ((ComboItem)cmbSex.SelectedItem).Text + " -> " + sex.Where(x => x.SexId == lpkRow.SexEid).Select(x => x.Text), Program.myLoggedUser.LoginUserId);
-        lpkRow.SexEid = ((ComboItem)cmbSex.SelectedItem).iValue;
+        lpkRow.SexEid = ((ComboItem)cmbSex.SelectedItem).iValue == 0 ? null : ((ComboItem)cmbSex.SelectedItem).iValue;
+
       }
-      if (((ComboItem)cmbAge.SelectedItem).iValue != lpkRow.AgeEid)
+      if (((ComboItem)cmbAge.SelectedItem).iValue != lpkRow.AgeEid )
       {
         new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2LPvKTable, "Věk", ((ComboItem)cmbAge.SelectedItem).Text + " -> " + age.Where(x => x.AgeId == lpkRow.AgeEid).Select(x => x.Text), Program.myLoggedUser.LoginUserId);
-        lpkRow.AgeEid = ((ComboItem)cmbAge.SelectedItem).iValue;
+        lpkRow.AgeEid = ((ComboItem)cmbAge.SelectedItem).iValue == 0 ? null : ((ComboItem)cmbAge.SelectedItem).iValue;
       }
       if (((ComboItem)cmbFrom.SelectedItem).iValue != lpkRow.ClientFromEid)
       {
         new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2LPvKTable, "Odkud je klient", ((ComboItem)cmbFrom.SelectedItem).Text + " -> " + clientFrom.Where(x => x.ClientFromId == lpkRow.ClientFromEid).Select(x => x.Text), Program.myLoggedUser.LoginUserId);
-        lpkRow.ClientFromEid = ((ComboItem)cmbFrom.SelectedItem).iValue;
+        lpkRow.ClientFromEid = ((ComboItem)cmbFrom.SelectedItem).iValue == 0 ? null : ((ComboItem)cmbFrom.SelectedItem).iValue;
       }
       if (((ComboItem)cmbContactType.SelectedItem).iValue != lpkRow.ContactTypeEid)
       {
@@ -678,17 +693,17 @@ namespace EvitelApp2.Controls
 
     private void WriteThisNewCall()
     {
-      DateTime datetimeStartCall = dtCall.Value.Date.Add(TimeSpan.Parse(tmCall.Value.ToShortTimeString()));
-      DateTime datetimeEndCall = dtCall.Value.Date.Add(TimeSpan.Parse(tmCallTo.Value.ToShortTimeString()));
+      DateTime datetimeStartCall = dtCall.Value.Date.Add(TimeSpan.Parse(tmCall.Value.ToLongTimeString()));
+      DateTime datetimeEndCall = dtCall.Value.Date.Add(TimeSpan.Parse(tmCallTo.Value.ToLongTimeString()));
       int CallId = DB.WriteCall(datetimeStartCall, (int)eCallType.ePLK, datetimeEndCall);
       if (CallId > 0)
       {
         Lpk row = new Lpk();
         row.CallId = CallId;
-        row.AgeEid = ((ComboItem)cmbAge.SelectedItem).iValue;
-        row.SexEid = ((ComboItem)cmbSex.SelectedItem).iValue;
-        row.ClientFromEid = ((ComboItem)cmbFrom.SelectedItem).iValue;
-        row.ContactTypeEid = ((ComboItem)cmbContactType.SelectedItem).iValue;
+        row.AgeEid = ((ComboItem)cmbAge.SelectedItem).iValue == 0 ? null: ((ComboItem)cmbAge.SelectedItem).iValue;
+        row.SexEid = ((ComboItem)cmbSex.SelectedItem).iValue == 0? null : ((ComboItem)cmbSex.SelectedItem).iValue;
+        row.ClientFromEid = ((ComboItem)cmbFrom.SelectedItem).iValue == 0 ? null : ((ComboItem)cmbFrom.SelectedItem).iValue; 
+        row.ContactTypeEid = ((ComboItem)cmbContactType.SelectedItem).iValue; 
         row.TypeServiceEid = ((ComboItem)cmbTypeService.SelectedItem).iValue;
         row.Note = txtNote.Text;
         row.Nick = txtVolajici.Text;
@@ -708,13 +723,17 @@ namespace EvitelApp2.Controls
           }
         }
         PrepareScreen();
+        StopTimer();      // Zu se mi to nechce resit - 
       }
     }
 
     private void ucCallLPK_VisibleChanged(object sender, EventArgs e)
     {
       if (this.Visible == false)
+      {
         this.CausesValidation = false;
+        StopTimer();
+      }
     }
 
     private void btnBack_Click(object sender, EventArgs e)
@@ -736,5 +755,44 @@ namespace EvitelApp2.Controls
       this.txtNote.Height = this.tvEndOfSpeech.Height + 100;
 
     }
+
+    private void btnQuickLPvK_Click(object sender, EventArgs e)
+    {
+      ShowDetailUserControl?.Invoke(-99, 2);
+    }
+
+    private void pictureClock_Click(object sender, EventArgs e)
+    {
+      if (!isNewForm)
+        return;
+      if (timer1.Enabled)
+      {
+        StopTimer();
+      }
+      else
+      {
+        StartTimer();
+      }
+    }
+
+
+    private void StopTimer()
+    {
+      timer1.Enabled = false;
+      pictureClock.Image = Image.FromFile("Resources/ClockGray.png");
+    }
+    private void StartTimer()
+    {
+      tmCallTo.Value = DateTime.Now;
+      timer1.Enabled = true;
+      pictureClock.Image = Image.FromFile("Resources/ClockWhite.png");
+    }
+    private void timer1_Tick(object sender, EventArgs e)
+    {
+      tmCallTo.Value = tmCallTo.Value.AddSeconds(1);
+      SpoctiDobu();
+    }
+
+
   }
 }

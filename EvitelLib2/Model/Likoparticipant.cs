@@ -14,8 +14,8 @@ namespace EvitelLib2.Model
         public bool IsInjury { get; set; }
         public bool IsIntervence { get; set; }
         public bool IsFirstIntervence { get; set; }
-        public int DruhIntervenceEid { get; set; }
-        public int InterventId { get; set; }
+        public int? DruhIntervenceEid { get; set; }
+        public int? InterventId { get; set; }
         public int? InterventId2 { get; set; }
         public bool IsAgreement { get; set; }
         public bool IsAgreementBkb { get; set; }

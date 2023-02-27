@@ -127,7 +127,8 @@ namespace EvitelApp2.Controls
       {
         dgw.Columns[col.Name].Visible = col.isVisible;
       }
-      dgw.SortASC(dgw.Columns["Datum čas"]);
+      dgw.SortDESC(dgw.Columns["Datum"]);
+      dgw.SortDESC(dgw.Columns["Čas"]);
 
       toolStripItem1.Text = "Detail Intervence";
       toolStripItem1.Click += new EventHandler(toolStripItem1_Click);

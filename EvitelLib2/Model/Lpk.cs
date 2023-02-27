@@ -16,9 +16,9 @@ namespace EvitelLib2.Model
         public string Note { get; set; }
         public int ContactTypeEid { get; set; }
         public int TypeServiceEid { get; set; }
-        public int ClientFromEid { get; set; }
-        public int SexEid { get; set; }
-        public int AgeEid { get; set; }
+        public int? ClientFromEid { get; set; }
+        public int? SexEid { get; set; }
+        public int? AgeEid { get; set; }
         public string Nick { get; set; }
         public int CallId { get; set; }
         public int? ContactTopicEid { get; set; }

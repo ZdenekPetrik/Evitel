@@ -119,8 +119,8 @@ namespace EvitelApp2.Controls
       PrepareScreen();
     }
 
-   
- 
+
+
 
     // Volá se při LOAD a pak vždy poté co nadřazený proces rozhodne co zobrazit
     public void PrepareScreen()
@@ -152,6 +152,7 @@ namespace EvitelApp2.Controls
         lblSupposeId.Text = "Id události";
         LoadAllData();
         btnWrite.Enabled = false;     // je nutné nakonec - mění se při první změně
+        btnQuickLPvK.Visible = false;
       }
       chkSecondIntervence_CheckedChanged(null, null);
       ucParticipations1.InitData();
@@ -175,9 +176,9 @@ namespace EvitelApp2.Controls
     {
       if (ValidateChildren())
       {
-        if (txtNrCelkem.Value > 0 )
+        if (txtNrCelkem.Value > 0)
         {
-          if (DialogResult.Yes == MessageBox.Show("Opravdu "+btnWrite.Text + " tuto intervenci ?", "SKI intervence", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+          if (DialogResult.Yes == MessageBox.Show("Opravdu " + btnWrite.Text + " tuto intervenci ?", "SKI intervence", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
             if (isNewForm)
               WriteThisNewCall();
             else
@@ -358,7 +359,7 @@ namespace EvitelApp2.Controls
       ucParticipations1.InitData();
 
       LoadAllData();
-      btnWrite.Enabled = false;     
+      btnWrite.Enabled = false;
     }
 
     #region Validation
@@ -448,7 +449,7 @@ namespace EvitelApp2.Controls
 
     public void ucParticipations_NewRow()
     {
-      txtNrCelkem.Value = ucParticipations1.participantsList.Where(x=>x.IsIntervence).Count();
+      txtNrCelkem.Value = ucParticipations1.participantsList.Where(x => x.IsIntervence).Count();
     }
 
     private void ucCallLIKO_Resize(object sender, EventArgs e)
@@ -528,10 +529,10 @@ namespace EvitelApp2.Controls
     private void cmbIntervent_ValueChanged(object sender, EventArgs e)
     {
       ucParticipations1.supposeIntervent = ((ComboItem)cmbIntervent.SelectedItem).iValue;
-      Any_ValueChanged(sender,e);
+      Any_ValueChanged(sender, e);
     }
 
-    
+
 
     private void btnDruhaIntervence_Click(object sender, EventArgs e)
     {
@@ -647,6 +648,12 @@ namespace EvitelApp2.Controls
 
     private void boxIntervence_Enter(object sender, EventArgs e)
     {
+
+    }
+
+    private void btnQuickLPvK_Click(object sender, EventArgs e)
+    {
+      ShowDetailUserControl?.Invoke(-99, 1);
 
     }
   }

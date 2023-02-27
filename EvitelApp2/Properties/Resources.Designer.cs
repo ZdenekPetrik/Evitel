@@ -63,9 +63,9 @@ namespace EvitelApp2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap save_close {
+        public static System.Drawing.Bitmap ClockWhite {
             get {
-                object obj = ResourceManager.GetObject("save-close", resourceCulture);
+                object obj = ResourceManager.GetObject("ClockWhite", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

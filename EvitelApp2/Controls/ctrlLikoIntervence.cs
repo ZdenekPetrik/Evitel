@@ -50,8 +50,7 @@ namespace EvitelApp2.Controls
       myColumns = new List<MyColumn>()
       {
          new MyColumn { Name = "Id", DataPropertyName = "LikointervenceId", Type = 3 },
-         new MyColumn { Name = "Datum čas", DataPropertyName = "DtStartIntervence",Type=5, isVisible = false},
-         new MyColumn { Name = "Datum interv.", DataPropertyName = "DtIntervStart" , Type=5},
+         new MyColumn { Name = "Datum interv", DataPropertyName = "DtIntervStart" , Type=5},
          new MyColumn { Name = "Čas", DataPropertyName = "TmIntervStart",Type=6 },
          new MyColumn { Name = "Konec ", DataPropertyName = "TmIntervEnd",Type=6 },
          new MyColumn { Name = "Doba ", DataPropertyName = "TmIntervDuration",Type=6 },
@@ -131,7 +130,8 @@ namespace EvitelApp2.Controls
       {
         dgw.Columns[col.Name].Visible = col.isVisible;
       }
-      dgw.SortASC(dgw.Columns["Datum čas"]);
+      dgw.SortDESC(dgw.Columns["Datum interv"]);
+      dgw.SortDESC(dgw.Columns["Čas"]);
 
       toolStripItem1.Text = "Detail Intervence";
       toolStripItem1.Click += new EventHandler(toolStripItem1_Click);

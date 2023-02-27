@@ -28,534 +28,571 @@
     /// </summary>
     private void InitializeComponent()
     {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucCallLPK));
-            this.btnBack = new System.Windows.Forms.Button();
-            this.boxCall = new System.Windows.Forms.GroupBox();
-            this.dtCall = new System.Windows.Forms.DateTimePicker();
-            this.lblEditInfo = new System.Windows.Forms.Label();
-            this.cmbTypeService = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.cmbContactType = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.lblCallTimeSum = new System.Windows.Forms.Label();
-            this.txtVolajici = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.lblDatumACas = new System.Windows.Forms.Label();
-            this.lblVolajici = new System.Windows.Forms.Label();
-            this.lblZapsal = new System.Windows.Forms.Label();
-            this.txtLoginUser = new System.Windows.Forms.TextBox();
-            this.tmCall = new System.Windows.Forms.DateTimePicker();
-            this.tmCallTo = new System.Windows.Forms.DateTimePicker();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cmbFrom = new System.Windows.Forms.ComboBox();
-            this.cmbSex = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.boxClient = new System.Windows.Forms.GroupBox();
-            this.cmbAge = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.boxResult = new System.Windows.Forms.GroupBox();
-            this.lblEndOfSpeech = new System.Windows.Forms.Label();
-            this.lblCurrentClientStatus = new System.Windows.Forms.Label();
-            this.lblContactTopic = new System.Windows.Forms.Label();
-            this.lblEndOfSpeech1 = new System.Windows.Forms.Label();
-            this.lblCurrentClientStatus1 = new System.Windows.Forms.Label();
-            this.lblContactTopic1 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.tvEndOfSpeech = new System.Windows.Forms.TreeView();
-            this.label8 = new System.Windows.Forms.Label();
-            this.tvClientCurrentStatus = new System.Windows.Forms.TreeView();
-            this.label7 = new System.Windows.Forms.Label();
-            this.tvContactTopic = new System.Windows.Forms.TreeView();
-            this.txtNote = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.btnWrite = new System.Windows.Forms.Button();
-            this.lblTitulek = new System.Windows.Forms.Label();
-            this.boxCall.SuspendLayout();
-            this.boxClient.SuspendLayout();
-            this.boxResult.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // btnBack
-            // 
-            this.btnBack.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnBack.Image = ((System.Drawing.Image)(resources.GetObject("btnBack.Image")));
-            this.btnBack.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnBack.Location = new System.Drawing.Point(15, 3);
-            this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(85, 36);
-            this.btnBack.TabIndex = 0;
-            this.btnBack.Text = "Zpět";
-            this.btnBack.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnBack.UseVisualStyleBackColor = true;
-            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
-            // 
-            // boxCall
-            // 
-            this.boxCall.Controls.Add(this.dtCall);
-            this.boxCall.Controls.Add(this.lblEditInfo);
-            this.boxCall.Controls.Add(this.cmbTypeService);
-            this.boxCall.Controls.Add(this.label5);
-            this.boxCall.Controls.Add(this.cmbContactType);
-            this.boxCall.Controls.Add(this.label4);
-            this.boxCall.Controls.Add(this.lblCallTimeSum);
-            this.boxCall.Controls.Add(this.txtVolajici);
-            this.boxCall.Controls.Add(this.label1);
-            this.boxCall.Controls.Add(this.lblDatumACas);
-            this.boxCall.Controls.Add(this.lblVolajici);
-            this.boxCall.Controls.Add(this.lblZapsal);
-            this.boxCall.Controls.Add(this.txtLoginUser);
-            this.boxCall.Controls.Add(this.tmCall);
-            this.boxCall.Controls.Add(this.tmCallTo);
-            this.boxCall.Location = new System.Drawing.Point(3, 45);
-            this.boxCall.Name = "boxCall";
-            this.boxCall.Size = new System.Drawing.Size(1303, 104);
-            this.boxCall.TabIndex = 24;
-            this.boxCall.TabStop = false;
-            this.boxCall.Text = "Údaje o Hovoru";
-            // 
-            // dtCall
-            // 
-            this.dtCall.CalendarFont = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.dtCall.CustomFormat = "dd-MM-yyyy";
-            this.dtCall.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.dtCall.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtCall.Location = new System.Drawing.Point(158, 25);
-            this.dtCall.Name = "dtCall";
-            this.dtCall.Size = new System.Drawing.Size(102, 27);
-            this.dtCall.TabIndex = 0;
-            // 
-            // lblEditInfo
-            // 
-            this.lblEditInfo.AutoSize = true;
-            this.lblEditInfo.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblEditInfo.Location = new System.Drawing.Point(1361, 84);
-            this.lblEditInfo.Name = "lblEditInfo";
-            this.lblEditInfo.Size = new System.Drawing.Size(0, 17);
-            this.lblEditInfo.TabIndex = 57;
-            // 
-            // cmbTypeService
-            // 
-            this.cmbTypeService.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cmbTypeService.FormattingEnabled = true;
-            this.cmbTypeService.Location = new System.Drawing.Point(715, 67);
-            this.cmbTypeService.Name = "cmbTypeService";
-            this.cmbTypeService.Size = new System.Drawing.Size(176, 28);
-            this.cmbTypeService.TabIndex = 5;
-            this.cmbTypeService.Validating += new System.ComponentModel.CancelEventHandler(this.cmbTypeService_Validating);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label5.Location = new System.Drawing.Point(592, 68);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(68, 17);
-            this.label5.TabIndex = 56;
-            this.label5.Text = "Typ služby";
-            // 
-            // cmbContactType
-            // 
-            this.cmbContactType.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cmbContactType.FormattingEnabled = true;
-            this.cmbContactType.Location = new System.Drawing.Point(158, 67);
-            this.cmbContactType.Name = "cmbContactType";
-            this.cmbContactType.Size = new System.Drawing.Size(181, 28);
-            this.cmbContactType.TabIndex = 4;
-            this.cmbContactType.Validating += new System.ComponentModel.CancelEventHandler(this.cmbContactType_Validating);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(6, 67);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(81, 17);
-            this.label4.TabIndex = 54;
-            this.label4.Text = "Typ kontaktu";
-            // 
-            // lblCallTimeSum
-            // 
-            this.lblCallTimeSum.AutoSize = true;
-            this.lblCallTimeSum.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblCallTimeSum.Location = new System.Drawing.Point(500, 32);
-            this.lblCallTimeSum.Name = "lblCallTimeSum";
-            this.lblCallTimeSum.Size = new System.Drawing.Size(39, 17);
-            this.lblCallTimeSum.TabIndex = 49;
-            this.lblCallTimeSum.Text = "00:00";
-            // 
-            // txtVolajici
-            // 
-            this.txtVolajici.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtVolajici.Location = new System.Drawing.Point(715, 27);
-            this.txtVolajici.Name = "txtVolajici";
-            this.txtVolajici.Size = new System.Drawing.Size(176, 27);
-            this.txtVolajici.TabIndex = 3;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(390, 32);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(27, 17);
-            this.label1.TabIndex = 32;
-            this.label1.Text = "do:";
-            // 
-            // lblDatumACas
-            // 
-            this.lblDatumACas.AutoSize = true;
-            this.lblDatumACas.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblDatumACas.Location = new System.Drawing.Point(6, 32);
-            this.lblDatumACas.Name = "lblDatumACas";
-            this.lblDatumACas.Size = new System.Drawing.Size(148, 17);
-            this.lblDatumACas.TabIndex = 1;
-            this.lblDatumACas.Text = "Datum a čas hovoru od:";
-            // 
-            // lblVolajici
-            // 
-            this.lblVolajici.AutoSize = true;
-            this.lblVolajici.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblVolajici.Location = new System.Drawing.Point(612, 30);
-            this.lblVolajici.Name = "lblVolajici";
-            this.lblVolajici.Size = new System.Drawing.Size(48, 17);
-            this.lblVolajici.TabIndex = 2;
-            this.lblVolajici.Text = "Volající";
-            // 
-            // lblZapsal
-            // 
-            this.lblZapsal.AutoSize = true;
-            this.lblZapsal.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblZapsal.Location = new System.Drawing.Point(952, 29);
-            this.lblZapsal.Name = "lblZapsal";
-            this.lblZapsal.Size = new System.Drawing.Size(61, 17);
-            this.lblZapsal.TabIndex = 4;
-            this.lblZapsal.Text = "Zapsal(a)";
-            // 
-            // txtLoginUser
-            // 
-            this.txtLoginUser.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtLoginUser.Location = new System.Drawing.Point(1019, 25);
-            this.txtLoginUser.Name = "txtLoginUser";
-            this.txtLoginUser.ReadOnly = true;
-            this.txtLoginUser.Size = new System.Drawing.Size(277, 27);
-            this.txtLoginUser.TabIndex = 30;
-            this.txtLoginUser.TabStop = false;
-            // 
-            // tmCall
-            // 
-            this.tmCall.CustomFormat = "HH:mm";
-            this.tmCall.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.tmCall.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.tmCall.Location = new System.Drawing.Point(266, 25);
-            this.tmCall.Name = "tmCall";
-            this.tmCall.ShowUpDown = true;
-            this.tmCall.Size = new System.Drawing.Size(73, 27);
-            this.tmCall.TabIndex = 1;
-            this.tmCall.ValueChanged += new System.EventHandler(this.tmCall_ValueChanged);
-            // 
-            // tmCallTo
-            // 
-            this.tmCallTo.CustomFormat = "HH:mm";
-            this.tmCallTo.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.tmCallTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.tmCallTo.Location = new System.Drawing.Point(423, 25);
-            this.tmCallTo.Name = "tmCallTo";
-            this.tmCallTo.ShowUpDown = true;
-            this.tmCallTo.Size = new System.Drawing.Size(60, 27);
-            this.tmCallTo.TabIndex = 2;
-            this.tmCallTo.ValueChanged += new System.EventHandler(this.tmCallTo_ValueChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(6, 29);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(95, 17);
-            this.label2.TabIndex = 50;
-            this.label2.Text = "Odkud je klient";
-            // 
-            // cmbFrom
-            // 
-            this.cmbFrom.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cmbFrom.FormattingEnabled = true;
-            this.cmbFrom.Location = new System.Drawing.Point(147, 29);
-            this.cmbFrom.Name = "cmbFrom";
-            this.cmbFrom.Size = new System.Drawing.Size(210, 28);
-            this.cmbFrom.TabIndex = 6;
-            this.cmbFrom.Validating += new System.ComponentModel.CancelEventHandler(this.cmbFrom_Validating);
-            // 
-            // cmbSex
-            // 
-            this.cmbSex.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cmbSex.FormattingEnabled = true;
-            this.cmbSex.Location = new System.Drawing.Point(526, 29);
-            this.cmbSex.Name = "cmbSex";
-            this.cmbSex.Size = new System.Drawing.Size(210, 28);
-            this.cmbSex.TabIndex = 7;
-            this.cmbSex.Validating += new System.ComponentModel.CancelEventHandler(this.cmbSex_Validating);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(451, 30);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(49, 17);
-            this.label3.TabIndex = 52;
-            this.label3.Text = "Pohlaví";
-            // 
-            // boxClient
-            // 
-            this.boxClient.Controls.Add(this.cmbAge);
-            this.boxClient.Controls.Add(this.label6);
-            this.boxClient.Controls.Add(this.cmbFrom);
-            this.boxClient.Controls.Add(this.cmbSex);
-            this.boxClient.Controls.Add(this.label3);
-            this.boxClient.Controls.Add(this.label2);
-            this.boxClient.Location = new System.Drawing.Point(0, 146);
-            this.boxClient.Name = "boxClient";
-            this.boxClient.Size = new System.Drawing.Size(1105, 75);
-            this.boxClient.TabIndex = 54;
-            this.boxClient.TabStop = false;
-            this.boxClient.Text = "Klient";
-            // 
-            // cmbAge
-            // 
-            this.cmbAge.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cmbAge.FormattingEnabled = true;
-            this.cmbAge.Location = new System.Drawing.Point(876, 28);
-            this.cmbAge.Name = "cmbAge";
-            this.cmbAge.Size = new System.Drawing.Size(210, 28);
-            this.cmbAge.TabIndex = 8;
-            this.cmbAge.Validating += new System.ComponentModel.CancelEventHandler(this.cmbAge_Validating);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label6.Location = new System.Drawing.Point(811, 29);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(28, 17);
-            this.label6.TabIndex = 54;
-            this.label6.Text = "Věk";
-            // 
-            // boxResult
-            // 
-            this.boxResult.Controls.Add(this.lblEndOfSpeech);
-            this.boxResult.Controls.Add(this.lblCurrentClientStatus);
-            this.boxResult.Controls.Add(this.lblContactTopic);
-            this.boxResult.Controls.Add(this.lblEndOfSpeech1);
-            this.boxResult.Controls.Add(this.lblCurrentClientStatus1);
-            this.boxResult.Controls.Add(this.lblContactTopic1);
-            this.boxResult.Controls.Add(this.label9);
-            this.boxResult.Controls.Add(this.tvEndOfSpeech);
-            this.boxResult.Controls.Add(this.label8);
-            this.boxResult.Controls.Add(this.tvClientCurrentStatus);
-            this.boxResult.Controls.Add(this.label7);
-            this.boxResult.Controls.Add(this.tvContactTopic);
-            this.boxResult.Location = new System.Drawing.Point(2, 227);
-            this.boxResult.Name = "boxResult";
-            this.boxResult.Size = new System.Drawing.Size(1103, 478);
-            this.boxResult.TabIndex = 55;
-            this.boxResult.TabStop = false;
-            this.boxResult.Text = "Hodnocení hovoru";
-            // 
-            // lblEndOfSpeech
-            // 
-            this.lblEndOfSpeech.AutoSize = true;
-            this.lblEndOfSpeech.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblEndOfSpeech.Location = new System.Drawing.Point(145, 458);
-            this.lblEndOfSpeech.Name = "lblEndOfSpeech";
-            this.lblEndOfSpeech.Size = new System.Drawing.Size(95, 17);
-            this.lblEndOfSpeech.TabIndex = 66;
-            this.lblEndOfSpeech.Text = "Téma kontaktu:";
-            // 
-            // lblCurrentClientStatus
-            // 
-            this.lblCurrentClientStatus.AutoSize = true;
-            this.lblCurrentClientStatus.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblCurrentClientStatus.Location = new System.Drawing.Point(145, 430);
-            this.lblCurrentClientStatus.Name = "lblCurrentClientStatus";
-            this.lblCurrentClientStatus.Size = new System.Drawing.Size(95, 17);
-            this.lblCurrentClientStatus.TabIndex = 65;
-            this.lblCurrentClientStatus.Text = "Téma kontaktu:";
-            // 
-            // lblContactTopic
-            // 
-            this.lblContactTopic.AutoSize = true;
-            this.lblContactTopic.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblContactTopic.Location = new System.Drawing.Point(145, 402);
-            this.lblContactTopic.Name = "lblContactTopic";
-            this.lblContactTopic.Size = new System.Drawing.Size(95, 17);
-            this.lblContactTopic.TabIndex = 64;
-            this.lblContactTopic.Text = "Téma kontaktu:";
-            // 
-            // lblEndOfSpeech1
-            // 
-            this.lblEndOfSpeech1.AutoSize = true;
-            this.lblEndOfSpeech1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblEndOfSpeech1.Location = new System.Drawing.Point(10, 458);
-            this.lblEndOfSpeech1.Name = "lblEndOfSpeech1";
-            this.lblEndOfSpeech1.Size = new System.Drawing.Size(88, 17);
-            this.lblEndOfSpeech1.TabIndex = 63;
-            this.lblEndOfSpeech1.Text = "Závěr hovoru:";
-            // 
-            // lblCurrentClientStatus1
-            // 
-            this.lblCurrentClientStatus1.AutoSize = true;
-            this.lblCurrentClientStatus1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblCurrentClientStatus1.Location = new System.Drawing.Point(10, 430);
-            this.lblCurrentClientStatus1.Name = "lblCurrentClientStatus1";
-            this.lblCurrentClientStatus1.Size = new System.Drawing.Size(124, 17);
-            this.lblCurrentClientStatus1.TabIndex = 62;
-            this.lblCurrentClientStatus1.Text = "Aktuální stav klienta:";
-            // 
-            // lblContactTopic1
-            // 
-            this.lblContactTopic1.AutoSize = true;
-            this.lblContactTopic1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblContactTopic1.Location = new System.Drawing.Point(10, 402);
-            this.lblContactTopic1.Name = "lblContactTopic1";
-            this.lblContactTopic1.Size = new System.Drawing.Size(95, 17);
-            this.lblContactTopic1.TabIndex = 61;
-            this.lblContactTopic1.Text = "Téma kontaktu:";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label9.Location = new System.Drawing.Point(994, 13);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(85, 17);
-            this.label9.TabIndex = 60;
-            this.label9.Text = "Závěr hovoru";
-            // 
-            // tvEndOfSpeech
-            // 
-            this.tvEndOfSpeech.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.tvEndOfSpeech.Location = new System.Drawing.Point(729, 33);
-            this.tvEndOfSpeech.Name = "tvEndOfSpeech";
-            this.tvEndOfSpeech.Size = new System.Drawing.Size(350, 360);
-            this.tvEndOfSpeech.TabIndex = 11;
-            this.tvEndOfSpeech.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tvEndOfSpeech_AfterCheck);
-            this.tvEndOfSpeech.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.tvEndOfSpeech_DrawNode);
-            this.tvEndOfSpeech.Validating += new System.ComponentModel.CancelEventHandler(this.tvEndOfSpeech_Validating);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label8.Location = new System.Drawing.Point(598, 13);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(121, 17);
-            this.label8.TabIndex = 58;
-            this.label8.Text = "Aktuální stav klienta";
-            // 
-            // tvClientCurrentStatus
-            // 
-            this.tvClientCurrentStatus.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.tvClientCurrentStatus.Location = new System.Drawing.Point(369, 33);
-            this.tvClientCurrentStatus.Name = "tvClientCurrentStatus";
-            this.tvClientCurrentStatus.Size = new System.Drawing.Size(350, 360);
-            this.tvClientCurrentStatus.TabIndex = 10;
-            this.tvClientCurrentStatus.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tvCurrentClientStatus_AfterCheck);
-            this.tvClientCurrentStatus.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.tvCurrentClientStatus_DrawNode);
-            this.tvClientCurrentStatus.Validating += new System.ComponentModel.CancelEventHandler(this.tvCurrentClientStatus_Validating);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label7.Location = new System.Drawing.Point(264, 13);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(92, 17);
-            this.label7.TabIndex = 56;
-            this.label7.Text = "Téma kontaktu";
-            // 
-            // tvContactTopic
-            // 
-            this.tvContactTopic.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.tvContactTopic.Location = new System.Drawing.Point(10, 33);
-            this.tvContactTopic.Name = "tvContactTopic";
-            this.tvContactTopic.Size = new System.Drawing.Size(350, 360);
-            this.tvContactTopic.TabIndex = 9;
-            this.tvContactTopic.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tvContactTopic_AfterCheck);
-            this.tvContactTopic.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.tvContactTopic_DrawNode);
-            this.tvContactTopic.Validating += new System.ComponentModel.CancelEventHandler(this.tvContactTopic_Validating);
-            // 
-            // txtNote
-            // 
-            this.txtNote.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtNote.Location = new System.Drawing.Point(1111, 175);
-            this.txtNote.Multiline = true;
-            this.txtNote.Name = "txtNote";
-            this.txtNote.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtNote.Size = new System.Drawing.Size(304, 562);
-            this.txtNote.TabIndex = 12;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label13.Location = new System.Drawing.Point(1111, 155);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(122, 17);
-            this.label13.TabIndex = 56;
-            this.label13.Text = "Poznámka k hovoru";
-            // 
-            // btnWrite
-            // 
-            this.btnWrite.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.btnWrite.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnWrite.Image = global::EvitelApp2.Properties.Resources.save_close24;
-            this.btnWrite.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnWrite.Location = new System.Drawing.Point(1323, 87);
-            this.btnWrite.Name = "btnWrite";
-            this.btnWrite.Size = new System.Drawing.Size(95, 39);
-            this.btnWrite.TabIndex = 13;
-            this.btnWrite.Text = "Uložit";
-            this.btnWrite.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnWrite.UseVisualStyleBackColor = true;
-            this.btnWrite.Click += new System.EventHandler(this.btnWrite_Click);
-            // 
-            // lblTitulek
-            // 
-            this.lblTitulek.AutoSize = true;
-            this.lblTitulek.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblTitulek.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.lblTitulek.Location = new System.Drawing.Point(269, 5);
-            this.lblTitulek.Name = "lblTitulek";
-            this.lblTitulek.Size = new System.Drawing.Size(88, 32);
-            this.lblTitulek.TabIndex = 57;
-            this.lblTitulek.Text = "Titulek";
-            // 
-            // ucCallLPK
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.lblTitulek);
-            this.Controls.Add(this.btnWrite);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.txtNote);
-            this.Controls.Add(this.boxResult);
-            this.Controls.Add(this.boxClient);
-            this.Controls.Add(this.btnBack);
-            this.Controls.Add(this.boxCall);
-            this.Name = "ucCallLPK";
-            this.Size = new System.Drawing.Size(1429, 753);
-            this.Load += new System.EventHandler(this.ucCallLPK_Load);
-            this.VisibleChanged += new System.EventHandler(this.ucCallLPK_VisibleChanged);
-            this.Resize += new System.EventHandler(this.ucCallLPK_Resize);
-            this.boxCall.ResumeLayout(false);
-            this.boxCall.PerformLayout();
-            this.boxClient.ResumeLayout(false);
-            this.boxClient.PerformLayout();
-            this.boxResult.ResumeLayout(false);
-            this.boxResult.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+      components = new System.ComponentModel.Container();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucCallLPK));
+      btnBack = new System.Windows.Forms.Button();
+      boxCall = new System.Windows.Forms.GroupBox();
+      pictureClock = new System.Windows.Forms.PictureBox();
+      dtCall = new System.Windows.Forms.DateTimePicker();
+      lblEditInfo = new System.Windows.Forms.Label();
+      cmbTypeService = new System.Windows.Forms.ComboBox();
+      label5 = new System.Windows.Forms.Label();
+      cmbContactType = new System.Windows.Forms.ComboBox();
+      label4 = new System.Windows.Forms.Label();
+      lblCallTimeSum = new System.Windows.Forms.Label();
+      txtVolajici = new System.Windows.Forms.TextBox();
+      label1 = new System.Windows.Forms.Label();
+      lblDatumACas = new System.Windows.Forms.Label();
+      lblVolajici = new System.Windows.Forms.Label();
+      lblZapsal = new System.Windows.Forms.Label();
+      txtLoginUser = new System.Windows.Forms.TextBox();
+      tmCall = new System.Windows.Forms.DateTimePicker();
+      tmCallTo = new System.Windows.Forms.DateTimePicker();
+      label2 = new System.Windows.Forms.Label();
+      cmbFrom = new System.Windows.Forms.ComboBox();
+      cmbSex = new System.Windows.Forms.ComboBox();
+      label3 = new System.Windows.Forms.Label();
+      boxClient = new System.Windows.Forms.GroupBox();
+      cmbAge = new System.Windows.Forms.ComboBox();
+      label6 = new System.Windows.Forms.Label();
+      boxResult = new System.Windows.Forms.GroupBox();
+      lblEndOfSpeech = new System.Windows.Forms.Label();
+      lblCurrentClientStatus = new System.Windows.Forms.Label();
+      lblContactTopic = new System.Windows.Forms.Label();
+      lblEndOfSpeech1 = new System.Windows.Forms.Label();
+      lblCurrentClientStatus1 = new System.Windows.Forms.Label();
+      lblContactTopic1 = new System.Windows.Forms.Label();
+      label9 = new System.Windows.Forms.Label();
+      tvEndOfSpeech = new System.Windows.Forms.TreeView();
+      label8 = new System.Windows.Forms.Label();
+      tvClientCurrentStatus = new System.Windows.Forms.TreeView();
+      label7 = new System.Windows.Forms.Label();
+      tvContactTopic = new System.Windows.Forms.TreeView();
+      txtNote = new System.Windows.Forms.TextBox();
+      label13 = new System.Windows.Forms.Label();
+      btnWrite = new System.Windows.Forms.Button();
+      lblTitulek = new System.Windows.Forms.Label();
+      btnQuickLPvK = new System.Windows.Forms.Button();
+      timer1 = new System.Windows.Forms.Timer(components);
+      boxCall.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)pictureClock).BeginInit();
+      boxClient.SuspendLayout();
+      boxResult.SuspendLayout();
+      SuspendLayout();
+      // 
+      // btnBack
+      // 
+      btnBack.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+      btnBack.Image = (System.Drawing.Image)resources.GetObject("btnBack.Image");
+      btnBack.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      btnBack.Location = new System.Drawing.Point(15, 3);
+      btnBack.Name = "btnBack";
+      btnBack.Size = new System.Drawing.Size(85, 36);
+      btnBack.TabIndex = 0;
+      btnBack.Text = "Zpět";
+      btnBack.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+      btnBack.UseVisualStyleBackColor = true;
+      btnBack.Click += btnBack_Click;
+      // 
+      // boxCall
+      // 
+      boxCall.Controls.Add(pictureClock);
+      boxCall.Controls.Add(dtCall);
+      boxCall.Controls.Add(lblEditInfo);
+      boxCall.Controls.Add(cmbTypeService);
+      boxCall.Controls.Add(label5);
+      boxCall.Controls.Add(cmbContactType);
+      boxCall.Controls.Add(label4);
+      boxCall.Controls.Add(lblCallTimeSum);
+      boxCall.Controls.Add(txtVolajici);
+      boxCall.Controls.Add(label1);
+      boxCall.Controls.Add(lblDatumACas);
+      boxCall.Controls.Add(lblVolajici);
+      boxCall.Controls.Add(lblZapsal);
+      boxCall.Controls.Add(txtLoginUser);
+      boxCall.Controls.Add(tmCall);
+      boxCall.Controls.Add(tmCallTo);
+      boxCall.Location = new System.Drawing.Point(3, 45);
+      boxCall.Name = "boxCall";
+      boxCall.Size = new System.Drawing.Size(1303, 104);
+      boxCall.TabIndex = 24;
+      boxCall.TabStop = false;
+      boxCall.Text = "Údaje o Hovoru";
+      // 
+      // pictureClock
+      // 
+      pictureClock.Image = Properties.Resources.ClockWhite;
+      pictureClock.Location = new System.Drawing.Point(510, 23);
+      pictureClock.Name = "pictureClock";
+      pictureClock.Size = new System.Drawing.Size(48, 48);
+      pictureClock.TabIndex = 58;
+      pictureClock.TabStop = false;
+      pictureClock.Click += pictureClock_Click;
+      // 
+      // dtCall
+      // 
+      dtCall.CalendarFont = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      dtCall.CustomFormat = "dd-MM-yyyy";
+      dtCall.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      dtCall.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+      dtCall.Location = new System.Drawing.Point(158, 25);
+      dtCall.Name = "dtCall";
+      dtCall.Size = new System.Drawing.Size(102, 27);
+      dtCall.TabIndex = 0;
+      // 
+      // lblEditInfo
+      // 
+      lblEditInfo.AutoSize = true;
+      lblEditInfo.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      lblEditInfo.Location = new System.Drawing.Point(1361, 84);
+      lblEditInfo.Name = "lblEditInfo";
+      lblEditInfo.Size = new System.Drawing.Size(0, 17);
+      lblEditInfo.TabIndex = 57;
+      // 
+      // cmbTypeService
+      // 
+      cmbTypeService.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      cmbTypeService.FormattingEnabled = true;
+      cmbTypeService.Location = new System.Drawing.Point(715, 67);
+      cmbTypeService.Name = "cmbTypeService";
+      cmbTypeService.Size = new System.Drawing.Size(176, 28);
+      cmbTypeService.TabIndex = 5;
+      cmbTypeService.Validating += cmbTypeService_Validating;
+      // 
+      // label5
+      // 
+      label5.AutoSize = true;
+      label5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      label5.Location = new System.Drawing.Point(592, 68);
+      label5.Name = "label5";
+      label5.Size = new System.Drawing.Size(68, 17);
+      label5.TabIndex = 56;
+      label5.Text = "Typ služby";
+      // 
+      // cmbContactType
+      // 
+      cmbContactType.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      cmbContactType.FormattingEnabled = true;
+      cmbContactType.Location = new System.Drawing.Point(158, 67);
+      cmbContactType.Name = "cmbContactType";
+      cmbContactType.Size = new System.Drawing.Size(181, 28);
+      cmbContactType.TabIndex = 4;
+      cmbContactType.Validating += cmbContactType_Validating;
+      // 
+      // label4
+      // 
+      label4.AutoSize = true;
+      label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      label4.Location = new System.Drawing.Point(6, 67);
+      label4.Name = "label4";
+      label4.Size = new System.Drawing.Size(81, 17);
+      label4.TabIndex = 54;
+      label4.Text = "Typ kontaktu";
+      // 
+      // lblCallTimeSum
+      // 
+      lblCallTimeSum.AutoSize = true;
+      lblCallTimeSum.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      lblCallTimeSum.Location = new System.Drawing.Point(510, 74);
+      lblCallTimeSum.Name = "lblCallTimeSum";
+      lblCallTimeSum.Size = new System.Drawing.Size(39, 17);
+      lblCallTimeSum.TabIndex = 49;
+      lblCallTimeSum.Text = "00:00";
+      // 
+      // txtVolajici
+      // 
+      txtVolajici.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      txtVolajici.Location = new System.Drawing.Point(715, 27);
+      txtVolajici.Name = "txtVolajici";
+      txtVolajici.Size = new System.Drawing.Size(176, 27);
+      txtVolajici.TabIndex = 3;
+      // 
+      // label1
+      // 
+      label1.AutoSize = true;
+      label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      label1.Location = new System.Drawing.Point(368, 32);
+      label1.Name = "label1";
+      label1.Size = new System.Drawing.Size(27, 17);
+      label1.TabIndex = 32;
+      label1.Text = "do:";
+      // 
+      // lblDatumACas
+      // 
+      lblDatumACas.AutoSize = true;
+      lblDatumACas.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      lblDatumACas.Location = new System.Drawing.Point(6, 32);
+      lblDatumACas.Name = "lblDatumACas";
+      lblDatumACas.Size = new System.Drawing.Size(148, 17);
+      lblDatumACas.TabIndex = 1;
+      lblDatumACas.Text = "Datum a čas hovoru od:";
+      // 
+      // lblVolajici
+      // 
+      lblVolajici.AutoSize = true;
+      lblVolajici.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      lblVolajici.Location = new System.Drawing.Point(612, 30);
+      lblVolajici.Name = "lblVolajici";
+      lblVolajici.Size = new System.Drawing.Size(48, 17);
+      lblVolajici.TabIndex = 2;
+      lblVolajici.Text = "Volající";
+      // 
+      // lblZapsal
+      // 
+      lblZapsal.AutoSize = true;
+      lblZapsal.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      lblZapsal.Location = new System.Drawing.Point(952, 29);
+      lblZapsal.Name = "lblZapsal";
+      lblZapsal.Size = new System.Drawing.Size(61, 17);
+      lblZapsal.TabIndex = 4;
+      lblZapsal.Text = "Zapsal(a)";
+      // 
+      // txtLoginUser
+      // 
+      txtLoginUser.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      txtLoginUser.Location = new System.Drawing.Point(1019, 25);
+      txtLoginUser.Name = "txtLoginUser";
+      txtLoginUser.ReadOnly = true;
+      txtLoginUser.Size = new System.Drawing.Size(277, 27);
+      txtLoginUser.TabIndex = 30;
+      txtLoginUser.TabStop = false;
+      // 
+      // tmCall
+      // 
+      tmCall.CustomFormat = "HH:mm:ss";
+      tmCall.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      tmCall.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+      tmCall.Location = new System.Drawing.Point(266, 25);
+      tmCall.Name = "tmCall";
+      tmCall.ShowUpDown = true;
+      tmCall.Size = new System.Drawing.Size(88, 27);
+      tmCall.TabIndex = 1;
+      tmCall.ValueChanged += tmCall_ValueChanged;
+      // 
+      // tmCallTo
+      // 
+      tmCallTo.CustomFormat = "HH:mm:ss";
+      tmCallTo.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      tmCallTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+      tmCallTo.Location = new System.Drawing.Point(401, 25);
+      tmCallTo.Name = "tmCallTo";
+      tmCallTo.ShowUpDown = true;
+      tmCallTo.Size = new System.Drawing.Size(81, 27);
+      tmCallTo.TabIndex = 2;
+      tmCallTo.ValueChanged += tmCallTo_ValueChanged;
+      // 
+      // label2
+      // 
+      label2.AutoSize = true;
+      label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      label2.Location = new System.Drawing.Point(6, 29);
+      label2.Name = "label2";
+      label2.Size = new System.Drawing.Size(95, 17);
+      label2.TabIndex = 50;
+      label2.Text = "Odkud je klient";
+      // 
+      // cmbFrom
+      // 
+      cmbFrom.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      cmbFrom.FormattingEnabled = true;
+      cmbFrom.Location = new System.Drawing.Point(147, 29);
+      cmbFrom.Name = "cmbFrom";
+      cmbFrom.Size = new System.Drawing.Size(210, 28);
+      cmbFrom.TabIndex = 6;
+      cmbFrom.Validating += cmbFrom_Validating;
+      // 
+      // cmbSex
+      // 
+      cmbSex.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      cmbSex.FormattingEnabled = true;
+      cmbSex.Location = new System.Drawing.Point(526, 29);
+      cmbSex.Name = "cmbSex";
+      cmbSex.Size = new System.Drawing.Size(210, 28);
+      cmbSex.TabIndex = 7;
+      cmbSex.Validating += cmbSex_Validating;
+      // 
+      // label3
+      // 
+      label3.AutoSize = true;
+      label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      label3.Location = new System.Drawing.Point(451, 30);
+      label3.Name = "label3";
+      label3.Size = new System.Drawing.Size(49, 17);
+      label3.TabIndex = 52;
+      label3.Text = "Pohlaví";
+      // 
+      // boxClient
+      // 
+      boxClient.Controls.Add(cmbAge);
+      boxClient.Controls.Add(label6);
+      boxClient.Controls.Add(cmbFrom);
+      boxClient.Controls.Add(cmbSex);
+      boxClient.Controls.Add(label3);
+      boxClient.Controls.Add(label2);
+      boxClient.Location = new System.Drawing.Point(0, 146);
+      boxClient.Name = "boxClient";
+      boxClient.Size = new System.Drawing.Size(1105, 75);
+      boxClient.TabIndex = 54;
+      boxClient.TabStop = false;
+      boxClient.Text = "Klient";
+      // 
+      // cmbAge
+      // 
+      cmbAge.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      cmbAge.FormattingEnabled = true;
+      cmbAge.Location = new System.Drawing.Point(876, 28);
+      cmbAge.Name = "cmbAge";
+      cmbAge.Size = new System.Drawing.Size(210, 28);
+      cmbAge.TabIndex = 8;
+      cmbAge.Validating += cmbAge_Validating;
+      // 
+      // label6
+      // 
+      label6.AutoSize = true;
+      label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      label6.Location = new System.Drawing.Point(811, 29);
+      label6.Name = "label6";
+      label6.Size = new System.Drawing.Size(28, 17);
+      label6.TabIndex = 54;
+      label6.Text = "Věk";
+      // 
+      // boxResult
+      // 
+      boxResult.Controls.Add(lblEndOfSpeech);
+      boxResult.Controls.Add(lblCurrentClientStatus);
+      boxResult.Controls.Add(lblContactTopic);
+      boxResult.Controls.Add(lblEndOfSpeech1);
+      boxResult.Controls.Add(lblCurrentClientStatus1);
+      boxResult.Controls.Add(lblContactTopic1);
+      boxResult.Controls.Add(label9);
+      boxResult.Controls.Add(tvEndOfSpeech);
+      boxResult.Controls.Add(label8);
+      boxResult.Controls.Add(tvClientCurrentStatus);
+      boxResult.Controls.Add(label7);
+      boxResult.Controls.Add(tvContactTopic);
+      boxResult.Location = new System.Drawing.Point(2, 227);
+      boxResult.Name = "boxResult";
+      boxResult.Size = new System.Drawing.Size(1103, 478);
+      boxResult.TabIndex = 55;
+      boxResult.TabStop = false;
+      boxResult.Text = "Hodnocení hovoru";
+      // 
+      // lblEndOfSpeech
+      // 
+      lblEndOfSpeech.AutoSize = true;
+      lblEndOfSpeech.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      lblEndOfSpeech.Location = new System.Drawing.Point(145, 458);
+      lblEndOfSpeech.Name = "lblEndOfSpeech";
+      lblEndOfSpeech.Size = new System.Drawing.Size(95, 17);
+      lblEndOfSpeech.TabIndex = 66;
+      lblEndOfSpeech.Text = "Téma kontaktu:";
+      // 
+      // lblCurrentClientStatus
+      // 
+      lblCurrentClientStatus.AutoSize = true;
+      lblCurrentClientStatus.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      lblCurrentClientStatus.Location = new System.Drawing.Point(145, 430);
+      lblCurrentClientStatus.Name = "lblCurrentClientStatus";
+      lblCurrentClientStatus.Size = new System.Drawing.Size(95, 17);
+      lblCurrentClientStatus.TabIndex = 65;
+      lblCurrentClientStatus.Text = "Téma kontaktu:";
+      // 
+      // lblContactTopic
+      // 
+      lblContactTopic.AutoSize = true;
+      lblContactTopic.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      lblContactTopic.Location = new System.Drawing.Point(145, 402);
+      lblContactTopic.Name = "lblContactTopic";
+      lblContactTopic.Size = new System.Drawing.Size(95, 17);
+      lblContactTopic.TabIndex = 64;
+      lblContactTopic.Text = "Téma kontaktu:";
+      // 
+      // lblEndOfSpeech1
+      // 
+      lblEndOfSpeech1.AutoSize = true;
+      lblEndOfSpeech1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      lblEndOfSpeech1.Location = new System.Drawing.Point(10, 458);
+      lblEndOfSpeech1.Name = "lblEndOfSpeech1";
+      lblEndOfSpeech1.Size = new System.Drawing.Size(88, 17);
+      lblEndOfSpeech1.TabIndex = 63;
+      lblEndOfSpeech1.Text = "Závěr hovoru:";
+      // 
+      // lblCurrentClientStatus1
+      // 
+      lblCurrentClientStatus1.AutoSize = true;
+      lblCurrentClientStatus1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      lblCurrentClientStatus1.Location = new System.Drawing.Point(10, 430);
+      lblCurrentClientStatus1.Name = "lblCurrentClientStatus1";
+      lblCurrentClientStatus1.Size = new System.Drawing.Size(124, 17);
+      lblCurrentClientStatus1.TabIndex = 62;
+      lblCurrentClientStatus1.Text = "Aktuální stav klienta:";
+      // 
+      // lblContactTopic1
+      // 
+      lblContactTopic1.AutoSize = true;
+      lblContactTopic1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      lblContactTopic1.Location = new System.Drawing.Point(10, 402);
+      lblContactTopic1.Name = "lblContactTopic1";
+      lblContactTopic1.Size = new System.Drawing.Size(95, 17);
+      lblContactTopic1.TabIndex = 61;
+      lblContactTopic1.Text = "Téma kontaktu:";
+      // 
+      // label9
+      // 
+      label9.AutoSize = true;
+      label9.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      label9.Location = new System.Drawing.Point(994, 13);
+      label9.Name = "label9";
+      label9.Size = new System.Drawing.Size(85, 17);
+      label9.TabIndex = 60;
+      label9.Text = "Závěr hovoru";
+      // 
+      // tvEndOfSpeech
+      // 
+      tvEndOfSpeech.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      tvEndOfSpeech.Location = new System.Drawing.Point(729, 33);
+      tvEndOfSpeech.Name = "tvEndOfSpeech";
+      tvEndOfSpeech.Size = new System.Drawing.Size(350, 360);
+      tvEndOfSpeech.TabIndex = 11;
+      tvEndOfSpeech.AfterCheck += tvEndOfSpeech_AfterCheck;
+      tvEndOfSpeech.DrawNode += tvEndOfSpeech_DrawNode;
+      tvEndOfSpeech.Validating += tvEndOfSpeech_Validating;
+      // 
+      // label8
+      // 
+      label8.AutoSize = true;
+      label8.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      label8.Location = new System.Drawing.Point(598, 13);
+      label8.Name = "label8";
+      label8.Size = new System.Drawing.Size(121, 17);
+      label8.TabIndex = 58;
+      label8.Text = "Aktuální stav klienta";
+      // 
+      // tvClientCurrentStatus
+      // 
+      tvClientCurrentStatus.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      tvClientCurrentStatus.Location = new System.Drawing.Point(369, 33);
+      tvClientCurrentStatus.Name = "tvClientCurrentStatus";
+      tvClientCurrentStatus.Size = new System.Drawing.Size(350, 360);
+      tvClientCurrentStatus.TabIndex = 10;
+      tvClientCurrentStatus.AfterCheck += tvCurrentClientStatus_AfterCheck;
+      tvClientCurrentStatus.DrawNode += tvCurrentClientStatus_DrawNode;
+      tvClientCurrentStatus.Validating += tvCurrentClientStatus_Validating;
+      // 
+      // label7
+      // 
+      label7.AutoSize = true;
+      label7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      label7.Location = new System.Drawing.Point(264, 13);
+      label7.Name = "label7";
+      label7.Size = new System.Drawing.Size(92, 17);
+      label7.TabIndex = 56;
+      label7.Text = "Téma kontaktu";
+      // 
+      // tvContactTopic
+      // 
+      tvContactTopic.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      tvContactTopic.Location = new System.Drawing.Point(10, 33);
+      tvContactTopic.Name = "tvContactTopic";
+      tvContactTopic.Size = new System.Drawing.Size(350, 360);
+      tvContactTopic.TabIndex = 9;
+      tvContactTopic.AfterCheck += tvContactTopic_AfterCheck;
+      tvContactTopic.DrawNode += tvContactTopic_DrawNode;
+      tvContactTopic.Validating += tvContactTopic_Validating;
+      // 
+      // txtNote
+      // 
+      txtNote.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      txtNote.Location = new System.Drawing.Point(1111, 175);
+      txtNote.Multiline = true;
+      txtNote.Name = "txtNote";
+      txtNote.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+      txtNote.Size = new System.Drawing.Size(304, 562);
+      txtNote.TabIndex = 12;
+      // 
+      // label13
+      // 
+      label13.AutoSize = true;
+      label13.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      label13.Location = new System.Drawing.Point(1111, 155);
+      label13.Name = "label13";
+      label13.Size = new System.Drawing.Size(122, 17);
+      label13.TabIndex = 56;
+      label13.Text = "Poznámka k hovoru";
+      // 
+      // btnWrite
+      // 
+      btnWrite.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+      btnWrite.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      btnWrite.Image = Properties.Resources.save_close24;
+      btnWrite.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      btnWrite.Location = new System.Drawing.Point(1323, 87);
+      btnWrite.Name = "btnWrite";
+      btnWrite.Size = new System.Drawing.Size(95, 39);
+      btnWrite.TabIndex = 13;
+      btnWrite.Text = "Uložit";
+      btnWrite.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+      btnWrite.UseVisualStyleBackColor = true;
+      btnWrite.Click += btnWrite_Click;
+      // 
+      // lblTitulek
+      // 
+      lblTitulek.AutoSize = true;
+      lblTitulek.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+      lblTitulek.ForeColor = System.Drawing.SystemColors.Highlight;
+      lblTitulek.Location = new System.Drawing.Point(269, 5);
+      lblTitulek.Name = "lblTitulek";
+      lblTitulek.Size = new System.Drawing.Size(88, 32);
+      lblTitulek.TabIndex = 57;
+      lblTitulek.Text = "Titulek";
+      // 
+      // btnQuickLPvK
+      // 
+      btnQuickLPvK.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+      btnQuickLPvK.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+      btnQuickLPvK.Image = (System.Drawing.Image)resources.GetObject("btnQuickLPvK.Image");
+      btnQuickLPvK.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+      btnQuickLPvK.Location = new System.Drawing.Point(1486, 3);
+      btnQuickLPvK.Name = "btnQuickLPvK";
+      btnQuickLPvK.Size = new System.Drawing.Size(63, 69);
+      btnQuickLPvK.TabIndex = 58;
+      btnQuickLPvK.Text = "SKI";
+      btnQuickLPvK.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+      btnQuickLPvK.UseVisualStyleBackColor = true;
+      btnQuickLPvK.Click += btnQuickLPvK_Click;
+      // 
+      // timer1
+      // 
+      timer1.Interval = 1000;
+      timer1.Tick += timer1_Tick;
+      // 
+      // ucCallLPK
+      // 
+      AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+      AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      Controls.Add(btnQuickLPvK);
+      Controls.Add(lblTitulek);
+      Controls.Add(btnWrite);
+      Controls.Add(label13);
+      Controls.Add(txtNote);
+      Controls.Add(boxResult);
+      Controls.Add(boxClient);
+      Controls.Add(btnBack);
+      Controls.Add(boxCall);
+      Name = "ucCallLPK";
+      Size = new System.Drawing.Size(1552, 753);
+      Load += ucCallLPK_Load;
+      VisibleChanged += ucCallLPK_VisibleChanged;
+      Resize += ucCallLPK_Resize;
+      boxCall.ResumeLayout(false);
+      boxCall.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)pictureClock).EndInit();
+      boxClient.ResumeLayout(false);
+      boxClient.PerformLayout();
+      boxResult.ResumeLayout(false);
+      boxResult.PerformLayout();
+      ResumeLayout(false);
+      PerformLayout();
     }
 
     #endregion
@@ -601,5 +638,8 @@
     private System.Windows.Forms.Label label13;
     private System.Windows.Forms.Label lblEditInfo;
     private System.Windows.Forms.Label lblTitulek;
+    private System.Windows.Forms.Button btnQuickLPvK;
+    private System.Windows.Forms.PictureBox pictureClock;
+    private System.Windows.Forms.Timer timer1;
   }
 }

@@ -74,3 +74,41 @@
   Protokol událostí - èíslo jednací.
 
 19.02 - eGrouping, dimDateTime, + MainSettings (CisloJednaci,CisloJednaciIncrement)
+20.02 - frmStatistika pro Calls a Events
+22.02 - Pavel
+1 - Chybí Alík, Rychlý pøeskok mezi okny, odèítání èasu, Editování èíselníkù.
+2 - Èas se vyøeší tak, že po naètení stránky to zaène poèítat èas. Objeví se ikona hodin - bílá a po kliku na bílou ikonu se èas stopne. Pokud znovu klikne na šedou ikonu hodin tak se èas znovu zaène poèíta od dtStartTime.
+3 - Participanti - pokud intervence = false tak se nevyžaduje Druh Intervence ani Intervent 1
+4 - Øazení - od nejnovìjšího. Øazení zadej do DB aby se schovávalo a používalo i pøi dalšíém naètení.
+5 - Intervent se zobrazuje v CMB boxu jako Pøíjmení Jméno - XXX a øadí se Kraj, Pøíjmení (u krajù zkusit editaci Order aby si mohli øíkat jak tøídit)
+6 - Když smažu interventa furt se zobrazuje v Combo až do restartu app.
+7 - Participanti - pamatuj si poslednì vybrané interventy a ty zobrazuj. Pokud žádnej není tak interventa z volání.
+8 - Tlaèítko /SKI/LPvK
+9 - Participant - umožní vìk 0 novorozenec, -1 neví se
+10 - Editace poznámky rovnou po dobleclicku (asi nemusím dìlat, ale po zmìnì poznámky nebo èehokoliv n row bych mìl tu row obèerstvit)
+
+
+
+25.02 1. Editování èíselníkù jen na právo PowerUser
+      2. Rychlý pøeskok mezi okny SKY a LPvK
+26.02 1. Automatické poèítání èasu hovoru. (èas se zapisuje do DB v sekundach pro LPVK a v minutach pro SKI)
+      2. Nemám øešení pro Omyl - zatím nevyžaduji Vìk, Pohlaví a Typ služby a vymýšlím si hodnoty (kvùli vazebnímu klíèi) - aby se vùbec omyl zapsal.
+      3. Vylepšení statistiky hovorù o možnost LoginUsers
+      4. Tøídìní datum èas descending
+      5. rozebìhnutí wLIKOParticipant - Úèastníci Intervence. Nefungoval.
+      6. øazení u všech LIKO dle datumu sestupnì
+
+
+
+
+SQL Zmeny 
+wLIKOParticipant - kvuli zmene wLIKOIntervence, + øazení
+Protokol události MAINSetting:
+CisloJednaci	è.j.: PPR-613 <ID>/ÈJ-2023-990762
+CisloJednaciIncrement	1
+Tabulky eGrouping, dimDateTime, + MainSettings (CisloJednaci,CisloJednaciIncrement)
+
+
+
+
+

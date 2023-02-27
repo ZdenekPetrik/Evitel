@@ -14,6 +14,7 @@ using EvitelLib2.Model;
 using EvitelLib2.Repository;
 using Microsoft.VisualBasic;
 using Microsoft.Data.SqlClient;
+using NPOI.OpenXmlFormats.Spreadsheet;
 
 namespace EvitelApp2.Forms
 {
@@ -55,10 +56,10 @@ namespace EvitelApp2.Forms
       grouping = DB.GetGrouping().OrderBy(x => x.GroupingId).ToList();
       foreach (var g1 in grouping)
         cmbGrouping.Items.Add(new ComboItem(g1.Text, g1.GroupingId.ToString()));
-      cmbGrouping.SelectedIndex = 2;
+      cmbGrouping.SelectedIndex = 3;
     }
 
-   
+
     private void cmbInterval_SelectedIndexChanged(object sender, EventArgs e)
     {
       var today = DateTime.Now.Date;
@@ -90,13 +91,17 @@ namespace EvitelApp2.Forms
     {
       string Select1 = " SELECT <interval>, ";
       string SelectTypHovoru = " Count(CASE WHEN CallType = 1 THEN 1 ELSE NULL END) AS 'LPvK', Count(CASE WHEN CallType = 2 THEN 1 ELSE NULL END) AS 'SKI', ";
+      string SelectUsers = " LU.LastName as Uživatel,  ";
       string SelectCelkem = " COUNT(C.CallId) AS 'Celkem' ";
       string From = " FROM [dbo].[Calls] C " + (chkVcetneDniBezHovoru.Checked ? "RIGHT" : "LEFT") + " JOIN dimDateTime D ON CAST(C.dtStartCall AS DATE) = D.Date ";
+      string UsersJoin = "LEFT JOIN LoginUsers LU on C.LoginUserId =  LU.LoginUserId ";
       string Where = " WHERE D.Date >= @dtFrom  AND D.Date <= @dtTo ";
       string GroupBy = " Group By <interval> ";
+      string UsersGroupBy = ", LU.LastName";
       string OrderBy = " Order By <interval> ";
+      string UsersOrderBy = " , LU.LastName ";
 
-      string Select = Select1 + (chkPodleTypuHovoru.Checked ? SelectTypHovoru: "") + SelectCelkem + From + Where + GroupBy + OrderBy;
+      string Select = Select1 + (chkPodleTypuHovoru.Checked ? SelectTypHovoru : "") + (chkUsers.Checked ? SelectUsers : "") + SelectCelkem + From + (chkUsers.Checked ? UsersJoin : "") + Where + GroupBy + (chkUsers.Checked ? UsersGroupBy : "") + OrderBy + (chkUsers.Checked ? UsersOrderBy : "");
       int groupingId = ((ComboItem)cmbGrouping.SelectedItem).iValue;
       var groupRow = grouping.Find(x => x.GroupingId == groupingId);
       Select = Select.Replace("<interval>", groupRow.Value);

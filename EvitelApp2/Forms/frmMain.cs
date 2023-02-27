@@ -27,7 +27,7 @@ namespace EvitelApp2
     eShowWindow aktWindow;
     private string Title = "EVITEL";
 
-    public delegate void DetailIntervence(int source, int? IntervenceId);      // Zobrazí detail intervence (LikoIntervenceId>1), nebo zhasne okno (LikoIntervenceId=-1)
+    public delegate void DetailIntervence(int source, int? IntervenceId);      // Zobrazí detail intervence (LikoIntervenceId>1), nebo zhasne okno (LikoIntervenceId=-1), nebo skočí na SKI (-99,2) nebo LPvK (-99,1)
     public delegate void RowInformation(int nrAkt, int nrRow);                 // Zobrazí 17/256 v StatusBaru
 
     private List<eShowWindow> lastWindowStack;
@@ -538,8 +538,17 @@ namespace EvitelApp2
           default: break;
         }
       }
+      else if (source == -99 && IntervenceId == 1)
+      {
+        HideActualView();
+        ShowView_NewCallLPK();
+      }
+      else if (source == -99 && IntervenceId == 2)
+      {
+        HideActualView();
+        ShowView_NewCall();
+      }
     }
-
     void ShowRowInformation(int nrAkt, int nrRow)
     {
       toolStripRows.Text = nrAkt.ToString() + " / " + nrRow.ToString();
@@ -902,7 +911,7 @@ namespace EvitelApp2
         rozhrani = (IctrlWithDGW)ctrlStatistika1;
       return rozhrani;
     }
-   
+
     private void fileExportCSV_Click(object sender, EventArgs e)
     {
       IctrlWithDGW r = GetActiveCtrl(aktWindow);
@@ -975,5 +984,5 @@ namespace EvitelApp2
 
     }
 
-    }
+  }
 }

@@ -53,6 +53,8 @@ namespace EvitelApp2.Controls
       {
          new MyColumn { Name = "ID", DataPropertyName = "LikoparticipantId" , Type = 3},
          new MyColumn { Name = "IntervenceId", DataPropertyName = "LikointervenceId", Type = 3 },
+         new MyColumn { Name = "Intervence datum", DataPropertyName = "DtIntervStart",  Type=5},
+         new MyColumn { Name = "Čas int.", DataPropertyName = "TmIntervStart", Type=6},
          new MyColumn { Name = "Forma účasti", DataPropertyName = "TypePartyText" },
          new MyColumn { Name = "Pohlaví", DataPropertyName = "SexText"},
          new MyColumn { Name = "Věk", DataPropertyName = "Age" },
@@ -76,8 +78,8 @@ namespace EvitelApp2.Controls
          new MyColumn { Name = "Organizace", DataPropertyName = "Organization" },
          new MyColumn { Name = "Datum Intervence", DataPropertyName = "DtStartIntervence" },
          new MyColumn { Name = "Pořadí", DataPropertyName = "Poradi" , Type = 3},
-         new MyColumn { Name = "Region", DataPropertyName = "RegionName" },
-         new MyColumn { Name = "Author", DataPropertyName = "UsrLastName" }
+         new MyColumn { Name = "Region", DataPropertyName = "UdalostRegion" },
+         new MyColumn { Name = "Author", DataPropertyName = "UserLastName" }
        };
       MyResize();
     }
@@ -102,7 +104,7 @@ namespace EvitelApp2.Controls
       bindingSource1.DataSource = _dataSet;
       dgw.SetDoubleBuffered();
       dgw.DataSource = bindingSource1;
-      participants = DB.GeWtLIKOParticipant(true);
+      participants = DB.GeWLIKOParticipant(true);
 
       CreateTable();
       AddDataToTable();
@@ -141,7 +143,8 @@ namespace EvitelApp2.Controls
       {
         dgw.Columns[col.Name].Visible = col.isVisible;
       }
-      dgw.SortASC(dgw.Columns["Volání od"]);
+      dgw.SortDESC(dgw.Columns["Intervence datum"]);
+      dgw.SortDESC(dgw.Columns["Čas int."]);
 
       toolStripItem1.Text = "Detail Intervence";
       toolStripItem1.Click += new EventHandler(toolStripItem1_Click);
