@@ -69,6 +69,7 @@ namespace EvitelApp2.Controls
          new MyColumn { Name = "Místo události", DataPropertyName = "UdalostMisto"},
          new MyColumn { Name = "Poznámka události", DataPropertyName = "UdalostNote"},
          new MyColumn { Name = "Kategorie události", DataPropertyName = "KategorieUdalosti"},
+         new MyColumn { Name = "Zapsal", DataPropertyName = "UserLastName" }
       };
       _dataTable = new DataTable();
       _dataSet = new DataSet();

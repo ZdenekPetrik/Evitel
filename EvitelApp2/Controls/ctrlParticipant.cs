@@ -79,7 +79,7 @@ namespace EvitelApp2.Controls
          new MyColumn { Name = "Datum Intervence", DataPropertyName = "DtStartIntervence" },
          new MyColumn { Name = "Pořadí", DataPropertyName = "Poradi" , Type = 3},
          new MyColumn { Name = "Region", DataPropertyName = "UdalostRegion" },
-         new MyColumn { Name = "Author", DataPropertyName = "UserLastName" }
+         new MyColumn { Name = "Zapsal", DataPropertyName = "UserLastName" }
        };
       MyResize();
     }
