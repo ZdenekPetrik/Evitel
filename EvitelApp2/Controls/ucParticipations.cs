@@ -27,7 +27,9 @@ namespace EvitelApp2.Controls
     private ColumnLayoutDB cldb;
 
     public delegate void HandlerParticipantsRowChanged();
+    public delegate void HandlerParticipantsDataChanged();
     public event HandlerParticipantsRowChanged RowChanged_Event;
+    public event HandlerParticipantsDataChanged DataChanged_Event;
     public List<Likoparticipant> participantsList;
     public bool isNew = true;                 // tvorime nove participanty
     public bool isEditMode = true;            // zobrazeni existujici skupiny participantu (tj. isNew == false). Tak ještě je třeba rozhodnout zdali smíme editovat.
@@ -180,6 +182,8 @@ namespace EvitelApp2.Controls
         source.ResetBindings(false);
         if (RowChanged_Event != null)
           RowChanged_Event();
+        if (DataChanged_Event != null)
+          DataChanged_Event();
       }
     }
 
@@ -203,6 +207,8 @@ namespace EvitelApp2.Controls
         source.ResetBindings(false);
         if (RowChanged_Event != null)
           RowChanged_Event();
+        if (DataChanged_Event != null)
+          DataChanged_Event();
       }
 
     }
@@ -228,6 +234,8 @@ namespace EvitelApp2.Controls
         source.ResetBindings(false);
         if (RowChanged_Event != null)
           RowChanged_Event();
+        if (DataChanged_Event != null)
+          DataChanged_Event();
       }
     }
 

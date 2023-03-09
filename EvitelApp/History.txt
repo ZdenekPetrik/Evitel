@@ -98,6 +98,13 @@
       5. rozebìhnutí wLIKOParticipant - Úèastníci Intervence. Nefungoval.
       6. øazení u všech LIKO dle datumu sestupnì
 
+28.2. - Návštìva øeditelství. Rozchození nové verze. DB ruènì protože na NTB mám verzi SQL serveru 15 a oni 16. Rošíøení o sloupeèek Zapsal (userName). Stále chybí ALIK
+
+
+9.3. - Doma - rozšíøení ucParticipation o event DataChanged. Tím je možno enable buton "Uložit" i pøi zmìnì v úèastnícich.
+              oprava editace svých vlastních nejde. Zmìna EndCallTime na StartCallTime  (v EndCallTime je pøeci null)
+              Dodìlání Alíka verze 1.2
+
 
 
 

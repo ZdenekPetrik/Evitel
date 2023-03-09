@@ -348,7 +348,7 @@ namespace EvitelApp2.Controls
       }
       else
       {
-        StartTimer(); 
+        StartTimer();
       }
 
       txtVolajici.AutoCompleteCustomSource.AddRange(DB.GetNick().Select(x => x.Text).ToArray());
@@ -533,7 +533,7 @@ namespace EvitelApp2.Controls
 
     private void cmbSex_Validating(object sender, CancelEventArgs e)
     {
-      if (cmbSex.SelectedIndex == 0 &&  isHovor)
+      if (cmbSex.SelectedIndex == 0 && isHovor)
       {
         cmbSexErrorProvider.SetError(this.cmbSex, "Pohlaví musí být vyplněn");
         e.Cancel = true;
@@ -646,7 +646,7 @@ namespace EvitelApp2.Controls
         lpkRow.SexEid = ((ComboItem)cmbSex.SelectedItem).iValue == 0 ? null : ((ComboItem)cmbSex.SelectedItem).iValue;
 
       }
-      if (((ComboItem)cmbAge.SelectedItem).iValue != lpkRow.AgeEid )
+      if (((ComboItem)cmbAge.SelectedItem).iValue != lpkRow.AgeEid)
       {
         new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2LPvKTable, "Věk", ((ComboItem)cmbAge.SelectedItem).Text + " -> " + age.Where(x => x.AgeId == lpkRow.AgeEid).Select(x => x.Text), Program.myLoggedUser.LoginUserId);
         lpkRow.AgeEid = ((ComboItem)cmbAge.SelectedItem).iValue == 0 ? null : ((ComboItem)cmbAge.SelectedItem).iValue;
@@ -700,10 +700,10 @@ namespace EvitelApp2.Controls
       {
         Lpk row = new Lpk();
         row.CallId = CallId;
-        row.AgeEid = ((ComboItem)cmbAge.SelectedItem).iValue == 0 ? null: ((ComboItem)cmbAge.SelectedItem).iValue;
-        row.SexEid = ((ComboItem)cmbSex.SelectedItem).iValue == 0? null : ((ComboItem)cmbSex.SelectedItem).iValue;
-        row.ClientFromEid = ((ComboItem)cmbFrom.SelectedItem).iValue == 0 ? null : ((ComboItem)cmbFrom.SelectedItem).iValue; 
-        row.ContactTypeEid = ((ComboItem)cmbContactType.SelectedItem).iValue; 
+        row.AgeEid = ((ComboItem)cmbAge.SelectedItem).iValue == 0 ? null : ((ComboItem)cmbAge.SelectedItem).iValue;
+        row.SexEid = ((ComboItem)cmbSex.SelectedItem).iValue == 0 ? null : ((ComboItem)cmbSex.SelectedItem).iValue;
+        row.ClientFromEid = ((ComboItem)cmbFrom.SelectedItem).iValue == 0 ? null : ((ComboItem)cmbFrom.SelectedItem).iValue;
+        row.ContactTypeEid = ((ComboItem)cmbContactType.SelectedItem).iValue;
         row.TypeServiceEid = ((ComboItem)cmbTypeService.SelectedItem).iValue;
         row.Note = txtNote.Text;
         row.Nick = txtVolajici.Text;
@@ -794,5 +794,27 @@ namespace EvitelApp2.Controls
     }
 
 
+    private void txtVolajici_Leave(object sender, EventArgs e)
+    {
+      if (isNewForm && !string.IsNullOrEmpty(txtVolajici.Text) && txtVolajici.Text.Length > 1)
+      {
+        var lastNick = DB.GetLastNick(txtVolajici.Text);
+        if (lastNick != null && lastNick.Lpkid > 0)
+        {
+          if (cmbContactType.SelectedIndex == 0)
+            cmbContactType.SelectedIndex = lastNick.ContactTypeEid;
+          if (cmbTypeService.SelectedIndex == 0)
+            cmbTypeService.SelectedIndex = lastNick.TypeServiceEid;
+          if (cmbFrom.SelectedIndex == 0)
+            cmbFrom.SelectedIndex = lastNick.ClientFromEid ?? 0;
+          if (cmbSex.SelectedIndex == 0)
+            cmbSex.SelectedIndex = lastNick.SexEid ?? 0;
+          if (cmbAge.SelectedIndex == 0)
+            cmbAge.SelectedIndex = lastNick.AgeEid ?? 0;
+          if (txtNote.Text.Length == 0)
+            txtNote.Text = lastNick.Note;
+        }
+      }
+    }
   }
 }

@@ -2520,6 +2520,22 @@ namespace EvitelLib2.Repository
 
     }
 
+    public Lpk GetLastNick(string nick)
+    {
+      sErr = "";
+      Evitel2DB db = new Evitel2DB();
+      try
+      {
+        var r = from lpk in db.Lpks  where lpk.Nick == nick orderby lpk.Lpkid descending select lpk;
+        return r.FirstOrDefault();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetLastNick() " + GetInnerException(Ex), "", IdUser);
+      }
+      return null;
+    }
   }
 }
 

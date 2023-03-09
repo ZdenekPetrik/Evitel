@@ -92,6 +92,7 @@ namespace EvitelApp2.Controls
       cmbRegionErrorProvider = InitializeErrorProvider(1, cmbRegion);
       cmbSubTypeIncidentErrorProvider = InitializeErrorProvider(1, cmbSubTypeIncident);
       ucParticipations1.RowChanged_Event += ucParticipations_NewRow;
+      ucParticipations1.DataChanged_Event += ucParticipations_DataChanged;
       this.dtCall.ValueChanged += new System.EventHandler(this.Any_ValueChanged);
       this.tmCall.ValueChanged += new System.EventHandler(this.Any_ValueChanged);
       this.dtIncident.ValueChanged += this.Any_ValueChanged;
@@ -143,7 +144,7 @@ namespace EvitelApp2.Controls
         aktCall = DB.GetCall(aktLikoIntervence.CallId ?? 0);
         aktLikoIncident = DB.GetLikoIncident(aktLikoIntervence.LikoincidentId ?? 0);
         ucParticipations1.participantsList = DB.GetLikoParticipants(aktLikoIntervence.LikointervenceId, 2);
-        isEditMode = (Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser) || (aktCall.DtEndCall?.AddMonths(1) > DateTime.Now && aktCall.LoginUserId == Program.myLoggedUser.LoginUserId));
+        isEditMode = (Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser) || (aktCall.DtStartCall?.AddMonths(1) > DateTime.Now && aktCall.LoginUserId == Program.myLoggedUser.LoginUserId));
         ucParticipations1.isEditMode = isEditMode;
         ucParticipations1.isNew = false;
         var anyUser = DB.GetUsers().Where(x => x.LoginUserId == aktCall.LoginUserId).FirstOrDefault();
@@ -450,6 +451,10 @@ namespace EvitelApp2.Controls
     public void ucParticipations_NewRow()
     {
       txtNrCelkem.Value = ucParticipations1.participantsList.Where(x => x.IsIntervence).Count();
+    }
+    public void ucParticipations_DataChanged()
+    {
+      changedAnyValue = true;
     }
 
     private void ucCallLIKO_Resize(object sender, EventArgs e)

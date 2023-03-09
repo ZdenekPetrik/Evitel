@@ -206,6 +206,7 @@
       txtVolajici.Name = "txtVolajici";
       txtVolajici.Size = new System.Drawing.Size(176, 27);
       txtVolajici.TabIndex = 3;
+      txtVolajici.Leave += txtVolajici_Leave;
       // 
       // label1
       // 

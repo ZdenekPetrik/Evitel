@@ -5,6 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>Resources\Evitel.ico</ApplicationIcon>
+    <Version>2.2.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
