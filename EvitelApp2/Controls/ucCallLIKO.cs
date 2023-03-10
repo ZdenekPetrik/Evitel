@@ -300,7 +300,7 @@ namespace EvitelApp2.Controls
       }
       if (isChangeIntervence)
       {
-        DB.UpdateIntervence(aktLikoIntervence.LikointervenceId, datetimeStartIntervence, datetimeEndIntervence, (int)txtNrObetemPoskozenym.Value, (int)txtNrPozustalymBlizkym.Value, (int)txtNrOstatnimOsobam.Value, txtIntervenceNote.Text);
+        DB.UpdateIntervence(aktLikoIntervence.LikointervenceId, datetimeStartIntervence, datetimeEndIntervence, (int)txtNrObetemPoskozenym.Value, (int)txtNrPozustalymBlizkym.Value, (int)txtNrOstatnimOsobam.Value, txtIntervenceNote.Text, ((ComboItem)cmbIntervent.SelectedItem).iValue);
         aktLikoIntervence = DB.GetLikoIntervence(aktLikoIntervence.LikointervenceId);
       }
       bool isChangeIncident = false;

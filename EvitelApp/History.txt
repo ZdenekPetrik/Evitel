@@ -103,7 +103,9 @@
 
 9.3. - Doma - rozšíøení ucParticipation o event DataChanged. Tím je možno enable buton "Uložit" i pøi zmìnì v úèastnícich.
               oprava editace svých vlastních nejde. Zmìna EndCallTime na StartCallTime  (v EndCallTime je pøeci null)
-              Dodìlání Alíka verze 1.2
+              Dodìlání Alíka-propisování z DB.
+              Verze 2.2.0 zapsaná ruènì v Evitel2App.csproj + zobrazování v About, kde se zobrazuje datum vytvoøení souboru (last build)
+10.3.         Oprava Volajiciho, nešel v rámci editace zmìnit.
 
 
 

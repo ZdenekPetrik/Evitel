@@ -1345,7 +1345,7 @@ namespace EvitelLib2.Repository
       return false;
 
     }
-    public bool UpdateIntervence(int likoIntervenceId, DateTime datetimeStartIntervence, DateTime datetimeEndIntervence, int NrObetemPoskozenym, int NrPozustalymBlizkym, int NrOstatnimOsobam, string note)
+    public bool UpdateIntervence(int likoIntervenceId, DateTime datetimeStartIntervence, DateTime datetimeEndIntervence, int NrObetemPoskozenym, int NrPozustalymBlizkym, int NrOstatnimOsobam, string note, int InterventId )
     {
       sErr = "";
       Evitel2DB db = new Evitel2DB();
@@ -1358,6 +1358,7 @@ namespace EvitelLib2.Repository
         oneIntervence.ObetemPoskozenym = NrObetemPoskozenym;
         oneIntervence.PozustalymBlizkym = NrPozustalymBlizkym;
         oneIntervence.Ostatnim = NrOstatnimOsobam;
+        oneIntervence.InterventId = InterventId;
         db.SaveChanges();
         return true;
       }
