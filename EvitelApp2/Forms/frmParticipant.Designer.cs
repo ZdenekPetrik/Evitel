@@ -324,7 +324,6 @@
       numAge.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
       numAge.Location = new System.Drawing.Point(134, 100);
       numAge.Maximum = new decimal(new int[] { 120, 0, 0, 0 });
-      numAge.Minimum = new decimal(new int[] { 1, 0, 0, int.MinValue });
       numAge.Name = "numAge";
       numAge.Size = new System.Drawing.Size(61, 29);
       numAge.TabIndex = 25;

@@ -779,13 +779,13 @@ namespace EvitelApp2.Controls
     private void StopTimer()
     {
       timer1.Enabled = false;
-      pictureClock.Image = Image.FromFile("Resources/ClockGray.png");
+      pictureClock.Image = Properties.Resources.ClockGray;
     }
     private void StartTimer()
     {
       tmCallTo.Value = DateTime.Now;
       timer1.Enabled = true;
-      pictureClock.Image = Image.FromFile("Resources/ClockWhite.png");
+      pictureClock.Image = Properties.Resources.ClockWhite;
     }
     private void timer1_Tick(object sender, EventArgs e)
     {

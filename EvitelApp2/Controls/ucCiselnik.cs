@@ -24,42 +24,12 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 namespace EvitelApp2.Controls
 {
 
-  public enum eAllCodeBooks
-  {
-    eSex = 1,
-    eSubTypeIncident,
-    eTypeIncident,
-    eTypeParty,
-    eRegions,
-    eIntervents,
-    eDruhIntervence,
-    eNick,
-    eEndOfSpeech,
-    eSubEndOfSpeech,
-    eClientCurrentStatus,
-    eSubClientCurrentStatus,
-    eContactTopic,
-    eSubContactTopic,
-    eContactType,
-    eAge,
-    eClientFrom,
-    eTypeService
 
-  }
 
 
 
   public partial class ucCiselnik : UserControl, IctrlWithDGW
   {
-
-
-
-    public class EnumData
-    {
-      public string Title { get; set; }
-      public List<MyColumn> myColumns = new List<MyColumn>();
-    }
-
 
     private CRepositoryDB DB;
     private DataTable _dataTable;
@@ -89,11 +59,6 @@ namespace EvitelApp2.Controls
     List<EClientFrom> clientFromDataList;
     List<ETypeService> typeServiceDataList;
 
-
-
-
-
-
     public event RowInformation ShowRowInformation;
 
     BindingSource bindingSource1;
@@ -109,19 +74,20 @@ namespace EvitelApp2.Controls
     public ucCiselnik()
     {
       InitializeComponent();
-      dgw.AllowUserToAddRows = false;
-      dgw.AllowUserToDeleteRows = false;
-      if (Program.myLoggedUser.HasAccess(EvitelLib2.Common.eLoginAccess.PowerUser)==false){
-        btnAdd.Enabled= false;
-        btnEdit.Enabled= false;
-        btnDelete.Enabled= false;
-      }
     }
 
     private void ucCiselnik2_Load(object sender, EventArgs e)
     {
       if (DesignMode == false)
       {
+        dgw.AllowUserToAddRows = false;
+        dgw.AllowUserToDeleteRows = false;
+        if (Program.myLoggedUser.HasAccess(EvitelLib2.Common.eLoginAccess.PowerUser) == false)
+        {
+          btnAdd.Enabled = false;
+          btnEdit.Enabled = false;
+          btnDelete.Enabled = false;
+        }
         DB = new CRepositoryDB(Program.myLoggedUser.LoginUserId);
         MyResize();
       }
@@ -591,8 +557,8 @@ namespace EvitelApp2.Controls
         _dataTable.Rows.Add(newRow);
       }
     }
-    
-  private void AddDataToTableTypeService()
+
+    private void AddDataToTableTypeService()
     {
       _dataTable.Rows.Clear();
       foreach (var p in typeServiceDataList)
@@ -723,7 +689,7 @@ namespace EvitelApp2.Controls
           frmU.ShowDialog();
           if (frmU.isReturnOK)
           {
-            RefreshData(frmU.TypeForm, frmU.ID, frmU.Text1, "",((ComboItem)frmU.cmb.SelectedItem).iValue);
+            RefreshData(frmU.TypeForm, frmU.ID, frmU.Text1, "", ((ComboItem)frmU.cmb.SelectedItem).iValue);
           }
           break;
 
@@ -803,7 +769,7 @@ namespace EvitelApp2.Controls
           frmU.Label2 = "Kategorie";
           frmU.ShowDialog();
           if (frmU.isReturnOK)
-            RefreshData(eModifyRow.modifyRow, frmU.ID, frmU.Text1,"", ((ComboItem)frmU.cmb.SelectedItem).iValue);
+            RefreshData(eModifyRow.modifyRow, frmU.ID, frmU.Text1, "", ((ComboItem)frmU.cmb.SelectedItem).iValue);
           break;
         case eAllCodeBooks.eSubClientCurrentStatus:
           foreach (var r in clientCurrentStatusDataList)
@@ -863,7 +829,7 @@ namespace EvitelApp2.Controls
         RefreshData(frmU.TypeForm, frmU.ID, frmU.Text1, "", 0);
     }
 
-    private void RefreshData(eModifyRow typeForm, int id, string text, string text2= "",int idMaster = 0)
+    private void RefreshData(eModifyRow typeForm, int id, string text, string text2 = "", int idMaster = 0)
     {
       switch (aktCodeBook)
       {
@@ -883,7 +849,7 @@ namespace EvitelApp2.Controls
           AddDataToTableDruhIntervence();
           break;
         case eAllCodeBooks.eSubTypeIncident:
-          DB.UniversalModifySubTypeIncident(typeForm, id, text,text2);
+          DB.UniversalModifySubTypeIncident(typeForm, id, text, text2);
           subTypeIncidentDataList = DB.GetSubTypeIncident();
           AddDataToTableSubTypeIncident();
           break;

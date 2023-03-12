@@ -1,6 +1,7 @@
 ﻿using EvitelLib2.Model;
 using EvitelLib2.Repository;
 using NPOI.SS.Formula.Functions;
+using NPOI.Util.Collections;
 using PdfSharpCore.Drawing;
 using PdfSharpCore.Pdf;
 using System;
@@ -168,7 +169,7 @@ namespace EvitelLib2.Common
           }
           gfx.DrawLine(pen, new XPoint(0, (int)page.Height - 20), new XPoint(page.Width, (int)page.Height - 20));
 
-          var image = XImage.FromFile("Resources/Evitel100.png");
+          XImage image =  XImage.FromFile("Resources/Evitel100.png");
           gfx.DrawImage(image , new XRect(hovorStart, (int)page.Height - 20, 20, 20));
 
           gfx.DrawString("Evitel", fontRegular, textColor, new XRect(hovorStart+25, (int)page.Height - 20, 20, 15), XStringFormats.BottomCenter);

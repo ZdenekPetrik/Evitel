@@ -1,845 +1,779 @@
 ﻿
 namespace EvitelApp2
 {
-    partial class frmMain
+  partial class frmMain
+  {
+    /// <summary>
+    ///  Required designer variable.
+    /// </summary>
+    private System.ComponentModel.IContainer components = null;
+
+    /// <summary>
+    ///  Clean up any resources being used.
+    /// </summary>
+    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+    protected override void Dispose(bool disposing)
     {
-        /// <summary>
-        ///  Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+      if (disposing && (components != null))
+      {
+        components.Dispose();
+      }
+      base.Dispose(disposing);
+    }
 
-        /// <summary>
-        ///  Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+    #region Windows Form Designer generated code
 
-        #region Windows Form Designer generated code
+    /// <summary>
+    ///  Required method for Designer support - do not modify
+    ///  the contents of this method with the code editor.
+    /// </summary>
+    private void InitializeComponent()
+    {
+      components = new System.ComponentModel.Container();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
+      menuStrip1 = new System.Windows.Forms.MenuStrip();
+      souborToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      FileExportExcel = new System.Windows.Forms.ToolStripMenuItem();
+      FileExportCSV = new System.Windows.Forms.ToolStripMenuItem();
+      toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+      exportDenníProtokolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+      MenuSystemExit = new System.Windows.Forms.ToolStripMenuItem();
+      toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      MenuToolsRemoveFilters = new System.Windows.Forms.ToolStripMenuItem();
+      MenuToolsRemoveOrders = new System.Windows.Forms.ToolStripMenuItem();
+      toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+      MenuToolSetColumnLayout = new System.Windows.Forms.ToolStripMenuItem();
+      MenuToolsRemoveColumnLayout = new System.Windows.Forms.ToolStripMenuItem();
+      viewsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      MenuToolEventLog = new System.Windows.Forms.ToolStripMenuItem();
+      interventiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      EnumsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      EnumsSexMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      EnumSubTypIntervenceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      EnumDruhIntervenceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      EnumPartyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      EnumRegionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+      EnumContactTypeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      EnumTypeServiceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      EnumClientFromMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      EnumAgeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      EnumNickMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      EnumEndOfSpeechMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      EnumSubEndOfSpeechMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      EnumAktualniStavKlientaMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      EnumAktualniStavKlientaDetailMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      EnumTemaKontaktuMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      EnumTemaKontaktuDetailMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+      MenuToolShowCallsAll = new System.Windows.Forms.ToolStripMenuItem();
+      toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+      MenuToolShowCalls = new System.Windows.Forms.ToolStripMenuItem();
+      MenuToolShowEvents = new System.Windows.Forms.ToolStripMenuItem();
+      MenuToolShowIntervence = new System.Windows.Forms.ToolStripMenuItem();
+      MenuToolShowParticipation = new System.Windows.Forms.ToolStripMenuItem();
+      MenuToolShowSKIReport = new System.Windows.Forms.ToolStripMenuItem();
+      toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+      linkaPomociVKriziLPKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      NewCallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      newCallLIKOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      newCallLDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      mainTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      graphTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      SettingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      MenuItemChangePassword = new System.Windows.Forms.ToolStripMenuItem();
+      MenuItemUsers = new System.Windows.Forms.ToolStripMenuItem();
+      MenuItemNewUser = new System.Windows.Forms.ToolStripMenuItem();
+      toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+      MenuItemBackup = new System.Windows.Forms.ToolStripMenuItem();
+      MenuItemRestore = new System.Windows.Forms.ToolStripMenuItem();
+      toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+      MenuItemPromenneAplikace = new System.Windows.Forms.ToolStripMenuItem();
+      toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+      oAplikaciToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      statistikaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      statistikaVoláníToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      statistikaSKIUdálostíToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      statusStrip1 = new System.Windows.Forms.StatusStrip();
+      toolStripTime = new System.Windows.Forms.ToolStripStatusLabel();
+      toolStripUser = new System.Windows.Forms.ToolStripStatusLabel();
+      toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+      toolStripRows = new System.Windows.Forms.ToolStripStatusLabel();
+      timer1 = new System.Windows.Forms.Timer(components);
+      splitContainer1 = new System.Windows.Forms.SplitContainer();
+      ucCallLIKO1 = new Controls.ucCallLIKO();
+      ucIntervents1 = new Controls.ucIntervents();
+      ctrlParticipation1 = new Controls.ctrlParticipant();
+      ctrlLikoCall1 = new Controls.ctrlLikoCall();
+      ctrllikoIncident1 = new Controls.ctrlLIKOIncident();
+      ctrllikoIntervence1 = new Controls.ctrlLIKOIntervence();
+      ctrlUser1 = new Controls.ctrlUser();
+      ucCallLPK1 = new Controls.ucCallLPK();
+      ctrlCall1 = new Controls.ctrlCall();
+      ctrllpk1 = new Controls.ctrlLPK();
+      ctrlSKIReport1 = new Controls.ctrlSKIReport();
+      ctrlStatistika1 = new Controls.ctrlStatistika();
+      ucCiselnik1 = new Controls.ucCiselnik();
+      menuStrip1.SuspendLayout();
+      statusStrip1.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
+      splitContainer1.SuspendLayout();
+      SuspendLayout();
+      // 
+      // menuStrip1
+      // 
+      menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { souborToolStripMenuItem, toolsToolStripMenuItem, viewsToolStripMenuItem, NewCallToolStripMenuItem, testToolStripMenuItem, SettingToolStripMenuItem, statistikaToolStripMenuItem });
+      menuStrip1.Location = new System.Drawing.Point(0, 0);
+      menuStrip1.Name = "menuStrip1";
+      menuStrip1.Size = new System.Drawing.Size(1555, 24);
+      menuStrip1.TabIndex = 0;
+      menuStrip1.Text = "menuStrip1";
+      // 
+      // souborToolStripMenuItem
+      // 
+      souborToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { FileExportExcel, FileExportCSV, toolStripSeparator7, exportDenníProtokolToolStripMenuItem, toolStripSeparator6, MenuSystemExit });
+      souborToolStripMenuItem.Name = "souborToolStripMenuItem";
+      souborToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+      souborToolStripMenuItem.Text = "Soubor";
+      // 
+      // FileExportExcel
+      // 
+      FileExportExcel.Name = "FileExportExcel";
+      FileExportExcel.Size = new System.Drawing.Size(212, 22);
+      FileExportExcel.Text = "Export Excel";
+      FileExportExcel.Click += FileExportExcel_Click;
+      // 
+      // FileExportCSV
+      // 
+      FileExportCSV.Name = "FileExportCSV";
+      FileExportCSV.Size = new System.Drawing.Size(212, 22);
+      FileExportCSV.Text = "Export CSV";
+      FileExportCSV.Click += fileExportCSV_Click;
+      // 
+      // toolStripSeparator7
+      // 
+      toolStripSeparator7.Name = "toolStripSeparator7";
+      toolStripSeparator7.Size = new System.Drawing.Size(209, 6);
+      // 
+      // exportDenníProtokolToolStripMenuItem
+      // 
+      exportDenníProtokolToolStripMenuItem.Name = "exportDenníProtokolToolStripMenuItem";
+      exportDenníProtokolToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+      exportDenníProtokolToolStripMenuItem.Text = "SKI - Denní protokol (PDF)";
+      exportDenníProtokolToolStripMenuItem.Click += exportDenníProtokolToolStripMenuItem_Click;
+      // 
+      // toolStripSeparator6
+      // 
+      toolStripSeparator6.Name = "toolStripSeparator6";
+      toolStripSeparator6.Size = new System.Drawing.Size(209, 6);
+      // 
+      // MenuSystemExit
+      // 
+      MenuSystemExit.Name = "MenuSystemExit";
+      MenuSystemExit.Size = new System.Drawing.Size(212, 22);
+      MenuSystemExit.Text = "Exit";
+      MenuSystemExit.Click += MenuSystemExit_Click;
+      // 
+      // toolsToolStripMenuItem
+      // 
+      toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { MenuToolsRemoveFilters, MenuToolsRemoveOrders, toolStripSeparator2, MenuToolSetColumnLayout, MenuToolsRemoveColumnLayout });
+      toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+      toolsToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
+      toolsToolStripMenuItem.Text = "Nástroje";
+      // 
+      // MenuToolsRemoveFilters
+      // 
+      MenuToolsRemoveFilters.Name = "MenuToolsRemoveFilters";
+      MenuToolsRemoveFilters.Size = new System.Drawing.Size(229, 22);
+      MenuToolsRemoveFilters.Text = "Odstranit Filtry";
+      MenuToolsRemoveFilters.Click += MenuToolsRemoveFilters_Click;
+      // 
+      // MenuToolsRemoveOrders
+      // 
+      MenuToolsRemoveOrders.Name = "MenuToolsRemoveOrders";
+      MenuToolsRemoveOrders.Size = new System.Drawing.Size(229, 22);
+      MenuToolsRemoveOrders.Text = "Odstranit Řazení";
+      MenuToolsRemoveOrders.Click += MenuToolsRemoveOrders_Click;
+      // 
+      // toolStripSeparator2
+      // 
+      toolStripSeparator2.Name = "toolStripSeparator2";
+      toolStripSeparator2.Size = new System.Drawing.Size(226, 6);
+      // 
+      // MenuToolSetColumnLayout
+      // 
+      MenuToolSetColumnLayout.Name = "MenuToolSetColumnLayout";
+      MenuToolSetColumnLayout.Size = new System.Drawing.Size(229, 22);
+      MenuToolSetColumnLayout.Text = "Ulož vlastní rozložení sloupců";
+      MenuToolSetColumnLayout.Click += MenuToolSetColumnLayout_Click;
+      // 
+      // MenuToolsRemoveColumnLayout
+      // 
+      MenuToolsRemoveColumnLayout.Name = "MenuToolsRemoveColumnLayout";
+      MenuToolsRemoveColumnLayout.Size = new System.Drawing.Size(229, 22);
+      MenuToolsRemoveColumnLayout.Text = "Inicializuj rozložení sloupců";
+      MenuToolsRemoveColumnLayout.Click += MenuToolsRemoveColumn_Click;
+      // 
+      // viewsToolStripMenuItem
+      // 
+      viewsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { MenuToolEventLog, interventiToolStripMenuItem, EnumsMenuItem, toolStripMenuItem2, MenuToolShowCallsAll, toolStripSeparator4, MenuToolShowCalls, MenuToolShowEvents, MenuToolShowIntervence, MenuToolShowParticipation, MenuToolShowSKIReport, toolStripSeparator5, linkaPomociVKriziLPKToolStripMenuItem });
+      viewsToolStripMenuItem.Name = "viewsToolStripMenuItem";
+      viewsToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+      viewsToolStripMenuItem.Text = "Zobrazení";
+      // 
+      // MenuToolEventLog
+      // 
+      MenuToolEventLog.Name = "MenuToolEventLog";
+      MenuToolEventLog.Size = new System.Drawing.Size(217, 22);
+      MenuToolEventLog.Text = "EventLog";
+      MenuToolEventLog.Click += MenuToolEventLog_Click;
+      // 
+      // interventiToolStripMenuItem
+      // 
+      interventiToolStripMenuItem.Name = "interventiToolStripMenuItem";
+      interventiToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+      interventiToolStripMenuItem.Text = "Interventi";
+      interventiToolStripMenuItem.Click += interventiToolStripMenuItem_Click;
+      // 
+      // EnumsMenuItem
+      // 
+      EnumsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { EnumsSexMenuItem, EnumSubTypIntervenceMenuItem, EnumDruhIntervenceMenuItem, EnumPartyToolStripMenuItem, EnumRegionMenuItem, toolStripSeparator3, EnumContactTypeMenuItem, EnumTypeServiceMenuItem, EnumClientFromMenuItem, EnumAgeMenuItem, EnumNickMenuItem, EnumEndOfSpeechMenuItem, EnumSubEndOfSpeechMenuItem, EnumAktualniStavKlientaMenuItem, EnumAktualniStavKlientaDetailMenuItem, EnumTemaKontaktuMenuItem, EnumTemaKontaktuDetailMenuItem });
+      EnumsMenuItem.Name = "EnumsMenuItem";
+      EnumsMenuItem.Size = new System.Drawing.Size(217, 22);
+      EnumsMenuItem.Text = "Číselníky";
+      // 
+      // EnumsSexMenuItem
+      // 
+      EnumsSexMenuItem.Name = "EnumsSexMenuItem";
+      EnumsSexMenuItem.Size = new System.Drawing.Size(215, 22);
+      EnumsSexMenuItem.Text = "Pohlaví";
+      EnumsSexMenuItem.Click += EnumsSexMenuItem_Click;
+      // 
+      // EnumSubTypIntervenceMenuItem
+      // 
+      EnumSubTypIntervenceMenuItem.Name = "EnumSubTypIntervenceMenuItem";
+      EnumSubTypIntervenceMenuItem.Size = new System.Drawing.Size(215, 22);
+      EnumSubTypIntervenceMenuItem.Text = "Typ Incidentu";
+      EnumSubTypIntervenceMenuItem.Click += EnumTypIncidentuMenuItem_Click;
+      // 
+      // EnumDruhIntervenceMenuItem
+      // 
+      EnumDruhIntervenceMenuItem.Name = "EnumDruhIntervenceMenuItem";
+      EnumDruhIntervenceMenuItem.Size = new System.Drawing.Size(215, 22);
+      EnumDruhIntervenceMenuItem.Text = "Druh Intervence";
+      EnumDruhIntervenceMenuItem.Click += EnumDruhIntervenceMenuItem_Click;
+      // 
+      // EnumPartyToolStripMenuItem
+      // 
+      EnumPartyToolStripMenuItem.Name = "EnumPartyToolStripMenuItem";
+      EnumPartyToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+      EnumPartyToolStripMenuItem.Text = "Forma Účasti";
+      EnumPartyToolStripMenuItem.Click += EnumPartyToolStripMenuItem_Click;
+      // 
+      // EnumRegionMenuItem
+      // 
+      EnumRegionMenuItem.Name = "EnumRegionMenuItem";
+      EnumRegionMenuItem.Size = new System.Drawing.Size(215, 22);
+      EnumRegionMenuItem.Text = "Kraje";
+      EnumRegionMenuItem.Click += EnumRegionMenuItem_Click;
+      // 
+      // toolStripSeparator3
+      // 
+      toolStripSeparator3.Name = "toolStripSeparator3";
+      toolStripSeparator3.Size = new System.Drawing.Size(212, 6);
+      // 
+      // EnumContactTypeMenuItem
+      // 
+      EnumContactTypeMenuItem.Name = "EnumContactTypeMenuItem";
+      EnumContactTypeMenuItem.Size = new System.Drawing.Size(215, 22);
+      EnumContactTypeMenuItem.Text = "Typ kontaktu";
+      EnumContactTypeMenuItem.Click += EnumContactTypeMenuItem_Click;
+      // 
+      // EnumTypeServiceMenuItem
+      // 
+      EnumTypeServiceMenuItem.Name = "EnumTypeServiceMenuItem";
+      EnumTypeServiceMenuItem.Size = new System.Drawing.Size(215, 22);
+      EnumTypeServiceMenuItem.Text = "Typ služby";
+      EnumTypeServiceMenuItem.Click += EnumTypeServiceMenuItem_Click;
+      // 
+      // EnumClientFromMenuItem
+      // 
+      EnumClientFromMenuItem.Name = "EnumClientFromMenuItem";
+      EnumClientFromMenuItem.Size = new System.Drawing.Size(215, 22);
+      EnumClientFromMenuItem.Text = "Odkud je klient";
+      EnumClientFromMenuItem.Click += EnumClientFromMenuItem_Click;
+      // 
+      // EnumAgeMenuItem
+      // 
+      EnumAgeMenuItem.Name = "EnumAgeMenuItem";
+      EnumAgeMenuItem.Size = new System.Drawing.Size(215, 22);
+      EnumAgeMenuItem.Text = "Věk";
+      EnumAgeMenuItem.Click += EnumAgeMenuItem_Click;
+      // 
+      // EnumNickMenuItem
+      // 
+      EnumNickMenuItem.Name = "EnumNickMenuItem";
+      EnumNickMenuItem.Size = new System.Drawing.Size(215, 22);
+      EnumNickMenuItem.Text = "Přezdívky";
+      EnumNickMenuItem.Click += EnumNickMenuItem_Click;
+      // 
+      // EnumEndOfSpeechMenuItem
+      // 
+      EnumEndOfSpeechMenuItem.Name = "EnumEndOfSpeechMenuItem";
+      EnumEndOfSpeechMenuItem.Size = new System.Drawing.Size(215, 22);
+      EnumEndOfSpeechMenuItem.Text = "Závěr hovoru";
+      EnumEndOfSpeechMenuItem.Click += EnumEndOfSpeechMenuItem_Click;
+      // 
+      // EnumSubEndOfSpeechMenuItem
+      // 
+      EnumSubEndOfSpeechMenuItem.Name = "EnumSubEndOfSpeechMenuItem";
+      EnumSubEndOfSpeechMenuItem.Size = new System.Drawing.Size(215, 22);
+      EnumSubEndOfSpeechMenuItem.Text = "Závěr hovoru-Detail";
+      EnumSubEndOfSpeechMenuItem.Click += EnumSubEndOfSpeechMenuItem_Click;
+      // 
+      // EnumAktualniStavKlientaMenuItem
+      // 
+      EnumAktualniStavKlientaMenuItem.Name = "EnumAktualniStavKlientaMenuItem";
+      EnumAktualniStavKlientaMenuItem.Size = new System.Drawing.Size(215, 22);
+      EnumAktualniStavKlientaMenuItem.Text = "Aktuální stav klienta";
+      EnumAktualniStavKlientaMenuItem.Click += EnumAktualniStavKlientaMenuItem_Click;
+      // 
+      // EnumAktualniStavKlientaDetailMenuItem
+      // 
+      EnumAktualniStavKlientaDetailMenuItem.Name = "EnumAktualniStavKlientaDetailMenuItem";
+      EnumAktualniStavKlientaDetailMenuItem.Size = new System.Drawing.Size(215, 22);
+      EnumAktualniStavKlientaDetailMenuItem.Text = "Aktuální stav klienta-Detail";
+      EnumAktualniStavKlientaDetailMenuItem.Click += EnumAktualniStavKlientaDetailMenuItem_Click;
+      // 
+      // EnumTemaKontaktuMenuItem
+      // 
+      EnumTemaKontaktuMenuItem.Name = "EnumTemaKontaktuMenuItem";
+      EnumTemaKontaktuMenuItem.Size = new System.Drawing.Size(215, 22);
+      EnumTemaKontaktuMenuItem.Text = "Téma kontaktu";
+      EnumTemaKontaktuMenuItem.Click += EnumTemaKontaktuMenuItem_Click;
+      // 
+      // EnumTemaKontaktuDetailMenuItem
+      // 
+      EnumTemaKontaktuDetailMenuItem.Name = "EnumTemaKontaktuDetailMenuItem";
+      EnumTemaKontaktuDetailMenuItem.Size = new System.Drawing.Size(215, 22);
+      EnumTemaKontaktuDetailMenuItem.Text = "Téma kontaktu-Detail ";
+      EnumTemaKontaktuDetailMenuItem.Click += EnumTemaKontaktuDetailMenuItem_Click;
+      // 
+      // toolStripMenuItem2
+      // 
+      toolStripMenuItem2.Name = "toolStripMenuItem2";
+      toolStripMenuItem2.Size = new System.Drawing.Size(214, 6);
+      // 
+      // MenuToolShowCallsAll
+      // 
+      MenuToolShowCallsAll.Name = "MenuToolShowCallsAll";
+      MenuToolShowCallsAll.Size = new System.Drawing.Size(217, 22);
+      MenuToolShowCallsAll.Text = "Telefonní volání (Vše)";
+      MenuToolShowCallsAll.Click += MenuToolShowCallsAll_Click;
+      // 
+      // toolStripSeparator4
+      // 
+      toolStripSeparator4.Name = "toolStripSeparator4";
+      toolStripSeparator4.Size = new System.Drawing.Size(214, 6);
+      // 
+      // MenuToolShowCalls
+      // 
+      MenuToolShowCalls.Name = "MenuToolShowCalls";
+      MenuToolShowCalls.Size = new System.Drawing.Size(217, 22);
+      MenuToolShowCalls.Text = "Telefonní volání (SKI)";
+      MenuToolShowCalls.Click += MenuToolShowCalls_Click;
+      // 
+      // MenuToolShowEvents
+      // 
+      MenuToolShowEvents.Name = "MenuToolShowEvents";
+      MenuToolShowEvents.Size = new System.Drawing.Size(217, 22);
+      MenuToolShowEvents.Text = "Události (SKI)";
+      MenuToolShowEvents.Click += MenuToolShowEvents_Click;
+      // 
+      // MenuToolShowIntervence
+      // 
+      MenuToolShowIntervence.Name = "MenuToolShowIntervence";
+      MenuToolShowIntervence.Size = new System.Drawing.Size(217, 22);
+      MenuToolShowIntervence.Text = "Intervence (SKI)";
+      MenuToolShowIntervence.Click += MenuToolShowIntervence_Click;
+      // 
+      // MenuToolShowParticipation
+      // 
+      MenuToolShowParticipation.Name = "MenuToolShowParticipation";
+      MenuToolShowParticipation.Size = new System.Drawing.Size(217, 22);
+      MenuToolShowParticipation.Text = "Účastníci Intervence (SKI)";
+      MenuToolShowParticipation.Click += MenuToolShowParticipation_Click;
+      // 
+      // MenuToolShowSKIReport
+      // 
+      MenuToolShowSKIReport.Name = "MenuToolShowSKIReport";
+      MenuToolShowSKIReport.Size = new System.Drawing.Size(217, 22);
+      MenuToolShowSKIReport.Text = "Report (SKI)";
+      MenuToolShowSKIReport.Click += MenuToolShowSKIReport_Click;
+      // 
+      // toolStripSeparator5
+      // 
+      toolStripSeparator5.Name = "toolStripSeparator5";
+      toolStripSeparator5.Size = new System.Drawing.Size(214, 6);
+      // 
+      // linkaPomociVKriziLPKToolStripMenuItem
+      // 
+      linkaPomociVKriziLPKToolStripMenuItem.Name = "linkaPomociVKriziLPKToolStripMenuItem";
+      linkaPomociVKriziLPKToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+      linkaPomociVKriziLPKToolStripMenuItem.Text = "Linka Pomoci v Krizi (LPvK)";
+      linkaPomociVKriziLPKToolStripMenuItem.Click += linkaPomociVKriziLPKToolStripMenuItem_Click;
+      // 
+      // NewCallToolStripMenuItem
+      // 
+      NewCallToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { newCallLIKOToolStripMenuItem, newCallLDToolStripMenuItem });
+      NewCallToolStripMenuItem.Name = "NewCallToolStripMenuItem";
+      NewCallToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+      NewCallToolStripMenuItem.Text = "Nový hovor";
+      // 
+      // newCallLIKOToolStripMenuItem
+      // 
+      newCallLIKOToolStripMenuItem.Name = "newCallLIKOToolStripMenuItem";
+      newCallLIKOToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+      newCallLIKOToolStripMenuItem.Text = "Nový hovor - SKI";
+      newCallLIKOToolStripMenuItem.Click += newCallLIKOToolStripMenuItem_Click;
+      // 
+      // newCallLDToolStripMenuItem
+      // 
+      newCallLDToolStripMenuItem.Name = "newCallLDToolStripMenuItem";
+      newCallLDToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+      newCallLDToolStripMenuItem.Text = "Nový hovor - LPvK";
+      newCallLDToolStripMenuItem.Click += newCallLDToolStripMenuItem_Click;
+      // 
+      // testToolStripMenuItem
+      // 
+      testToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { mainTestToolStripMenuItem, graphTestToolStripMenuItem });
+      testToolStripMenuItem.Name = "testToolStripMenuItem";
+      testToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+      testToolStripMenuItem.Text = "Test";
+      testToolStripMenuItem.Click += testToolStripMenuItem_Click;
+      // 
+      // mainTestToolStripMenuItem
+      // 
+      mainTestToolStripMenuItem.Name = "mainTestToolStripMenuItem";
+      mainTestToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+      mainTestToolStripMenuItem.Text = "Main Test";
+      mainTestToolStripMenuItem.Click += mainTestToolStripMenuItem_Click;
+      // 
+      // graphTestToolStripMenuItem
+      // 
+      graphTestToolStripMenuItem.Name = "graphTestToolStripMenuItem";
+      graphTestToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+      graphTestToolStripMenuItem.Text = "Graph Test";
+      graphTestToolStripMenuItem.Click += graphTestToolStripMenuItem_Click;
+      // 
+      // SettingToolStripMenuItem
+      // 
+      SettingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { MenuItemChangePassword, MenuItemUsers, MenuItemNewUser, toolStripSeparator1, MenuItemBackup, MenuItemRestore, toolStripSeparator8, MenuItemPromenneAplikace, toolStripSeparator9, oAplikaciToolStripMenuItem });
+      SettingToolStripMenuItem.Name = "SettingToolStripMenuItem";
+      SettingToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+      SettingToolStripMenuItem.Text = "Nastavení";
+      // 
+      // MenuItemChangePassword
+      // 
+      MenuItemChangePassword.Name = "MenuItemChangePassword";
+      MenuItemChangePassword.Size = new System.Drawing.Size(214, 22);
+      MenuItemChangePassword.Text = "Změna hesla";
+      MenuItemChangePassword.Click += MenuItemChangePassword_Click;
+      // 
+      // MenuItemUsers
+      // 
+      MenuItemUsers.Name = "MenuItemUsers";
+      MenuItemUsers.Size = new System.Drawing.Size(214, 22);
+      MenuItemUsers.Text = "Uživatelé";
+      MenuItemUsers.Click += MenuItemUsers_Click;
+      // 
+      // MenuItemNewUser
+      // 
+      MenuItemNewUser.Name = "MenuItemNewUser";
+      MenuItemNewUser.Size = new System.Drawing.Size(214, 22);
+      MenuItemNewUser.Text = "Nový uživatel";
+      MenuItemNewUser.Click += MenuItemNewUser_Click;
+      // 
+      // toolStripSeparator1
+      // 
+      toolStripSeparator1.Name = "toolStripSeparator1";
+      toolStripSeparator1.Size = new System.Drawing.Size(211, 6);
+      // 
+      // MenuItemBackup
+      // 
+      MenuItemBackup.Name = "MenuItemBackup";
+      MenuItemBackup.Size = new System.Drawing.Size(214, 22);
+      MenuItemBackup.Text = "Zálohování databáze Evitel";
+      MenuItemBackup.Click += MenuItemBackup_Click;
+      // 
+      // MenuItemRestore
+      // 
+      MenuItemRestore.Name = "MenuItemRestore";
+      MenuItemRestore.Size = new System.Drawing.Size(214, 22);
+      MenuItemRestore.Text = "Obnova databáze Evitel";
+      MenuItemRestore.Click += MenuItemRestore_Click;
+      // 
+      // toolStripSeparator8
+      // 
+      toolStripSeparator8.Name = "toolStripSeparator8";
+      toolStripSeparator8.Size = new System.Drawing.Size(211, 6);
+      // 
+      // MenuItemPromenneAplikace
+      // 
+      MenuItemPromenneAplikace.Name = "MenuItemPromenneAplikace";
+      MenuItemPromenneAplikace.Size = new System.Drawing.Size(214, 22);
+      MenuItemPromenneAplikace.Text = "Proměnné aplikace";
+      MenuItemPromenneAplikace.Click += MenuItemPromenneAplikace_Click;
+      // 
+      // toolStripSeparator9
+      // 
+      toolStripSeparator9.Name = "toolStripSeparator9";
+      toolStripSeparator9.Size = new System.Drawing.Size(211, 6);
+      // 
+      // oAplikaciToolStripMenuItem
+      // 
+      oAplikaciToolStripMenuItem.Name = "oAplikaciToolStripMenuItem";
+      oAplikaciToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+      oAplikaciToolStripMenuItem.Text = "O aplikaci";
+      oAplikaciToolStripMenuItem.Click += oAplikaciToolStripMenuItem_Click;
+      // 
+      // statistikaToolStripMenuItem
+      // 
+      statistikaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { statistikaVoláníToolStripMenuItem, statistikaSKIUdálostíToolStripMenuItem });
+      statistikaToolStripMenuItem.Name = "statistikaToolStripMenuItem";
+      statistikaToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+      statistikaToolStripMenuItem.Text = "Statistika";
+      // 
+      // statistikaVoláníToolStripMenuItem
+      // 
+      statistikaVoláníToolStripMenuItem.Name = "statistikaVoláníToolStripMenuItem";
+      statistikaVoláníToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+      statistikaVoláníToolStripMenuItem.Text = "Statistika Volání";
+      statistikaVoláníToolStripMenuItem.Click += statistikaVoláníToolStripMenuItem_Click;
+      // 
+      // statistikaSKIUdálostíToolStripMenuItem
+      // 
+      statistikaSKIUdálostíToolStripMenuItem.Name = "statistikaSKIUdálostíToolStripMenuItem";
+      statistikaSKIUdálostíToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+      statistikaSKIUdálostíToolStripMenuItem.Text = "Statistika SKI událostí";
+      statistikaSKIUdálostíToolStripMenuItem.Click += statistikaSKIUdálostíToolStripMenuItem_Click;
+      // 
+      // statusStrip1
+      // 
+      statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripTime, toolStripUser, toolStripStatusLabel1, toolStripRows });
+      statusStrip1.Location = new System.Drawing.Point(0, 796);
+      statusStrip1.Name = "statusStrip1";
+      statusStrip1.Size = new System.Drawing.Size(1555, 22);
+      statusStrip1.TabIndex = 1;
+      statusStrip1.Text = "statusStrip1";
+      // 
+      // toolStripTime
+      // 
+      toolStripTime.Name = "toolStripTime";
+      toolStripTime.Size = new System.Drawing.Size(79, 17);
+      toolStripTime.Text = "ToolStripTime";
+      // 
+      // toolStripUser
+      // 
+      toolStripUser.Name = "toolStripUser";
+      toolStripUser.Size = new System.Drawing.Size(75, 17);
+      toolStripUser.Text = "toolStripUser";
+      // 
+      // toolStripStatusLabel1
+      // 
+      toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+      toolStripStatusLabel1.Size = new System.Drawing.Size(1306, 17);
+      toolStripStatusLabel1.Spring = true;
+      // 
+      // toolStripRows
+      // 
+      toolStripRows.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      toolStripRows.Name = "toolStripRows";
+      toolStripRows.RightToLeft = System.Windows.Forms.RightToLeft.No;
+      toolStripRows.Size = new System.Drawing.Size(80, 17);
+      toolStripRows.Text = "toolStripRows";
+      // 
+      // timer1
+      // 
+      timer1.Tick += timer1_Tick;
+      // 
+      // splitContainer1
+      // 
+      splitContainer1.Cursor = System.Windows.Forms.Cursors.HSplit;
+      splitContainer1.Location = new System.Drawing.Point(0, 24);
+      splitContainer1.Name = "splitContainer1";
+      splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+      // 
+      // splitContainer1.Panel1
+      // 
+      splitContainer1.Panel1.BackColor = System.Drawing.SystemColors.Info;
+      splitContainer1.Panel1.Resize += splitContainer1_Panel1_Resize;
+      // 
+      // splitContainer1.Panel2
+      // 
+      splitContainer1.Panel2.BackColor = System.Drawing.SystemColors.Info;
+      splitContainer1.Size = new System.Drawing.Size(288, 266);
+      splitContainer1.SplitterDistance = 174;
+      splitContainer1.TabIndex = 2;
+      // 
+      // ucCallLIKO1
+      // 
+      ucCallLIKO1.CausesValidation = false;
+      ucCallLIKO1.Location = new System.Drawing.Point(294, 24);
+      ucCallLIKO1.Name = "ucCallLIKO1";
+      ucCallLIKO1.Size = new System.Drawing.Size(128, 110);
+      ucCallLIKO1.TabIndex = 4;
+      // 
+      // ucIntervents1
+      // 
+      ucIntervents1.Location = new System.Drawing.Point(440, 36);
+      ucIntervents1.Name = "ucIntervents1";
+      ucIntervents1.Size = new System.Drawing.Size(511, 284);
+      ucIntervents1.TabIndex = 5;
+      // 
+      // ctrlParticipation1
+      // 
+      ctrlParticipation1.Location = new System.Drawing.Point(0, 296);
+      ctrlParticipation1.Name = "ctrlParticipation1";
+      ctrlParticipation1.Size = new System.Drawing.Size(272, 171);
+      ctrlParticipation1.TabIndex = 7;
+      // 
+      // ctrlLikoCall1
+      // 
+      ctrlLikoCall1.Location = new System.Drawing.Point(278, 296);
+      ctrlLikoCall1.Name = "ctrlLikoCall1";
+      ctrlLikoCall1.Size = new System.Drawing.Size(221, 157);
+      ctrlLikoCall1.TabIndex = 8;
+      // 
+      // ctrllikoIncident1
+      // 
+      ctrllikoIncident1.Location = new System.Drawing.Point(505, 326);
+      ctrllikoIncident1.Name = "ctrllikoIncident1";
+      ctrllikoIncident1.Size = new System.Drawing.Size(259, 168);
+      ctrllikoIncident1.TabIndex = 9;
+      // 
+      // ctrllikoIntervence1
+      // 
+      ctrllikoIntervence1.Location = new System.Drawing.Point(752, 326);
+      ctrllikoIntervence1.Name = "ctrllikoIntervence1";
+      ctrllikoIntervence1.Size = new System.Drawing.Size(259, 168);
+      ctrllikoIntervence1.TabIndex = 10;
+      // 
+      // ctrlUser1
+      // 
+      ctrlUser1.Location = new System.Drawing.Point(1005, 304);
+      ctrlUser1.Name = "ctrlUser1";
+      ctrlUser1.Size = new System.Drawing.Size(180, 163);
+      ctrlUser1.TabIndex = 11;
+      // 
+      // ucCallLPK1
+      // 
+      ucCallLPK1.CausesValidation = false;
+      ucCallLPK1.Location = new System.Drawing.Point(12, 473);
+      ucCallLPK1.Name = "ucCallLPK1";
+      ucCallLPK1.Size = new System.Drawing.Size(228, 100);
+      ucCallLPK1.TabIndex = 13;
+      // 
+      // ctrlCall1
+      // 
+      ctrlCall1.Location = new System.Drawing.Point(278, 500);
+      ctrlCall1.Name = "ctrlCall1";
+      ctrlCall1.Size = new System.Drawing.Size(259, 168);
+      ctrlCall1.TabIndex = 14;
+      // 
+      // ctrllpk1
+      // 
+      ctrllpk1.Location = new System.Drawing.Point(543, 500);
+      ctrllpk1.Name = "ctrllpk1";
+      ctrllpk1.Size = new System.Drawing.Size(259, 168);
+      ctrllpk1.TabIndex = 15;
+      // 
+      // ctrlSKIReport1
+      // 
+      ctrlSKIReport1.Location = new System.Drawing.Point(800, 496);
+      ctrlSKIReport1.Name = "ctrlSKIReport1";
+      ctrlSKIReport1.Size = new System.Drawing.Size(259, 168);
+      ctrlSKIReport1.TabIndex = 16;
+      // 
+      // ctrlStatistika1
+      // 
+      ctrlStatistika1.Location = new System.Drawing.Point(1065, 473);
+      ctrlStatistika1.Name = "ctrlStatistika1";
+      ctrlStatistika1.Size = new System.Drawing.Size(259, 168);
+      ctrlStatistika1.TabIndex = 17;
+      // 
+      // ucCiselnik1
+      // 
+      ucCiselnik1.Location = new System.Drawing.Point(957, 36);
+      ucCiselnik1.Name = "ucCiselnik1";
+      ucCiselnik1.Size = new System.Drawing.Size(510, 242);
+      ucCiselnik1.TabIndex = 18;
+      // 
+      // frmMain
+      // 
+      AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+      AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      ClientSize = new System.Drawing.Size(1555, 818);
+      Controls.Add(ucCiselnik1);
+      Controls.Add(ctrlStatistika1);
+      Controls.Add(ctrlSKIReport1);
+      Controls.Add(ctrllpk1);
+      Controls.Add(ctrlCall1);
+      Controls.Add(ucCallLPK1);
+      Controls.Add(ctrlUser1);
+      Controls.Add(ctrllikoIntervence1);
+      Controls.Add(ctrllikoIncident1);
+      Controls.Add(ctrlLikoCall1);
+      Controls.Add(ctrlParticipation1);
+      Controls.Add(ucIntervents1);
+      Controls.Add(ucCallLIKO1);
+      Controls.Add(splitContainer1);
+      Controls.Add(statusStrip1);
+      Controls.Add(menuStrip1);
+      Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+      MainMenuStrip = menuStrip1;
+      Name = "frmMain";
+      Text = "Form1";
+      FormClosing += frmMain_FormClosing;
+      Load += Form1_Load;
+      menuStrip1.ResumeLayout(false);
+      menuStrip1.PerformLayout();
+      statusStrip1.ResumeLayout(false);
+      statusStrip1.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
+      splitContainer1.ResumeLayout(false);
+      ResumeLayout(false);
+      PerformLayout();
+    }
 
-        /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-            this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.souborToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.FileExportExcel = new System.Windows.Forms.ToolStripMenuItem();
-            this.FileExportCSV = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.exportDenníProtokolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.MenuSystemExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuToolsRemoveFilters = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuToolsRemoveOrders = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.MenuToolSetColumnLayout = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuToolsRemoveColumnLayout = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuToolEventLog = new System.Windows.Forms.ToolStripMenuItem();
-            this.interventiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EnumsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EnumsSexMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EnumSubTypIntervenceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EnumDruhIntervenceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EnumPartyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EnumRegionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.EnumContactTypeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EnumTypeServiceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EnumClientFromMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EnumAgeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EnumNickMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EnumEndOfSpeechMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EnumSubEndOfSpeechMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EnumAktualniStavKlientaMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EnumAktualniStavKlientaDetailMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EnumTemaKontaktuMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EnumTemaKontaktuDetailMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.MenuToolShowCallsAll = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.MenuToolShowCalls = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuToolShowEvents = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuToolShowIntervence = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuToolShowParticipation = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuToolShowSKIReport = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.linkaPomociVKriziLPKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.NewCallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newCallLIKOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newCallLDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mainTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.graphTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SettingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuItemChangePassword = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuItemUsers = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuItemNewUser = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.MenuItemBackup = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuItemRestore = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.MenuItemPromenneAplikace = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.oAplikaciToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statistikaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statistikaVoláníToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripTime = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripUser = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripRows = new System.Windows.Forms.ToolStripStatusLabel();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.ucCallLIKO1 = new EvitelApp2.Controls.ucCallLIKO();
-            this.ucIntervents1 = new EvitelApp2.Controls.ucIntervents();
-            this.ctrlParticipation1 = new EvitelApp2.Controls.ctrlParticipant();
-            this.ctrlLikoCall1 = new EvitelApp2.Controls.ctrlLikoCall();
-            this.ctrllikoIncident1 = new EvitelApp2.Controls.ctrlLIKOIncident();
-            this.ctrllikoIntervence1 = new EvitelApp2.Controls.ctrlLIKOIntervence();
-            this.ctrlUser1 = new EvitelApp2.Controls.ctrlUser();
-            this.ucCiselnik1 = new EvitelApp2.Controls.ucCiselnik();
-            this.ucCallLPK1 = new EvitelApp2.Controls.ucCallLPK();
-            this.ctrlCall1 = new EvitelApp2.Controls.ctrlCall();
-            this.ctrllpk1 = new EvitelApp2.Controls.ctrlLPK();
-            this.ctrlSKIReport1 = new EvitelApp2.Controls.ctrlSKIReport();
-            this.ctrlStatistika1 = new EvitelApp2.Controls.ctrlStatistika();
-            this.statistikaSKIUdálostíToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.souborToolStripMenuItem,
-            this.toolsToolStripMenuItem,
-            this.viewsToolStripMenuItem,
-            this.NewCallToolStripMenuItem,
-            this.testToolStripMenuItem,
-            this.SettingToolStripMenuItem,
-            this.statistikaToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1555, 24);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // souborToolStripMenuItem
-            // 
-            this.souborToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.FileExportExcel,
-            this.FileExportCSV,
-            this.toolStripSeparator7,
-            this.exportDenníProtokolToolStripMenuItem,
-            this.toolStripSeparator6,
-            this.MenuSystemExit});
-            this.souborToolStripMenuItem.Name = "souborToolStripMenuItem";
-            this.souborToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
-            this.souborToolStripMenuItem.Text = "Soubor";
-            // 
-            // FileExportExcel
-            // 
-            this.FileExportExcel.Name = "FileExportExcel";
-            this.FileExportExcel.Size = new System.Drawing.Size(212, 22);
-            this.FileExportExcel.Text = "Export Excel";
-            this.FileExportExcel.Click += new System.EventHandler(this.FileExportExcel_Click);
-            // 
-            // FileExportCSV
-            // 
-            this.FileExportCSV.Name = "FileExportCSV";
-            this.FileExportCSV.Size = new System.Drawing.Size(212, 22);
-            this.FileExportCSV.Text = "Export CSV";
-            this.FileExportCSV.Click += new System.EventHandler(this.fileExportCSV_Click);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(209, 6);
-            // 
-            // exportDenníProtokolToolStripMenuItem
-            // 
-            this.exportDenníProtokolToolStripMenuItem.Name = "exportDenníProtokolToolStripMenuItem";
-            this.exportDenníProtokolToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
-            this.exportDenníProtokolToolStripMenuItem.Text = "SKI - Denní protokol (PDF)";
-            this.exportDenníProtokolToolStripMenuItem.Click += new System.EventHandler(this.exportDenníProtokolToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(209, 6);
-            // 
-            // MenuSystemExit
-            // 
-            this.MenuSystemExit.Name = "MenuSystemExit";
-            this.MenuSystemExit.Size = new System.Drawing.Size(212, 22);
-            this.MenuSystemExit.Text = "Exit";
-            this.MenuSystemExit.Click += new System.EventHandler(this.MenuSystemExit_Click);
-            // 
-            // toolsToolStripMenuItem
-            // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MenuToolsRemoveFilters,
-            this.MenuToolsRemoveOrders,
-            this.toolStripSeparator2,
-            this.MenuToolSetColumnLayout,
-            this.MenuToolsRemoveColumnLayout});
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
-            this.toolsToolStripMenuItem.Text = "Nástroje";
-            // 
-            // MenuToolsRemoveFilters
-            // 
-            this.MenuToolsRemoveFilters.Name = "MenuToolsRemoveFilters";
-            this.MenuToolsRemoveFilters.Size = new System.Drawing.Size(229, 22);
-            this.MenuToolsRemoveFilters.Text = "Odstranit Filtry";
-            this.MenuToolsRemoveFilters.Click += new System.EventHandler(this.MenuToolsRemoveFilters_Click);
-            // 
-            // MenuToolsRemoveOrders
-            // 
-            this.MenuToolsRemoveOrders.Name = "MenuToolsRemoveOrders";
-            this.MenuToolsRemoveOrders.Size = new System.Drawing.Size(229, 22);
-            this.MenuToolsRemoveOrders.Text = "Odstranit Řazení";
-            this.MenuToolsRemoveOrders.Click += new System.EventHandler(this.MenuToolsRemoveOrders_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(226, 6);
-            // 
-            // MenuToolSetColumnLayout
-            // 
-            this.MenuToolSetColumnLayout.Name = "MenuToolSetColumnLayout";
-            this.MenuToolSetColumnLayout.Size = new System.Drawing.Size(229, 22);
-            this.MenuToolSetColumnLayout.Text = "Ulož vlastní rozložení sloupců";
-            this.MenuToolSetColumnLayout.Click += new System.EventHandler(this.MenuToolSetColumnLayout_Click);
-            // 
-            // MenuToolsRemoveColumnLayout
-            // 
-            this.MenuToolsRemoveColumnLayout.Name = "MenuToolsRemoveColumnLayout";
-            this.MenuToolsRemoveColumnLayout.Size = new System.Drawing.Size(229, 22);
-            this.MenuToolsRemoveColumnLayout.Text = "Inicializuj rozložení sloupců";
-            this.MenuToolsRemoveColumnLayout.Click += new System.EventHandler(this.MenuToolsRemoveColumn_Click);
-            // 
-            // viewsToolStripMenuItem
-            // 
-            this.viewsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MenuToolEventLog,
-            this.interventiToolStripMenuItem,
-            this.EnumsMenuItem,
-            this.toolStripMenuItem2,
-            this.MenuToolShowCallsAll,
-            this.toolStripSeparator4,
-            this.MenuToolShowCalls,
-            this.MenuToolShowEvents,
-            this.MenuToolShowIntervence,
-            this.MenuToolShowParticipation,
-            this.MenuToolShowSKIReport,
-            this.toolStripSeparator5,
-            this.linkaPomociVKriziLPKToolStripMenuItem});
-            this.viewsToolStripMenuItem.Name = "viewsToolStripMenuItem";
-            this.viewsToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
-            this.viewsToolStripMenuItem.Text = "Zobrazení";
-            // 
-            // MenuToolEventLog
-            // 
-            this.MenuToolEventLog.Name = "MenuToolEventLog";
-            this.MenuToolEventLog.Size = new System.Drawing.Size(217, 22);
-            this.MenuToolEventLog.Text = "EventLog";
-            this.MenuToolEventLog.Click += new System.EventHandler(this.MenuToolEventLog_Click);
-            // 
-            // interventiToolStripMenuItem
-            // 
-            this.interventiToolStripMenuItem.Name = "interventiToolStripMenuItem";
-            this.interventiToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.interventiToolStripMenuItem.Text = "Interventi";
-            this.interventiToolStripMenuItem.Click += new System.EventHandler(this.interventiToolStripMenuItem_Click);
-            // 
-            // EnumsMenuItem
-            // 
-            this.EnumsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.EnumsSexMenuItem,
-            this.EnumSubTypIntervenceMenuItem,
-            this.EnumDruhIntervenceMenuItem,
-            this.EnumPartyToolStripMenuItem,
-            this.EnumRegionMenuItem,
-            this.toolStripSeparator3,
-            this.EnumContactTypeMenuItem,
-            this.EnumTypeServiceMenuItem,
-            this.EnumClientFromMenuItem,
-            this.EnumAgeMenuItem,
-            this.EnumNickMenuItem,
-            this.EnumEndOfSpeechMenuItem,
-            this.EnumSubEndOfSpeechMenuItem,
-            this.EnumAktualniStavKlientaMenuItem,
-            this.EnumAktualniStavKlientaDetailMenuItem,
-            this.EnumTemaKontaktuMenuItem,
-            this.EnumTemaKontaktuDetailMenuItem});
-            this.EnumsMenuItem.Name = "EnumsMenuItem";
-            this.EnumsMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.EnumsMenuItem.Text = "Číselníky";
-            // 
-            // EnumsSexMenuItem
-            // 
-            this.EnumsSexMenuItem.Name = "EnumsSexMenuItem";
-            this.EnumsSexMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.EnumsSexMenuItem.Text = "Pohlaví";
-            this.EnumsSexMenuItem.Click += new System.EventHandler(this.EnumsSexMenuItem_Click);
-            // 
-            // EnumSubTypIntervenceMenuItem
-            // 
-            this.EnumSubTypIntervenceMenuItem.Name = "EnumSubTypIntervenceMenuItem";
-            this.EnumSubTypIntervenceMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.EnumSubTypIntervenceMenuItem.Text = "Typ Incidentu";
-            this.EnumSubTypIntervenceMenuItem.Click += new System.EventHandler(this.EnumTypIncidentuMenuItem_Click);
-            // 
-            // EnumDruhIntervenceMenuItem
-            // 
-            this.EnumDruhIntervenceMenuItem.Name = "EnumDruhIntervenceMenuItem";
-            this.EnumDruhIntervenceMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.EnumDruhIntervenceMenuItem.Text = "Druh Intervence";
-            this.EnumDruhIntervenceMenuItem.Click += new System.EventHandler(this.EnumDruhIntervenceMenuItem_Click);
-            // 
-            // EnumPartyToolStripMenuItem
-            // 
-            this.EnumPartyToolStripMenuItem.Name = "EnumPartyToolStripMenuItem";
-            this.EnumPartyToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.EnumPartyToolStripMenuItem.Text = "Forma Účasti";
-            this.EnumPartyToolStripMenuItem.Click += new System.EventHandler(this.EnumPartyToolStripMenuItem_Click);
-            // 
-            // EnumRegionMenuItem
-            // 
-            this.EnumRegionMenuItem.Name = "EnumRegionMenuItem";
-            this.EnumRegionMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.EnumRegionMenuItem.Text = "Kraje";
-            this.EnumRegionMenuItem.Click += new System.EventHandler(this.EnumRegionMenuItem_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(212, 6);
-            // 
-            // EnumContactTypeMenuItem
-            // 
-            this.EnumContactTypeMenuItem.Name = "EnumContactTypeMenuItem";
-            this.EnumContactTypeMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.EnumContactTypeMenuItem.Text = "Typ kontaktu";
-            this.EnumContactTypeMenuItem.Click += new System.EventHandler(this.EnumContactTypeMenuItem_Click);
-            // 
-            // EnumTypeServiceMenuItem
-            // 
-            this.EnumTypeServiceMenuItem.Name = "EnumTypeServiceMenuItem";
-            this.EnumTypeServiceMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.EnumTypeServiceMenuItem.Text = "Typ služby";
-            this.EnumTypeServiceMenuItem.Click += new System.EventHandler(this.EnumTypeServiceMenuItem_Click);
-            // 
-            // EnumClientFromMenuItem
-            // 
-            this.EnumClientFromMenuItem.Name = "EnumClientFromMenuItem";
-            this.EnumClientFromMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.EnumClientFromMenuItem.Text = "Odkud je klient";
-            this.EnumClientFromMenuItem.Click += new System.EventHandler(this.EnumClientFromMenuItem_Click);
-            // 
-            // EnumAgeMenuItem
-            // 
-            this.EnumAgeMenuItem.Name = "EnumAgeMenuItem";
-            this.EnumAgeMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.EnumAgeMenuItem.Text = "Věk";
-            this.EnumAgeMenuItem.Click += new System.EventHandler(this.EnumAgeMenuItem_Click);
-            // 
-            // EnumNickMenuItem
-            // 
-            this.EnumNickMenuItem.Name = "EnumNickMenuItem";
-            this.EnumNickMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.EnumNickMenuItem.Text = "Přezdívky";
-            this.EnumNickMenuItem.Click += new System.EventHandler(this.EnumNickMenuItem_Click);
-            // 
-            // EnumEndOfSpeechMenuItem
-            // 
-            this.EnumEndOfSpeechMenuItem.Name = "EnumEndOfSpeechMenuItem";
-            this.EnumEndOfSpeechMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.EnumEndOfSpeechMenuItem.Text = "Závěr hovoru";
-            this.EnumEndOfSpeechMenuItem.Click += new System.EventHandler(this.EnumEndOfSpeechMenuItem_Click);
-            // 
-            // EnumSubEndOfSpeechMenuItem
-            // 
-            this.EnumSubEndOfSpeechMenuItem.Name = "EnumSubEndOfSpeechMenuItem";
-            this.EnumSubEndOfSpeechMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.EnumSubEndOfSpeechMenuItem.Text = "Závěr hovoru-Detail";
-            this.EnumSubEndOfSpeechMenuItem.Click += new System.EventHandler(this.EnumSubEndOfSpeechMenuItem_Click);
-            // 
-            // EnumAktualniStavKlientaMenuItem
-            // 
-            this.EnumAktualniStavKlientaMenuItem.Name = "EnumAktualniStavKlientaMenuItem";
-            this.EnumAktualniStavKlientaMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.EnumAktualniStavKlientaMenuItem.Text = "Aktuální stav klienta";
-            this.EnumAktualniStavKlientaMenuItem.Click += new System.EventHandler(this.EnumAktualniStavKlientaMenuItem_Click);
-            // 
-            // EnumAktualniStavKlientaDetailMenuItem
-            // 
-            this.EnumAktualniStavKlientaDetailMenuItem.Name = "EnumAktualniStavKlientaDetailMenuItem";
-            this.EnumAktualniStavKlientaDetailMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.EnumAktualniStavKlientaDetailMenuItem.Text = "Aktuální stav klienta-Detail";
-            this.EnumAktualniStavKlientaDetailMenuItem.Click += new System.EventHandler(this.EnumAktualniStavKlientaDetailMenuItem_Click);
-            // 
-            // EnumTemaKontaktuMenuItem
-            // 
-            this.EnumTemaKontaktuMenuItem.Name = "EnumTemaKontaktuMenuItem";
-            this.EnumTemaKontaktuMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.EnumTemaKontaktuMenuItem.Text = "Téma kontaktu";
-            this.EnumTemaKontaktuMenuItem.Click += new System.EventHandler(this.EnumTemaKontaktuMenuItem_Click);
-            // 
-            // EnumTemaKontaktuDetailMenuItem
-            // 
-            this.EnumTemaKontaktuDetailMenuItem.Name = "EnumTemaKontaktuDetailMenuItem";
-            this.EnumTemaKontaktuDetailMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.EnumTemaKontaktuDetailMenuItem.Text = "Téma kontaktu-Detail ";
-            this.EnumTemaKontaktuDetailMenuItem.Click += new System.EventHandler(this.EnumTemaKontaktuDetailMenuItem_Click);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(214, 6);
-            // 
-            // MenuToolShowCallsAll
-            // 
-            this.MenuToolShowCallsAll.Name = "MenuToolShowCallsAll";
-            this.MenuToolShowCallsAll.Size = new System.Drawing.Size(217, 22);
-            this.MenuToolShowCallsAll.Text = "Telefonní volání (Vše)";
-            this.MenuToolShowCallsAll.Click += new System.EventHandler(this.MenuToolShowCallsAll_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(214, 6);
-            // 
-            // MenuToolShowCalls
-            // 
-            this.MenuToolShowCalls.Name = "MenuToolShowCalls";
-            this.MenuToolShowCalls.Size = new System.Drawing.Size(217, 22);
-            this.MenuToolShowCalls.Text = "Telefonní volání (SKI)";
-            this.MenuToolShowCalls.Click += new System.EventHandler(this.MenuToolShowCalls_Click);
-            // 
-            // MenuToolShowEvents
-            // 
-            this.MenuToolShowEvents.Name = "MenuToolShowEvents";
-            this.MenuToolShowEvents.Size = new System.Drawing.Size(217, 22);
-            this.MenuToolShowEvents.Text = "Události (SKI)";
-            this.MenuToolShowEvents.Click += new System.EventHandler(this.MenuToolShowEvents_Click);
-            // 
-            // MenuToolShowIntervence
-            // 
-            this.MenuToolShowIntervence.Name = "MenuToolShowIntervence";
-            this.MenuToolShowIntervence.Size = new System.Drawing.Size(217, 22);
-            this.MenuToolShowIntervence.Text = "Intervence (SKI)";
-            this.MenuToolShowIntervence.Click += new System.EventHandler(this.MenuToolShowIntervence_Click);
-            // 
-            // MenuToolShowParticipation
-            // 
-            this.MenuToolShowParticipation.Name = "MenuToolShowParticipation";
-            this.MenuToolShowParticipation.Size = new System.Drawing.Size(217, 22);
-            this.MenuToolShowParticipation.Text = "Účastníci Intervence (SKI)";
-            this.MenuToolShowParticipation.Click += new System.EventHandler(this.MenuToolShowParticipation_Click);
-            // 
-            // MenuToolShowSKIReport
-            // 
-            this.MenuToolShowSKIReport.Name = "MenuToolShowSKIReport";
-            this.MenuToolShowSKIReport.Size = new System.Drawing.Size(217, 22);
-            this.MenuToolShowSKIReport.Text = "Report (SKI)";
-            this.MenuToolShowSKIReport.Click += new System.EventHandler(this.MenuToolShowSKIReport_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(214, 6);
-            // 
-            // linkaPomociVKriziLPKToolStripMenuItem
-            // 
-            this.linkaPomociVKriziLPKToolStripMenuItem.Name = "linkaPomociVKriziLPKToolStripMenuItem";
-            this.linkaPomociVKriziLPKToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.linkaPomociVKriziLPKToolStripMenuItem.Text = "Linka Pomoci v Krizi (LPvK)";
-            this.linkaPomociVKriziLPKToolStripMenuItem.Click += new System.EventHandler(this.linkaPomociVKriziLPKToolStripMenuItem_Click);
-            // 
-            // NewCallToolStripMenuItem
-            // 
-            this.NewCallToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newCallLIKOToolStripMenuItem,
-            this.newCallLDToolStripMenuItem});
-            this.NewCallToolStripMenuItem.Name = "NewCallToolStripMenuItem";
-            this.NewCallToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
-            this.NewCallToolStripMenuItem.Text = "Nový hovor";
-            // 
-            // newCallLIKOToolStripMenuItem
-            // 
-            this.newCallLIKOToolStripMenuItem.Name = "newCallLIKOToolStripMenuItem";
-            this.newCallLIKOToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.newCallLIKOToolStripMenuItem.Text = "Nový hovor - SKI";
-            this.newCallLIKOToolStripMenuItem.Click += new System.EventHandler(this.newCallLIKOToolStripMenuItem_Click);
-            // 
-            // newCallLDToolStripMenuItem
-            // 
-            this.newCallLDToolStripMenuItem.Name = "newCallLDToolStripMenuItem";
-            this.newCallLDToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.newCallLDToolStripMenuItem.Text = "Nový hovor - LPvK";
-            this.newCallLDToolStripMenuItem.Click += new System.EventHandler(this.newCallLDToolStripMenuItem_Click);
-            // 
-            // testToolStripMenuItem
-            // 
-            this.testToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mainTestToolStripMenuItem,
-            this.graphTestToolStripMenuItem});
-            this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.testToolStripMenuItem.Text = "Test";
-            this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
-            // 
-            // mainTestToolStripMenuItem
-            // 
-            this.mainTestToolStripMenuItem.Name = "mainTestToolStripMenuItem";
-            this.mainTestToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
-            this.mainTestToolStripMenuItem.Text = "Main Test";
-            this.mainTestToolStripMenuItem.Click += new System.EventHandler(this.mainTestToolStripMenuItem_Click);
-            // 
-            // graphTestToolStripMenuItem
-            // 
-            this.graphTestToolStripMenuItem.Name = "graphTestToolStripMenuItem";
-            this.graphTestToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
-            this.graphTestToolStripMenuItem.Text = "Graph Test";
-            this.graphTestToolStripMenuItem.Click += new System.EventHandler(this.graphTestToolStripMenuItem_Click);
-            // 
-            // SettingToolStripMenuItem
-            // 
-            this.SettingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MenuItemChangePassword,
-            this.MenuItemUsers,
-            this.MenuItemNewUser,
-            this.toolStripSeparator1,
-            this.MenuItemBackup,
-            this.MenuItemRestore,
-            this.toolStripSeparator8,
-            this.MenuItemPromenneAplikace,
-            this.toolStripSeparator9,
-            this.oAplikaciToolStripMenuItem});
-            this.SettingToolStripMenuItem.Name = "SettingToolStripMenuItem";
-            this.SettingToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
-            this.SettingToolStripMenuItem.Text = "Nastavení";
-            // 
-            // MenuItemChangePassword
-            // 
-            this.MenuItemChangePassword.Name = "MenuItemChangePassword";
-            this.MenuItemChangePassword.Size = new System.Drawing.Size(214, 22);
-            this.MenuItemChangePassword.Text = "Změna hesla";
-            this.MenuItemChangePassword.Click += new System.EventHandler(this.MenuItemChangePassword_Click);
-            // 
-            // MenuItemUsers
-            // 
-            this.MenuItemUsers.Name = "MenuItemUsers";
-            this.MenuItemUsers.Size = new System.Drawing.Size(214, 22);
-            this.MenuItemUsers.Text = "Uživatelé";
-            this.MenuItemUsers.Click += new System.EventHandler(this.MenuItemUsers_Click);
-            // 
-            // MenuItemNewUser
-            // 
-            this.MenuItemNewUser.Name = "MenuItemNewUser";
-            this.MenuItemNewUser.Size = new System.Drawing.Size(214, 22);
-            this.MenuItemNewUser.Text = "Nový uživatel";
-            this.MenuItemNewUser.Click += new System.EventHandler(this.MenuItemNewUser_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(211, 6);
-            // 
-            // MenuItemBackup
-            // 
-            this.MenuItemBackup.Name = "MenuItemBackup";
-            this.MenuItemBackup.Size = new System.Drawing.Size(214, 22);
-            this.MenuItemBackup.Text = "Zálohování databáze Evitel";
-            this.MenuItemBackup.Click += new System.EventHandler(this.MenuItemBackup_Click);
-            // 
-            // MenuItemRestore
-            // 
-            this.MenuItemRestore.Name = "MenuItemRestore";
-            this.MenuItemRestore.Size = new System.Drawing.Size(214, 22);
-            this.MenuItemRestore.Text = "Obnova databáze Evitel";
-            this.MenuItemRestore.Click += new System.EventHandler(this.MenuItemRestore_Click);
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(211, 6);
-            // 
-            // MenuItemPromenneAplikace
-            // 
-            this.MenuItemPromenneAplikace.Name = "MenuItemPromenneAplikace";
-            this.MenuItemPromenneAplikace.Size = new System.Drawing.Size(214, 22);
-            this.MenuItemPromenneAplikace.Text = "Proměnné aplikace";
-            this.MenuItemPromenneAplikace.Click += new System.EventHandler(this.MenuItemPromenneAplikace_Click);
-            // 
-            // toolStripSeparator9
-            // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(211, 6);
-            // 
-            // oAplikaciToolStripMenuItem
-            // 
-            this.oAplikaciToolStripMenuItem.Name = "oAplikaciToolStripMenuItem";
-            this.oAplikaciToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
-            this.oAplikaciToolStripMenuItem.Text = "O aplikaci";
-            this.oAplikaciToolStripMenuItem.Click += new System.EventHandler(this.oAplikaciToolStripMenuItem_Click);
-            // 
-            // statistikaToolStripMenuItem
-            // 
-            this.statistikaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statistikaVoláníToolStripMenuItem,
-            this.statistikaSKIUdálostíToolStripMenuItem});
-            this.statistikaToolStripMenuItem.Name = "statistikaToolStripMenuItem";
-            this.statistikaToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
-            this.statistikaToolStripMenuItem.Text = "Statistika";
-            // 
-            // statistikaVoláníToolStripMenuItem
-            // 
-            this.statistikaVoláníToolStripMenuItem.Name = "statistikaVoláníToolStripMenuItem";
-            this.statistikaVoláníToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.statistikaVoláníToolStripMenuItem.Text = "Statistika Volání";
-            this.statistikaVoláníToolStripMenuItem.Click += new System.EventHandler(this.statistikaVoláníToolStripMenuItem_Click);
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripTime,
-            this.toolStripUser,
-            this.toolStripStatusLabel1,
-            this.toolStripRows});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 796);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1555, 22);
-            this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripTime
-            // 
-            this.toolStripTime.Name = "toolStripTime";
-            this.toolStripTime.Size = new System.Drawing.Size(79, 17);
-            this.toolStripTime.Text = "ToolStripTime";
-            // 
-            // toolStripUser
-            // 
-            this.toolStripUser.Name = "toolStripUser";
-            this.toolStripUser.Size = new System.Drawing.Size(75, 17);
-            this.toolStripUser.Text = "toolStripUser";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(1306, 17);
-            this.toolStripStatusLabel1.Spring = true;
-            // 
-            // toolStripRows
-            // 
-            this.toolStripRows.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripRows.Name = "toolStripRows";
-            this.toolStripRows.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripRows.Size = new System.Drawing.Size(80, 17);
-            this.toolStripRows.Text = "toolStripRows";
-            // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Cursor = System.Windows.Forms.Cursors.HSplit;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 24);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.BackColor = System.Drawing.SystemColors.Info;
-            this.splitContainer1.Panel1.Resize += new System.EventHandler(this.splitContainer1_Panel1_Resize);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.BackColor = System.Drawing.SystemColors.Info;
-            this.splitContainer1.Size = new System.Drawing.Size(288, 266);
-            this.splitContainer1.SplitterDistance = 174;
-            this.splitContainer1.TabIndex = 2;
-            // 
-            // ucCallLIKO1
-            // 
-            this.ucCallLIKO1.Location = new System.Drawing.Point(294, 24);
-            this.ucCallLIKO1.Name = "ucCallLIKO1";
-            this.ucCallLIKO1.Size = new System.Drawing.Size(128, 110);
-            this.ucCallLIKO1.TabIndex = 4;
-            // 
-            // ucIntervents1
-            // 
-            this.ucIntervents1.Location = new System.Drawing.Point(440, 36);
-            this.ucIntervents1.Name = "ucIntervents1";
-            this.ucIntervents1.Size = new System.Drawing.Size(511, 284);
-            this.ucIntervents1.TabIndex = 5;
-            // 
-            // ctrlParticipation1
-            // 
-            this.ctrlParticipation1.Location = new System.Drawing.Point(0, 296);
-            this.ctrlParticipation1.Name = "ctrlParticipation1";
-            this.ctrlParticipation1.Size = new System.Drawing.Size(272, 171);
-            this.ctrlParticipation1.TabIndex = 7;
-            // 
-            // ctrlLikoCall1
-            // 
-            this.ctrlLikoCall1.Location = new System.Drawing.Point(278, 296);
-            this.ctrlLikoCall1.Name = "ctrlLikoCall1";
-            this.ctrlLikoCall1.Size = new System.Drawing.Size(221, 157);
-            this.ctrlLikoCall1.TabIndex = 8;
-            // 
-            // ctrllikoIncident1
-            // 
-            this.ctrllikoIncident1.Location = new System.Drawing.Point(505, 326);
-            this.ctrllikoIncident1.Name = "ctrllikoIncident1";
-            this.ctrllikoIncident1.Size = new System.Drawing.Size(259, 168);
-            this.ctrllikoIncident1.TabIndex = 9;
-            // 
-            // ctrllikoIntervence1
-            // 
-            this.ctrllikoIntervence1.Location = new System.Drawing.Point(752, 326);
-            this.ctrllikoIntervence1.Name = "ctrllikoIntervence1";
-            this.ctrllikoIntervence1.Size = new System.Drawing.Size(259, 168);
-            this.ctrllikoIntervence1.TabIndex = 10;
-            // 
-            // ctrlUser1
-            // 
-            this.ctrlUser1.Location = new System.Drawing.Point(1005, 304);
-            this.ctrlUser1.Name = "ctrlUser1";
-            this.ctrlUser1.Size = new System.Drawing.Size(180, 163);
-            this.ctrlUser1.TabIndex = 11;
-            // 
-            // ucCiselnik1
-            // 
-            this.ucCiselnik1.Location = new System.Drawing.Point(957, 36);
-            this.ucCiselnik1.Name = "ucCiselnik1";
-            this.ucCiselnik1.Size = new System.Drawing.Size(510, 242);
-            this.ucCiselnik1.TabIndex = 12;
-            // 
-            // ucCallLPK1
-            // 
-            this.ucCallLPK1.Location = new System.Drawing.Point(12, 473);
-            this.ucCallLPK1.Name = "ucCallLPK1";
-            this.ucCallLPK1.Size = new System.Drawing.Size(228, 100);
-            this.ucCallLPK1.TabIndex = 13;
-            // 
-            // ctrlCall1
-            // 
-            this.ctrlCall1.Location = new System.Drawing.Point(278, 500);
-            this.ctrlCall1.Name = "ctrlCall1";
-            this.ctrlCall1.Size = new System.Drawing.Size(259, 168);
-            this.ctrlCall1.TabIndex = 14;
-            // 
-            // ctrllpk1
-            // 
-            this.ctrllpk1.Location = new System.Drawing.Point(543, 500);
-            this.ctrllpk1.Name = "ctrllpk1";
-            this.ctrllpk1.Size = new System.Drawing.Size(259, 168);
-            this.ctrllpk1.TabIndex = 15;
-            // 
-            // ctrlSKIReport1
-            // 
-            this.ctrlSKIReport1.Location = new System.Drawing.Point(800, 496);
-            this.ctrlSKIReport1.Name = "ctrlSKIReport1";
-            this.ctrlSKIReport1.Size = new System.Drawing.Size(259, 168);
-            this.ctrlSKIReport1.TabIndex = 16;
-            // 
-            // ctrlStatistika1
-            // 
-            this.ctrlStatistika1.Location = new System.Drawing.Point(1065, 473);
-            this.ctrlStatistika1.Name = "ctrlStatistika1";
-            this.ctrlStatistika1.Size = new System.Drawing.Size(259, 168);
-            this.ctrlStatistika1.TabIndex = 17;
-            // 
-            // statistikaSKIUdálostíToolStripMenuItem
-            // 
-            this.statistikaSKIUdálostíToolStripMenuItem.Name = "statistikaSKIUdálostíToolStripMenuItem";
-            this.statistikaSKIUdálostíToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.statistikaSKIUdálostíToolStripMenuItem.Text = "Statistika SKI událostí";
-            this.statistikaSKIUdálostíToolStripMenuItem.Click += new System.EventHandler(this.statistikaSKIUdálostíToolStripMenuItem_Click);
-            // 
-            // frmMain
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1555, 818);
-            this.Controls.Add(this.ctrlStatistika1);
-            this.Controls.Add(this.ctrlSKIReport1);
-            this.Controls.Add(this.ctrllpk1);
-            this.Controls.Add(this.ctrlCall1);
-            this.Controls.Add(this.ucCallLPK1);
-            this.Controls.Add(this.ucCiselnik1);
-            this.Controls.Add(this.ctrlUser1);
-            this.Controls.Add(this.ctrllikoIntervence1);
-            this.Controls.Add(this.ctrllikoIncident1);
-            this.Controls.Add(this.ctrlLikoCall1);
-            this.Controls.Add(this.ctrlParticipation1);
-            this.Controls.Add(this.ucIntervents1);
-            this.Controls.Add(this.ucCallLIKO1);
-            this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.menuStrip1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
-            this.Name = "frmMain";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+    #endregion
 
-        }
-
-        #endregion
-
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripTime;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripUser;
-        private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.ToolStripMenuItem souborToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem MenuSystemExit;
-        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem MenuToolEventLog;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.ToolStripMenuItem NewCallToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newCallLIKOToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newCallLDToolStripMenuItem;
-        private Controls.ucCallLIKO ucCallLIKO1;
-        private Controls.ucIntervents ucIntervents1;
-        private System.Windows.Forms.ToolStripMenuItem interventiToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem EnumsMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem EnumsSexMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem EnumSubTypIntervenceMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem EnumDruhIntervenceMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem EnumPartyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem EnumRegionMenuItem;
+    private System.Windows.Forms.MenuStrip menuStrip1;
+    private System.Windows.Forms.StatusStrip statusStrip1;
+    private System.Windows.Forms.ToolStripStatusLabel toolStripTime;
+    private System.Windows.Forms.ToolStripStatusLabel toolStripUser;
+    private System.Windows.Forms.Timer timer1;
+    private System.Windows.Forms.ToolStripMenuItem souborToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem MenuSystemExit;
+    private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem viewsToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem MenuToolEventLog;
+    private System.Windows.Forms.SplitContainer splitContainer1;
+    private System.Windows.Forms.ToolStripMenuItem NewCallToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem newCallLIKOToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem newCallLDToolStripMenuItem;
+    private Controls.ucCallLIKO ucCallLIKO1;
+    private Controls.ucIntervents ucIntervents1;
+    private System.Windows.Forms.ToolStripMenuItem interventiToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem EnumsMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem EnumsSexMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem EnumSubTypIntervenceMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem EnumDruhIntervenceMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem EnumPartyToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem EnumRegionMenuItem;
     private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
     private System.Windows.Forms.ToolStripMenuItem MenuToolShowParticipation;
     private Controls.ctrlParticipant ctrlParticipation1;
@@ -868,7 +802,6 @@ namespace EvitelApp2
     private System.Windows.Forms.ToolStripMenuItem MenuItemRestore;
     private System.Windows.Forms.ToolStripMenuItem mainTestToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem graphTestToolStripMenuItem;
-    private Controls.ucCiselnik ucCiselnik1;
     private System.Windows.Forms.ToolStripMenuItem FileExportCSV;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     private System.Windows.Forms.ToolStripMenuItem EnumNickMenuItem;
@@ -901,6 +834,7 @@ namespace EvitelApp2
     private System.Windows.Forms.ToolStripMenuItem statistikaVoláníToolStripMenuItem;
     private Controls.ctrlStatistika ctrlStatistika1;
     private System.Windows.Forms.ToolStripMenuItem statistikaSKIUdálostíToolStripMenuItem;
+    private Controls.ucCiselnik ucCiselnik1;
   }
 }
 

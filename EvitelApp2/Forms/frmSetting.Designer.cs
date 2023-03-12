@@ -28,56 +28,55 @@
     /// </summary>
     private void InitializeComponent()
     {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSetting));
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtCisloJednaci = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(31, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(155, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Číslo Jednací (PDF Protokol)";
-            // 
-            // txtCisloJednaci
-            // 
-            this.txtCisloJednaci.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtCisloJednaci.Location = new System.Drawing.Point(227, 27);
-            this.txtCisloJednaci.Name = "txtCisloJednaci";
-            this.txtCisloJednaci.Size = new System.Drawing.Size(287, 27);
-            this.txtCisloJednaci.TabIndex = 1;
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button1.Location = new System.Drawing.Point(215, 95);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(97, 36);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Uložit";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // frmSetting
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(526, 159);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.txtCisloJednaci);
-            this.Controls.Add(this.label1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "frmSetting";
-            this.Text = "Nastavení - Proměnné aplikace";
-            this.TopMost = true;
-            this.Load += new System.EventHandler(this.frmSetting_Load);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSetting));
+      label1 = new System.Windows.Forms.Label();
+      txtCisloJednaci = new System.Windows.Forms.TextBox();
+      button1 = new System.Windows.Forms.Button();
+      SuspendLayout();
+      // 
+      // label1
+      // 
+      label1.AutoSize = true;
+      label1.Location = new System.Drawing.Point(31, 30);
+      label1.Name = "label1";
+      label1.Size = new System.Drawing.Size(155, 15);
+      label1.TabIndex = 0;
+      label1.Text = "Číslo Jednací (PDF Protokol)";
+      // 
+      // txtCisloJednaci
+      // 
+      txtCisloJednaci.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      txtCisloJednaci.Location = new System.Drawing.Point(227, 27);
+      txtCisloJednaci.Name = "txtCisloJednaci";
+      txtCisloJednaci.Size = new System.Drawing.Size(287, 27);
+      txtCisloJednaci.TabIndex = 1;
+      // 
+      // button1
+      // 
+      button1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+      button1.Location = new System.Drawing.Point(215, 95);
+      button1.Name = "button1";
+      button1.Size = new System.Drawing.Size(97, 36);
+      button1.TabIndex = 2;
+      button1.Text = "Uložit";
+      button1.UseVisualStyleBackColor = true;
+      button1.Click += button1_Click;
+      // 
+      // frmSetting
+      // 
+      AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+      AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      ClientSize = new System.Drawing.Size(1134, 532);
+      Controls.Add(button1);
+      Controls.Add(txtCisloJednaci);
+      Controls.Add(label1);
+      Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+      Name = "frmSetting";
+      Text = "Nastavení - Proměnné aplikace";
+      TopMost = true;
+      Load += frmSetting_Load;
+      ResumeLayout(false);
+      PerformLayout();
     }
 
     #endregion

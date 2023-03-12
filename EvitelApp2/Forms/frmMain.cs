@@ -984,5 +984,10 @@ namespace EvitelApp2
 
     }
 
+    private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+    {
+      if (MessageBox.Show ("Opravdu ukončit EVITEL?","EVITEL",MessageBoxButtons.YesNo,MessageBoxIcon.Question) != DialogResult.Yes)
+        e.Cancel = true;
+    }
   }
 }
