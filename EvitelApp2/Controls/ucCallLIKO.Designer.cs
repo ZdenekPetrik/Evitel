@@ -52,9 +52,6 @@ namespace EvitelApp2.Controls
       boxEvent = new System.Windows.Forms.GroupBox();
       txtSupposedId = new System.Windows.Forms.TextBox();
       lblSupposeId = new System.Windows.Forms.Label();
-      chkPokusPriprava = new System.Windows.Forms.CheckBox();
-      chkDokonane = new System.Windows.Forms.CheckBox();
-      chkNasledekSmrti = new System.Windows.Forms.CheckBox();
       txtPocetObeti = new System.Windows.Forms.NumericUpDown();
       txtPlace = new System.Windows.Forms.TextBox();
       lblPlace = new System.Windows.Forms.Label();
@@ -304,9 +301,6 @@ namespace EvitelApp2.Controls
       // 
       boxEvent.Controls.Add(txtSupposedId);
       boxEvent.Controls.Add(lblSupposeId);
-      boxEvent.Controls.Add(chkPokusPriprava);
-      boxEvent.Controls.Add(chkDokonane);
-      boxEvent.Controls.Add(chkNasledekSmrti);
       boxEvent.Controls.Add(txtPocetObeti);
       boxEvent.Controls.Add(txtPlace);
       boxEvent.Controls.Add(lblPlace);
@@ -345,39 +339,6 @@ namespace EvitelApp2.Controls
       lblSupposeId.Size = new System.Drawing.Size(162, 17);
       lblSupposeId.TabIndex = 28;
       lblSupposeId.Text = "Předpokládané ID události";
-      // 
-      // chkPokusPriprava
-      // 
-      chkPokusPriprava.AutoSize = true;
-      chkPokusPriprava.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-      chkPokusPriprava.Location = new System.Drawing.Point(503, 125);
-      chkPokusPriprava.Name = "chkPokusPriprava";
-      chkPokusPriprava.Size = new System.Drawing.Size(115, 21);
-      chkPokusPriprava.TabIndex = 27;
-      chkPokusPriprava.Text = "Pokus/příprava";
-      chkPokusPriprava.UseVisualStyleBackColor = true;
-      // 
-      // chkDokonane
-      // 
-      chkDokonane.AutoSize = true;
-      chkDokonane.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-      chkDokonane.Location = new System.Drawing.Point(503, 102);
-      chkDokonane.Name = "chkDokonane";
-      chkDokonane.Size = new System.Drawing.Size(86, 21);
-      chkDokonane.TabIndex = 26;
-      chkDokonane.Text = "Dokonané";
-      chkDokonane.UseVisualStyleBackColor = true;
-      // 
-      // chkNasledekSmrti
-      // 
-      chkNasledekSmrti.AutoSize = true;
-      chkNasledekSmrti.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-      chkNasledekSmrti.Location = new System.Drawing.Point(503, 77);
-      chkNasledekSmrti.Name = "chkNasledekSmrti";
-      chkNasledekSmrti.Size = new System.Drawing.Size(114, 21);
-      chkNasledekSmrti.TabIndex = 25;
-      chkNasledekSmrti.Text = "Následek smrti";
-      chkNasledekSmrti.UseVisualStyleBackColor = true;
       // 
       // txtPocetObeti
       // 
@@ -773,9 +734,6 @@ namespace EvitelApp2.Controls
     private System.Windows.Forms.TextBox txtPlace;
     private System.Windows.Forms.Label lblPlace;
     private System.Windows.Forms.Label lblregion1;
-    private System.Windows.Forms.CheckBox chkPokusPriprava;
-    private System.Windows.Forms.CheckBox chkDokonane;
-    private System.Windows.Forms.CheckBox chkNasledekSmrti;
     private System.Windows.Forms.NumericUpDown txtPocetObeti;
     private System.Windows.Forms.GroupBox boxIntervence;
     private System.Windows.Forms.Label lblIntervenceNote;

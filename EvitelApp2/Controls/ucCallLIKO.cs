@@ -107,9 +107,6 @@ namespace EvitelApp2.Controls
       this.txtIntervenceNote.TextChanged += this.Any_ValueChanged;
       this.txtEventNote.TextChanged += this.Any_ValueChanged;
       this.txtPlace.TextChanged += this.Any_ValueChanged;
-      this.chkDokonane.CheckedChanged += this.Any_ValueChanged;
-      this.chkNasledekSmrti.CheckedChanged += this.Any_ValueChanged;
-      this.chkPokusPriprava.CheckedChanged += this.Any_ValueChanged;
       this.chkSecondIntervence.CheckedChanged += this.Any_ValueChanged;
       this.txtPocetObeti.ValueChanged += this.Any_ValueChanged;
       this.txtNrCelkem.ValueChanged += this.Any_ValueChanged;
@@ -227,7 +224,7 @@ namespace EvitelApp2.Controls
         if (chkSecondIntervence.Checked != true)
         {
           DateTime datetimeIncident = dtIncident.Value.Date.Add(TimeSpan.Parse(tmIncident.Value.ToShortTimeString()));
-          IncidentId = DB.WriteIncident(txtEventNote.Text, ((ComboItem)cmbSubTypeIncident.SelectedItem).iValue, datetimeIncident, ((ComboItem)cmbRegion.SelectedItem).iValue, txtPlace.Text, chkNasledekSmrti.Checked, chkDokonane.Checked, chkPokusPriprava.Checked, (int)txtPocetObeti.Value);
+          IncidentId = DB.WriteIncident(txtEventNote.Text, ((ComboItem)cmbSubTypeIncident.SelectedItem).iValue, datetimeIncident, ((ComboItem)cmbRegion.SelectedItem).iValue, txtPlace.Text, true,true,true, (int)txtPocetObeti.Value);
         }
         if (IncidentId > 0)
         {
@@ -335,25 +332,10 @@ namespace EvitelApp2.Controls
         new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2IntervenceTable, "Počet počkozených " + txtPocetObeti.Value.ToString() + " -> " + aktLikoIncident.PocetPoskozenych, aktLikoIncident.LikoincidentId.ToString(), Program.myLoggedUser.LoginUserId);
         isChangeIncident = true;
       }
-      if (chkDokonane.Checked != aktLikoIncident.Dokonane)
-      {
-        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2IntervenceTable, "Dokonané " + chkDokonane.Checked.ToString() + " -> " + aktLikoIncident.Dokonane.ToString(), aktLikoIncident.LikoincidentId.ToString(), Program.myLoggedUser.LoginUserId);
-        isChangeIncident = true;
-      }
-      if (chkNasledekSmrti.Checked != aktLikoIncident.NasledekSmrti)
-      {
-        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2IntervenceTable, "Dokonané " + chkNasledekSmrti.Checked.ToString() + " -> " + aktLikoIncident.NasledekSmrti.ToString(), aktLikoIncident.LikoincidentId.ToString(), Program.myLoggedUser.LoginUserId);
-        isChangeIncident = true;
-      }
-      if (chkPokusPriprava.Checked != aktLikoIncident.PokusPriprava)
-      {
-        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2IntervenceTable, "Dokonané " + chkPokusPriprava.Checked.ToString() + " -> " + aktLikoIncident.PokusPriprava.ToString(), aktLikoIncident.LikoincidentId.ToString(), Program.myLoggedUser.LoginUserId);
-        isChangeIncident = true;
-      }
 
       if (isChangeIncident)
       {
-        DB.UpdateIncident(aktLikoIncident.LikoincidentId, datetimeIncident, ((ComboItem)cmbSubTypeIncident.SelectedItem).iValue, ((ComboItem)cmbRegion.SelectedItem).iValue, txtEventNote.Text, txtPlace.Text, (int)txtPocetObeti.Value, chkDokonane.Checked, chkNasledekSmrti.Checked, chkPokusPriprava.Checked);
+        DB.UpdateIncident(aktLikoIncident.LikoincidentId, datetimeIncident, ((ComboItem)cmbSubTypeIncident.SelectedItem).iValue, ((ComboItem)cmbRegion.SelectedItem).iValue, txtEventNote.Text, txtPlace.Text, (int)txtPocetObeti.Value, true,true,true);
         aktLikoIncident = DB.GetLikoIncident(aktLikoIncident.LikoincidentId);
       }
       DB.UpdateParticipants(aktLikoIntervence.LikointervenceId, ucParticipations1.participantsList);
@@ -474,7 +456,6 @@ namespace EvitelApp2.Controls
       txtPocetObeti.Value = 0;
       cmbRegion.SelectedIndex = 0;
       txtPlace.Text = string.Empty;
-      chkNasledekSmrti.Checked = chkDokonane.Checked = chkPokusPriprava.Checked = false;
       txtEventNote.Text = string.Empty;
       dtIntervence.Value = DateTime.Now;
       tmIntervence.Value = DateTime.Now;
@@ -501,9 +482,6 @@ namespace EvitelApp2.Controls
       txtPlace.Text = aktLikoIncident.Place;
       cmbSubTypeIncident.SelectItemByValue(aktLikoIncident.SubTypeIncidentEid ?? 0);
       txtPocetObeti.Value = aktLikoIncident.PocetPoskozenych ?? 0;
-      chkNasledekSmrti.Checked = aktLikoIncident.NasledekSmrti ?? false;
-      chkDokonane.Checked = aktLikoIncident.Dokonane ?? false;
-      chkPokusPriprava.Checked = aktLikoIncident.PokusPriprava ?? false;
       txtEventNote.Text = aktLikoIncident.Note;
 
       dtIntervence.Value = (DateTime)aktLikoIntervence.DtStartIntervence;
@@ -560,9 +538,6 @@ namespace EvitelApp2.Controls
               txtPlace.Text = aktLikoIncident.Place;
               cmbSubTypeIncident.SelectItemByValue(aktLikoIncident.SubTypeIncidentEid ?? 0);
               txtPocetObeti.Value = aktLikoIncident.PocetPoskozenych ?? 0;
-              chkDokonane.Checked = aktLikoIncident.NasledekSmrti ?? false;
-              chkDokonane.Checked = aktLikoIncident.Dokonane ?? false;
-              chkPokusPriprava.Checked = aktLikoIncident.PokusPriprava ?? false;
               txtEventNote.Text = aktLikoIncident.Note;
             }
             else

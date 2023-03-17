@@ -630,7 +630,7 @@ namespace EvitelApp2
       // 
       ucIntervents1.Location = new System.Drawing.Point(440, 36);
       ucIntervents1.Name = "ucIntervents1";
-      ucIntervents1.Size = new System.Drawing.Size(511, 284);
+      ucIntervents1.Size = new System.Drawing.Size(176, 209);
       ucIntervents1.TabIndex = 5;
       // 
       // ctrlParticipation1
@@ -706,9 +706,9 @@ namespace EvitelApp2
       // 
       // ucCiselnik1
       // 
-      ucCiselnik1.Location = new System.Drawing.Point(957, 36);
+      ucCiselnik1.Location = new System.Drawing.Point(649, 36);
       ucCiselnik1.Name = "ucCiselnik1";
-      ucCiselnik1.Size = new System.Drawing.Size(510, 242);
+      ucCiselnik1.Size = new System.Drawing.Size(163, 209);
       ucCiselnik1.TabIndex = 18;
       // 
       // frmMain
