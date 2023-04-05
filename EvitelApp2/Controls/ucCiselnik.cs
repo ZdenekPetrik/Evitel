@@ -955,7 +955,7 @@ namespace EvitelApp2.Controls
     public void Visibility(bool isVisibility)
     {
       Visible = isVisibility;
-      if (Visible)
+      if (dgw.CurrentCell != null && Visible)
         dgw_RowEnter(null, new DataGridViewCellEventArgs(0, dgw.CurrentCell.RowIndex));
       else
       {

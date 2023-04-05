@@ -137,9 +137,10 @@ namespace EvitelApp2.Controls
       MyResize();
     }
 
-    public void Visibility(bool isVisibility) {
+    public void Visibility(bool isVisibility) 
+    {
       Visible = isVisibility;
-      if (Visible)
+      if (dgw.CurrentCell != null && Visible)
         dgw_RowEnter(null, new DataGridViewCellEventArgs(0,dgw.CurrentCell.RowIndex));
       else {
         ShowRowInformation?.Invoke(-1, -1);
