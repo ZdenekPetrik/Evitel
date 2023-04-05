@@ -12,6 +12,8 @@ namespace EvitelLib2.Model
         public string VolajiciKraj { get; set; }
         public int? CallId { get; set; }
         public DateTime? DtIncident { get; set; }
+        public int? UdalostMonth { get; set; }
+        public int? UdalostYear { get; set; }
         public DateTime? DtUdalost { get; set; }
         public string TmUdalost { get; set; }
         public string UdalostRegion { get; set; }
@@ -19,11 +21,9 @@ namespace EvitelLib2.Model
         public string UdalostNote { get; set; }
         public string DruhUdalosti { get; set; }
         public string KategorieUdalosti { get; set; }
-        public bool? NasledekSmrti { get; set; }
-        public bool? Dokonane { get; set; }
-        public bool? PokusPriprava { get; set; }
         public int? PocetPoskozenych { get; set; }
         public int? UdalostId { get; set; }
+        public int IntervenceId { get; set; }
         public DateTime? DtStartIntervence { get; set; }
         public DateTime? DtIntervStart { get; set; }
         public string TmIntervStart { get; set; }
@@ -66,5 +66,7 @@ namespace EvitelLib2.Model
         public string UserLastName { get; set; }
         public string UserFirstName { get; set; }
         public int? LoginUserId { get; set; }
+        public int? Year { get; set; }
+        public int? Month { get; set; }
     }
 }

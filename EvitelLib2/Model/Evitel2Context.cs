@@ -59,7 +59,6 @@ namespace EvitelLib2.Model
         public virtual DbSet<WLikocall> WLikocalls { get; set; }
         public virtual DbSet<WLikoincident> WLikoincidents { get; set; }
         public virtual DbSet<WLikointervence> WLikointervences { get; set; }
-        public virtual DbSet<WLikointervenceOld> WLikointervenceOlds { get; set; }
         public virtual DbSet<WLikoparticipant> WLikoparticipants { get; set; }
         public virtual DbSet<WLpk> WLpks { get; set; }
         public virtual DbSet<WMainEventLog> WMainEventLogs { get; set; }
@@ -69,12 +68,14 @@ namespace EvitelLib2.Model
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=.;Database=Evitel2;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=(LocalDB)\\MSSQLLocalDB;Database=Evitel2;Trusted_Connection=True;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.UseCollation("Czech_CI_AS");
+
             modelBuilder.Entity<Call>(entity =>
             {
                 entity.Property(e => e.CallType).HasColumnName("callType");
@@ -92,7 +93,7 @@ namespace EvitelLib2.Model
             modelBuilder.Entity<DimDateTime>(entity =>
             {
                 entity.HasKey(e => e.Date)
-                    .HasName("PK__dimDateT__D9DE21FCF91386B3");
+                    .HasName("PK__dimDateT__D9DE21FC35794280");
 
                 entity.ToTable("dimDateTime");
 
@@ -894,6 +895,8 @@ namespace EvitelLib2.Model
 
                 entity.Property(e => e.IntervPoradi).HasColumnName("Interv_Poradi");
 
+                entity.Property(e => e.IntervenceId).HasColumnName("Intervence_Id");
+
                 entity.Property(e => e.Intervent2Name).HasMaxLength(53);
 
                 entity.Property(e => e.InterventName).HasMaxLength(53);
@@ -911,8 +914,6 @@ namespace EvitelLib2.Model
                 entity.Property(e => e.LikointervenceId).HasColumnName("LIKOIntervenceId");
 
                 entity.Property(e => e.Organization).HasMaxLength(255);
-
-                entity.Property(e => e.PokusPriprava).HasColumnName("Pokus_Priprava");
 
                 entity.Property(e => e.RegionName).HasMaxLength(50);
 
@@ -951,11 +952,15 @@ namespace EvitelLib2.Model
                     .HasMaxLength(50)
                     .HasColumnName("Udalost_Misto");
 
+                entity.Property(e => e.UdalostMonth).HasColumnName("Udalost_Month");
+
                 entity.Property(e => e.UdalostNote).HasColumnName("Udalost_Note");
 
                 entity.Property(e => e.UdalostRegion)
                     .HasMaxLength(50)
                     .HasColumnName("Udalost_Region");
+
+                entity.Property(e => e.UdalostYear).HasColumnName("Udalost_Year");
 
                 entity.Property(e => e.UserFirstName).HasMaxLength(50);
 
@@ -1163,46 +1168,6 @@ namespace EvitelLib2.Model
                     .HasColumnName("Volajici_Kraj");
             });
 
-            modelBuilder.Entity<WLikointervenceOld>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("wLIKOIntervenceOld");
-
-                entity.Property(e => e.DateStartIntervence)
-                    .HasColumnType("date")
-                    .HasColumnName("dateStartIntervence");
-
-                entity.Property(e => e.DtEndIntervence).HasColumnName("dtEndIntervence");
-
-                entity.Property(e => e.DtStartCall).HasColumnName("dtStartCall");
-
-                entity.Property(e => e.DtStartIntervence).HasColumnName("dtStartIntervence");
-
-                entity.Property(e => e.InterventShortName).HasMaxLength(53);
-
-                entity.Property(e => e.LikoincidentId).HasColumnName("LIKOIncidentId");
-
-                entity.Property(e => e.LikointervenceId).HasColumnName("LIKOIntervenceId");
-
-                entity.Property(e => e.LikointervenceIdmaster).HasColumnName("LIKOIntervenceIDMaster");
-
-                entity.Property(e => e.RegionName).HasMaxLength(50);
-
-                entity.Property(e => e.TimeStartIntervence)
-                    .HasMaxLength(8)
-                    .IsUnicode(false)
-                    .HasColumnName("timeStartIntervence");
-
-                entity.Property(e => e.UsrFirstName)
-                    .HasMaxLength(50)
-                    .HasColumnName("usrFirstName");
-
-                entity.Property(e => e.UsrLastName)
-                    .HasMaxLength(50)
-                    .HasColumnName("usrLastName");
-            });
-
             modelBuilder.Entity<WLikoparticipant>(entity =>
             {
                 entity.HasNoKey();
@@ -1271,7 +1236,11 @@ namespace EvitelLib2.Model
 
                 entity.Property(e => e.AgeEid).HasColumnName("AgeEID");
 
+                entity.Property(e => e.CallMonth).HasColumnName("call_Month");
+
                 entity.Property(e => e.CallType).HasMaxLength(50);
+
+                entity.Property(e => e.CallYear).HasColumnName("call_Year");
 
                 entity.Property(e => e.ClientCurrentStatus).HasMaxLength(4000);
 

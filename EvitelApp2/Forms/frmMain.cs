@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
-
+using System.Diagnostics.Eventing.Reader;
 using System.Windows.Forms;
 
 namespace EvitelApp2
@@ -77,8 +77,8 @@ namespace EvitelApp2
       {
         testToolStripMenuItem.Visible = false;
       }
-      MenuItemBackup.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.Archive);
-      MenuItemRestore.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.Archive);
+      MenuItemBackup.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser);
+      MenuItemRestore.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser);
       MenuItemUsers.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.Admin);
       MenuItemNewUser.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.Admin);
       MenuItemPromenneAplikace.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser);
@@ -175,37 +175,37 @@ namespace EvitelApp2
           ucCallLPK1.Visible = false;
           break;
         case eShowWindow.Intervents:
-          ucIntervents1.Visible = false;
+          ucIntervents1.Visibility(false);
           break;
         case eShowWindow.Enums:
-          ucCiselnik1.Visible = false;
+          ucCiselnik1.Visibility(false);
           break;
         case eShowWindow.SKIParticipant:
-          ctrlParticipation1.Visible = false;
+          ctrlParticipation1.Visibility(false);
           break;
         case eShowWindow.SKICall:
-          ctrlLikoCall1.Visible = false;
+          ctrlLikoCall1.Visibility(false);
           break;
         case eShowWindow.SKIIncident:
-          ctrllikoIncident1.Visible = false;
+          ctrllikoIncident1.Visibility(false);
           break;
         case eShowWindow.SKIIntervence:
-          ctrllikoIntervence1.Visible = false;
+          ctrllikoIntervence1.Visibility(false); ;
           break;
         case eShowWindow.User:
-          ctrlUser1.Visible = false;
+          ctrlUser1.Visibility(false);
           break;
         case eShowWindow.CallAll:
-          ctrlCall1.Visible = false;
+          ctrlCall1.Visibility(false);
           break;
         case eShowWindow.LPvKRows:
-          ctrllpk1.Visible = false;
+          ctrllpk1.Visibility(false);
           break;
         case eShowWindow.SKIReport:
-          ctrlSKIReport1.Visible = false;
+          ctrlSKIReport1.Visibility(false);
           break;
         case eShowWindow.Statistika:
-          ctrlStatistika1.Visible = false;
+          ctrlStatistika1.Visibility(false);
           break;
         case eShowWindow.NecoJineho:
           break;
@@ -297,9 +297,9 @@ namespace EvitelApp2
 
     private void ShowView_Interventi()
     {
-      ucIntervents1.Visible = true;
       if (!ucIntervents1.isData)
         ucIntervents1.ReadDataFirstTime();
+      ucIntervents1.Visibility(true);
       aktWindow = eShowWindow.Intervents;
       MenuToolsRemoveFilters.Enabled = true;
       MenuToolsRemoveOrders.Enabled = true;
@@ -313,7 +313,6 @@ namespace EvitelApp2
     }
     private void ShowView_Ciselnik(eAllCodeBooks aktCodeBook)
     {
-      ucCiselnik1.Visible = true;
       ucCiselnik1.aktCodeBook = aktCodeBook;
       ucCiselnik1.ReadDataFirstTime();
       ucCiselnik1.MyResize();
@@ -321,11 +320,10 @@ namespace EvitelApp2
       MenuToolsRemoveColumnLayout.Enabled = true;
       FileExportExcel.Enabled = true;
       FileExportCSV.Enabled = true;
-
       aktWindow = eShowWindow.Enums;
+      ucCiselnik1.Visibility(true);
       this.Text = Title + " - Číselník " + ucCiselnik1.Titulek;
       lastWindowStack.Add(aktWindow);
-
     }
     private void ShowView_Participant(bool openNeeded = true)
     {
@@ -334,7 +332,6 @@ namespace EvitelApp2
         ctrlParticipation1.ReadDataFirstTime();
         ctrlParticipation1.MyResize();
       }
-      ctrlParticipation1.Visible = true;
       MenuToolsRemoveFilters.Enabled = true;
       MenuToolsRemoveOrders.Enabled = true;
       MenuToolSetColumnLayout.Enabled = true;
@@ -342,6 +339,7 @@ namespace EvitelApp2
       FileExportExcel.Enabled = true;
       FileExportCSV.Enabled = true;
       aktWindow = eShowWindow.SKIParticipant;
+      ctrlParticipation1.Visibility(true);
       this.Text = Title + "Účastníci intervence";
       lastWindowStack.Add(aktWindow);
 
@@ -354,7 +352,6 @@ namespace EvitelApp2
         ctrlLikoCall1.ReadDataFirstTime();
         ctrlLikoCall1.MyResize();
       }
-      ctrlLikoCall1.Visible = true;
       MenuToolsRemoveFilters.Enabled = true;
       MenuToolsRemoveOrders.Enabled = true;
       MenuToolSetColumnLayout.Enabled = true;
@@ -362,6 +359,7 @@ namespace EvitelApp2
       FileExportExcel.Enabled = true;
       FileExportCSV.Enabled = true;
       aktWindow = eShowWindow.SKICall;
+      ctrlLikoCall1.Visibility(true);
       this.Text = Title + " - Intervenční telefonní hovory";
       lastWindowStack.Add(aktWindow);
     }
@@ -372,7 +370,6 @@ namespace EvitelApp2
         ctrlCall1.ReadDataFirstTime();
         ctrlCall1.MyResize();
       }
-      ctrlCall1.Visible = true;
       MenuToolsRemoveFilters.Enabled = true;
       MenuToolsRemoveOrders.Enabled = true;
       MenuToolSetColumnLayout.Enabled = true;
@@ -380,6 +377,7 @@ namespace EvitelApp2
       FileExportExcel.Enabled = true;
       FileExportCSV.Enabled = true;
       aktWindow = eShowWindow.CallAll;
+      ctrlCall1.Visibility(true);
       this.Text = Title + " - Telefonní hovory (SKI + LPvK)";
       lastWindowStack.Add(aktWindow);
     }
@@ -391,7 +389,6 @@ namespace EvitelApp2
         ctrllpk1.ReadDataFirstTime();
         ctrllpk1.MyResize();
       }
-      ctrllpk1.Visible = true;
       MenuToolsRemoveFilters.Enabled = true;
       MenuToolsRemoveOrders.Enabled = true;
       MenuToolSetColumnLayout.Enabled = true;
@@ -399,6 +396,7 @@ namespace EvitelApp2
       FileExportExcel.Enabled = true;
       FileExportCSV.Enabled = true;
       aktWindow = eShowWindow.LPvKRows;
+      ctrllpk1.Visibility(true);
       this.Text = Title + " - Linka pomoci v krizi (LPvK)";
       lastWindowStack.Add(aktWindow);
     }
@@ -410,7 +408,6 @@ namespace EvitelApp2
         ctrllikoIncident1.ReadDataFirstTime();
         ctrllikoIncident1.MyResize();
       }
-      ctrllikoIncident1.Visible = true;
       MenuToolsRemoveFilters.Enabled = true;
       MenuToolsRemoveOrders.Enabled = true;
       MenuToolSetColumnLayout.Enabled = true;
@@ -418,6 +415,7 @@ namespace EvitelApp2
       FileExportExcel.Enabled = true;
       FileExportCSV.Enabled = true;
       aktWindow = eShowWindow.SKIIncident;
+      ctrllikoIncident1.Visibility(true);
       this.Text = Title + " - SKI Události";
       lastWindowStack.Add(aktWindow);
 
@@ -429,7 +427,6 @@ namespace EvitelApp2
         ctrllikoIntervence1.ReadDataFirstTime();
         ctrllikoIntervence1.MyResize();
       }
-      ctrllikoIntervence1.Visible = true;
       MenuToolsRemoveFilters.Enabled = true;
       MenuToolsRemoveOrders.Enabled = true;
       MenuToolSetColumnLayout.Enabled = true;
@@ -437,6 +434,7 @@ namespace EvitelApp2
       FileExportExcel.Enabled = true;
       FileExportCSV.Enabled = true;
       aktWindow = eShowWindow.SKIIntervence;
+      ctrllikoIntervence1.Visibility(true);
       this.Text = Title + " - SKI Intervence";
       lastWindowStack.Add(aktWindow);
     }
@@ -448,7 +446,6 @@ namespace EvitelApp2
         ctrlSKIReport1.ReadDataFirstTime();
         ctrlSKIReport1.MyResize();
       }
-      ctrlSKIReport1.Visible = true;
       MenuToolsRemoveFilters.Enabled = true;
       MenuToolsRemoveOrders.Enabled = true;
       MenuToolSetColumnLayout.Enabled = true;
@@ -456,6 +453,7 @@ namespace EvitelApp2
       FileExportExcel.Enabled = true;
       FileExportCSV.Enabled = true;
       aktWindow = eShowWindow.SKIReport;
+      ctrlSKIReport1.Visibility(true);
       this.Text = Title + " - SKI Report";
       lastWindowStack.Add(aktWindow);
     }
@@ -465,9 +463,8 @@ namespace EvitelApp2
       if (openNeeded)
       {
         ctrlUser1.ReadDataFirstTime();
-        ctrllikoIntervence1.MyResize();
+        ctrlUser1.MyResize();
       }
-      ctrlUser1.Visible = true;
       MenuToolsRemoveFilters.Enabled = true;
       MenuToolsRemoveOrders.Enabled = true;
       MenuToolSetColumnLayout.Enabled = true;
@@ -475,15 +472,16 @@ namespace EvitelApp2
       FileExportExcel.Enabled = true;
       FileExportCSV.Enabled = true;
       aktWindow = eShowWindow.User;
+      ctrlUser1.Visibility(true);
       this.Text = Title + " - Uživatelé";
       lastWindowStack.Add(aktWindow);
     }
     private void ShowView_Statistika(string Titulek)
     {
-      ctrlStatistika1.Visible = true;
       aktWindow = eShowWindow.Statistika;
       FileExportExcel.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser);
       FileExportCSV.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser);
+      ctrlStatistika1.Visibility(true);
       this.Text = Title + " - Statistika " + Titulek;
       lastWindowStack.Add(aktWindow);
     }
@@ -495,7 +493,7 @@ namespace EvitelApp2
       ctrlEventLog1.ReReadData();
     }
 
-    // source 1=Call, 2=Incident, 3=Intervence, 4=Participant, 11=LPK, -1 ucCallLiko konci
+    // source 1=Call, 2=Incident, 3=Intervence, 4=Participant, 11=LPK, -1 ucCallLiko/LPvK konci
     private void ShowDetailUserControl_Obsluha(int source, int? IntervenceId)
     {
       if (source >= 1 && source <= 5)
@@ -524,16 +522,16 @@ namespace EvitelApp2
             ShowView_LikoCalls(false);
             break;
           case eShowWindow.SKIIncident:
-            ShowView_LIKOIncidents(false);
+            ShowView_LIKOIncidents(IntervenceId > 0);
             break;
           case eShowWindow.SKIIntervence:
-            ShowView_Intervence(false);
+            ShowView_Intervence(IntervenceId > 0);
             break;
           case eShowWindow.CallAll:
             ShowView_CallAll(false);
             break;
           case eShowWindow.LPvKRows:
-            ShowView_LPKRows(false);
+            ShowView_LPKRows(IntervenceId > 0); // tzn. že se věta změnila - znovu načti
             break;
           default: break;
         }
@@ -551,7 +549,10 @@ namespace EvitelApp2
     }
     void ShowRowInformation(int nrAkt, int nrRow)
     {
-      toolStripRows.Text = nrAkt.ToString() + " / " + nrRow.ToString();
+      if (nrAkt == -1 && nrRow == -1)
+        toolStripRows.Text = "";
+      else
+        toolStripRows.Text = nrAkt.ToString() + " / " + nrRow.ToString();
     }
 
 
@@ -875,6 +876,16 @@ namespace EvitelApp2
 
     }
 
+    private void statiskikaLPvKToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      frmStatisticsLPvK frm = new frmStatisticsLPvK();
+      if (frm.ShowDialog() == DialogResult.OK)
+      {
+        ctrlStatistika1.dataTable = frm.aktStatistikaTable;
+        ShowView_Statistika("Statistika LPVK");
+      }
+
+    }
 
 
     #endregion
@@ -989,5 +1000,6 @@ namespace EvitelApp2
       if (MessageBox.Show("Opravdu ukončit EVITEL?", "EVITEL", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
         e.Cancel = true;
     }
-  }
+
+   }
 }

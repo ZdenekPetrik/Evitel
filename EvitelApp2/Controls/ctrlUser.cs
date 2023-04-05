@@ -172,10 +172,20 @@ namespace EvitelApp2.Controls
     {
       cldb.SaveColumnLayout();
     }
+    public void Visibility(bool isVisibility)
+    {
+      Visible = isVisibility;
+      if (Visible)
+        dgw_RowEnter(null, new DataGridViewCellEventArgs(0, dgw.CurrentCell.RowIndex));
+      else
+      {
+        ShowRowInformation?.Invoke(-1, -1);
+      }
+    }
 
     private void dgw_RowEnter(object sender, DataGridViewCellEventArgs e)
     {
-      ShowRowInformation?.Invoke(e.RowIndex + 1, loginUserList.Count);
+      ShowRowInformation?.Invoke(e.RowIndex + 1, dgw.RowCount);
     }
 
     private void dgw_DoubleClick(object sender, EventArgs e)

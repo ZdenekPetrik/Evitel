@@ -60,8 +60,26 @@
     <Compile Update="Controls\ucCiselnik.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Forms\frmStatisticsLPvK.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\frmStatisticsEvent.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="LPvKSettings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LPvKSettings.settings</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\CallSettings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CallSettings.settings</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\LPvkSettings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LPvkSettings.settings</DependentUpon>
     </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -72,6 +90,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\SKISettings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SKISettings.settings</DependentUpon>
     </Compile>
     <Compile Update="Resource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -98,9 +121,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="LPvKSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>LPvKSettings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="Properties\CallSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>CallSettings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="Properties\LPvkSettings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>LPvkSettings.Designer.cs</LastGenOutput>
+    </None>
     <None Update="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="Properties\SKISettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>SKISettings.Designer.cs</LastGenOutput>
     </None>
     <None Update="Resources\add_IconGray.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -1,6 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-
 namespace EvitelLib2.Model
 {
     public partial class WLpk
@@ -9,9 +6,9 @@ namespace EvitelLib2.Model
         public string Note { get; set; }
         public int ContactTypeEid { get; set; }
         public int TypeServiceEid { get; set; }
-        public int? ClientFromEid { get; set; }
-        public int? SexEid { get; set; }
-        public int? AgeEid { get; set; }
+        public int ClientFromEid { get; set; }
+        public int SexEid { get; set; }
+        public int AgeEid { get; set; }
         public int CallId { get; set; }
         public string Age { get; set; }
         public string TypeService { get; set; }
@@ -32,7 +29,5 @@ namespace EvitelLib2.Model
         public string ClientCurrentStatus { get; set; }
         public string ContactTopic { get; set; }
         public string EndOfSpeech { get; set; }
-        public int? CallMonth { get; set; }
-        public int? CallYear { get; set; }
     }
 }

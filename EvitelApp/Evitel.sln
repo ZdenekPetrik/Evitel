@@ -7,8 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		..\DB-Evitel20230104.sql = ..\DB-Evitel20230104.sql
 		EF.txt = EF.txt
+		EvitelExport20230318c.xlsx = EvitelExport20230318c.xlsx
 		..\ExcelRowSet.sql = ..\ExcelRowSet.sql
 		History.txt = History.txt
+		Pivot1-EndOfSpeech.sql = Pivot1-EndOfSpeech.sql
 		SQLDeleteTables.txt = SQLDeleteTables.txt
 		SQLJakZmenitNazevMDFLDF.txt = SQLJakZmenitNazevMDFLDF.txt
 		TODO.txt = TODO.txt
@@ -22,7 +24,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "..\Wind
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdvancedDataGridView", "..\AdvancedDataGridView\AdvancedDataGridView.csproj", "{6B37C173-DBDF-4261-A784-8754FFB3CF63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xUnitTestEvitel2", "xUnitTestEvitel2\xUnitTestEvitel2.csproj", "{FE98B4D8-63B6-4A5C-9E55-F022D3FE7585}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "xUnitTestEvitel2", "xUnitTestEvitel2\xUnitTestEvitel2.csproj", "{FE98B4D8-63B6-4A5C-9E55-F022D3FE7585}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

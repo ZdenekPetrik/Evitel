@@ -3,6 +3,7 @@ using EvitelLib2.Common;
 using EvitelLib2.Model;
 using EvitelLib2.Repository;
 using NPOI.SS.Formula.Functions;
+using NPOI.SS.UserModel;
 using PdfSharpCore.Drawing;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace EvitelApp2.Controls
   {
     public bool isNewForm;
     public bool isEditMode;
-    public int LPKId;               // Pokud je isNewForm=true zde najdeš ID 
+    public int LPKId;               // Pokud je isNewForm=false zde najdeš ID 
 
     private ErrorProvider cmbContactTypeErrorProvider;
     private ErrorProvider cmbTypeServiceErrorProvider;
@@ -127,24 +128,25 @@ namespace EvitelApp2.Controls
 
     public void PrepareScreen()
     {
+      btnBack.Visible = !isNewForm;
+      btnWrite.Enabled = isNewForm;
+      btnWrite.Text = isNewForm ? "Uložit" : "Upravit";
+      btnDelete.Visible = Program.myLoggedUser.HasAccess(eLoginAccess.Admin) && !isNewForm;
+      lblEditInfo.Visible = !isNewForm;
       if (isNewForm)
       {
-        btnBack.Visible = false;
-        btnWrite.Enabled = true;
-        btnWrite.Text = "Uložit";
         lblContactTopic.Text = "";
         lblCurrentClientStatus.Text = "";
         lblEndOfSpeech.Text = "";
         txtLoginUser.Text = Program.myLoggedUser.FirstName + " " + Program.myLoggedUser.LastName;
         txtNote.Text = "";
         txtVolajici.Text = "";
+        dtCall.Value = DateTime.Now;
         tmCall.Value = DateTime.Now;
         tmCallTo.Value = DateTime.Now;
-        lblEditInfo.Visible = false;
       }
       else
       {
-        btnBack.Visible = true;
         lpkRow = DB.GetLPK(LPKId).First();
         aktCall = DB.GetCall(lpkRow.CallId);
         isEditMode = (Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser) || (aktCall.DtEndCall?.AddMonths(1) > DateTime.Now && aktCall.LoginUserId == Program.myLoggedUser.LoginUserId));
@@ -157,7 +159,6 @@ namespace EvitelApp2.Controls
         tmCall.Value = (DateTime)aktCall.DtStartCall;
         tmCallTo.Value = (DateTime)aktCall.DtEndCall;
         lblEditInfo.Text = "Id:" + lpkRow.Lpkid.ToString() + "; " + (isEditMode ? "EDIT" : "NO-EDIT");
-        lblEditInfo.Visible = true;
         btnQuickLPvK.Visible = false;
         ReWriteScreen();
       }
@@ -343,8 +344,6 @@ namespace EvitelApp2.Controls
         SetActiveNodeId(tvEndOfSpeech, endOfSpeech_Selected);
         SetActiveNodeId(tvClientCurrentStatus, clientCurrentStatus_Selected);
         SetActiveNodeId(tvContactTopic, contactTopic_Selected);
-        btnWrite.Text = "Upravit";
-        btnWrite.Enabled = false;
       }
       else
       {
@@ -686,7 +685,18 @@ namespace EvitelApp2.Controls
         endOfSpeech_Selected = DB.GetLPKEndOfSpeech(LPKId);
       }
       lpkRow.Note = txtNote.Text;
-      lpkRow.Nick = txtVolajici.Text;
+      if (lpkRow.Nick != txtVolajici.Text)
+      {
+        new CEventLog(eEventCode.e1DBChange, eEventSubCode.e2LPvKTable, "Volající", lpkRow.Nick + " -> " + txtVolajici.Text, Program.myLoggedUser.LoginUserId);
+        lpkRow.Nick = txtVolajici.Text;
+        if (txtVolajici.Text.Length > 0)
+        {
+          if (!txtVolajici.AutoCompleteCustomSource.Contains(txtVolajici.Text))
+          {
+            DB.AddNick(txtVolajici.Text);
+          }
+        }
+      }
       DB.UpdateLPK(lpkRow);
       btnWrite.Enabled = false;
     }
@@ -723,7 +733,7 @@ namespace EvitelApp2.Controls
           }
         }
         PrepareScreen();
-        StopTimer();      // Zu se mi to nechce resit - 
+        StopTimer();      // Zde se mi to nechce resit - 
       }
     }
 
@@ -798,7 +808,7 @@ namespace EvitelApp2.Controls
     {
       if (isNewForm && !string.IsNullOrEmpty(txtVolajici.Text) && txtVolajici.Text.Length > 1)
       {
-        var lastNick = DB.GetLastNick(txtVolajici.Text);
+        var lastNick = DB.GetLastNickFromLPK(txtVolajici.Text);
         if (lastNick != null && lastNick.Lpkid > 0)
         {
           if (cmbContactType.SelectedIndex == 0)
@@ -815,6 +825,20 @@ namespace EvitelApp2.Controls
             txtNote.Text = lastNick.Note;
         }
       }
+    }
+
+    private void btnDelete_Click(object sender, EventArgs e)
+    {
+      if (DialogResult.Yes == MessageBox.Show("Opravdu smazat tento hovor?", "LPvK - Mazání věty", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+      {
+        if (1 == DB.DeleteLPKRow(LPKId))
+        {
+          MessageBox.Show("LPvK věta smazána.", "LPvK - Mazání věty");
+          ShowDetailUserControl?.Invoke(-1, 2);
+        }
+
+      }
+
     }
   }
 }

@@ -63,6 +63,8 @@ namespace EvitelApp2.Controls
          new MyColumn { Name = "Začátek", DataPropertyName = "TmStartCall"  },
          new MyColumn { Name = "Konec", DataPropertyName = "TmEndCall"  },
          new MyColumn { Name = "Doba", DataPropertyName = "TmDuration"  },
+         new MyColumn { Name = "Rok", DataPropertyName = "CallYear" , Type=3},
+         new MyColumn { Name = "Měsíc", DataPropertyName = "CallMonth" , Type=3},
          new MyColumn { Name = "Přezdívka", DataPropertyName = "Nick"},
          new MyColumn { Name = "Kontakt", DataPropertyName = "ContactType"},
          new MyColumn { Name = "Věk", DataPropertyName = "Age"},
@@ -74,6 +76,7 @@ namespace EvitelApp2.Controls
          new MyColumn { Name = "Aktuální stav klienta", DataPropertyName = "ClientCurrentStatus"},
          new MyColumn { Name = "Závěr hovoru", DataPropertyName = "EndOfSpeech"},
          new MyColumn { Name = "Zapsal", DataPropertyName = "UsrLastName" },
+
        };
       _dataTable = new DataTable();
       _dataSet = new DataSet();
@@ -179,10 +182,19 @@ namespace EvitelApp2.Controls
     {
       cldb.SaveColumnLayout();
     }
-
+    public void Visibility(bool isVisibility)
+    {
+      Visible = isVisibility;
+      if (Visible)
+        dgw_RowEnter(null, new DataGridViewCellEventArgs(0, dgw.CurrentCell.RowIndex));
+      else
+      {
+        ShowRowInformation?.Invoke(-1, -1);
+      }
+    }
     private void dgw_RowEnter(object sender, DataGridViewCellEventArgs e)
     {
-      ShowRowInformation?.Invoke(e.RowIndex + 1, wLpks.Count);
+      ShowRowInformation?.Invoke(e.RowIndex + 1, dgw.RowCount);
     }
 
     private void dgw_DoubleClick(object sender, EventArgs e)

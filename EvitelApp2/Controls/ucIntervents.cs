@@ -116,13 +116,7 @@ namespace EvitelApp2.Controls
       }
     }
 
-    public void RefreshMyData()
-    {
-      winterventi = DB.GetWIntervents(null, "", "");
-      bindingSource1.DataSource = winterventi;
-      dgw.DataSource = bindingSource1;
-    }
-
+    
     public void MyResize()
     {
       dgw.Top = dgw.Left = 0;
@@ -143,6 +137,14 @@ namespace EvitelApp2.Controls
       MyResize();
     }
 
+    public void Visibility(bool isVisibility) {
+      Visible = isVisibility;
+      if (Visible)
+        dgw_RowEnter(null, new DataGridViewCellEventArgs(0,dgw.CurrentCell.RowIndex));
+      else {
+        ShowRowInformation?.Invoke(-1, -1);
+      }
+    }
 
     private void ucIntervents_Resize(object sender, EventArgs e)
     {
@@ -249,8 +251,7 @@ namespace EvitelApp2.Controls
 
     private void dgw_RowEnter(object sender, DataGridViewCellEventArgs e)
     {
-      ShowRowInformation?.Invoke(e.RowIndex + 1, _dataTable.Rows.Count);
-
+      ShowRowInformation?.Invoke(e.RowIndex + 1, dgw.RowCount);
     }
 
     private void ucIntervents_VisibleChanged(object sender, EventArgs e)

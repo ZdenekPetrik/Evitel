@@ -8,6 +8,8 @@ namespace EvitelLib2.Model
         public int CallId { get; set; }
         public int LikointervenceId { get; set; }
         public DateTime? DtStartCall { get; set; }
+        public int? Year { get; set; }
+        public int? Month { get; set; }
         public DateTime? DtCall { get; set; }
         public string TmStartCall { get; set; }
         public int? LoginUserId { get; set; }

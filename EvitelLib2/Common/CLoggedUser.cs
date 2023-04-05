@@ -67,8 +67,8 @@ namespace EvitelLib2.Common
     {
         Admin = 1,
         User = 2,
-        PowerUser = 3,
-        Archive = 4
+        PowerUser = 3
+  //      Archive = 4
     }
     
     public enum eLoginMode

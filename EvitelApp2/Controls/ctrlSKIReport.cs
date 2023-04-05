@@ -51,22 +51,22 @@ namespace EvitelApp2.Controls
       }
       myColumns = new List<MyColumn>()
       {
-         new MyColumn { Name = "ID", DataPropertyName = "ParticipantId" , Type = 3},
+         new MyColumn { Name = "ID osoby", DataPropertyName = "ParticipantId" , Type = 3},
+         new MyColumn { Name = "Rok", DataPropertyName = "UdalostYear", Type=3},
+         new MyColumn { Name = "Měsíc", DataPropertyName = "UdalostMonth", Type=3},
          new MyColumn { Name = "Událost datum", DataPropertyName = "DtUdalost", Type=5},
          new MyColumn { Name = "Čas", DataPropertyName = "TmUdalost", Type=6},
          new MyColumn { Name = "Událost", DataPropertyName = "DruhUdalosti"},
          new MyColumn { Name = "Kategorie", DataPropertyName = "KategorieUdalosti"},
          new MyColumn { Name = "Kraj", DataPropertyName = "UdalostRegion"},
          new MyColumn { Name = "Místo", DataPropertyName = "UdalostMisto"},
-         new MyColumn { Name = "Následek Smrti", DataPropertyName = "NasledekSmrti", Type = 2},
-         new MyColumn { Name = "Dokonané", DataPropertyName = "Dokonane", Type = 2},
-         new MyColumn { Name = "Pokus Příprava", DataPropertyName = "PokusPriprava", Type = 2},
          new MyColumn { Name = "Počet Poškocených", DataPropertyName = "PocetPoskozenych",Type=3},
          new MyColumn { Name = "Událost ID", DataPropertyName = "UdalostId"},
          new MyColumn { Name = "Volání datum", DataPropertyName = "DtCall", Type=5},
          new MyColumn { Name = "Čas tf. ", DataPropertyName = "TmCall", Type=5},
          new MyColumn { Name = "Volajici", DataPropertyName = "Volajici"},
          new MyColumn { Name = "Kraj Volajicí", DataPropertyName = "VolajiciKraj"},
+         new MyColumn { Name = "Intervence Id", DataPropertyName = "IntervenceId",  Type=3},
          new MyColumn { Name = "Intervence datum", DataPropertyName = "DtIntervStart",  Type=5},
          new MyColumn { Name = "Čas int.", DataPropertyName = "TmIntervStart", Type=6},
          new MyColumn { Name = "End int.", DataPropertyName = "TmIntervEnd", Type=6},
@@ -98,8 +98,6 @@ namespace EvitelApp2.Controls
          new MyColumn { Name = "Minorita", DataPropertyName = "IsMemberMinorityGroup",Type = 2},
          new MyColumn { Name = "Organizace", DataPropertyName = "Organization"},
          new MyColumn { Name = "Poznámka", DataPropertyName = "Note"},
-         new MyColumn { Name = "ID osoby", DataPropertyName = "ParticipantId"},
-
       };
       MyResize();
     }
@@ -188,7 +186,7 @@ namespace EvitelApp2.Controls
 
     private void dgw_RowEnter(object sender, DataGridViewCellEventArgs e)
     {
-      ShowRowInformation?.Invoke(e.RowIndex + 1, likoAll.Count);
+      ShowRowInformation?.Invoke(e.RowIndex + 1, dgw.RowCount);
     }
 
     private void dgw_DoubleClick(object sender, EventArgs e)
@@ -200,7 +198,7 @@ namespace EvitelApp2.Controls
     private void JumpToIntervence()
     {
       int ParticipantId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["ID"].Value;
-      int? likoIntervenceId = likoAll.Where(x => x.ParticipantId == ParticipantId)?.First().LikointervenceId;
+      int? likoIntervenceId =  likoAll.Where(x => x.ParticipantId == ParticipantId)?.First().LikointervenceId;
       ShowDetailUserControl?.Invoke(5, likoIntervenceId);
     }
 
@@ -222,6 +220,16 @@ namespace EvitelApp2.Controls
     public void SetColumns()
     {
       cldb.SaveColumnLayout();
+    }
+    public void Visibility(bool isVisibility)
+    {
+      Visible = isVisibility;
+      if (Visible)
+        dgw_RowEnter(null, new DataGridViewCellEventArgs(0, dgw.CurrentCell.RowIndex));
+      else
+      {
+        ShowRowInformation?.Invoke(-1, -1);
+      }
     }
 
   }

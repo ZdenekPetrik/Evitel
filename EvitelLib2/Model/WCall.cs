@@ -24,5 +24,7 @@ namespace EvitelLib2.Model
         public string ContactType { get; set; }
         public DateTime? DtEndCall { get; set; }
         public int? CallTypeId { get; set; }
+        public int? Year { get; set; }
+        public int? Month { get; set; }
     }
 }

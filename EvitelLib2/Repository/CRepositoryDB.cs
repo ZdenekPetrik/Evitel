@@ -1219,6 +1219,7 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
+   
     public Call GetCall(int id)
     {
       sErr = "";
@@ -2521,7 +2522,7 @@ namespace EvitelLib2.Repository
 
     }
 
-    public Lpk GetLastNick(string nick)
+    public Lpk GetLastNickFromLPK(string nick)
     {
       sErr = "";
       Evitel2DB db = new Evitel2DB();
@@ -2536,6 +2537,71 @@ namespace EvitelLib2.Repository
         new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetLastNick() " + GetInnerException(Ex), "", IdUser);
       }
       return null;
+    }
+
+    public int DeleteLPKRow(int lPKId)
+    {
+      sErr = "";
+      Evitel2DB db = new Evitel2DB();
+      try
+      {
+        var lpkRows = from lpk in db.Lpks where lpk.Lpkid == lPKId select lpk;
+        if (!lpkRows.Any())
+          return -1;
+        var lpkRow = lpkRows.First();
+        var callRow = from call in db.Calls where call.CallId == lpkRow.CallId select call;
+        var clientCurrentStatusRows = from clientCurrentStatus in db.LpkclientCurrentStatuses where clientCurrentStatus.Lpkid == lPKId select clientCurrentStatus;
+        var subContactTopicRows = from contactTopic in db.LpksubContactTopics where contactTopic.Lpkid == lPKId select contactTopic;
+        var endOfSpeechRows = from endOfSpeech in db.LpksubEndOfSpeeches where endOfSpeech.Lpkid == lPKId select endOfSpeech;
+        db.LpkclientCurrentStatuses.RemoveRange(clientCurrentStatusRows);
+        db.LpksubContactTopics.RemoveRange(subContactTopicRows);
+        db.LpksubEndOfSpeeches.RemoveRange(endOfSpeechRows);
+        db.Lpks.Remove(lpkRow);
+        db.Calls.RemoveRange(callRow);
+        db.SaveChanges();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "DeleteLPKRow() " + GetInnerException(Ex), "", IdUser);
+        return 0;
+      }
+      return 1;
+
+    }
+
+    public int DeleteSkiRow(int IntervenceId)
+    {
+      sErr = "";
+      Evitel2DB db = new Evitel2DB();
+      try
+      {
+        var intervenceRow = (from par in db.Likointervences where par.LikointervenceId == IntervenceId select par).First();
+        if (intervenceRow == null)
+        {
+          sErr = "Neexistuje intervence id = " + IntervenceId.ToString();
+          return -1;
+        }
+        var incidentRow = (from par in db.Likoincidents where par.LikoincidentId == intervenceRow.LikoincidentId select par).First();
+        var intervences = (from par in db.Likointervences where par.LikoincidentId == intervenceRow.LikoincidentId select par);
+        var callRow = from call in db.Calls where call.CallId == intervenceRow.CallId select call;
+        var participants = from par in db.Likoparticipants where par.LikointervenceId == intervenceRow.LikointervenceId select par;
+        bool isDeleteIncident = (intervences.Count() == 1);
+        db.Likoparticipants.RemoveRange(participants);
+        db.Calls.RemoveRange(callRow);
+        db.Likointervences.Remove(intervenceRow);
+        if (isDeleteIncident)
+          db.Likoincidents.Remove(incidentRow);
+        db.SaveChanges();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "DeleteSkiRow() " + GetInnerException(Ex), "", IdUser);
+        return 0;
+      }
+      return 1;
+
     }
   }
 }

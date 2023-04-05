@@ -107,7 +107,19 @@
               Verze 2.2.0 zapsaná ruènì v Evitel2App.csproj + zobrazování v About, kde se zobrazuje datum vytvoøení souboru (last build)
 10.3.         Oprava Volajiciho, nešel v rámci editace zmìnit.
 
-
+17.3. Simona Doma. 
+      - FANYNKA1 - pokud upraviš Tf hovor a následnì ti Fanynka1 zavolá, tak se údaje nepøepisují. 
+      Smazat záznam pro admina
+      - Power User bude mít práva jak Archiv. Archiv nebude využit.
+      - Button LPVK zmizí po Detail
+      Button Duplikovat úèastníka
+      - Rok mìsíc do všech reportù
+      - Filtr a poèet vìt se nemìní.
+      Vytvoø nový report s cca110 sloupci. 
+      - Zjisti v Excelu jak vytvoøit tabulku pro výkonnost Volání, události, intervence, úèastníci
+19.3. Pøepisování údajù Fanynka, Mazání záznamù zatím jen LPVK, Button LPVK už nemizí, Rok Mìsíc do všech reportù (snad). Excel vybojován
+1.4.  Dokonèení statistika LPvK. Uložení filteru do souboru LPvkSetting.sesttings. Speciální SQL pro hledání v ContactTopic,CurrentStatus,EndOfSpeech
+      Všechny Reporty mají mìsíc a rok. 
 
 
 SQL Zmeny 

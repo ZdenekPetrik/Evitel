@@ -54,6 +54,8 @@ namespace EvitelApp2.Controls
          new MyColumn { Name = "ID", DataPropertyName = "LikoincidentId" , Type = 3},
          new MyColumn { Name = "Datum", DataPropertyName = "DtUdalost", Type=5},
          new MyColumn { Name = "Čas", DataPropertyName = "TmUdalost", Type=6},
+         new MyColumn { Name = "Rok", DataPropertyName = "Year",Type=3},
+         new MyColumn { Name = "Měsíc", DataPropertyName = "Month",Type=3},
          new MyColumn { Name = "Událost", DataPropertyName = "DruhUdalosti"},
          new MyColumn { Name = "Kategorie", DataPropertyName = "KategorieUdalosti"},
          new MyColumn { Name = "Kraj", DataPropertyName = "UdalostRegion"},
@@ -162,9 +164,19 @@ namespace EvitelApp2.Controls
       cldb.SaveColumnLayout();
     }
 
+    public void Visibility(bool isVisibility)
+    {
+      Visible = isVisibility;
+      if (Visible)
+        dgw_RowEnter(null, new DataGridViewCellEventArgs(0, dgw.CurrentCell.RowIndex));
+      else
+      {
+        ShowRowInformation?.Invoke(-1, -1);
+      }
+    }
     private void dgw_RowEnter(object sender, DataGridViewCellEventArgs e)
     {
-      ShowRowInformation?.Invoke(e.RowIndex + 1, wIncidents.Count);
+      ShowRowInformation?.Invoke(e.RowIndex + 1, dgw.RowCount);
     }
 
 

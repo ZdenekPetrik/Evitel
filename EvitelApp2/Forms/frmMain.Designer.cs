@@ -116,6 +116,7 @@ namespace EvitelApp2
       ctrlSKIReport1 = new Controls.ctrlSKIReport();
       ctrlStatistika1 = new Controls.ctrlStatistika();
       ucCiselnik1 = new Controls.ucCiselnik();
+      statiskikaLPvKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       menuStrip1.SuspendLayout();
       statusStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -541,7 +542,7 @@ namespace EvitelApp2
       // 
       // statistikaToolStripMenuItem
       // 
-      statistikaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { statistikaVoláníToolStripMenuItem, statistikaSKIUdálostíToolStripMenuItem });
+      statistikaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { statistikaVoláníToolStripMenuItem, statistikaSKIUdálostíToolStripMenuItem, statiskikaLPvKToolStripMenuItem });
       statistikaToolStripMenuItem.Name = "statistikaToolStripMenuItem";
       statistikaToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
       statistikaToolStripMenuItem.Text = "Statistika";
@@ -711,6 +712,13 @@ namespace EvitelApp2
       ucCiselnik1.Size = new System.Drawing.Size(163, 209);
       ucCiselnik1.TabIndex = 18;
       // 
+      // statiskikaLPvKToolStripMenuItem
+      // 
+      statiskikaLPvKToolStripMenuItem.Name = "statiskikaLPvKToolStripMenuItem";
+      statiskikaLPvKToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+      statiskikaLPvKToolStripMenuItem.Text = "Statistika LPvK ";
+      statiskikaLPvKToolStripMenuItem.Click += statiskikaLPvKToolStripMenuItem_Click;
+      // 
       // frmMain
       // 
       AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -835,6 +843,7 @@ namespace EvitelApp2
     private Controls.ctrlStatistika ctrlStatistika1;
     private System.Windows.Forms.ToolStripMenuItem statistikaSKIUdálostíToolStripMenuItem;
     private Controls.ucCiselnik ucCiselnik1;
+    private System.Windows.Forms.ToolStripMenuItem statiskikaLPvKToolStripMenuItem;
   }
 }
 

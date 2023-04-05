@@ -28,39 +28,39 @@
     /// </summary>
     private void InitializeComponent()
     {
-            this.dgw = new Zuby.ADGV.AdvancedDataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dgw)).BeginInit();
-            this.SuspendLayout();
-            // 
-            // dgw
-            // 
-            this.dgw.AllowUserToAddRows = false;
-            this.dgw.AllowUserToDeleteRows = false;
-            this.dgw.AllowUserToOrderColumns = true;
-            this.dgw.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgw.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgw.FilterAndSortEnabled = true;
-            this.dgw.FilterStringChangedInvokeBeforeDatasourceUpdate = true;
-            this.dgw.Location = new System.Drawing.Point(3, 3);
-            this.dgw.Name = "dgw";
-            this.dgw.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.dgw.RowTemplate.Height = 25;
-            this.dgw.Size = new System.Drawing.Size(240, 150);
-            this.dgw.SortStringChangedInvokeBeforeDatasourceUpdate = true;
-            this.dgw.TabIndex = 3;
-              // 
-            // ctrlLikoCall
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.dgw);
-            this.Name = "ctrlLikoCall";
-            this.Size = new System.Drawing.Size(259, 168);
-            this.Load += new System.EventHandler(this.ctrlLikoCall_Load);
-            this.Resize += new System.EventHandler(this.ctrlLikoCall_Resize);
-            ((System.ComponentModel.ISupportInitialize)(this.dgw)).EndInit();
-            this.ResumeLayout(false);
-
+      dgw = new Zuby.ADGV.AdvancedDataGridView();
+      ((System.ComponentModel.ISupportInitialize)dgw).BeginInit();
+      SuspendLayout();
+      // 
+      // dgw
+      // 
+      dgw.AllowUserToAddRows = false;
+      dgw.AllowUserToDeleteRows = false;
+      dgw.AllowUserToOrderColumns = true;
+      dgw.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      dgw.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+      dgw.FilterAndSortEnabled = true;
+      dgw.FilterStringChangedInvokeBeforeDatasourceUpdate = true;
+      dgw.Location = new System.Drawing.Point(3, 3);
+      dgw.Name = "dgw";
+      dgw.RightToLeft = System.Windows.Forms.RightToLeft.No;
+      dgw.RowTemplate.Height = 25;
+      dgw.Size = new System.Drawing.Size(240, 150);
+      dgw.SortStringChangedInvokeBeforeDatasourceUpdate = true;
+      dgw.TabIndex = 3;
+      dgw.RowEnter += dgw_RowEnter;
+      // 
+      // ctrlStatistika
+      // 
+      AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+      AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      Controls.Add(dgw);
+      Name = "ctrlStatistika";
+      Size = new System.Drawing.Size(259, 168);
+      Load += ctrlLikoCall_Load;
+      Resize += ctrlLikoCall_Resize;
+      ((System.ComponentModel.ISupportInitialize)dgw).EndInit();
+      ResumeLayout(false);
     }
 
     #endregion

@@ -35,7 +35,9 @@ namespace EvitelApp2.Controls
         dv.Sort = dgw.SortString;
         return dv.ToTable();
       }
-      set { _dataTable = value;
+      set
+      {
+        _dataTable = value;
         _dataSet = new DataSet();
         bindingSource1 = new BindingSource();
         bindingSource1.DataSource = _dataSet;
@@ -45,7 +47,7 @@ namespace EvitelApp2.Controls
         bindingSource1.DataMember = _dataTable.TableName;
       }
     }
-    
+
 
     public ctrlStatistika()
     {
@@ -90,6 +92,22 @@ namespace EvitelApp2.Controls
     public void RemoveFilters()
     {
       throw new NotImplementedException();
+    }
+
+    public void Visibility(bool isVisibility)
+    {
+      Visible = isVisibility;
+      if (Visible)
+        dgw_RowEnter(null, new DataGridViewCellEventArgs(0, dgw.CurrentCell.RowIndex));
+      else
+      {
+        ShowRowInformation?.Invoke(-1, -1);
+      }
+    }
+
+    private void dgw_RowEnter(object sender, DataGridViewCellEventArgs e)
+    {
+      ShowRowInformation?.Invoke(e.RowIndex + 1, dgw.RowCount);
     }
   }
 }

@@ -13,6 +13,7 @@ namespace EvitelApp2.Controls
     public void InitColumns();
     public void RemoveOrders();
     public void RemoveFilters();
+    public void Visibility(bool isVisible);
 
     public DataTable dataTable { get; }
   }

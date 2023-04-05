@@ -74,6 +74,7 @@
       lblTitulek = new System.Windows.Forms.Label();
       btnQuickLPvK = new System.Windows.Forms.Button();
       timer1 = new System.Windows.Forms.Timer(components);
+      btnDelete = new System.Windows.Forms.Button();
       boxCall.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)pictureClock).BeginInit();
       boxClient.SuspendLayout();
@@ -567,10 +568,25 @@
       timer1.Interval = 1000;
       timer1.Tick += timer1_Tick;
       // 
+      // btnDelete
+      // 
+      btnDelete.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      btnDelete.Image = (System.Drawing.Image)resources.GetObject("btnDelete.Image");
+      btnDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      btnDelete.Location = new System.Drawing.Point(1431, 690);
+      btnDelete.Name = "btnDelete";
+      btnDelete.Size = new System.Drawing.Size(92, 47);
+      btnDelete.TabIndex = 59;
+      btnDelete.Text = "Delete";
+      btnDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+      btnDelete.UseVisualStyleBackColor = true;
+      btnDelete.Click += btnDelete_Click;
+      // 
       // ucCallLPK
       // 
       AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
       AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      Controls.Add(btnDelete);
       Controls.Add(btnQuickLPvK);
       Controls.Add(lblTitulek);
       Controls.Add(btnWrite);
@@ -581,7 +597,7 @@
       Controls.Add(btnBack);
       Controls.Add(boxCall);
       Name = "ucCallLPK";
-      Size = new System.Drawing.Size(1552, 753);
+      Size = new System.Drawing.Size(1532, 753);
       Load += ucCallLPK_Load;
       VisibleChanged += ucCallLPK_VisibleChanged;
       Resize += ucCallLPK_Resize;
@@ -642,5 +658,6 @@
     private System.Windows.Forms.Button btnQuickLPvK;
     private System.Windows.Forms.PictureBox pictureClock;
     private System.Windows.Forms.Timer timer1;
+    private System.Windows.Forms.Button btnDelete;
   }
 }

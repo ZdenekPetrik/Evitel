@@ -31,11 +31,13 @@ namespace EvitelApp2.Controls
     public event RowInformation ShowRowInformation;
     public event DetailIntervence ShowDetailUserControl;
     private DataGridViewCellEventArgs mouseLocation;
-    public DataTable dataTable { 
-      get {
+    public DataTable dataTable
+    {
+      get
+      {
         DataView dv = new DataView(_dataTable);
-        dv.RowFilter = dgw.FilterString; 
-        dv.Sort= dgw.SortString;
+        dv.RowFilter = dgw.FilterString;
+        dv.Sort = dgw.SortString;
         return dv.ToTable();
       }
     }
@@ -59,8 +61,10 @@ namespace EvitelApp2.Controls
       myColumns = new List<MyColumn>()
       {
          new MyColumn { Name = "ID", DataPropertyName = "CallId", Type=3  },
-         new MyColumn { Name = "Typ Hovoru", DataPropertyName = "CallType"},
          new MyColumn { Name = "Datum volání", DataPropertyName = "DtCall" , Type=5},
+         new MyColumn { Name = "Rok", DataPropertyName = "Year" , Type=3},
+         new MyColumn { Name = "Měsíc", DataPropertyName = "Month" , Type=3},
+         new MyColumn { Name = "Typ Hovoru", DataPropertyName = "CallType"},
          new MyColumn { Name = "Začátek", DataPropertyName = "TmStartCall"  },
          new MyColumn { Name = "Konec", DataPropertyName = "TmEndCall"  },
          new MyColumn { Name = "Doba", DataPropertyName = "TmDuration"  },
@@ -175,9 +179,19 @@ namespace EvitelApp2.Controls
       cldb.SaveColumnLayout();
     }
 
+    public void Visibility(bool isVisibility)
+    {
+      Visible = isVisibility;
+      if (Visible)
+        dgw_RowEnter(null, new DataGridViewCellEventArgs(0, dgw.CurrentCell.RowIndex));
+      else
+      {
+        ShowRowInformation?.Invoke(-1, -1);
+      }
+    }
     private void dgw_RowEnter(object sender, DataGridViewCellEventArgs e)
     {
-      ShowRowInformation?.Invoke(e.RowIndex + 1, wCalls.Count);
+      ShowRowInformation?.Invoke(e.RowIndex + 1, dgw.RowCount);
     }
 
     private void dgw_DoubleClick(object sender, EventArgs e)
@@ -197,12 +211,13 @@ namespace EvitelApp2.Controls
       {
         ShowDetailUserControl?.Invoke(1, wCalls.Where(x => x.CallId == CallId)?.First().LikointervenceId);
       }
-      else {
+      else
+      {
         MessageBox.Show("Ani LPvK ani SKI. To Je Divná věta");
       }
     }
 
-    private void dgw_CellContentClick(object sender, DataGridViewCellEventArgs e)
+    private void dgw_FilterStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
     {
 
     }

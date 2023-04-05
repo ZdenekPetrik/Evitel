@@ -49,5 +49,7 @@ namespace EvitelLib2.Model
         public int? Poradi { get; set; }
         public DateTime? DtIntervStart { get; set; }
         public string TmIntervStart { get; set; }
+        public int? Year { get; set; }
+        public int? Month { get; set; }
     }
 }

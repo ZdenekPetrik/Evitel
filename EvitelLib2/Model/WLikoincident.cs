@@ -27,5 +27,7 @@ namespace EvitelLib2.Model
         public string UserLastName { get; set; }
         public string UserFirstName { get; set; }
         public int? LoginUserId { get; set; }
+        public int? Year { get; set; }
+        public int? Month { get; set; }
     }
 }

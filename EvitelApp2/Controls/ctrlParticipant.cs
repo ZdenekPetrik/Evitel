@@ -55,6 +55,8 @@ namespace EvitelApp2.Controls
          new MyColumn { Name = "IntervenceId", DataPropertyName = "LikointervenceId", Type = 3 },
          new MyColumn { Name = "Intervence datum", DataPropertyName = "DtIntervStart",  Type=5},
          new MyColumn { Name = "Čas int.", DataPropertyName = "TmIntervStart", Type=6},
+         new MyColumn { Name = "Rok", DataPropertyName = "Year" , Type=3},
+         new MyColumn { Name = "Měsíc", DataPropertyName = "Month" , Type=3},
          new MyColumn { Name = "Forma účasti", DataPropertyName = "TypePartyText" },
          new MyColumn { Name = "Pohlaví", DataPropertyName = "SexText"},
          new MyColumn { Name = "Věk", DataPropertyName = "Age" },
@@ -165,10 +167,20 @@ namespace EvitelApp2.Controls
       dgw.CleanSort();
     }
 
+    public void Visibility(bool isVisibility)
+    {
+      Visible = isVisibility;
+      if (Visible)
+        dgw_RowEnter(null, new DataGridViewCellEventArgs(0, dgw.CurrentCell.RowIndex));
+      else
+      {
+        ShowRowInformation?.Invoke(-1, -1);
+      }
+    }
 
     private void dgw_RowEnter(object sender, DataGridViewCellEventArgs e)
     {
-      ShowRowInformation?.Invoke(e.RowIndex + 1, participants.Count);
+      ShowRowInformation?.Invoke(e.RowIndex + 1, dgw.RowCount);
     }
 
     private void dgw_DoubleClick(object sender, EventArgs e)

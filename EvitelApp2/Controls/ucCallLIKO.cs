@@ -18,7 +18,7 @@ using static EvitelApp2.frmMain;
 
 namespace EvitelApp2.Controls
 {
-  public partial class ucCallLIKO : UserControl, IctrlWithDGW
+  public partial class ucCallLIKO : UserControl
   {
     List<string> ErrorList = new List<string>();
     List<string> WarningList = new List<string>();
@@ -123,10 +123,12 @@ namespace EvitelApp2.Controls
     // Volá se při LOAD a pak vždy poté co nadřazený proces rozhodne co zobrazit
     public void PrepareScreen()
     {
+      btnDelete.Visible = Program.myLoggedUser.HasAccess(eLoginAccess.Admin) && !isNewForm;
+      btnBack.Visible = !isNewForm;
+      btnWrite.Enabled = isNewForm;
+
       if (isNewForm)
       {
-        btnBack.Visible = false;
-        btnWrite.Enabled = true;
         btnWrite.Text = "Uložit";
         lblSupposeId.Text = "Předpokládané Id události";
         txtLoginUser.Text = Program.myLoggedUser.FirstName + " " + Program.myLoggedUser.LastName;
@@ -135,7 +137,6 @@ namespace EvitelApp2.Controls
       }
       else
       {
-        btnBack.Visible = true;
         btnWrite.Text = "Upravit";
         aktLikoIntervence = DB.GetLikoIntervence(LikoIntervenceId);
         aktCall = DB.GetCall(aktLikoIntervence.CallId ?? 0);
@@ -149,7 +150,6 @@ namespace EvitelApp2.Controls
         txtSupposedId.Text = aktLikoIncident.LikoincidentId.ToString();
         lblSupposeId.Text = "Id události";
         LoadAllData();
-        btnWrite.Enabled = false;     // je nutné nakonec - mění se při první změně
         btnQuickLPvK.Visible = false;
       }
       chkSecondIntervence_CheckedChanged(null, null);
@@ -224,7 +224,7 @@ namespace EvitelApp2.Controls
         if (chkSecondIntervence.Checked != true)
         {
           DateTime datetimeIncident = dtIncident.Value.Date.Add(TimeSpan.Parse(tmIncident.Value.ToShortTimeString()));
-          IncidentId = DB.WriteIncident(txtEventNote.Text, ((ComboItem)cmbSubTypeIncident.SelectedItem).iValue, datetimeIncident, ((ComboItem)cmbRegion.SelectedItem).iValue, txtPlace.Text, true,true,true, (int)txtPocetObeti.Value);
+          IncidentId = DB.WriteIncident(txtEventNote.Text, ((ComboItem)cmbSubTypeIncident.SelectedItem).iValue, datetimeIncident, ((ComboItem)cmbRegion.SelectedItem).iValue, txtPlace.Text, true, true, true, (int)txtPocetObeti.Value);
         }
         if (IncidentId > 0)
         {
@@ -335,7 +335,7 @@ namespace EvitelApp2.Controls
 
       if (isChangeIncident)
       {
-        DB.UpdateIncident(aktLikoIncident.LikoincidentId, datetimeIncident, ((ComboItem)cmbSubTypeIncident.SelectedItem).iValue, ((ComboItem)cmbRegion.SelectedItem).iValue, txtEventNote.Text, txtPlace.Text, (int)txtPocetObeti.Value, true,true,true);
+        DB.UpdateIncident(aktLikoIncident.LikoincidentId, datetimeIncident, ((ComboItem)cmbSubTypeIncident.SelectedItem).iValue, ((ComboItem)cmbRegion.SelectedItem).iValue, txtEventNote.Text, txtPlace.Text, (int)txtPocetObeti.Value, true, true, true);
         aktLikoIncident = DB.GetLikoIncident(aktLikoIncident.LikoincidentId);
       }
       DB.UpdateParticipants(aktLikoIntervence.LikointervenceId, ucParticipations1.participantsList);
@@ -567,25 +567,7 @@ namespace EvitelApp2.Controls
 
     }
 
-    public void SetColumns()
-    {
-      ucParticipations1.SetColumns();
-    }
 
-    public void InitColumns()
-    {
-      ucParticipations1.InitColumns();
-    }
-
-    public void RemoveOrders()
-    {
-      throw new NotImplementedException();
-    }
-
-    public void RemoveFilters()
-    {
-      throw new NotImplementedException();
-    }
 
     private void txtEventNote_TextChanged_1(object sender, EventArgs e)
     {
@@ -636,5 +618,19 @@ namespace EvitelApp2.Controls
       ShowDetailUserControl?.Invoke(-99, 1);
 
     }
+
+    private void btnDelete_Click(object sender, EventArgs e)
+    {
+      if (DialogResult.Yes == MessageBox.Show("Opravdu smazat tuto intervenci?", "SKI - Mazání věty", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+      {
+        if (1 == DB.DeleteSkiRow(LikoIntervenceId))
+        {
+          MessageBox.Show("SKI věta smazána.", "SKI - Mazání věty", MessageBoxButtons.OK, MessageBoxIcon.Information);
+          ShowDetailUserControl?.Invoke(-1, 2);
+        }
+
+      }
+    }
   }
 }
+

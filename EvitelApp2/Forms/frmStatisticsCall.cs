@@ -31,8 +31,6 @@ namespace EvitelApp2.Forms
 
     private void frmStatisticsCall_Load(object sender, EventArgs e)
     {
-      dtFrom.Value = DateTime.Now.AddDays(-1).Date;
-      dtTo.Value = DateTime.Now.AddDays(-1).Date;
       DB = new CRepositoryDB(Program.myLoggedUser.LoginUserId);
       cmbInterval.Items.Add(new ComboItem("Včera", "1"));
       cmbInterval.Items.Add(new ComboItem("Předevčířem", "2"));
@@ -56,7 +54,11 @@ namespace EvitelApp2.Forms
       grouping = DB.GetGrouping().OrderBy(x => x.GroupingId).ToList();
       foreach (var g1 in grouping)
         cmbGrouping.Items.Add(new ComboItem(g1.Text, g1.GroupingId.ToString()));
-      cmbGrouping.SelectedIndex = 3;
+      cmbInterval.SelectedIndex = (int)Properties.CallSettings.Default.Interval;
+      cmbGrouping.SelectedIndex = (int)Properties.CallSettings.Default.Grouping;
+      // s datumem je problém. Při prvním čtení neexistuje a i kdybych ho tam dal jako implicitní, tak může být jiný formát (US, CZ). Takže radši s kontrolou.
+      dtFrom.Value = (Properties.CallSettings.Default.DateFrom < dtFrom.MinDate) ? DateTime.Now : Properties.CallSettings.Default.DateFrom;
+      dtTo.Value = (Properties.CallSettings.Default.DateTo < dtTo.MinDate) ? DateTime.Now : Properties.CallSettings.Default.DateTo;
     }
 
 
@@ -113,6 +115,11 @@ namespace EvitelApp2.Forms
         da.SelectCommand.Parameters.AddWithValue("@dtTo", dtTo.Value.AddDays(1).Date);
         da.Fill(aktStatistikaTable);
         aktStatistikaTable.TableName = "StatistikaX";
+        Properties.CallSettings.Default.DateFrom = dtFrom.Value.Date;
+        Properties.CallSettings.Default.DateTo = dtTo.Value.Date;
+        Properties.CallSettings.Default.Interval = cmbInterval.SelectedIndex;
+        Properties.CallSettings.Default.Grouping = cmbGrouping.SelectedIndex;
+        Properties.CallSettings.Default.Save();
         this.DialogResult = DialogResult.OK;
       }
     }

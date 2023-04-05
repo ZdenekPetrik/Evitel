@@ -83,6 +83,7 @@ namespace EvitelApp2.Controls
       btnBack = new System.Windows.Forms.Button();
       lblTitulek = new System.Windows.Forms.Label();
       btnQuickLPvK = new System.Windows.Forms.Button();
+      btnDelete = new System.Windows.Forms.Button();
       boxCall.SuspendLayout();
       boxEvent.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)txtPocetObeti).BeginInit();
@@ -677,10 +678,25 @@ namespace EvitelApp2.Controls
       btnQuickLPvK.UseVisualStyleBackColor = true;
       btnQuickLPvK.Click += btnQuickLPvK_Click;
       // 
+      // btnDelete
+      // 
+      btnDelete.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      btnDelete.Image = (System.Drawing.Image)resources.GetObject("btnDelete.Image");
+      btnDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      btnDelete.Location = new System.Drawing.Point(1204, 652);
+      btnDelete.Name = "btnDelete";
+      btnDelete.Size = new System.Drawing.Size(92, 47);
+      btnDelete.TabIndex = 60;
+      btnDelete.Text = "Delete";
+      btnDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+      btnDelete.UseVisualStyleBackColor = true;
+      btnDelete.Click += btnDelete_Click;
+      // 
       // ucCallLIKO
       // 
       AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
       AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      Controls.Add(btnDelete);
       Controls.Add(btnQuickLPvK);
       Controls.Add(lblTitulek);
       Controls.Add(btnBack);
@@ -690,7 +706,7 @@ namespace EvitelApp2.Controls
       Controls.Add(boxCall);
       Controls.Add(lblRegion);
       Name = "ucCallLIKO";
-      Size = new System.Drawing.Size(1397, 702);
+      Size = new System.Drawing.Size(1308, 702);
       Load += ucCallLIKO_Load;
       VisibleChanged += ucCallLIKO_VisibleChanged;
       Resize += ucCallLIKO_Resize;
@@ -765,6 +781,7 @@ namespace EvitelApp2.Controls
     private System.Windows.Forms.Label lblIntervenceSum;
     private System.Windows.Forms.Label lblTitulek;
     private System.Windows.Forms.Button btnQuickLPvK;
+    private System.Windows.Forms.Button btnDelete;
   }
 
 }
