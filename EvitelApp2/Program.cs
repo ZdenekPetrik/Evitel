@@ -2,6 +2,7 @@ using EvitelApp2.Login;
 using EvitelLib2;
 using EvitelLib2.Business;
 using EvitelLib2.Common;
+using EvitelLib2.Repository;
 using Microsoft.VisualBasic.ApplicationServices;
 using NPOI.OpenXml4Net.OPC;
 using System;
@@ -20,10 +21,20 @@ namespace EvitelApp2
     [STAThread]
     static void Main()
     {
+      CProtocol.ProtocolName = "Evitel2.pro";
       Application.SetHighDpiMode(HighDpiMode.SystemAware);
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
-      loginManipulation = new CLoginManipulation();
+      CProtocol.Write ("Start in "+ (ConfigurationManager.AppSettings["Debug"] == "Yes" ? "Debug":"Standard" ) + " mode" );
+      CRepositoryDB db = new CRepositoryDB();
+      int loginMode = db.GetSettingI("LoginMode");
+      if (loginMode == 0 && db.sErr.Length > 0) {
+        CProtocol.Write(db.sErr);
+        MessageBox.Show("No able read DB. Look at " + CProtocol.FullNameProtocol);
+        return;
+      }
+
+      loginManipulation = new CLoginManipulation();   
       if (ConfigurationManager.AppSettings["Debug"] == "Yes")
         myLoggedUser = loginManipulation.CheckLogin("ZPT", "12345678");
       else

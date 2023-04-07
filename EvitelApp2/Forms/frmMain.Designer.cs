@@ -96,6 +96,7 @@ namespace EvitelApp2
       statistikaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       statistikaVoláníToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       statistikaSKIUdálostíToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      statiskikaLPvKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       statusStrip1 = new System.Windows.Forms.StatusStrip();
       toolStripTime = new System.Windows.Forms.ToolStripStatusLabel();
       toolStripUser = new System.Windows.Forms.ToolStripStatusLabel();
@@ -116,7 +117,6 @@ namespace EvitelApp2
       ctrlSKIReport1 = new Controls.ctrlSKIReport();
       ctrlStatistika1 = new Controls.ctrlStatistika();
       ucCiselnik1 = new Controls.ucCiselnik();
-      statiskikaLPvKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       menuStrip1.SuspendLayout();
       statusStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -125,7 +125,7 @@ namespace EvitelApp2
       // 
       // menuStrip1
       // 
-      menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { souborToolStripMenuItem, toolsToolStripMenuItem, viewsToolStripMenuItem, NewCallToolStripMenuItem, testToolStripMenuItem, SettingToolStripMenuItem, statistikaToolStripMenuItem });
+      menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { souborToolStripMenuItem, toolsToolStripMenuItem, viewsToolStripMenuItem, NewCallToolStripMenuItem, testToolStripMenuItem, statistikaToolStripMenuItem, SettingToolStripMenuItem });
       menuStrip1.Location = new System.Drawing.Point(0, 0);
       menuStrip1.Name = "menuStrip1";
       menuStrip1.Size = new System.Drawing.Size(1555, 24);
@@ -561,6 +561,13 @@ namespace EvitelApp2
       statistikaSKIUdálostíToolStripMenuItem.Text = "Statistika SKI událostí";
       statistikaSKIUdálostíToolStripMenuItem.Click += statistikaSKIUdálostíToolStripMenuItem_Click;
       // 
+      // statiskikaLPvKToolStripMenuItem
+      // 
+      statiskikaLPvKToolStripMenuItem.Name = "statiskikaLPvKToolStripMenuItem";
+      statiskikaLPvKToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+      statiskikaLPvKToolStripMenuItem.Text = "Statistika LPvK ";
+      statiskikaLPvKToolStripMenuItem.Click += statiskikaLPvKToolStripMenuItem_Click;
+      // 
       // statusStrip1
       // 
       statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripTime, toolStripUser, toolStripStatusLabel1, toolStripRows });
@@ -711,13 +718,6 @@ namespace EvitelApp2
       ucCiselnik1.Name = "ucCiselnik1";
       ucCiselnik1.Size = new System.Drawing.Size(163, 209);
       ucCiselnik1.TabIndex = 18;
-      // 
-      // statiskikaLPvKToolStripMenuItem
-      // 
-      statiskikaLPvKToolStripMenuItem.Name = "statiskikaLPvKToolStripMenuItem";
-      statiskikaLPvKToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-      statiskikaLPvKToolStripMenuItem.Text = "Statistika LPvK ";
-      statiskikaLPvKToolStripMenuItem.Click += statiskikaLPvKToolStripMenuItem_Click;
       // 
       // frmMain
       // 

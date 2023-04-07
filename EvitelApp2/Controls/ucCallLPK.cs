@@ -812,15 +812,61 @@ namespace EvitelApp2.Controls
         if (lastNick != null && lastNick.Lpkid > 0)
         {
           if (cmbContactType.SelectedIndex == 0)
-            cmbContactType.SelectedIndex = lastNick.ContactTypeEid;
+          {
+            for (int i = 0; i < cmbContactType.Items.Count; i++)
+            {
+              if (lastNick.ContactTypeEid == ((ComboItem)cmbContactType.Items[i]).iValue)
+              {
+                cmbContactType.SelectedIndex = i;
+                break;
+              }
+            }
+          }
           if (cmbTypeService.SelectedIndex == 0)
-            cmbTypeService.SelectedIndex = lastNick.TypeServiceEid;
+          {
+            for (int i = 0; i < cmbTypeService.Items.Count; i++)
+            {
+              if (lastNick.TypeServiceEid == ((ComboItem)cmbTypeService.Items[i]).iValue)
+              {
+                cmbTypeService.SelectedIndex = i;
+                break;
+              }
+            }
+          }
           if (cmbFrom.SelectedIndex == 0)
-            cmbFrom.SelectedIndex = lastNick.ClientFromEid ?? 0;
+          {
+            for (int i = 0; i < cmbFrom.Items.Count; i++)
+            {
+              if (lastNick.ClientFromEid == ((ComboItem)cmbFrom.Items[i]).iValue)
+              {
+                cmbFrom.SelectedIndex = i;
+                break;
+              }
+            }
+          }
           if (cmbSex.SelectedIndex == 0)
-            cmbSex.SelectedIndex = lastNick.SexEid ?? 0;
+          {
+            for (int i = 0; i < cmbSex.Items.Count; i++)
+            {
+              if (lastNick.SexEid == ((ComboItem)cmbSex.Items[i]).iValue)
+              {
+                cmbSex.SelectedIndex = i;
+                break;
+              }
+            }
+          }
+
           if (cmbAge.SelectedIndex == 0)
-            cmbAge.SelectedIndex = lastNick.AgeEid ?? 0;
+          {
+            for (int i = 0; i < cmbAge.Items.Count; i++)
+            {
+              if (lastNick.AgeEid == ((ComboItem)cmbAge.Items[i]).iValue)
+              {
+                cmbAge.SelectedIndex = i;
+                break;
+              }
+            }
+          }
           if (txtNote.Text.Length == 0)
             txtNote.Text = lastNick.Note;
         }

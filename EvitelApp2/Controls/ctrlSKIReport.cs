@@ -149,7 +149,9 @@ namespace EvitelApp2.Controls
         DataRow newRow = _dataTable.NewRow();
         foreach (var col in myColumns)
         {
-          newRow[col.Name] = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null); ;
+          var x = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null);
+          if (x != null)
+            newRow[col.Name] = x;
         }
         _dataTable.Rows.Add(newRow);
       }
@@ -198,7 +200,7 @@ namespace EvitelApp2.Controls
     private void JumpToIntervence()
     {
       int ParticipantId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["ID"].Value;
-      int? likoIntervenceId =  likoAll.Where(x => x.ParticipantId == ParticipantId)?.First().LikointervenceId;
+      int? likoIntervenceId = likoAll.Where(x => x.ParticipantId == ParticipantId)?.First().LikointervenceId;
       ShowDetailUserControl?.Invoke(5, likoIntervenceId);
     }
 

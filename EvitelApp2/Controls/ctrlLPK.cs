@@ -31,11 +31,13 @@ namespace EvitelApp2.Controls
     public event RowInformation ShowRowInformation;
     public event DetailIntervence ShowDetailUserControl;
     private DataGridViewCellEventArgs mouseLocation;
-    public DataTable dataTable { 
-      get {
+    public DataTable dataTable
+    {
+      get
+      {
         DataView dv = new DataView(_dataTable);
-        dv.RowFilter = dgw.FilterString; 
-        dv.Sort= dgw.SortString;
+        dv.RowFilter = dgw.FilterString;
+        dv.Sort = dgw.SortString;
         return dv.ToTable();
       }
     }
@@ -128,7 +130,9 @@ namespace EvitelApp2.Controls
         DataRow newRow = _dataTable.NewRow();
         foreach (var col in myColumns)
         {
-          newRow[col.Name] = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null); ;
+          var x = p.GetType().GetProperty(col.DataPropertyName).GetValue(p, null);
+          if (x != null)
+            newRow[col.Name] = x;
         }
         //          
         _dataTable.Rows.Add(newRow);
@@ -203,7 +207,8 @@ namespace EvitelApp2.Controls
     }
 
     private void JumpToIntervence()
-    { int lpkId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["ID"].Value;
+    {
+      int lpkId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["ID"].Value;
       ShowDetailUserControl?.Invoke(11, lpkId);
     }
 

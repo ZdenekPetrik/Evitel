@@ -86,8 +86,11 @@ namespace EvitelLib2.Repository
 
     public String GetSettingS(string Name)
     {
+      sErr = "";
       Evitel2DB db = new Evitel2DB();
-      IQueryable<MainSetting> ms = db.MainSettings.Select(n => n).Where(n => n.Name == Name);
+      try
+      {
+        IQueryable<MainSetting> ms = db.MainSettings.Select(n => n).Where(n => n.Name == Name);
       MainSetting[] MainS = ms.ToArray();
       if (ms.Count() == 1)
       {
@@ -97,24 +100,39 @@ namespace EvitelLib2.Repository
       {
         new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetSettingS - no able found param " + Name, "", IdUser);
       }
+      }
+      catch (Exception Ex)
+      {
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetSettingS(" + Name + ").  " + GetInnerException(Ex), "", IdUser);
+        sErr = GetInnerException(Ex);
+      }
       return "";
     }
     public int GetSettingI(string Name)
     {
+      sErr = "";
       Evitel2DB db = new Evitel2DB();
-      IQueryable<MainSetting> ms = db.MainSettings.Select(n => n).Where(n => n.Name == Name);
-      MainSetting[] MainS = ms.ToArray();
-      if (ms.Count() == 1)
+      try
       {
-        return MainS[0].IValue ?? 0;
+        IQueryable<MainSetting> ms = db.MainSettings.Select(n => n).Where(n => n.Name == Name);
+        MainSetting[] MainS = ms.ToArray();
+        if (ms.Count() == 1)
+        {
+          return MainS[0].IValue ?? 0;
+        }
+        else
+        {
+          new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetSettingI - no able found param " + Name, "", IdUser);
+        }
       }
-      else
+      catch (Exception Ex)
       {
-        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetSettingI - no able found param " + Name, "", IdUser);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetSettingI(" + Name +").  " + GetInnerException(Ex), "", IdUser);
+        sErr = GetInnerException(Ex);
+        return 0;
       }
       return 0;
     }
-
 
     public DateTime GetSettingD(string Name)
     {
@@ -136,6 +154,7 @@ namespace EvitelLib2.Repository
       }
       return MyMinDate;
     }
+
     public bool GetSettingB(string Name)
     {
       Evitel2DB db = new Evitel2DB();
@@ -2588,6 +2607,8 @@ namespace EvitelLib2.Repository
         var participants = from par in db.Likoparticipants where par.LikointervenceId == intervenceRow.LikointervenceId select par;
         bool isDeleteIncident = (intervences.Count() == 1);
         db.Likoparticipants.RemoveRange(participants);
+        db.SaveChanges();
+
         db.Calls.RemoveRange(callRow);
         db.Likointervences.Remove(intervenceRow);
         if (isDeleteIncident)

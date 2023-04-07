@@ -683,7 +683,7 @@ namespace EvitelApp2.Controls
       btnDelete.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
       btnDelete.Image = (System.Drawing.Image)resources.GetObject("btnDelete.Image");
       btnDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      btnDelete.Location = new System.Drawing.Point(1204, 652);
+      btnDelete.Location = new System.Drawing.Point(1289, 391);
       btnDelete.Name = "btnDelete";
       btnDelete.Size = new System.Drawing.Size(92, 47);
       btnDelete.TabIndex = 60;
@@ -706,7 +706,7 @@ namespace EvitelApp2.Controls
       Controls.Add(boxCall);
       Controls.Add(lblRegion);
       Name = "ucCallLIKO";
-      Size = new System.Drawing.Size(1308, 702);
+      Size = new System.Drawing.Size(1415, 702);
       Load += ucCallLIKO_Load;
       VisibleChanged += ucCallLIKO_VisibleChanged;
       Resize += ucCallLIKO_Resize;

@@ -513,13 +513,13 @@ namespace EvitelApp2
         switch (aktWindow)
         {
           case eShowWindow.SKIReport:
-            ShowView_SKIReport(false);
+            ShowView_SKIReport(IntervenceId > 0);
             break;
           case eShowWindow.SKIParticipant:
-            ShowView_Participant(false);
+            ShowView_Participant(IntervenceId > 0);
             break;
           case eShowWindow.SKICall:
-            ShowView_LikoCalls(false);
+            ShowView_LikoCalls(IntervenceId > 0);
             break;
           case eShowWindow.SKIIncident:
             ShowView_LIKOIncidents(IntervenceId > 0);
@@ -528,7 +528,7 @@ namespace EvitelApp2
             ShowView_Intervence(IntervenceId > 0);
             break;
           case eShowWindow.CallAll:
-            ShowView_CallAll(false);
+            ShowView_CallAll(IntervenceId > 0);
             break;
           case eShowWindow.LPvKRows:
             ShowView_LPKRows(IntervenceId > 0); // tzn. že se věta změnila - znovu načti
@@ -1001,5 +1001,5 @@ namespace EvitelApp2
         e.Cancel = true;
     }
 
-   }
+  }
 }

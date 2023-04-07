@@ -626,7 +626,7 @@ namespace EvitelApp2.Controls
         if (1 == DB.DeleteSkiRow(LikoIntervenceId))
         {
           MessageBox.Show("SKI věta smazána.", "SKI - Mazání věty", MessageBoxButtons.OK, MessageBoxIcon.Information);
-          ShowDetailUserControl?.Invoke(-1, 2);
+          ShowDetailUserControl?.Invoke(-1, 1);
         }
 
       }

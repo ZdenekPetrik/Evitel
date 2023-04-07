@@ -109,7 +109,7 @@
 
 17.3. Simona Doma. 
       - FANYNKA1 - pokud upraviš Tf hovor a následnì ti Fanynka1 zavolá, tak se údaje nepøepisují. 
-      Smazat záznam pro admina
+      - Smazat záznam pro admina
       - Power User bude mít práva jak Archiv. Archiv nebude využit.
       - Button LPVK zmizí po Detail
       Button Duplikovat úèastníka
@@ -120,7 +120,8 @@
 19.3. Pøepisování údajù Fanynka, Mazání záznamù zatím jen LPVK, Button LPVK už nemizí, Rok Mìsíc do všech reportù (snad). Excel vybojován
 1.4.  Dokonèení statistika LPvK. Uložení filteru do souboru LPvkSetting.sesttings. Speciální SQL pro hledání v ContactTopic,CurrentStatus,EndOfSpeech
       Všechny Reporty mají mìsíc a rok. 
-
+5.4 - U Simony v práci. Ètení hodnot z DB do GrifView pouze pokud nejsou null. Oprava vyplòování Nick - nikoliv podle indexu ale podle hodnoty iValue.
+7.4. - Doma Doplnìní o protokol.pro (do user/petri/onedrive/document/). + Test na pøítomnost databáze pøi startu se zápisem chyby do protokolu
 
 SQL Zmeny 
 wLIKOParticipant - kvuli zmene wLIKOIntervence, + øazení
