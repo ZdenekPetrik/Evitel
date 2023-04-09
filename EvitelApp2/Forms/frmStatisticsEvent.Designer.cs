@@ -203,7 +203,7 @@
       Controls.Add(dtFrom);
       Controls.Add(lblDatumACas);
       Name = "frmStatisticsEvent";
-      Text = "Statistika - Počet Událostí";
+      Text = "Statistika SKI - Počet Událostí";
       Load += frmStatisticsCall_Load;
       groupBox1.ResumeLayout(false);
       groupBox1.PerformLayout();

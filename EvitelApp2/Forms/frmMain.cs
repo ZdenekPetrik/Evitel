@@ -142,7 +142,7 @@ namespace EvitelApp2
       eShowWindow[] myEnumMembers = (eShowWindow[])Enum.GetValues(typeof(eShowWindow));
       foreach (eShowWindow enumMember in myEnumMembers)
       {
-        aktWindow = enumMember; ;
+        aktWindow = enumMember; 
         HideActualView();
       }
       toolStripRows.Text = "";
@@ -257,7 +257,6 @@ namespace EvitelApp2
         ucCallLIKO1.isNewForm = false;
         ucCallLIKO1.LikoIntervenceId = TypeCall;
         this.Text = Title + " - Linka krizové intervence (SKI) Detail";
-
       }
       else
       {
@@ -265,8 +264,6 @@ namespace EvitelApp2
         this.Text = Title + " - Linka krizové intervence (SKI) Nové volání";
       }
       ucCallLIKO1.Title = this.Text;
-      MenuToolSetColumnLayout.Enabled = true;
-      MenuToolsRemoveColumnLayout.Enabled = true;
       ucCallLIKO1.PrepareScreen();
       lastWindowStack.Add(aktWindow);
 

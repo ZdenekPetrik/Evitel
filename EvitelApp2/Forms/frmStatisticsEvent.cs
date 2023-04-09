@@ -53,7 +53,7 @@ namespace EvitelApp2.Forms
       grouping = DB.GetGrouping().OrderBy(x => x.GroupingId).ToList();
       foreach (var g1 in grouping)
         cmbGrouping.Items.Add(new ComboItem(g1.Text, g1.GroupingId.ToString()));
-      cmbInterval.SelectedIndex = (int)Properties.SKISettings .Default.Interval;
+      cmbInterval.SelectedIndex = (int)Properties.SKISettings.Default.Interval;
       cmbGrouping.SelectedIndex = (int)Properties.SKISettings.Default.Grouping;
       // s datumem je problém. Při prvním čtení neexistuje a i kdybych ho tam dal jako implicitní, tak může být jiný formát (US, CZ). Takže radši s kontrolou.
       dtFrom.Value = (Properties.SKISettings.Default.DateFrom < dtFrom.MinDate) ? DateTime.Now : Properties.SKISettings.Default.DateFrom;
@@ -109,6 +109,16 @@ namespace EvitelApp2.Forms
           SelectTrestnaCinnost += "Count(CASE WHEN TI.TypeIncidentId = " + tc1.TypeIncidentId + " THEN 1 ELSE NULL END) AS '" + tc1.Text + "',";
         }
         FromIncident = " LEFT JOIN eSubTypeIncident STI ON I.SubTypeIncidentEID=STI.SubTypeIncidentID LEFT JOIN eTypeIncident TI ON STI.TypeIncidentId = TI.TypeIncidentId ";
+      }
+
+      if (chkPodleTrestneCinnostiPodrobne.Checked == true)
+      {
+        var tcSub = DB.GetSubTypeIncident();
+        foreach (var tc1 in tcSub)
+        {
+          SelectTrestnaCinnost += "Count(CASE WHEN I.SubTypeIncidentEId = " + tc1.SubTypeIncidentId + " THEN 1 ELSE NULL END) AS '" + tc1.Text + "',";
+        }
+        FromIncident = " LEFT JOIN eSubTypeIncident STI ON I.SubTypeIncidentEID=STI.SubTypeIncidentID  ";
       }
 
       string Select1 = " SELECT <interval>, ";

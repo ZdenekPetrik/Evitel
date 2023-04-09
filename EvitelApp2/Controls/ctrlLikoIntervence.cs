@@ -67,6 +67,7 @@ namespace EvitelApp2.Controls
          new MyColumn { Name = "Čas volání", DataPropertyName = "TmCall",Type=6},
          new MyColumn { Name = "Datum událost", DataPropertyName = "DtUdalost" , Type=5},
          new MyColumn { Name = "Čas události", DataPropertyName = "TmUdalost",Type=6},
+         new MyColumn { Name = "ID události", DataPropertyName = "LikoincidentId",Type=3},
          new MyColumn { Name = "Kraj události", DataPropertyName = "UdalostRegion"},
          new MyColumn { Name = "Místo události", DataPropertyName = "UdalostMisto"},
          new MyColumn { Name = "Poznámka události", DataPropertyName = "UdalostNote"},
