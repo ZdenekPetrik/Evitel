@@ -77,6 +77,7 @@ namespace EvitelApp2.Controls
          new MyColumn { Name = "Téma kontaktu", DataPropertyName = "ContactTopic"},
          new MyColumn { Name = "Aktuální stav klienta", DataPropertyName = "ClientCurrentStatus"},
          new MyColumn { Name = "Závěr hovoru", DataPropertyName = "EndOfSpeech"},
+         new MyColumn { Name = "CallId", DataPropertyName = "CallId", Type=3  },
          new MyColumn { Name = "Zapsal", DataPropertyName = "UsrLastName" },
 
        };

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq; 
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -34,7 +34,7 @@ namespace EvitelApp2.Forms1
     {
       for (int i = 0; i < loginAccessList.Count(); i++)
       {
-        chkBoxAccess.Items.Add(loginAccessList[i].AccessName, loginUser.LoginAccessUsers.Where(x=>x.LoginAccessId== loginAccessList[i].LoginAccessId).Count() > 0);
+        chkBoxAccess.Items.Add(loginAccessList[i].AccessName, loginUser.LoginAccessUsers.Where(x => x.LoginAccessId == loginAccessList[i].LoginAccessId).Count() > 0);
       }
       errFirstName = InitializeErrorProvider(1, txtFirstName);
       errLastName = InitializeErrorProvider(1, txtLastName);
@@ -45,7 +45,7 @@ namespace EvitelApp2.Forms1
       {
         btnSave.Text = "Nový uživatel";
         chkChangePassword.Visible = false;
-        chkChangePassword.Checked =  true;
+        chkChangePassword.Checked = true;
       }
       else
       {
@@ -170,7 +170,7 @@ namespace EvitelApp2.Forms1
 
     private void SaveValues()
     {
-      List<LoginAccess> newLoginAccessesList = new List<LoginAccess>()  ;
+      List<LoginAccess> newLoginAccessesList = new List<LoginAccess>();
 
       for (int i = 0; i < chkBoxAccess.Items.Count; i++)
       {
@@ -182,11 +182,12 @@ namespace EvitelApp2.Forms1
         if (!value && loginAccessUser != null)
           loginUser.LoginAccessUsers.Remove(loginAccessUser);
       }
-      loginUser.LoginName = txtLoginName.Text;  
-      loginUser.FirstName= txtFirstName.Text; 
-      loginUser.LastName= txtLastName.Text;
-      if ((Type == 1) || chkChangePassword.Checked) { 
-        loginUser.LoginPassword = txtPassword.Text; 
+      loginUser.LoginName = txtLoginName.Text;
+      loginUser.FirstName = txtFirstName.Text;
+      loginUser.LastName = txtLastName.Text;
+      if ((Type == 1) || chkChangePassword.Checked)
+      {
+        loginUser.LoginPassword = txtPassword.Text;
       }
     }
 

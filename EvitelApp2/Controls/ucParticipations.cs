@@ -291,17 +291,12 @@ namespace EvitelApp2.Controls
       gb_Participation.Top = 0;
       gb_Participation.Width = this.ClientSize.Width - 10;
       dgw.Width = gb_Participation.ClientSize.Width - (btnAddParticipant.Width + 25);
-      if (isEditMode)
-      {
-      }
-      else {
-        btnAddParticipant.Enabled = false;
-        btnDeleteParticipant.Enabled = false;
-        btnUpParticipant.Enabled = false;
-        btnDownParticipant.Enabled = false;
-        btnEditParticipant.Text = "Show";
-      }
-    }
+      btnAddParticipant.Enabled = isEditMode;
+      btnDeleteParticipant.Enabled = isEditMode;
+      btnUpParticipant.Enabled = isEditMode;
+      btnDownParticipant.Enabled = isEditMode;
+      btnEditParticipant.Text = isEditMode ? "Edit" : "Show";
+        }
 
     private void gb_Participation_Enter(object sender, EventArgs e)
     {

@@ -64,8 +64,10 @@ namespace EvitelApp2.Controls
          new MyColumn { Name = "Dokonané", DataPropertyName = "Dokonane", Type = 2},
          new MyColumn { Name = "Pokus Příprava", DataPropertyName = "PokusPriprava", Type = 2},
          new MyColumn { Name = "Počet Poškocených", DataPropertyName = "PocetPoskozenych",Type=3},
+         new MyColumn { Name = "Poznámka", DataPropertyName = "UdalostNote"},
          new MyColumn { Name = "Volání datum", DataPropertyName = "DtCall", Type=5},
          new MyColumn { Name = "Čas tf. ", DataPropertyName = "TmCall", Type=6},
+         new MyColumn { Name = "CallId", DataPropertyName = "CallId", Type=3  },
          new MyColumn { Name = "Volajici", DataPropertyName = "Volajici"},
          new MyColumn { Name = "Kraj Volajicí", DataPropertyName = "VolajiciKraj"},
          new MyColumn { Name = "Zapsal", DataPropertyName = "UserLastName" }
