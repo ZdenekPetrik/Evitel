@@ -125,14 +125,15 @@ namespace EvitelApp2.Controls
     {
       btnDelete.Visible = Program.myLoggedUser.HasAccess(eLoginAccess.Admin) && !isNewForm;
       btnBack.Visible = !isNewForm;
-      btnWrite.Enabled = isNewForm;
+      btnQuickLPvK.Visible = isNewForm;
+      ucParticipations1.isEditMode = isNewForm;
+      ucParticipations1.isNew = isNewForm;
 
       if (isNewForm)
       {
         btnWrite.Text = "Uložit";
         lblSupposeId.Text = "Předpokládané Id události";
         txtLoginUser.Text = Program.myLoggedUser.FirstName + " " + Program.myLoggedUser.LastName;
-        ucParticipations1.isNew = true;
         EmptyAll();
       }
       else
@@ -142,20 +143,20 @@ namespace EvitelApp2.Controls
         aktCall = DB.GetCall(aktLikoIntervence.CallId ?? 0);
         aktLikoIncident = DB.GetLikoIncident(aktLikoIntervence.LikoincidentId ?? 0);
         ucParticipations1.participantsList = DB.GetLikoParticipants(aktLikoIntervence.LikointervenceId, 2);
-        isEditMode = (Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser) || (aktCall.DtStartCall?.AddMonths(1) > DateTime.Now && aktCall.LoginUserId == Program.myLoggedUser.LoginUserId));
+        isEditMode = (Program.myLoggedUser.HasAccess(eLoginAccess.Admin) || (aktCall.DtStartCall?.AddMonths(1) > DateTime.Now && aktCall.LoginUserId == Program.myLoggedUser.LoginUserId));
         ucParticipations1.isEditMode = isEditMode;
-        ucParticipations1.isNew = false;
         var anyUser = DB.GetUsers().Where(x => x.LoginUserId == aktCall.LoginUserId).FirstOrDefault();
         txtLoginUser.Text = anyUser.FirstName + " " + anyUser.LastName;
         txtSupposedId.Text = aktLikoIncident.LikoincidentId.ToString();
         lblSupposeId.Text = "Id události";
         LoadAllData();
-        btnQuickLPvK.Visible = false;
       }
       chkSecondIntervence_CheckedChanged(null, null);
       ucParticipations1.InitData();
       SpoctiDobuIntervence();
       ReWriteScreen();
+      btnWrite.Enabled = isNewForm; // az nakonec protože inicializační změna prvků mi to automaticky změní na true
+
     }
 
 

@@ -77,11 +77,11 @@ namespace EvitelApp2
       {
         testToolStripMenuItem.Visible = false;
       }
-      MenuItemBackup.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser);
-      MenuItemRestore.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser);
+      MenuItemBackup.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.Admin);
+      MenuItemRestore.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.Admin);
       MenuItemUsers.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.Admin);
       MenuItemNewUser.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.Admin);
-      MenuItemPromenneAplikace.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser);
+      MenuItemPromenneAplikace.Enabled = Program.myLoggedUser.HasAccess(eLoginAccess.Admin);
       // 
       CRepositoryDB repo = new CRepositoryDB();
       ucCallLIKO1.Dock = DockStyle.Fill;

@@ -22,6 +22,7 @@ namespace EvitelApp2.Controls
   {
     public bool isNewForm;
     public bool isEditMode;
+    public bool WasChanged;
     public int LPKId;               // Pokud je isNewForm=false zde najdeš ID 
 
     private ErrorProvider cmbContactTypeErrorProvider;
@@ -129,8 +130,6 @@ namespace EvitelApp2.Controls
     public void PrepareScreen()
     {
       btnBack.Visible = !isNewForm;
-      btnWrite.Enabled = isNewForm;
-      btnWrite.Text = isNewForm ? "Uložit" : "Upravit";
       btnDelete.Visible = Program.myLoggedUser.HasAccess(eLoginAccess.Admin) && !isNewForm;
       lblEditInfo.Visible = !isNewForm;
       if (isNewForm)
@@ -149,7 +148,7 @@ namespace EvitelApp2.Controls
       {
         lpkRow = DB.GetLPK(LPKId).First();
         aktCall = DB.GetCall(lpkRow.CallId);
-        isEditMode = (Program.myLoggedUser.HasAccess(eLoginAccess.PowerUser) || (aktCall.DtEndCall?.AddMonths(1) > DateTime.Now && aktCall.LoginUserId == Program.myLoggedUser.LoginUserId));
+        isEditMode = (Program.myLoggedUser.HasAccess(eLoginAccess.Admin) || (aktCall.DtEndCall?.AddMonths(1) > DateTime.Now && aktCall.LoginUserId == Program.myLoggedUser.LoginUserId));
         var anyUser = DB.GetUsers().Where(x => x.LoginUserId == aktCall.LoginUserId).FirstOrDefault();
         txtLoginUser.Text = anyUser.FirstName + " " + anyUser.LastName;
         btnWrite.Enabled = false;     // je nutné nakonec - mění se při první změně
@@ -351,6 +350,9 @@ namespace EvitelApp2.Controls
       }
 
       txtVolajici.AutoCompleteCustomSource.AddRange(DB.GetNick().Select(x => x.Text).ToArray());
+      btnWrite.Enabled = isNewForm;
+      btnWrite.Text = isNewForm ? "Uložit" : "Upravit";
+      WasChanged = false;
       ReWriteScreen();
 
     }
@@ -698,6 +700,7 @@ namespace EvitelApp2.Controls
         }
       }
       DB.UpdateLPK(lpkRow);
+      WasChanged = true;
       btnWrite.Enabled = false;
     }
 
@@ -748,7 +751,7 @@ namespace EvitelApp2.Controls
 
     private void btnBack_Click(object sender, EventArgs e)
     {
-      ShowDetailUserControl?.Invoke(-1, 0);
+      ShowDetailUserControl?.Invoke(-1, WasChanged?1:0);
     }
     private void Any_ValueChanged(object sender, EventArgs e)
     {
