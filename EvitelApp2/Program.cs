@@ -26,13 +26,17 @@ namespace EvitelApp2
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
       CProtocol.Write ("Start in "+ (ConfigurationManager.AppSettings["Debug"] == "Yes" ? "Debug":"Standard" ) + " mode" );
+      string cn = ConfigurationManager.ConnectionStrings["DBEvitel2"].ConnectionString;
+      CProtocol.Write(cn);
       CRepositoryDB db = new CRepositoryDB();
+      CProtocol.Write("Database 1");
       int loginMode = db.GetSettingI("LoginMode");
       if (loginMode == 0 && db.sErr.Length > 0) {
         CProtocol.Write(db.sErr);
         MessageBox.Show("No able read DB. Look at " + CProtocol.FullNameProtocol);
         return;
       }
+      CProtocol.Write("Database 2");
 
       loginManipulation = new CLoginManipulation();   
       if (ConfigurationManager.AppSettings["Debug"] == "Yes")

@@ -50,8 +50,8 @@ namespace EvitelLib2.Common
       this.fileName = fileName;
       this.cisloJednaci = cisloJednaci;
       DB = new CRepositoryDB(userId);
-      intervenceList = DB.GetWLIKOIntervence().Where(x => x.DtStartIntervence >= dtFrom && x.DtStartIntervence <= dtTo).ToList();
-      callsList = DB.GetWLikoCalls().Where(x => intervenceList.Select(x => x.LikointervenceId).Contains(x.LikointervenceId)).ToList();
+      callsList = DB.GetWLikoCalls().Where(x => x.DtStartCall >= dtFrom && x.DtStartCall <= dtTo).ToList();
+      intervenceList = DB.GetWLIKOIntervence().Where(x => callsList.Select(x => x.CallId).Contains(x.CallId??0)).ToList();
       incidentsList = DB.GetWLIKOIncident().Where(x => intervenceList.Select(x => x.LikoincidentId).Contains(x.LikoincidentId)).ToList();
       participantList = DB.GetLikoParticipants(0, 0).Where(x => intervenceList.Select(x=>x.LikointervenceId).Contains(x.LikointervenceId)).ToList();
 
