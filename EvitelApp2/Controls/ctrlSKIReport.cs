@@ -199,8 +199,8 @@ namespace EvitelApp2.Controls
 
     private void JumpToIntervence()
     {
-      int ParticipantId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["IntervenceId"].Value;
-      int? likoIntervenceId = likoAll.Where(x => x.ParticipantId == ParticipantId)?.First().LikointervenceId;
+      int ParticipantId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["ID osoby"].Value;
+      int ? likoIntervenceId = likoAll.Where(x => x.ParticipantId == ParticipantId)?.First().LikointervenceId;
       ShowDetailUserControl?.Invoke(5, likoIntervenceId);
     }
 

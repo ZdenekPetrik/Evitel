@@ -6,6 +6,8 @@ using EvitelApp2.Login;
 using EvitelLib2.Common;
 using EvitelLib2.Model;
 using EvitelLib2.Repository;
+using Microsoft.Data.SqlClient;
+using NPOI.OpenXmlFormats.Dml.Chart;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -49,6 +51,7 @@ namespace EvitelApp2
       LPvKRows,
       SKIReport,
       Statistika,
+      LPvKFullRows,
       NecoJineho
     }
 
@@ -118,6 +121,11 @@ namespace EvitelApp2
       ctrllpk1.ShowRowInformation += ShowRowInformation;
       ctrllpk1.ShowDetailUserControl += ShowDetailUserControl_Obsluha;
 
+
+      ctrllpkFull1.Dock = DockStyle.Fill;
+      ctrllpkFull1.ShowRowInformation += ShowRowInformation;
+      ctrllpkFull1.ShowDetailUserControl += ShowDetailUserControl_Obsluha;
+
       ctrlUser1.Dock = DockStyle.Fill;
       ctrlUser1.ShowRowInformation += ShowRowInformation;
 
@@ -142,7 +150,7 @@ namespace EvitelApp2
       eShowWindow[] myEnumMembers = (eShowWindow[])Enum.GetValues(typeof(eShowWindow));
       foreach (eShowWindow enumMember in myEnumMembers)
       {
-        aktWindow = enumMember; 
+        aktWindow = enumMember;
         HideActualView();
       }
       toolStripRows.Text = "";
@@ -200,6 +208,9 @@ namespace EvitelApp2
           break;
         case eShowWindow.LPvKRows:
           ctrllpk1.Visibility(false);
+          break;
+        case eShowWindow.LPvKFullRows:
+          ctrllpkFull1.Visibility(false);
           break;
         case eShowWindow.SKIReport:
           ctrlSKIReport1.Visibility(false);
@@ -398,6 +409,25 @@ namespace EvitelApp2
       lastWindowStack.Add(aktWindow);
     }
 
+    private void ShowView_LPKFullRows(bool openNeeded = true)
+    {
+      if (openNeeded)
+      {
+        ctrllpkFull1.ReadDataFirstTime();
+        ctrllpkFull1.MyResize();
+      }
+      MenuToolsRemoveFilters.Enabled = true;
+      MenuToolsRemoveOrders.Enabled = true;
+      MenuToolSetColumnLayout.Enabled = true;
+      MenuToolsRemoveColumnLayout.Enabled = true;
+      FileExportExcel.Enabled = true;
+      FileExportCSV.Enabled = true;
+      aktWindow = eShowWindow.LPvKFullRows;
+      ctrllpkFull1.Visibility(true);
+      this.Text = Title + " - Linka pomoci v krizi (LPvK-FULL)";
+      lastWindowStack.Add(aktWindow);
+    }
+
     private void ShowView_LIKOIncidents(bool openNeeded = true)
     {
       if (openNeeded)
@@ -490,7 +520,7 @@ namespace EvitelApp2
       ctrlEventLog1.ReReadData();
     }
 
-    // source 1=Call, 2=Incident, 3=Intervence, 4=Participant, 11=LPK, -1 ucCallLiko/LPvK konci
+    // source 1=Call, 2=Incident, 3=Intervence, 5=Participant, 11=LPK, -1 ucCallLiko/LPvK konci
     private void ShowDetailUserControl_Obsluha(int source, int? IntervenceId)
     {
       if (source >= 1 && source <= 5)
@@ -498,7 +528,7 @@ namespace EvitelApp2
         HideActualView();
         ShowView_NewCall(IntervenceId ?? 0);
       }
-      else if (source == 11)
+      else if (source == 11 || source == 12)
       {
         HideActualView();
         ShowView_NewCallLPK(IntervenceId ?? 0);
@@ -529,6 +559,9 @@ namespace EvitelApp2
             break;
           case eShowWindow.LPvKRows:
             ShowView_LPKRows(IntervenceId > 0); // tzn. že se věta změnila - znovu načti
+            break;
+          case eShowWindow.LPvKFullRows:
+            ShowView_LPKFullRows(IntervenceId > 0); // tzn. že se věta změnila - znovu načti
             break;
           default: break;
         }
@@ -883,6 +916,25 @@ namespace EvitelApp2
       }
 
     }
+    private void MenuToolShowLPvKFULL_Click(object sender, EventArgs e)
+    {
+      var DB = new CRepositoryDB(Program.myLoggedUser.LoginUserId);
+
+      DataTable aktTable = new DataTable();
+      using (var da = new SqlDataAdapter("EXEC wLPKFull", DB.ConnectionString))
+      {
+        da.Fill(aktTable);
+        aktTable.TableName = "LPvKFull";
+      }
+      ctrlStatistika1.dataTable = aktTable;
+      ShowView_Statistika("Volání");
+      /*
+  HideActualView();
+  ShowView_LPKFullRows();
+  */
+
+    }
+
 
 
     #endregion

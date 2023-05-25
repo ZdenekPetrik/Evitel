@@ -76,12 +76,17 @@ namespace EvitelApp2
       MenuToolShowSKIReport = new System.Windows.Forms.ToolStripMenuItem();
       toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
       linkaPomociVKriziLPKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      MenuToolShowLPvKFULL = new System.Windows.Forms.ToolStripMenuItem();
       NewCallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       newCallLIKOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       newCallLDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       mainTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       graphTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      statistikaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      statistikaVoláníToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      statistikaSKIUdálostíToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      statiskikaLPvKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       SettingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       MenuItemChangePassword = new System.Windows.Forms.ToolStripMenuItem();
       MenuItemUsers = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,10 +98,6 @@ namespace EvitelApp2
       MenuItemPromenneAplikace = new System.Windows.Forms.ToolStripMenuItem();
       toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
       oAplikaciToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      statistikaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      statistikaVoláníToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      statistikaSKIUdálostíToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      statiskikaLPvKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       statusStrip1 = new System.Windows.Forms.StatusStrip();
       toolStripTime = new System.Windows.Forms.ToolStripStatusLabel();
       toolStripUser = new System.Windows.Forms.ToolStripStatusLabel();
@@ -117,6 +118,7 @@ namespace EvitelApp2
       ctrlSKIReport1 = new Controls.ctrlSKIReport();
       ctrlStatistika1 = new Controls.ctrlStatistika();
       ucCiselnik1 = new Controls.ucCiselnik();
+      ctrllpkFull1 = new Controls.ctrlLPKFull();
       menuStrip1.SuspendLayout();
       statusStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -219,7 +221,7 @@ namespace EvitelApp2
       // 
       // viewsToolStripMenuItem
       // 
-      viewsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { MenuToolEventLog, interventiToolStripMenuItem, EnumsMenuItem, toolStripMenuItem2, MenuToolShowCallsAll, toolStripSeparator4, MenuToolShowCalls, MenuToolShowEvents, MenuToolShowIntervence, MenuToolShowParticipation, MenuToolShowSKIReport, toolStripSeparator5, linkaPomociVKriziLPKToolStripMenuItem });
+      viewsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { MenuToolEventLog, interventiToolStripMenuItem, EnumsMenuItem, toolStripMenuItem2, MenuToolShowCallsAll, toolStripSeparator4, MenuToolShowCalls, MenuToolShowEvents, MenuToolShowIntervence, MenuToolShowParticipation, MenuToolShowSKIReport, toolStripSeparator5, linkaPomociVKriziLPKToolStripMenuItem, MenuToolShowLPvKFULL });
       viewsToolStripMenuItem.Name = "viewsToolStripMenuItem";
       viewsToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
       viewsToolStripMenuItem.Text = "Zobrazení";
@@ -227,14 +229,14 @@ namespace EvitelApp2
       // MenuToolEventLog
       // 
       MenuToolEventLog.Name = "MenuToolEventLog";
-      MenuToolEventLog.Size = new System.Drawing.Size(217, 22);
+      MenuToolEventLog.Size = new System.Drawing.Size(246, 22);
       MenuToolEventLog.Text = "EventLog";
       MenuToolEventLog.Click += MenuToolEventLog_Click;
       // 
       // interventiToolStripMenuItem
       // 
       interventiToolStripMenuItem.Name = "interventiToolStripMenuItem";
-      interventiToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+      interventiToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
       interventiToolStripMenuItem.Text = "Interventi";
       interventiToolStripMenuItem.Click += interventiToolStripMenuItem_Click;
       // 
@@ -242,7 +244,7 @@ namespace EvitelApp2
       // 
       EnumsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { EnumsSexMenuItem, EnumSubTypIntervenceMenuItem, EnumDruhIntervenceMenuItem, EnumPartyToolStripMenuItem, EnumRegionMenuItem, toolStripSeparator3, EnumContactTypeMenuItem, EnumTypeServiceMenuItem, EnumClientFromMenuItem, EnumAgeMenuItem, EnumNickMenuItem, EnumEndOfSpeechMenuItem, EnumSubEndOfSpeechMenuItem, EnumAktualniStavKlientaMenuItem, EnumAktualniStavKlientaDetailMenuItem, EnumTemaKontaktuMenuItem, EnumTemaKontaktuDetailMenuItem });
       EnumsMenuItem.Name = "EnumsMenuItem";
-      EnumsMenuItem.Size = new System.Drawing.Size(217, 22);
+      EnumsMenuItem.Size = new System.Drawing.Size(246, 22);
       EnumsMenuItem.Text = "Číselníky";
       // 
       // EnumsSexMenuItem
@@ -365,66 +367,73 @@ namespace EvitelApp2
       // toolStripMenuItem2
       // 
       toolStripMenuItem2.Name = "toolStripMenuItem2";
-      toolStripMenuItem2.Size = new System.Drawing.Size(214, 6);
+      toolStripMenuItem2.Size = new System.Drawing.Size(243, 6);
       // 
       // MenuToolShowCallsAll
       // 
       MenuToolShowCallsAll.Name = "MenuToolShowCallsAll";
-      MenuToolShowCallsAll.Size = new System.Drawing.Size(217, 22);
+      MenuToolShowCallsAll.Size = new System.Drawing.Size(246, 22);
       MenuToolShowCallsAll.Text = "Telefonní volání (Vše)";
       MenuToolShowCallsAll.Click += MenuToolShowCallsAll_Click;
       // 
       // toolStripSeparator4
       // 
       toolStripSeparator4.Name = "toolStripSeparator4";
-      toolStripSeparator4.Size = new System.Drawing.Size(214, 6);
+      toolStripSeparator4.Size = new System.Drawing.Size(243, 6);
       // 
       // MenuToolShowCalls
       // 
       MenuToolShowCalls.Name = "MenuToolShowCalls";
-      MenuToolShowCalls.Size = new System.Drawing.Size(217, 22);
+      MenuToolShowCalls.Size = new System.Drawing.Size(246, 22);
       MenuToolShowCalls.Text = "Telefonní volání (SKI)";
       MenuToolShowCalls.Click += MenuToolShowCalls_Click;
       // 
       // MenuToolShowEvents
       // 
       MenuToolShowEvents.Name = "MenuToolShowEvents";
-      MenuToolShowEvents.Size = new System.Drawing.Size(217, 22);
+      MenuToolShowEvents.Size = new System.Drawing.Size(246, 22);
       MenuToolShowEvents.Text = "Události (SKI)";
       MenuToolShowEvents.Click += MenuToolShowEvents_Click;
       // 
       // MenuToolShowIntervence
       // 
       MenuToolShowIntervence.Name = "MenuToolShowIntervence";
-      MenuToolShowIntervence.Size = new System.Drawing.Size(217, 22);
+      MenuToolShowIntervence.Size = new System.Drawing.Size(246, 22);
       MenuToolShowIntervence.Text = "Intervence (SKI)";
       MenuToolShowIntervence.Click += MenuToolShowIntervence_Click;
       // 
       // MenuToolShowParticipation
       // 
       MenuToolShowParticipation.Name = "MenuToolShowParticipation";
-      MenuToolShowParticipation.Size = new System.Drawing.Size(217, 22);
+      MenuToolShowParticipation.Size = new System.Drawing.Size(246, 22);
       MenuToolShowParticipation.Text = "Účastníci Intervence (SKI)";
       MenuToolShowParticipation.Click += MenuToolShowParticipation_Click;
       // 
       // MenuToolShowSKIReport
       // 
       MenuToolShowSKIReport.Name = "MenuToolShowSKIReport";
-      MenuToolShowSKIReport.Size = new System.Drawing.Size(217, 22);
+      MenuToolShowSKIReport.Size = new System.Drawing.Size(246, 22);
       MenuToolShowSKIReport.Text = "Report (SKI)";
       MenuToolShowSKIReport.Click += MenuToolShowSKIReport_Click;
       // 
       // toolStripSeparator5
       // 
       toolStripSeparator5.Name = "toolStripSeparator5";
-      toolStripSeparator5.Size = new System.Drawing.Size(214, 6);
+      toolStripSeparator5.Size = new System.Drawing.Size(243, 6);
       // 
       // linkaPomociVKriziLPKToolStripMenuItem
       // 
       linkaPomociVKriziLPKToolStripMenuItem.Name = "linkaPomociVKriziLPKToolStripMenuItem";
-      linkaPomociVKriziLPKToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+      linkaPomociVKriziLPKToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
       linkaPomociVKriziLPKToolStripMenuItem.Text = "Linka Pomoci v Krizi (LPvK)";
       linkaPomociVKriziLPKToolStripMenuItem.Click += linkaPomociVKriziLPKToolStripMenuItem_Click;
+      // 
+      // MenuToolShowLPvKFULL
+      // 
+      MenuToolShowLPvKFULL.Name = "MenuToolShowLPvKFULL";
+      MenuToolShowLPvKFULL.Size = new System.Drawing.Size(246, 22);
+      MenuToolShowLPvKFULL.Text = "Linka Pomoci v Krizi FULL (LPvK)";
+      MenuToolShowLPvKFULL.Click += MenuToolShowLPvKFULL_Click;
       // 
       // NewCallToolStripMenuItem
       // 
@@ -468,6 +477,34 @@ namespace EvitelApp2
       graphTestToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
       graphTestToolStripMenuItem.Text = "Graph Test";
       graphTestToolStripMenuItem.Click += graphTestToolStripMenuItem_Click;
+      // 
+      // statistikaToolStripMenuItem
+      // 
+      statistikaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { statistikaVoláníToolStripMenuItem, statistikaSKIUdálostíToolStripMenuItem, statiskikaLPvKToolStripMenuItem });
+      statistikaToolStripMenuItem.Name = "statistikaToolStripMenuItem";
+      statistikaToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+      statistikaToolStripMenuItem.Text = "Statistika";
+      // 
+      // statistikaVoláníToolStripMenuItem
+      // 
+      statistikaVoláníToolStripMenuItem.Name = "statistikaVoláníToolStripMenuItem";
+      statistikaVoláníToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+      statistikaVoláníToolStripMenuItem.Text = "Statistika Volání";
+      statistikaVoláníToolStripMenuItem.Click += statistikaVoláníToolStripMenuItem_Click;
+      // 
+      // statistikaSKIUdálostíToolStripMenuItem
+      // 
+      statistikaSKIUdálostíToolStripMenuItem.Name = "statistikaSKIUdálostíToolStripMenuItem";
+      statistikaSKIUdálostíToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+      statistikaSKIUdálostíToolStripMenuItem.Text = "Statistika SKI událostí";
+      statistikaSKIUdálostíToolStripMenuItem.Click += statistikaSKIUdálostíToolStripMenuItem_Click;
+      // 
+      // statiskikaLPvKToolStripMenuItem
+      // 
+      statiskikaLPvKToolStripMenuItem.Name = "statiskikaLPvKToolStripMenuItem";
+      statiskikaLPvKToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+      statiskikaLPvKToolStripMenuItem.Text = "Statistika LPvK ";
+      statiskikaLPvKToolStripMenuItem.Click += statiskikaLPvKToolStripMenuItem_Click;
       // 
       // SettingToolStripMenuItem
       // 
@@ -539,34 +576,6 @@ namespace EvitelApp2
       oAplikaciToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
       oAplikaciToolStripMenuItem.Text = "O aplikaci";
       oAplikaciToolStripMenuItem.Click += oAplikaciToolStripMenuItem_Click;
-      // 
-      // statistikaToolStripMenuItem
-      // 
-      statistikaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { statistikaVoláníToolStripMenuItem, statistikaSKIUdálostíToolStripMenuItem, statiskikaLPvKToolStripMenuItem });
-      statistikaToolStripMenuItem.Name = "statistikaToolStripMenuItem";
-      statistikaToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
-      statistikaToolStripMenuItem.Text = "Statistika";
-      // 
-      // statistikaVoláníToolStripMenuItem
-      // 
-      statistikaVoláníToolStripMenuItem.Name = "statistikaVoláníToolStripMenuItem";
-      statistikaVoláníToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-      statistikaVoláníToolStripMenuItem.Text = "Statistika Volání";
-      statistikaVoláníToolStripMenuItem.Click += statistikaVoláníToolStripMenuItem_Click;
-      // 
-      // statistikaSKIUdálostíToolStripMenuItem
-      // 
-      statistikaSKIUdálostíToolStripMenuItem.Name = "statistikaSKIUdálostíToolStripMenuItem";
-      statistikaSKIUdálostíToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-      statistikaSKIUdálostíToolStripMenuItem.Text = "Statistika SKI událostí";
-      statistikaSKIUdálostíToolStripMenuItem.Click += statistikaSKIUdálostíToolStripMenuItem_Click;
-      // 
-      // statiskikaLPvKToolStripMenuItem
-      // 
-      statiskikaLPvKToolStripMenuItem.Name = "statiskikaLPvKToolStripMenuItem";
-      statiskikaLPvKToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-      statiskikaLPvKToolStripMenuItem.Text = "Statistika LPvK ";
-      statiskikaLPvKToolStripMenuItem.Click += statiskikaLPvKToolStripMenuItem_Click;
       // 
       // statusStrip1
       // 
@@ -719,11 +728,19 @@ namespace EvitelApp2
       ucCiselnik1.Size = new System.Drawing.Size(163, 209);
       ucCiselnik1.TabIndex = 18;
       // 
+      // ctrllpkFull1
+      // 
+      ctrllpkFull1.Location = new System.Drawing.Point(893, 112);
+      ctrllpkFull1.Name = "ctrllpkFull1";
+      ctrllpkFull1.Size = new System.Drawing.Size(259, 168);
+      ctrllpkFull1.TabIndex = 19;
+      // 
       // frmMain
       // 
       AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
       AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       ClientSize = new System.Drawing.Size(1555, 818);
+      Controls.Add(ctrllpkFull1);
       Controls.Add(ucCiselnik1);
       Controls.Add(ctrlStatistika1);
       Controls.Add(ctrlSKIReport1);
@@ -844,6 +861,8 @@ namespace EvitelApp2
     private System.Windows.Forms.ToolStripMenuItem statistikaSKIUdálostíToolStripMenuItem;
     private Controls.ucCiselnik ucCiselnik1;
     private System.Windows.Forms.ToolStripMenuItem statiskikaLPvKToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem MenuToolShowLPvKFULL;
+    private Controls.ctrlLPKFull ctrllpkFull1;
   }
 }
 
