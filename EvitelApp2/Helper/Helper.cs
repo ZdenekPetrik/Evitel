@@ -10,6 +10,21 @@ using System.Windows.Forms;
 
 namespace EvitelApp2.Helper
 {
+
+  public enum commandFromTable
+  {
+    callTable = 1,
+    IncidentTable = 2,
+    IntervenceTable = 3,
+    ParticipantTable = 4,
+    SkiReportTable = 5,
+    LPKTable = 11,
+    LPKFullTable = 12,
+    EndOfScreen = 98,   // byvale -1
+    ShowScreen = 99   // byvale -99
+  };
+
+
   public static class Helper
   {
 

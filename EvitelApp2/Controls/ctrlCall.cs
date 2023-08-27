@@ -1,16 +1,12 @@
 ﻿using EvitelApp2.Helper;
 using EvitelApp2.MyUserControl;
+using EvitelLib2;
+using EvitelLib2.Common;
 using EvitelLib2.Model;
 using EvitelLib2.Repository;
-using Newtonsoft.Json;
-using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using static EvitelApp2.Controls.frmTestEndNPOI;
@@ -27,7 +23,6 @@ namespace EvitelApp2.Controls
     BindingSource bindingSource1;
     private List<MyColumn> myColumns;
     private ColumnLayoutDB cldb;
-    ToolStripMenuItem toolStripItem1 = new ToolStripMenuItem();
     public event RowInformation ShowRowInformation;
     public event DetailIntervence ShowDetailUserControl;
     private DataGridViewCellEventArgs mouseLocation;
@@ -140,20 +135,29 @@ namespace EvitelApp2.Controls
       }
       dgw.SortDESC(dgw.Columns["Datum volání"]);
       dgw.SortDESC(dgw.Columns["Začátek"]);
-
+      ToolStripMenuItem toolStripItem1 = new ToolStripMenuItem();
       toolStripItem1.Text = "Detail Hovoru";
       toolStripItem1.Click += new EventHandler(toolStripItem1_Click);
+      ToolStripMenuItem toolStripItem2 = new ToolStripMenuItem();
+      toolStripItem2.Text = "Smazat Hovor";
+      toolStripItem2.Click += new EventHandler(toolStripItem2_Click);
       ContextMenuStrip strip = new ContextMenuStrip();
       foreach (DataGridViewColumn column in dgw.Columns)
       {
         column.ContextMenuStrip = strip;
         column.ContextMenuStrip.Items.Add(toolStripItem1);
+        if (Program.myLoggedUser.HasAccess(eLoginAccess.Admin))
+          column.ContextMenuStrip.Items.Add(toolStripItem2);
       }
     }
 
     private void toolStripItem1_Click(object sender, EventArgs args)
     {
       JumpToIntervence();
+    }
+    private void toolStripItem2_Click(object sender, EventArgs args)
+    {
+      DeleteRow();
     }
     private void dgw_CellMouseEnter(object sender, DataGridViewCellEventArgs location)
     {
@@ -192,8 +196,15 @@ namespace EvitelApp2.Controls
     private void dgw_RowEnter(object sender, DataGridViewCellEventArgs e)
     {
       ShowRowInformation?.Invoke(e.RowIndex + 1, dgw.RowCount);
-    }
+      var r = NajdiRowIdInAnyTable(e.RowIndex);
+      int IdInTable = r.Item2;
+      eCallType callType = r.Item1;
+      foreach (DataGridViewColumn column in dgw.Columns)
+      {
+        //column.ContextMenuStrip.Items[1].Visible = (IdInTable == 0);
+      }
 
+    }
     private void dgw_DoubleClick(object sender, EventArgs e)
     {
       JumpToIntervence();
@@ -201,25 +212,71 @@ namespace EvitelApp2.Controls
 
     private void JumpToIntervence()
     {
-      int CallId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["ID"].Value;
-      int? callTypeId = wCalls.Where(x => x.CallId == CallId)?.First().CallTypeId;
-      if (callTypeId == 1)
+      var r = NajdiRowIdInAnyTable(mouseLocation.RowIndex);
+      int IdInTable = r.Item2;
+      eCallType callType = r.Item1;
+      int CallID = r.Item3;
+      if (callType == eCallType.eLPvK && IdInTable > 0)
       {
-        ShowDetailUserControl?.Invoke(11, wCalls.Where(x => x.CallId == CallId)?.First().Lpkid);
+        ShowDetailUserControl?.Invoke(Helper.commandFromTable.LPKTable, IdInTable);
       }
-      else if (callTypeId == 2)
+      else if (callType == eCallType.eLIKO && IdInTable > 0)
       {
-        ShowDetailUserControl?.Invoke(1, wCalls.Where(x => x.CallId == CallId)?.First().LikointervenceId);
+        ShowDetailUserControl?.Invoke(Helper.commandFromTable.callTable, IdInTable);
+      }
+      else if (callType == eCallType.eUnknown)
+      {
+        MessageBox.Show($"Ani LPvK ani SKI. To Je Divná věta.");
       }
       else
       {
-        MessageBox.Show("Ani LPvK ani SKI. To Je Divná věta");
+        MessageBox.Show($"K tomuto {callType} hovoru nejsou přiřazeny žádné další informace. CallId = {CallID}");
       }
     }
 
-    private void dgw_FilterStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
+    private Tuple<eCallType, int, int> NajdiRowIdInAnyTable(int rowIndex)
     {
+      int IdTable = 0;
+      eCallType callType = eCallType.eUnknown;
 
+      int CallId = (int)dgw.Rows[rowIndex].Cells["ID"].Value;
+      int? callTypeId = wCalls.Where(x => x.CallId == CallId)?.First().CallTypeId;
+      if (callTypeId == 1)
+      {
+        IdTable = wCalls.Where(x => x.CallId == CallId)?.First().Lpkid ?? 00;
+        callType = eCallType.eLPvK;
+      }
+      else if (callTypeId == 2)
+      {
+        IdTable = wCalls.Where(x => x.CallId == CallId)?.First().LikointervenceId ?? 00;
+        callType = eCallType.eLIKO;
+      }
+      return new Tuple<eCallType, int, int>(callType, IdTable, CallId);
+    }
+
+
+    private void DeleteRow()
+    {
+      var r = NajdiRowIdInAnyTable(mouseLocation.RowIndex);
+      int IdInTable = r.Item2;
+      eCallType callType = r.Item1;
+      int dbReturn = 0;
+      int callId = r.Item3;
+      if (IdInTable == 0)
+      {
+        var msgBoxReturn = MessageBox.Show($"Opravdu smazat hovor CallID = {callId}.", "Mazání hovoru", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+        if (msgBoxReturn == DialogResult.Yes)
+        {
+          dbReturn = DB.DeleteCallRow(callId);
+          if (dbReturn == 1)
+            dgw.Rows.RemoveAt(mouseLocation.RowIndex);
+          else
+            MessageBox.Show(DB.sErr);
+        }
+      }
+      else {
+        MessageBox.Show($"Nelze smazat hovor {callType}. Hovor lze smazat pouze pokud není ani LPvK ani SKI" , "Mazání hovoru", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+      }
     }
   }
 }

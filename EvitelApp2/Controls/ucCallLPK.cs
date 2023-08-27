@@ -132,6 +132,8 @@ namespace EvitelApp2.Controls
       btnBack.Visible = !isNewForm;
       btnDelete.Visible = Program.myLoggedUser.HasAccess(eLoginAccess.Admin) && !isNewForm;
       lblEditInfo.Visible = !isNewForm;
+      btnQuickLPvK.Visible = isNewForm;
+
       if (isNewForm)
       {
         lblContactTopic.Text = "";
@@ -158,7 +160,6 @@ namespace EvitelApp2.Controls
         tmCall.Value = (DateTime)aktCall.DtStartCall;
         tmCallTo.Value = (DateTime)aktCall.DtEndCall;
         lblEditInfo.Text = "Id:" + lpkRow.Lpkid.ToString() + "; " + (isEditMode ? "EDIT" : "NO-EDIT");
-        btnQuickLPvK.Visible = false;
         ReWriteScreen();
       }
 
@@ -708,7 +709,7 @@ namespace EvitelApp2.Controls
     {
       DateTime datetimeStartCall = dtCall.Value.Date.Add(TimeSpan.Parse(tmCall.Value.ToLongTimeString()));
       DateTime datetimeEndCall = dtCall.Value.Date.Add(TimeSpan.Parse(tmCallTo.Value.ToLongTimeString()));
-      int CallId = DB.WriteCall(datetimeStartCall, (int)eCallType.ePLK, datetimeEndCall);
+      int CallId = DB.WriteCall(datetimeStartCall, (int)eCallType.eLPvK, datetimeEndCall);
       if (CallId > 0)
       {
         Lpk row = new Lpk();
@@ -751,7 +752,7 @@ namespace EvitelApp2.Controls
 
     private void btnBack_Click(object sender, EventArgs e)
     {
-      ShowDetailUserControl?.Invoke(-1, WasChanged?1:0);
+      ShowDetailUserControl?.Invoke(Helper.commandFromTable.EndOfScreen, WasChanged?1:0);
     }
     private void Any_ValueChanged(object sender, EventArgs e)
     {
@@ -771,7 +772,7 @@ namespace EvitelApp2.Controls
 
     private void btnQuickLPvK_Click(object sender, EventArgs e)
     {
-      ShowDetailUserControl?.Invoke(-99, 2);
+      ShowDetailUserControl?.Invoke(Helper.commandFromTable.ShowScreen, 2);
     }
 
     private void pictureClock_Click(object sender, EventArgs e)
@@ -883,7 +884,7 @@ namespace EvitelApp2.Controls
         if (1 == DB.DeleteLPKRow(LPKId))
         {
           MessageBox.Show("LPvK věta smazána.", "LPvK - Mazání věty");
-          ShowDetailUserControl?.Invoke(-1, 2);
+          ShowDetailUserControl?.Invoke(Helper.commandFromTable.EndOfScreen, 1);
         }
 
       }

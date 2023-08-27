@@ -210,7 +210,7 @@ namespace EvitelApp2.Controls
     private void JumpToIntervence()
     {
       int lpkId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["ID"].Value;
-      ShowDetailUserControl?.Invoke(11, lpkId);
+      ShowDetailUserControl?.Invoke(Helper.commandFromTable.LPKTable, lpkId);
     }
 
     private void dgw_CellContentClick(object sender, DataGridViewCellEventArgs e)

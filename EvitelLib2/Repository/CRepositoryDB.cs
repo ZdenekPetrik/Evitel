@@ -91,15 +91,15 @@ namespace EvitelLib2.Repository
       try
       {
         IQueryable<MainSetting> ms = db.MainSettings.Select(n => n).Where(n => n.Name == Name);
-      MainSetting[] MainS = ms.ToArray();
-      if (ms.Count() == 1)
-      {
-        return MainS[0].SValue;
-      }
-      else
-      {
-        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetSettingS - no able found param " + Name, "", IdUser);
-      }
+        MainSetting[] MainS = ms.ToArray();
+        if (ms.Count() == 1)
+        {
+          return MainS[0].SValue;
+        }
+        else
+        {
+          new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetSettingS - no able found param " + Name, "", IdUser);
+        }
       }
       catch (Exception Ex)
       {
@@ -127,7 +127,7 @@ namespace EvitelLib2.Repository
       }
       catch (Exception Ex)
       {
-        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetSettingI(" + Name +").  " + GetInnerException(Ex), "", IdUser);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "GetSettingI(" + Name + ").  " + GetInnerException(Ex), "", IdUser);
         sErr = GetInnerException(Ex);
         return 0;
       }
@@ -1238,7 +1238,7 @@ namespace EvitelLib2.Repository
       }
       return null;
     }
-   
+
     public Call GetCall(int id)
     {
       sErr = "";
@@ -1365,7 +1365,7 @@ namespace EvitelLib2.Repository
       return false;
 
     }
-    public bool UpdateIntervence(int likoIntervenceId, DateTime datetimeStartIntervence, DateTime datetimeEndIntervence, int NrObetemPoskozenym, int NrPozustalymBlizkym, int NrOstatnimOsobam, string note, int InterventId )
+    public bool UpdateIntervence(int likoIntervenceId, DateTime datetimeStartIntervence, DateTime datetimeEndIntervence, int NrObetemPoskozenym, int NrPozustalymBlizkym, int NrOstatnimOsobam, string note, int InterventId)
     {
       sErr = "";
       Evitel2DB db = new Evitel2DB();
@@ -2547,7 +2547,7 @@ namespace EvitelLib2.Repository
       Evitel2DB db = new Evitel2DB();
       try
       {
-        var r = from lpk in db.Lpks  where lpk.Nick == nick orderby lpk.Lpkid descending select lpk;
+        var r = from lpk in db.Lpks where lpk.Nick == nick orderby lpk.Lpkid descending select lpk;
         return r.FirstOrDefault();
       }
       catch (Exception Ex)
@@ -2623,6 +2623,30 @@ namespace EvitelLib2.Repository
       }
       return 1;
 
+    }
+
+    public int DeleteCallRow(int callId)
+    {
+      sErr = "";
+      Evitel2DB db = new Evitel2DB();
+      try
+      {
+        var row = (from par in db.Calls where par.CallId == callId select par).First();
+        if (row == null)
+        {
+          sErr = "Neexistuje Call id = " + callId.ToString();
+          return -1;
+        }
+        db.Calls.Remove(row);
+        db.SaveChanges();
+      }
+      catch (Exception Ex)
+      {
+        sErr = GetInnerException(Ex);
+        new CEventLog(eEventCode.e1Message, eEventSubCode.e2Error, "DeleteCallRow() " + GetInnerException(Ex), "", IdUser);
+        return 0;
+      }
+      return 1;
     }
   }
 }

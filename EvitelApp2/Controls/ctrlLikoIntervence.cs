@@ -193,7 +193,7 @@ namespace EvitelApp2.Controls
     private void JumpToIntervence()
     {
       int? likoIntervenceId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["ID"].Value;
-      ShowDetailUserControl?.Invoke(3, likoIntervenceId);
+      ShowDetailUserControl?.Invoke(Helper.commandFromTable.IntervenceTable, likoIntervenceId);
     }
 
     private void toolStripItem1_Click(object sender, EventArgs args)

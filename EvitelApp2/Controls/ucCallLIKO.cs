@@ -118,7 +118,7 @@ namespace EvitelApp2.Controls
     }
 
 
-
+     
 
     // Volá se při LOAD a pak vždy poté co nadřazený proces rozhodne co zobrazit
     public void PrepareScreen()
@@ -500,10 +500,8 @@ namespace EvitelApp2.Controls
 
     private void btnBack_Click(object sender, EventArgs e)
     {
-      ShowDetailUserControl?.Invoke(-1, 0);
+      ShowDetailUserControl?.Invoke(Helper.commandFromTable.EndOfScreen, 0);
     }
-
-
 
     // Univerzální metoda, abychom věděli že uživatel něco změnil a my mohli uvolnit editační button
     private void Any_ValueChanged(object sender, EventArgs e)
@@ -616,7 +614,7 @@ namespace EvitelApp2.Controls
 
     private void btnQuickLPvK_Click(object sender, EventArgs e)
     {
-      ShowDetailUserControl?.Invoke(-99, 1);
+      ShowDetailUserControl?.Invoke(Helper.commandFromTable.ShowScreen, 1);
 
     }
 
@@ -627,9 +625,8 @@ namespace EvitelApp2.Controls
         if (1 == DB.DeleteSkiRow(LikoIntervenceId))
         {
           MessageBox.Show("SKI věta smazána.", "SKI - Mazání věty", MessageBoxButtons.OK, MessageBoxIcon.Information);
-          ShowDetailUserControl?.Invoke(-1, 1);
+          ShowDetailUserControl?.Invoke(Helper.commandFromTable.EndOfScreen, 1);
         }
-
       }
     }
   }

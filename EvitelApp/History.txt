@@ -122,13 +122,26 @@
       Všechny Reporty mají mìsíc a rok. 
 5.4 - U Simony v práci. Ètení hodnot z DB do GrifView pouze pokud nejsou null. Oprava vyplòování Nick - nikoliv podle indexu ale podle hodnoty iValue.
 7.4. - Doma Doplnìní o protokol.pro (do user/petri/onedrive/document/). + Test na pøítomnost databáze pøi startu se zápisem chyby do protokolu
+10.8.2023 - Simona v práci. View LPvK odstranìno TOP 1000.
+	1 Zasekne se formuláø a nejde ostranit (na pozadí blikaj ale správné hodnoty - poèty vìt titulek)
+	2 Èíselník poskoèí o 1000
+	3 Pøehledy hovorù se nezobrazují všechny  konèí 19.7
+	4 Z dílèích pøehledù se nedostanu do detailu hovoru.
+	5 Statiska volání hlásí chybu - po odkliknutí OK. 
+Nahrál jsem si zálohu dat. Tu jsem doma rozbalil do DB Evitel22. (do Evitel2 jsem to nedostal.)
 
-SQL Zmeny 
+27.8. 
+	Opraveno 
+ad 1.   Debug protokolace zmìn obrazovky. U Statistiky to nedìlalo Hide. commandFromTable je enum pøíkazù z jednotlivých tabulek (už né pøes int). Lepší názvy tabulek (dle menu).
+
+Ad 2. SQL Zmeny 
+ALTER DATABASE SCOPED CONFIGURATION SET IDENTITY_CACHE = OFF 
 wLIKOParticipant - kvuli zmene wLIKOIntervence, + øazení
 Protokol události MAINSetting:
 CisloJednaci	è.j.: PPR-613 <ID>/ÈJ-2023-990762
 CisloJednaciIncrement	1
 Tabulky eGrouping, dimDateTime, + MainSettings (CisloJednaci,CisloJednaciIncrement)
+10.8.20
 
 
 

@@ -48,6 +48,7 @@
       dgw.Size = new System.Drawing.Size(240, 150);
       dgw.SortStringChangedInvokeBeforeDatasourceUpdate = true;
       dgw.TabIndex = 3;
+      dgw.CellContentClick += dgw_CellContentClick;
       dgw.RowEnter += dgw_RowEnter;
       // 
       // ctrlStatistika

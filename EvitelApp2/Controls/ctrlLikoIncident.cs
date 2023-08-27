@@ -195,7 +195,7 @@ namespace EvitelApp2.Controls
       int Id = (int)dgw.Rows[mouseLocation.RowIndex].Cells["ID"].Value;
       var x = DB.GetWLIKOIntervence();
       int? likoIntervenceId = DB.GetWLIKOIntervence().Where(x => x.LikoincidentId == Id && x.IntervPoradi == 1).FirstOrDefault().LikointervenceId;
-      ShowDetailUserControl?.Invoke(2, likoIntervenceId);
+      ShowDetailUserControl?.Invoke(Helper.commandFromTable.IncidentTable, likoIntervenceId);
     }
 
     private void toolStripItem1_Click(object sender, EventArgs args)

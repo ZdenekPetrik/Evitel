@@ -203,7 +203,7 @@ namespace EvitelApp2.Controls
     {
       int CallId = (int)dgw.Rows[mouseLocation.RowIndex].Cells["ID"].Value;
       int? likoIntervenceId = wLikoCalls.Where(x => x.CallId == CallId)?.First().LikointervenceId;
-      ShowDetailUserControl?.Invoke(1, likoIntervenceId);
+      ShowDetailUserControl?.Invoke(Helper.commandFromTable.callTable, likoIntervenceId);
     }
 
     private void dgw_CellContentClick(object sender, DataGridViewCellEventArgs e)

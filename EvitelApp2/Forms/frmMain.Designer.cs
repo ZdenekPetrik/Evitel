@@ -118,7 +118,6 @@ namespace EvitelApp2
       ctrlSKIReport1 = new Controls.ctrlSKIReport();
       ctrlStatistika1 = new Controls.ctrlStatistika();
       ucCiselnik1 = new Controls.ucCiselnik();
-      ctrllpkFull1 = new Controls.ctrlLPKFull();
       menuStrip1.SuspendLayout();
       statusStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -727,20 +726,12 @@ namespace EvitelApp2
       ucCiselnik1.Name = "ucCiselnik1";
       ucCiselnik1.Size = new System.Drawing.Size(163, 209);
       ucCiselnik1.TabIndex = 18;
-      // 
-      // ctrllpkFull1
-      // 
-      ctrllpkFull1.Location = new System.Drawing.Point(893, 112);
-      ctrllpkFull1.Name = "ctrllpkFull1";
-      ctrllpkFull1.Size = new System.Drawing.Size(259, 168);
-      ctrllpkFull1.TabIndex = 19;
-      // 
+        // 
       // frmMain
       // 
       AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
       AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       ClientSize = new System.Drawing.Size(1555, 818);
-      Controls.Add(ctrllpkFull1);
       Controls.Add(ucCiselnik1);
       Controls.Add(ctrlStatistika1);
       Controls.Add(ctrlSKIReport1);
@@ -862,7 +853,6 @@ namespace EvitelApp2
     private Controls.ucCiselnik ucCiselnik1;
     private System.Windows.Forms.ToolStripMenuItem statiskikaLPvKToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem MenuToolShowLPvKFULL;
-    private Controls.ctrlLPKFull ctrllpkFull1;
   }
 }
 

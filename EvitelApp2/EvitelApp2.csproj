@@ -26,9 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Controls\ctrlLPKFull.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Update="Controls\ctrlStatistika.cs">
       <SubType>UserControl</SubType>
     </Compile>

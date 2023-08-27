@@ -109,5 +109,5 @@ namespace EvitelApp2.Controls
     {
       ShowRowInformation?.Invoke(e.RowIndex + 1, dgw.RowCount);
     }
-  }
+   }
 }
