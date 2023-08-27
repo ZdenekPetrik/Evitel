@@ -127,6 +127,5 @@ namespace EvitelApp2
 
       return false;
     }
-
   }
 }

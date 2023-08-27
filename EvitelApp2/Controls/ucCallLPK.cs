@@ -722,7 +722,32 @@ namespace EvitelApp2.Controls
         row.Note = txtNote.Text;
         row.Nick = txtVolajici.Text;
         row.CallId = CallId;
+
+        if (row.AgeEid == null)
+        {
+          int index = cmbAge.FindString("Nezjištěno");
+          if (index >= 0)
+            row.AgeEid = ((ComboItem)cmbAge.Items[index]).iValue;
+        }
+        if (row.SexEid == null)
+        {
+          int index = cmbSex.FindString("Nezjištěno");
+          if (index >= 0)
+            row.SexEid = ((ComboItem)cmbSex.Items[index]).iValue;
+        }
+        if (row.ClientFromEid == null)
+        {
+          int index = cmbFrom.FindString("Neurčeno");
+          if (index >= 0)
+            row.ClientFromEid = ((ComboItem)cmbFrom.Items[index]).iValue;
+        }
+
         int aktLPKId = DB.WriteRowLPK(row);
+        if (aktLPKId < 0)
+        {
+          MessageBox.Show(DB.sErr);
+          return;
+        }
         List<int> contactTopicIdList = GetActiveNodeId(tvContactTopic);
         DB.SetLPKContactTopic(aktLPKId, contactTopicIdList);
         List<int> currentClientStatusIdList = GetActiveNodeId(tvClientCurrentStatus);
@@ -752,7 +777,7 @@ namespace EvitelApp2.Controls
 
     private void btnBack_Click(object sender, EventArgs e)
     {
-      ShowDetailUserControl?.Invoke(Helper.commandFromTable.EndOfScreen, WasChanged?1:0);
+      ShowDetailUserControl?.Invoke(Helper.commandFromTable.EndOfScreen, WasChanged ? 1 : 0);
     }
     private void Any_ValueChanged(object sender, EventArgs e)
     {

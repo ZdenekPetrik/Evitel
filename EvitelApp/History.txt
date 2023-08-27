@@ -132,10 +132,15 @@ Nahrál jsem si zálohu dat. Tu jsem doma rozbalil do DB Evitel22. (do Evitel2 jse
 
 27.8. 
 	Opraveno 
-ad 1.   Debug protokolace zmìn obrazovky. U Statistiky to nedìlalo Hide. commandFromTable je enum pøíkazù z jednotlivých tabulek (už né pøes int). Lepší názvy tabulek (dle menu).
+ad 1.   Debug protokolace zmìn obrazovky. U Statistiky to nedìlalo Hide. commandFromTable je enum pøíkazù z jednotlivých tabulek (už né pøes int). Lepší názvy tabulek (dle menu). 
 
-Ad 2. SQL Zmeny 
-ALTER DATABASE SCOPED CONFIGURATION SET IDENTITY_CACHE = OFF 
+Ad 2.  ALTER DATABASE SCOPED CONFIGURATION SET IDENTITY_CACHE = OFF 
+Ad 3.  TOP 1000
+Ad 4.  Z CallAll lze mazat hovory. Nìkteré hovory totiž neudìlají ani LPVK vìtu. A pak nešli smazat. Tak jsem udìlal metodu NajdiRowIdInAnyTable(). Ta zjisti ID LPvK nebo SKI nebo že neexistuje. Tato metoda se uplatni pøi Detailu nebo pøi mazání vìty. Nová DB metode DeleteCalls(). 	
+
+
+Další opravy - již se nezobrazuje na form "Nový LPVK hovor" tlaèítko pro rychlý pøeskok na SKI pokud je voláno z tabulky LPVK nebo CallAll.
+SQL Zmeny
 wLIKOParticipant - kvuli zmene wLIKOIntervence, + øazení
 Protokol události MAINSetting:
 CisloJednaci	è.j.: PPR-613 <ID>/ÈJ-2023-990762
