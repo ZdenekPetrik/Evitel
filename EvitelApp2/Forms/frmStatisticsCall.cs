@@ -112,7 +112,7 @@ namespace EvitelApp2.Forms
       using (var da = new SqlDataAdapter(Select, DB.ConnectionString))
       {
         da.SelectCommand.Parameters.AddWithValue("@dtFrom", dtFrom.Value.Date);
-        da.SelectCommand.Parameters.AddWithValue("@dtTo", dtTo.Value.AddDays(1).Date);
+        da.SelectCommand.Parameters.AddWithValue("@dtTo", dtTo.Value.Date);
         da.Fill(aktStatistikaTable);
         aktStatistikaTable.TableName = "StatistikaX";
         Properties.CallSettings.Default.DateFrom = dtFrom.Value.Date;
