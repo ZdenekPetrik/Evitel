@@ -26,7 +26,7 @@ namespace EvitelApp2.Forms
       FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
       string version = fileVersionInfo.ProductVersion;
 
-      var date = File.GetCreationTime(assembly.Location);
+      var date = File.GetLastWriteTime(assembly.Location);
       string dateStr = date.Date.ToString("dd.MM.yyyy");
 
       lblVersion.Text = version;
